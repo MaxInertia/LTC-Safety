@@ -1,0 +1,145 @@
+<!DOCTYPE html> 
+<html>
+<!--
+Auther: Vigor
+Version: 1.0
+Date: Jan 15 2017
+-->
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="style.css">
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style type = "text/css">
+
+		.box{
+			margin: 0 auto;
+			width: 28em;
+			height: 18em;
+			
+		}
+
+		@media screen and (max-width: 765px) {
+		input[type=text], input[type=password] {
+			width: 100%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		.form{
+			  top: 50%;
+			  left: 50%;
+			  margin-top: 25%;
+			  margin-left: -0.31em;
+
+		}
+		}
+
+		@media screen and (min-width: 765px) {
+		input[type=text], input[type=password] {
+			width: 45.5%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		}
+		
+		@media screen and (min-width: 992px) {
+		input[type=text], input[type=password] {
+			width: 35.5%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		}
+		
+		@media screen and (min-width: 1200px) {
+		input[type=text], input[type=password] {
+			width: 29.5%;
+			padding: 12px 20px;
+			margin: 8px 0;
+			display: block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		.form{
+			  top: 50%;
+			  left: 50%;
+			  margin-top: 10%;
+			  margin-left: -2em;
+
+		}
+		}
+		
+		.form_box{
+			margin:1em;
+		}
+		
+		.login-btn {width:150px;}
+
+		.login-btn-style{
+			background-color:black;
+		    border: none;
+		    color: white;
+		    padding: 10px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		    margin: 4px 2px;
+		    cursor: pointer;
+		}
+		.login-btn-style:hover{
+			background-color:white;
+		    border: none;
+		    color: black;
+		    padding: 10px 32px;
+		    text-align: center;
+		    text-decoration: none;
+		    display: inline-block;
+		    font-size: 16px;
+		    margin: 4px 2px;
+		    cursor: pointer;
+		}
+		.remember_me, .remember_me:hover {
+			color:black;
+			text-decoration:none;
+		}
+      </style>
+</head>
+<body>
+	<div class="form" align="centre">
+		<h1>LTC Login</h1>
+		<div class="empty"></div>
+		<div class="box shadow">
+			<div class="form_box">
+				<div class="container">
+					<div class="empty"></div>
+					<label><b>Username</b></label>
+					<input type="text" placeholder="Enter Username"  name="uname" required>
+
+					<label><b>Password</b></label>
+					<input type="password" placeholder="Enter Password" name="psw" required>
+
+					<button type="submit" class="login-btn login-btn-style">Login</button>
+					<input type="checkbox" id="checkbox-c" checked="checked"> <a class="remember_me">Remember me</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<!--End of warp-->
+<script type="text/javascript" src="login.js"></script>
+</body>
+</html>

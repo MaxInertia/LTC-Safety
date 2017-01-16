@@ -1,0 +1,112 @@
+*{}
+
+body{}
+
+.warp{
+	width:auto;
+}
+
+h1, h2, h3, h4{
+	text-align: center;
+}
+
+.h1-left, .h2-left, .h3-left, .h4-left{
+	text-align:left;
+}
+
+.h1-right, .h2-right, .h3-right, .h4-right{
+	text-align:right;
+}
+
+		
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+
+ol {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul li {
+    float: left;
+}
+
+.left{
+	float: left;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+
+.side_warp{
+	width:300px;
+	height:auto;
+}
+
+.content_warp{
+	width:1200px;
+}
+
+.image_cell{
+	float:left;
+	padding:5px;
+}
+
+.clear{
+    clear:both;
+}
+
+		
+		.shadow{
+			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+		}
+		.empty{
+			margin:1em;
+		}
+		.title-panel{
+			margin:1em 0 0 1em;
+			width: auto;
+			height:20px;
+		}
+		
+		.title-panel p {
+			padding-right:0.2em;
+			display: inline;
+		}
+		.admin-info{
+			width:auto;
+			height:20px;
+		}
+		.logout{
+			width:200px;
+			height:20px;
+		}
+		
+		.right-absolute{
+			position:inherit;
+			right:0px;
+			float:right;
+		}
