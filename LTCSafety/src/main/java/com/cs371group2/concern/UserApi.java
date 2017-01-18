@@ -1,17 +1,17 @@
-package com.cs371group2;
+package com.cs371group2.concern;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.UnauthorizedException;
 
-/**
- * Created by allankerr on 2017-01-17.
- */
-@Api(name = "userApi", title = "User API", version = "v1")
-public class UserApi {
+@Api(name = "userApi",
+        canonicalName = "User API",
+        title = "User API",
+        version = "v1")
+public final class UserApi {
 
     @ApiMethod(name = "submitConcern", path = "/concern/submit")
-    public OwnerToken submitConcern(ConcernInformation information) {
+    public OwnerToken submitConcern(ConcernData data) {
         return null;
     }
 
