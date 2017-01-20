@@ -1,7 +1,7 @@
 package com.cs371group2.concern;
 
-import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
+import com.cs371group2.concern.UserApi.Validatable;
 
 /**
  * The concern data class is used to store the data submitted by a user when reporting a concern.

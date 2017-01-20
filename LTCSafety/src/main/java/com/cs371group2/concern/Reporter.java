@@ -1,7 +1,7 @@
 package com.cs371group2.concern;
 
-import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
+import com.cs371group2.concern.UserApi.Validatable;
 
 /**
  * The reporter class is used to store information pertaining to the reporter of the concern. This

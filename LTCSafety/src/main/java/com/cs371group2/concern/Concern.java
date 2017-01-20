@@ -61,4 +61,33 @@ public final class Concern {
     public ConcernData getData() {
         return data;
     }
+
+    /**
+     * Create a new concern
+     *
+     * @param data The data for the concern that was submitted from the Android or iOS client.
+     * @precond data != null data is valid based on its validate method
+     */
+    public Concern(ConcernData data) {
+
+        assert data != null;
+        assert data.validate().isValid();
+
+        this.data = data;
+    }
+
+    /**
+     * Generates an owner token containing the concern id for this concern giving the holder
+     * authorization to retract, access, or update the concern.
+     *
+     * @return The owner token for this concern giving the holder authorized access to it.
+     * @precond The id of the concern must be populated. This means that the concern must be stored
+     * in the datastore using the ConcernDao prior to generating the owner token.
+     */
+    public OwnerToken generateOwnerToken() {
+
+        assert id != null;
+
+        return null;
+    }
 }

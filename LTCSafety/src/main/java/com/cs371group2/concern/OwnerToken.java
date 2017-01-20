@@ -10,13 +10,27 @@ package com.cs371group2.concern;
 class OwnerToken {
 
     /**
-     * The raw JWS token string used to verify that the owner token is authentic. The identifier used
-     * to locate the concern within the database is stored in the payload section of this token as
-     * the subject.
+     * The raw JWS token string used to verify that the owner token is authentic. The identifier
+     * used to locate the concern within the database is stored in the payload section of this token
+     * as the subject.
      */
     String token;
 
     public String getToken() {
         return token;
+    }
+
+    /**
+     * Creates a new owner token with the specified identifier. This identifier must correspond to a
+     * concern within the datastore. This id is then signed using the private server key to create
+     * the raw token.
+     *
+     * @param id The identifier of a concern within the datastore.
+     * @pre-cond id != null
+     */
+    OwnerToken(Long id) {
+
+        assert id != null;
+
     }
 }

@@ -1,7 +1,7 @@
 package com.cs371group2.concern;
 
-import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
+import com.cs371group2.concern.UserApi.Validatable;
 
 /**
  * The location class is used to store information pertaining to the location the concern was
