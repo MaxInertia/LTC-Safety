@@ -11,6 +11,9 @@
             <param-value>false</param-value>
         </init-param>
     </servlet>
+    <listener>
+        <listener-class>com.cs371group2.InitContextListener</listener-class>
+    </listener>
     <servlet-mapping>
         <servlet-name>EndpointsServlet</servlet-name>
         <url-pattern>/_ah/api/*</url-pattern>
