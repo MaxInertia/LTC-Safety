@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import com.cs371group2.ApiKeys;
+import com.cs371group2.InitContextListener;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
@@ -43,6 +44,7 @@ public class UserApiTest {
     public void setUp() throws Exception {
         this.session = ObjectifyService.begin();
         this.helper.setUp();
+        new InitContextListener().contextInitialized(null);
     }
 
     /**
@@ -240,12 +242,7 @@ public class UserApiTest {
      */
     @Test(expected = NotFoundException.class)
     public void retractNotFound() throws Exception {
-        OwnerToken token = new OwnerToken();
-        token.token = Jwts.builder()
-                .setSubject("9329032492384590435")
-                .signWith(SignatureAlgorithm.HS256, ApiKeys.JWS_SIGNING_KEY)
-                .compact();
-
+        OwnerToken token = new OwnerToken(93290324923845L);
         new UserApi().retractConcern(token);
     }
 }

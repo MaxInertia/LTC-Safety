@@ -88,6 +88,6 @@ public final class Concern {
 
         assert id != null;
 
-        return null;
+        return new OwnerToken(id);
     }
 }

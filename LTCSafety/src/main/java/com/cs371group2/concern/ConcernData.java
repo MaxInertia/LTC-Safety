@@ -54,6 +54,17 @@ public final class ConcernData implements Validatable {
 
     @Override
     public ValidationResult validate() {
-        return null;
+        if (concernNature == null) {
+            return new ValidationResult("");
+        }
+        ValidationResult reporterResult = reporter.validate();
+        if (!reporterResult.isValid()) {
+            return reporterResult;
+        }
+        ValidationResult locationResult = location.validate();
+        if (!locationResult.isValid()) {
+            return locationResult;
+        }
+        return new ValidationResult();
     }
 }

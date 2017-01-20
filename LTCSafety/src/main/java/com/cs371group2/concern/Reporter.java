@@ -45,6 +45,12 @@ public final class Reporter implements Validatable {
 
     @Override
     public ValidationResult validate() {
-        return null;
+        if (name == null) {
+            return new ValidationResult("");
+        }
+        if (phoneNumber == null && email == null) {
+            return new ValidationResult("");
+        }
+        return new ValidationResult();
     }
 }

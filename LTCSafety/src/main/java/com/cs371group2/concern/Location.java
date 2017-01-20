@@ -33,6 +33,9 @@ public final class Location implements Validatable {
 
     @Override
     public ValidationResult validate() {
-        return null;
+        if (facilityName == null) {
+            return new ValidationResult("");
+        }
+        return new ValidationResult();
     }
 }

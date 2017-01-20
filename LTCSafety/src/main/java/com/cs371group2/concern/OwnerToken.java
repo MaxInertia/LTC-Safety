@@ -1,5 +1,9 @@
 package com.cs371group2.concern;
 
+import com.cs371group2.ApiKeys;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 /**
  * The owner token class is used to store the JWS token that is created upon concern submission.
  * This JWS contains the identifier used to identify the concern within the data store. Possessing
@@ -31,6 +35,14 @@ class OwnerToken {
     OwnerToken(Long id) {
 
         assert id != null;
+
+        token = Jwts.builder()
+                .setSubject(id.toString())
+                .signWith(SignatureAlgorithm.HS256, ApiKeys.JWS_SIGNING_KEY)
+                .compact();
+    }
+
+    OwnerToken() {
 
     }
 }
