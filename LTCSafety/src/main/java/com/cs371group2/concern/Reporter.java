@@ -12,21 +12,21 @@ public final class Reporter {
      * The name of the reporter of a concern. This will generally be the first and last name of the
      * reporter but may vary as the input format is not enforced. Name must not be null.
      */
-    private String name;
+    String name;
 
     /**
      * The phone number used to contact the reporter. The format of this phone number may vary as
      * the input format is not enforced. The phone number may be null only if the email address
      * isn't.
      */
-    private String phoneNumber;
+    String phoneNumber;
 
     /**
      * The email address used to contact the reporter. The format of this phone number may vary as
      * the input is only checked for basic email formatting in the form of address@domain. The email
      * address may be null only if the phone number isn't.
      */
-    private String email;
+    String email;
 
     public String getName() {
         return name;

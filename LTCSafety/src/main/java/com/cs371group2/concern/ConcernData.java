@@ -14,24 +14,24 @@ public final class ConcernData {
      * environment, and aggressive resident behaviors. This must be non-null
      * when submitted by a user.
      */
-    private String concernNature;
+    String concernNature;
 
     /**
      * A description of any actions taken by the reporter regarding the submitted concern. This may
      * be null if no actions have been taken.
      */
-    private String actionsTaken;
+    String actionsTaken;
 
     /**
      * The name and contact information of the reporter. A reporter must be present for all
      * submitted concerns.
      */
-    private Reporter reporter;
+    Reporter reporter;
 
     /**
      * The location the concern occurred at. A location must be present for all submitted concerns.
      */
-    private Location location;
+    Location location;
 
     public String getConcernNature() {
         return concernNature;

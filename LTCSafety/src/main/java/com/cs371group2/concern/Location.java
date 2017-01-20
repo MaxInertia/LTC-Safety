@@ -12,19 +12,19 @@ public final class Location {
      * The room name within the facility where the concern was reported to be. Room name may be
      * null. This will usually be values similar to Lobby, Room 23A, 223, etc.
      */
-    private String roomName;
+    String roomName;
 
     /**
      * The facility name is the name of the Saskatoon Health Region location where to concern was
      * reported to be at. This value must never be null.
      */
-    private String facilityName;
+    String facilityName;
 
     public String getRoomName() {
         return roomName;
     }
 
-    public String getFacilityName() {
+    String getFacilityName() {
         return facilityName;
     }
 }
