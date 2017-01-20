@@ -14,7 +14,7 @@ class OwnerToken {
      * to locate the concern within the database is stored in the payload section of this token as
      * the subject.
      */
-    private String token;
+    String token;
 
     public String getToken() {
         return token;

@@ -45,4 +45,20 @@ public final class Concern {
      * The user submitted data relating to the concern such as nature, location, and reporter.
      */
     private ConcernData data;
+
+    public Date getSubmissionDate() {
+        return submissionDate;
+    }
+
+    public ConcernStatus getStatus() {
+        return status;
+    }
+
+    public boolean isArchived() {
+        return isArchived;
+    }
+
+    public ConcernData getData() {
+        return data;
+    }
 }
