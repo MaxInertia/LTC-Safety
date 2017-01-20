@@ -1,12 +1,15 @@
 package com.cs371group2.concern;
 
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
+
 /**
  * The reporter class is used to store information pertaining to the reporter of the concern. This
  * consists of name and contact information.
  *
  * Created on 2017-01-17.
  */
-public final class Reporter {
+public final class Reporter implements Validatable {
 
     /**
      * The name of the reporter of a concern. This will generally be the first and last name of the
@@ -38,5 +41,10 @@ public final class Reporter {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public ValidationResult validate() {
+        return null;
     }
 }

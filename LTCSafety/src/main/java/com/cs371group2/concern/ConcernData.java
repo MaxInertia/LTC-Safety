@@ -1,5 +1,8 @@
 package com.cs371group2.concern;
 
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
+
 /**
  * The concern data class is used to store the data submitted by a user when reporting a concern.
  * This data is not part of the concern class to separate the object that is sent using Cloud
@@ -7,7 +10,7 @@ package com.cs371group2.concern;
  *
  * Created on 2017-01-17.
  */
-public final class ConcernData {
+public final class ConcernData implements Validatable {
 
     /**
      * The category that the concern falls under. Examples of these are falls, equipment failures,
@@ -47,5 +50,10 @@ public final class ConcernData {
 
     public Location getLocation() {
         return location;
+    }
+
+    @Override
+    public ValidationResult validate() {
+        return null;
     }
 }

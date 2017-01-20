@@ -1,12 +1,15 @@
 package com.cs371group2.concern;
 
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
+
 /**
  * The location class is used to store information pertaining to the location the concern was
  * reported to be at. This includes a room name and facility name.
  *
  * Created on 2017-01-17.
  */
-public final class Location {
+public final class Location implements Validatable {
 
     /**
      * The room name within the facility where the concern was reported to be. Room name may be
@@ -26,5 +29,10 @@ public final class Location {
 
     String getFacilityName() {
         return facilityName;
+    }
+
+    @Override
+    public ValidationResult validate() {
+        return null;
     }
 }
