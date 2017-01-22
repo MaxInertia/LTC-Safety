@@ -2,6 +2,7 @@ package com.cs371group2;
 
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.Result;
 
 /**
  * Generic data access object for loading, saving, and deleting entities from the datastore. This
@@ -99,10 +100,10 @@ public abstract class Dao<E> {
      * @precond entity != null
      * @postcond The entity is no longer present in the datastore.
      */
-    public void delete(E entity) {
+    public Result<Void> delete(E entity) {
 
         assert entity != null;
 
-        ObjectifyService.ofy().delete().entity(entity);
+        return ObjectifyService.ofy().delete().entity(entity);
     }
 }
