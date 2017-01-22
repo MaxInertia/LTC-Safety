@@ -1,8 +1,15 @@
 package com.cs371group2.concern;
 
 import com.cs371group2.ApiKeys;
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 
 /**
  * The owner token class is used to store the JWS token that is created upon concern submission.
@@ -11,7 +18,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  *
  * Created on 2017-01-17.
  */
-class OwnerToken {
+class OwnerToken implements Validatable {
 
     /**
      * The raw JWS token string used to verify that the owner token is authentic. The identifier
@@ -42,7 +49,32 @@ class OwnerToken {
                 .compact();
     }
 
+
+    /**
+     * A constructor to make the owner token class more testable. This allows for tokens
+     * to be created with invalid or null JWS's. This should only be used for testing.
+     */
     OwnerToken() {
 
+    }
+
+    @Override
+    public ValidationResult validate() {
+        if (token == null) {
+            return new ValidationResult("");
+        }
+        try {
+            Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
+                    .parseClaimsJws(token);
+            Claims claims = claim.getBody();
+            Long.parseLong(claims.getSubject());
+        } catch (SignatureException e) {
+            return new ValidationResult("");
+        } catch (NumberFormatException e) {
+            return new ValidationResult("");
+        } catch (MalformedJwtException | UnsupportedJwtException e) {
+            return new ValidationResult("");
+        }
+        return new ValidationResult();
     }
 }

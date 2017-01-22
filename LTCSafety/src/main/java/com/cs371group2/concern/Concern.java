@@ -90,4 +90,14 @@ public final class Concern {
 
         return new OwnerToken(id);
     }
+
+    /**
+     * Updates the concern entity to reflact that the concern has been retracted.
+     *
+     * @postcond The status has been changed to RETRACTED and isArchived is now true.
+     */
+    public void retract() {
+        status = ConcernStatus.RETRACTED;
+        isArchived = true;
+    }
 }

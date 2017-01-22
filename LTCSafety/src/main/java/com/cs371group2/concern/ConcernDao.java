@@ -20,6 +20,15 @@ public class ConcernDao extends Dao<Concern> {
         super(Concern.class);
     }
 
+    /**
+     * Loads a concern from the datastore using an owner token that was previously created by it.
+     *
+     * @param token The owner token containing the concern ID in the payload.
+     * @return The entity in the datastore that the token references or null if it doesn't exist.
+     * @precond token != null
+     * @precond token.validate().isValid() meaning that the token contains a properly formatted and
+     * signed JWS for parsing.
+     */
     public Concern load(OwnerToken token) {
 
         assert token != null;
