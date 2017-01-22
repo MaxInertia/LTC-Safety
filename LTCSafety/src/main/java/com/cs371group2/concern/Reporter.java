@@ -11,6 +11,9 @@ import com.cs371group2.ValidationResult;
  */
 public final class Reporter implements Validatable {
 
+    private static final String REPORTER_CONTACT_ERROR = "Either a phone number or an email address must be provided when submitting a concern.";
+    private static final String REPORTER_NAME_ERROR = "A first and last name must be provided when submitting a concern.";
+
     /**
      * The name of the reporter of a concern. This will generally be the first and last name of the
      * reporter but may vary as the input format is not enforced. Name must not be null.
@@ -46,10 +49,10 @@ public final class Reporter implements Validatable {
     @Override
     public ValidationResult validate() {
         if (name == null) {
-            return new ValidationResult("");
+            return new ValidationResult(REPORTER_NAME_ERROR);
         }
         if (phoneNumber == null && email == null) {
-            return new ValidationResult("");
+            return new ValidationResult(REPORTER_CONTACT_ERROR);
         }
         return new ValidationResult();
     }

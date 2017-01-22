@@ -20,6 +20,8 @@ import io.jsonwebtoken.UnsupportedJwtException;
  */
 class OwnerToken implements Validatable {
 
+    private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
+
     /**
      * The raw JWS token string used to verify that the owner token is authentic. The identifier
      * used to locate the concern within the database is stored in the payload section of this token
@@ -49,7 +51,6 @@ class OwnerToken implements Validatable {
                 .compact();
     }
 
-
     /**
      * A constructor to make the owner token class more testable. This allows for tokens
      * to be created with invalid or null JWS's. This should only be used for testing.
@@ -61,7 +62,7 @@ class OwnerToken implements Validatable {
     @Override
     public ValidationResult validate() {
         if (token == null) {
-            return new ValidationResult("");
+            return new ValidationResult(NULL_TOKEN_ERROR);
         }
         try {
             Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
@@ -69,11 +70,11 @@ class OwnerToken implements Validatable {
             Claims claims = claim.getBody();
             Long.parseLong(claims.getSubject());
         } catch (SignatureException e) {
-            return new ValidationResult("");
+            return new ValidationResult(e.getMessage());
         } catch (NumberFormatException e) {
-            return new ValidationResult("");
+            return new ValidationResult(e.getMessage());
         } catch (MalformedJwtException | UnsupportedJwtException e) {
-            return new ValidationResult("");
+            return new ValidationResult(e.getMessage());
         }
         return new ValidationResult();
     }

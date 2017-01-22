@@ -12,6 +12,8 @@ import com.cs371group2.ValidationResult;
  */
 public final class ConcernData implements Validatable {
 
+    private static final String CONCERN_NATURE_ERROR = "The nature of the concern must be specified when a concern is submitted";
+
     /**
      * The category that the concern falls under. Examples of these are falls, equipment failures,
      * environment, and aggressive resident behaviors. This must be non-null
@@ -55,7 +57,7 @@ public final class ConcernData implements Validatable {
     @Override
     public ValidationResult validate() {
         if (concernNature == null) {
-            return new ValidationResult("");
+            return new ValidationResult(CONCERN_NATURE_ERROR);
         }
         ValidationResult reporterResult = reporter.validate();
         if (!reporterResult.isValid()) {

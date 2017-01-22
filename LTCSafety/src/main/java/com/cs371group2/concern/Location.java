@@ -11,6 +11,8 @@ import com.cs371group2.ValidationResult;
  */
 public final class Location implements Validatable {
 
+    private static final String FACILITY_NAME_ERROR = "A facility name must be provided when submitting a concern.";
+
     /**
      * The room name within the facility where the concern was reported to be. Room name may be
      * null. This will usually be values similar to Lobby, Room 23A, 223, etc.
@@ -34,7 +36,7 @@ public final class Location implements Validatable {
     @Override
     public ValidationResult validate() {
         if (facilityName == null) {
-            return new ValidationResult("");
+            return new ValidationResult(FACILITY_NAME_ERROR);
         }
         return new ValidationResult();
     }

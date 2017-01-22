@@ -12,6 +12,8 @@ import com.google.api.server.spi.response.NotFoundException;
         version = "v1")
 public final class UserApi {
 
+    private static final String CONCERN_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
+
     @ApiMethod(name = "submitConcern", path = "/concern/submit")
     public OwnerToken submitConcern(ConcernData data) throws BadRequestException {
         ValidationResult result = data.validate();
@@ -32,7 +34,7 @@ public final class UserApi {
         ConcernDao dao = new ConcernDao();
         Concern concern = dao.load(token);
         if (concern == null) {
-            throw new NotFoundException("");
+            throw new NotFoundException(CONCERN_NOT_FOUND_ERROR);
         }
         concern.retract();
         dao.save(concern);
