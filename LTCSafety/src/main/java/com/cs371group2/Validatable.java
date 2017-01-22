@@ -17,5 +17,5 @@ public interface Validatable {
      * passed and result.isValid() being false if it failed. If the validation failed then
      * result.getErrorMessage() will contain a message specifying what went wrong.
      */
-    public ValidationResult validate();
+    ValidationResult validate();
 }

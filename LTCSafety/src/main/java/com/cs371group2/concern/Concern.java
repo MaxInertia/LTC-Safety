@@ -1,5 +1,6 @@
 package com.cs371group2.concern;
 
+import com.cs371group2.client.OwnerToken;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -39,7 +40,7 @@ public final class Concern {
      * The exact date and time the concern was submitted.
      */
     @Index
-    private Date submissionDate = new Date();
+    private final Date submissionDate = new Date();
 
     /**
      * The user submitted data relating to the concern such as nature, location, and reporter.
@@ -92,7 +93,7 @@ public final class Concern {
     }
 
     /**
-     * Updates the concern entity to reflact that the concern has been retracted.
+     * Updates the concern entity to reflect that the concern has been retracted.
      *
      * @postcond The status has been changed to RETRACTED and isArchived is now true.
      */

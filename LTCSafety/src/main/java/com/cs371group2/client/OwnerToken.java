@@ -1,4 +1,4 @@
-package com.cs371group2.concern;
+package com.cs371group2.client;
 
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Validatable;
@@ -18,7 +18,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
  *
  * Created on 2017-01-17.
  */
-class OwnerToken implements Validatable {
+public class OwnerToken implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
@@ -41,7 +41,7 @@ class OwnerToken implements Validatable {
      * @param id The identifier of a concern within the datastore.
      * @pre-cond id != null
      */
-    OwnerToken(Long id) {
+    public OwnerToken(Long id) {
 
         assert id != null;
 
@@ -68,12 +68,10 @@ class OwnerToken implements Validatable {
             Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
                     .parseClaimsJws(token);
             Claims claims = claim.getBody();
+
+            // Ensuring that the parsing is correct despite the result not being used
             Long.parseLong(claims.getSubject());
-        } catch (SignatureException e) {
-            return new ValidationResult(e.getMessage());
-        } catch (NumberFormatException e) {
-            return new ValidationResult(e.getMessage());
-        } catch (MalformedJwtException | UnsupportedJwtException e) {
+        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | NumberFormatException e) {
             return new ValidationResult(e.getMessage());
         }
         return new ValidationResult();

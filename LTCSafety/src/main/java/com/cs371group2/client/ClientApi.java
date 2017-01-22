@@ -1,16 +1,18 @@
-package com.cs371group2.concern;
+package com.cs371group2.client;
 
 import com.cs371group2.ValidationResult;
+import com.cs371group2.concern.Concern;
+import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernData;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 
-@Api(name = "userApi",
-        canonicalName = "User API",
+@Api(name = "client",
         title = "User API",
         version = "v1")
-public final class UserApi {
+public final class ClientApi {
 
     private static final String CONCERN_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
 

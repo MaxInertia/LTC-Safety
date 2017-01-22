@@ -1,18 +1,16 @@
-package com.cs371group2.concern;
+package com.cs371group2.client;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import com.cs371group2.InitContextListener;
-import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
-import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import com.cs371group2.DatastoreTest;
+import com.cs371group2.concern.Concern;
+import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernData;
+import com.cs371group2.concern.ConcernStatus;
+import com.cs371group2.concern.ConcernTest;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
-import com.googlecode.objectify.cache.AsyncCacheFilter;
-import com.googlecode.objectify.util.Closeable;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -23,61 +21,7 @@ import org.junit.Test;
  *
  * Created on 2017-01-22.
  */
-public class ConcernDaoTest {
-
-
-    /**
-     * The local test helper for setting up and tearing down the local database.
-     */
-    private final LocalServiceTestHelper helper = new LocalServiceTestHelper(
-            new LocalDatastoreServiceTestConfig());
-
-    protected Closeable session;
-
-    /**
-     * Setup the environment for local testing of the datastore by creating an empty datastore to
-     * perform the tests with.
-     */
-    @Before
-    public void setUp() throws Exception {
-        this.session = ObjectifyService.begin();
-        this.helper.setUp();
-        new InitContextListener().contextInitialized(null);
-    }
-
-    /**
-     * Destroy the local test datastore cleanup for the next test.
-     */
-    @After
-    public void tearDown() throws Exception {
-        AsyncCacheFilter.complete();
-        this.session.close();
-        this.helper.tearDown();
-    }
-
-    /**
-     * Generates a new concern with all instance variables initialized to be valid strings. This is
-     * used as a helper method to construct new concern data.
-     *
-     * @return A new concern data object with all instance variables initialized.
-     */
-    public ConcernData generateConcernData() {
-        ConcernData data = new ConcernData();
-        data.actionsTaken = "Tests";
-        data.concernNature = "A type of concern";
-
-        Location location = new Location();
-        location.facilityName = "Concern Facility";
-        location.roomName = "Room";
-        data.location = location;
-
-        Reporter reporter = new Reporter();
-        reporter.email = "email@hotmail.com";
-        reporter.phoneNumber = "306 700 7601";
-        reporter.name = "A First Andlast";
-        data.reporter = reporter;
-        return data;
-    }
+public class ConcernDaoTest extends DatastoreTest {
 
     /**
      * Assert that the two concerns are equal based on the test parameters for the data access
@@ -86,7 +30,7 @@ public class ConcernDaoTest {
      * @param concern The originally created concern that the test concern should be compared to.
      * @param loadedConcern The test concern to check for correctness.
      */
-    public void assertConcerns(Concern concern, Concern loadedConcern) {
+    private void assertConcerns(Concern concern, Concern loadedConcern) {
 
         ConcernData data = concern.getData();
         ConcernData loadedData = loadedConcern.getData();
@@ -116,7 +60,7 @@ public class ConcernDaoTest {
         ConcernDao dao = new ConcernDao();
 
         // Save the object
-        ConcernData data = generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData();
         Concern concern = new Concern(data);
         Key<Concern> key = dao.save(concern);
 

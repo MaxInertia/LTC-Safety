@@ -29,7 +29,7 @@ public final class Location implements Validatable {
         return roomName;
     }
 
-    String getFacilityName() {
+    public String getFacilityName() {
         return facilityName;
     }
 

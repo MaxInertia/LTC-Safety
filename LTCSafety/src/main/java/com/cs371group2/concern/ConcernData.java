@@ -13,6 +13,8 @@ import com.cs371group2.ValidationResult;
 public final class ConcernData implements Validatable {
 
     private static final String CONCERN_NATURE_ERROR = "The nature of the concern must be specified when a concern is submitted";
+    private static final String REPORTER_ERROR = "A reporter must be specified when a concern is submitted";
+    private static final String LOCATION_ERROR = "A location must be specified when a concern is submitted";
 
     /**
      * The category that the concern falls under. Examples of these are falls, equipment failures,
@@ -58,6 +60,12 @@ public final class ConcernData implements Validatable {
     public ValidationResult validate() {
         if (concernNature == null) {
             return new ValidationResult(CONCERN_NATURE_ERROR);
+        }
+        if (reporter == null) {
+            return new ValidationResult(REPORTER_ERROR);
+        }
+        if (location == null) {
+            return new ValidationResult(LOCATION_ERROR);
         }
         ValidationResult reporterResult = reporter.validate();
         if (!reporterResult.isValid()) {
