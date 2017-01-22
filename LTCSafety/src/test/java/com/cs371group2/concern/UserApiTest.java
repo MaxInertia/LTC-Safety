@@ -8,7 +8,6 @@ import com.cs371group2.ApiKeys;
 import com.cs371group2.InitContextListener;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
-import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.googlecode.objectify.Key;
@@ -219,11 +218,10 @@ public class UserApiTest {
     }
 
     /**
-     * Tries to access data in the database with a random key and subject
-     * testing that accessing that data will fail.
-     * retractConcern should throw UnauthorizedException if this is the case.
+     * Tries to access data in the database with a random key and subject testing that accessing
+     * that data will fail. retractConcern should throw BadRequestException if this is the case.
      */
-    @Test(expected = UnauthorizedException.class)
+    @Test(expected = BadRequestException.class)
     public void retractUnauthorized() throws Exception {
 
         OwnerToken token = new OwnerToken();
@@ -236,13 +234,50 @@ public class UserApiTest {
     }
 
     /**
-     * Tries to access data in the database with a random subject but correct key
-     * testing that accessing that data will fail.
-     * retractConcern should throw NotFoundException if this is the case.
+     * Attempts to retract a concern with an entity for an entity ID that doesn't exist. The test
+     * passes if the NotFoundException is thrown because the entity shouldn't exist.
      */
     @Test(expected = NotFoundException.class)
     public void retractNotFound() throws Exception {
         OwnerToken token = new OwnerToken(93290324923845L);
+        new UserApi().retractConcern(token);
+    }
+
+    /**
+     * Tests that when a concern is retracted with a token that contains a non-numberical concern
+     * identifier a BadRequestException is thrown. Concerns can only be accessed with identifiers of
+     * type long.
+     */
+    @Test(expected = BadRequestException.class)
+    public void retractInvalidIdentifier() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = Jwts.builder()
+                .setSubject("Not a string")
+                .signWith(SignatureAlgorithm.HS256, ApiKeys.JWS_SIGNING_KEY)
+                .compact();
+        ;
+        new UserApi().retractConcern(token);
+    }
+
+    /**
+     * Tests that when an owner token with a malformed JWS is used to retract a concern that it
+     * fails gracefully by throwing a bad request exception.
+     */
+    @Test(expected = BadRequestException.class)
+    public void retractMalformed() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = "Invalid JWS";
+        new UserApi().retractConcern(token);
+    }
+
+    /**
+     * Tests that when an owner token with no raw token is provided that the request to retract the
+     * concern fails gracefully by throwing a bad request exception.
+     */
+    @Test(expected = BadRequestException.class)
+    public void retractNull() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = null;
         new UserApi().retractConcern(token);
     }
 }
