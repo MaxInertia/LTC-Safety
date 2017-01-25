@@ -4,8 +4,7 @@ jdk:
   - oraclejdk8
   - oraclejdk7
   - openjdk6
-sudo: false
-script: mvn clean verify
+script: mvn verify
 notifications:
   slack:
     on_success: always
