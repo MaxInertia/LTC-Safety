@@ -1,6 +1,8 @@
 language: java
 jdk:
   - oraclejdk8
+mvn test -B
+script: mvn verify
 notifications:
   slack: '<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>'
     on_success: always
