@@ -1,10 +1,10 @@
 language: java
-mvn test -B
 jdk:
   - oraclejdk8
-  - oraclejdk7
-  - openjdk6
+mvn test -B
+mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 script: mvn verify
 notifications:
-  slack:
+  slack: cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
     on_success: always
+    on_failure: always
