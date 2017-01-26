@@ -3,6 +3,9 @@ package com.cs371group2.concern;
 import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * The reporter class is used to store information pertaining to the reporter of the concern. This
  * consists of name and contact information.
@@ -10,6 +13,10 @@ import com.cs371group2.ValidationResult;
  * Created on 2017-01-17.
  */
 public final class Reporter implements Validatable {
+    /**
+     * Logger definition for this class.
+     */
+    private static final Logger LOGGER = Logger.getLogger( Concern.class.getName() );
 
     private static final String REPORTER_CONTACT_ERROR = "Either a phone number or an email address must be provided when submitting a concern.";
     private static final String REPORTER_NAME_ERROR = "A first and last name must be provided when submitting a concern.";
@@ -49,11 +56,21 @@ public final class Reporter implements Validatable {
     @Override
     public ValidationResult validate() {
         if (name == null) {
+            LOGGER.log(Level.FINE, "Validation of Concern Reporter failed due to null reporter name.");
             return new ValidationResult(REPORTER_NAME_ERROR);
         }
         if (phoneNumber == null && email == null) {
+            LOGGER.log(Level.FINE, "Validation of Concern Reporter failed due to null phone number and email.");
             return new ValidationResult(REPORTER_CONTACT_ERROR);
         }
+        LOGGER.log(Level.FINER, "Validation of Concern Reporter successful.");
         return new ValidationResult();
+    }
+
+    @Override
+    public String toString(){
+        return "Reporter Name:  " + this.getName()
+                + "\nReporter Phone Number: " + this.getPhoneNumber()
+                + "\nReporter Email: " + this.getEmail() + "\n";
     }
 }

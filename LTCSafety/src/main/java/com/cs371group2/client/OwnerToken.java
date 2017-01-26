@@ -3,6 +3,7 @@ package com.cs371group2.client;
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
+import com.cs371group2.concern.Concern;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -10,6 +11,10 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+
+import java.security.acl.Owner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The owner token class is used to store the JWS token that is created upon concern submission.
@@ -21,6 +26,11 @@ import io.jsonwebtoken.UnsupportedJwtException;
 public class OwnerToken implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
+
+    /**
+     * Logger definition for this class.
+     */
+    private static final Logger LOGGER = Logger.getLogger( OwnerToken.class.getName() );
 
     /**
      * The raw JWS token string used to verify that the owner token is authentic. The identifier
@@ -42,9 +52,9 @@ public class OwnerToken implements Validatable {
      * @pre-cond id != null
      */
     public OwnerToken(Long id) {
-
+        if(id == null){ LOGGER.log(Level.WARNING, "Owner token tried to be generated with null id."); }
         assert id != null;
-
+        LOGGER.log(Level.FINER, "Owner token generated for Concern# " + id + ".");
         token = Jwts.builder()
                 .setSubject(id.toString())
                 .signWith(SignatureAlgorithm.HS256, ApiKeys.JWS_SIGNING_KEY)
@@ -62,6 +72,7 @@ public class OwnerToken implements Validatable {
     @Override
     public ValidationResult validate() {
         if (token == null) {
+            LOGGER.log(Level.FINE, "Tried to validate a null owner token.");
             return new ValidationResult(NULL_TOKEN_ERROR);
         }
         try {
@@ -72,8 +83,10 @@ public class OwnerToken implements Validatable {
             // Ensuring that the parsing is correct despite the result not being used
             Long.parseLong(claims.getSubject());
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | NumberFormatException e) {
+            LOGGER.log(Level.FINE, "Owner token validation failed due to " + e.getMessage());
             return new ValidationResult(e.getMessage());
         }
+        LOGGER.log(Level.FINER, "Owner token validation successful.");
         return new ValidationResult();
     }
 }

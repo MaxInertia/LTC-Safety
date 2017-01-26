@@ -1,5 +1,9 @@
 package com.cs371group2;
 
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * The result from the Validatable interface. This class is used to return a boolean to determine
  * whether the validation succeeded or failed. If validation failed the error message will detail
@@ -8,6 +12,10 @@ package com.cs371group2;
  * Created on 2017-01-19.
  */
 public final class ValidationResult {
+    /**
+     * Logger definition for this class.
+     */
+    private static final Logger LOGGER = Logger.getLogger( ValidationResult.class.getName() );
 
     /**
      * True if the object passed validation; otherwise, false.
@@ -31,6 +39,7 @@ public final class ValidationResult {
      * Creates a new validation result for successful validation.
      */
     public ValidationResult() {
+        LOGGER.log(Level.FINER, "Creating a successful validation result.");
         this.isValid = true;
     }
 
@@ -42,10 +51,11 @@ public final class ValidationResult {
      * @precond errorMessage != null
      */
     public ValidationResult(String errorMessage) {
-
+        if(errorMessage == null){ LOGGER.log(Level.WARNING, "Tried to create a failed validation result with a null error message."); }
         assert errorMessage != null;
 
         this.isValid = false;
         this.errorMessage = errorMessage;
+        LOGGER.log(Level.FINE, "Created failed validation with error message: " + errorMessage + ".");
     }
 }

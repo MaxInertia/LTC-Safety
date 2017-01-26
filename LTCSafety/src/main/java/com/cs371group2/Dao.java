@@ -4,6 +4,9 @@ import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Result;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Generic data access object for loading, saving, and deleting entities from the datastore. This
  * class should be subclassed for every entity that is stored in the database.
@@ -11,6 +14,10 @@ import com.googlecode.objectify.Result;
  * Created on 2017-01-19.
  */
 public abstract class Dao<E> {
+    /**
+     * Logger definition for this class.
+     */
+    private static final Logger LOGGER = Logger.getLogger( Dao.class.getName() );
 
     /**
      * The class of the entity that the data access object was created for. This must be stored
@@ -25,9 +32,9 @@ public abstract class Dao<E> {
      * @precond entityClass != null
      */
     protected Dao(Class<E> entityClass) {
-
+        if(entityClass == null){ LOGGER.log(Level.WARNING, "Tried to create Dao with a null entity class."); }
         assert entityClass != null;
-
+        LOGGER.log(Level.FINER, "Created Dao for "+ entityClass.toString());
         this.entityClass = entityClass;
     }
 
@@ -39,9 +46,9 @@ public abstract class Dao<E> {
      * @precond id != null
      */
     public E load(Long id) {
-
+        if(id == null){ LOGGER.log(Level.WARNING, "Tried to load entity with a null id."); }
         assert id != null;
-
+        LOGGER.log(Level.FINER, "Successfully loaded Entity# " + id + " from the datastore.");
         return ObjectifyService.ofy().load().type(entityClass).id(id).now();
     }
 
@@ -55,9 +62,9 @@ public abstract class Dao<E> {
      * @precond identifier != null
      */
     public E load(String identifier) {
-
+        if(identifier == null){ LOGGER.log(Level.WARNING, "Tried to load entity with a null identifier."); }
         assert identifier != null;
-
+        LOGGER.log(Level.FINER, "Successfully loaded Entity# " + identifier + " from the datastore.");
         return ObjectifyService.ofy().load().type(entityClass).id(identifier).now();
     }
 
@@ -69,9 +76,9 @@ public abstract class Dao<E> {
      * @precond key != null
      */
     public E load(Key<E> key) {
-
+        if(key == null){ LOGGER.log(Level.WARNING, "Tried to load entity with a null key."); }
         assert key != null;
-
+        LOGGER.log(Level.FINER, "Successfully loaded Entity# " + key + " from the datastore.");
         return ObjectifyService.ofy().load().key(key).now();
     }
 
@@ -87,9 +94,9 @@ public abstract class Dao<E> {
      * unique identifier.
      */
     public Key<E> save(E entity) {
-
+        if(entity == null){ LOGGER.log(Level.WARNING, "Tried to save entity with a null key."); }
         assert entity != null;
-
+        LOGGER.log(Level.FINER, "Successfully saved Entity " + entity.toString() + " to the datastore.");
         return ObjectifyService.ofy().save().entity(entity).now();
     }
 
@@ -101,9 +108,9 @@ public abstract class Dao<E> {
      * @postcond The entity is no longer present in the datastore.
      */
     public Result<Void> delete(E entity) {
-
+        if(entity == null){ LOGGER.log(Level.WARNING, "Tried to delete a null entity."); }
         assert entity != null;
-
+        LOGGER.log(Level.FINER, "Deleting Entity " + entity.toString() + " from the datastore.");
         return ObjectifyService.ofy().delete().entity(entity);
     }
 }
