@@ -1,0 +1,469 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		114D56231E29984D005EFA2C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56221E29984D005EFA2C /* main.m */; };
+		114D56261E29984D005EFA2C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56251E29984D005EFA2C /* AppDelegate.m */; };
+		114D56291E29984D005EFA2C /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56281E29984D005EFA2C /* MasterViewController.m */; };
+		114D562C1E29984D005EFA2C /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D562B1E29984D005EFA2C /* DetailViewController.m */; };
+		114D562F1E29984D005EFA2C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 114D562D1E29984D005EFA2C /* Main.storyboard */; };
+		114D56311E29984D005EFA2C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 114D56301E29984D005EFA2C /* Assets.xcassets */; };
+		114D56341E29984D005EFA2C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 114D56321E29984D005EFA2C /* LaunchScreen.storyboard */; };
+		114D563D1E29A27C005EFA2C /* LTCButtonTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D563C1E29A27C005EFA2C /* LTCButtonTableViewCell.m */; };
+		114D56421E29ACA0005EFA2C /* LTCNewConcernController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D563F1E29ACA0005EFA2C /* LTCNewConcernController.m */; };
+		114D56491E29E2F6005EFA2C /* LTCCategoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56481E29E2F6005EFA2C /* LTCCategoryViewController.m */; };
+		114D564C1E29E8EB005EFA2C /* LTCCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D564B1E29E8EB005EFA2C /* LTCCategory.m */; };
+		114D564E1E29E9D1005EFA2C /* Categories.plist in Resources */ = {isa = PBXBuildFile; fileRef = 114D564D1E29E9D1005EFA2C /* Categories.plist */; };
+		114D56511E29EC07005EFA2C /* LTCCategoryLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56501E29EC07005EFA2C /* LTCCategoryLoader.m */; };
+		114D56531E29EF9F005EFA2C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 114D56521E29EF9F005EFA2C /* Localizable.strings */; };
+		114D56561E29F227005EFA2C /* LTCInputAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56551E29F227005EFA2C /* LTCInputAlertController.m */; };
+		114D565A1E29FE39005EFA2C /* LTCImagePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D56591E29FE39005EFA2C /* LTCImagePickerCell.m */; };
+		114D56601E2A16E7005EFA2C /* LTCImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D565F1E2A16E7005EFA2C /* LTCImageContainer.m */; };
+		6ED3B033605D3A6231FA853C /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 041EC08CFBA473A2839D37E0 /* libPods-LTC Safety.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		041EC08CFBA473A2839D37E0 /* libPods-LTC Safety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LTC Safety.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		114D561E1E29984D005EFA2C /* LTC Safety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTC Safety.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		114D56221E29984D005EFA2C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		114D56241E29984D005EFA2C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		114D56251E29984D005EFA2C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		114D56271E29984D005EFA2C /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		114D56281E29984D005EFA2C /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		114D562A1E29984D005EFA2C /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		114D562B1E29984D005EFA2C /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		114D562E1E29984D005EFA2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		114D56301E29984D005EFA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		114D56331E29984D005EFA2C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		114D56351E29984D005EFA2C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		114D563B1E29A27C005EFA2C /* LTCButtonTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCButtonTableViewCell.h; sourceTree = "<group>"; };
+		114D563C1E29A27C005EFA2C /* LTCButtonTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCButtonTableViewCell.m; sourceTree = "<group>"; };
+		114D563E1E29ACA0005EFA2C /* LTCNewConcernController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCNewConcernController.h; sourceTree = "<group>"; };
+		114D563F1E29ACA0005EFA2C /* LTCNewConcernController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCNewConcernController.m; sourceTree = "<group>"; };
+		114D56471E29E2F6005EFA2C /* LTCCategoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCCategoryViewController.h; sourceTree = "<group>"; };
+		114D56481E29E2F6005EFA2C /* LTCCategoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCategoryViewController.m; sourceTree = "<group>"; };
+		114D564A1E29E8EB005EFA2C /* LTCCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCCategory.h; sourceTree = "<group>"; };
+		114D564B1E29E8EB005EFA2C /* LTCCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCategory.m; sourceTree = "<group>"; };
+		114D564D1E29E9D1005EFA2C /* Categories.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Categories.plist; sourceTree = "<group>"; };
+		114D564F1E29EC07005EFA2C /* LTCCategoryLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCCategoryLoader.h; sourceTree = "<group>"; };
+		114D56501E29EC07005EFA2C /* LTCCategoryLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCategoryLoader.m; sourceTree = "<group>"; };
+		114D56521E29EF9F005EFA2C /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		114D56541E29F227005EFA2C /* LTCInputAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCInputAlertController.h; sourceTree = "<group>"; };
+		114D56551E29F227005EFA2C /* LTCInputAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCInputAlertController.m; sourceTree = "<group>"; };
+		114D56581E29FE39005EFA2C /* LTCImagePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCImagePickerCell.h; sourceTree = "<group>"; };
+		114D56591E29FE39005EFA2C /* LTCImagePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCImagePickerCell.m; sourceTree = "<group>"; };
+		114D565E1E2A16E7005EFA2C /* LTCImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCImageContainer.h; sourceTree = "<group>"; };
+		114D565F1E2A16E7005EFA2C /* LTCImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCImageContainer.m; sourceTree = "<group>"; };
+		73BED73E25018C2E7F8E793F /* Pods-LTC Safety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.release.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.release.xcconfig"; sourceTree = "<group>"; };
+		7CDB5F12A79B98CC0FF673FE /* Pods-LTC Safety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		114D561B1E29984D005EFA2C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6ED3B033605D3A6231FA853C /* libPods-LTC Safety.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		114D56151E29984D005EFA2C = {
+			isa = PBXGroup;
+			children = (
+				114D56201E29984D005EFA2C /* LTC Safety */,
+				114D561F1E29984D005EFA2C /* Products */,
+				31A9E2BDF1A9D165A41A4206 /* Pods */,
+				A5BDE5A081C05455ABE64398 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		114D561F1E29984D005EFA2C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				114D561E1E29984D005EFA2C /* LTC Safety.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		114D56201E29984D005EFA2C /* LTC Safety */ = {
+			isa = PBXGroup;
+			children = (
+				114D56241E29984D005EFA2C /* AppDelegate.h */,
+				114D56251E29984D005EFA2C /* AppDelegate.m */,
+				114D56271E29984D005EFA2C /* MasterViewController.h */,
+				114D56281E29984D005EFA2C /* MasterViewController.m */,
+				114D562A1E29984D005EFA2C /* DetailViewController.h */,
+				114D562B1E29984D005EFA2C /* DetailViewController.m */,
+				114D563B1E29A27C005EFA2C /* LTCButtonTableViewCell.h */,
+				114D563C1E29A27C005EFA2C /* LTCButtonTableViewCell.m */,
+				114D563E1E29ACA0005EFA2C /* LTCNewConcernController.h */,
+				114D563F1E29ACA0005EFA2C /* LTCNewConcernController.m */,
+				114D56581E29FE39005EFA2C /* LTCImagePickerCell.h */,
+				114D56591E29FE39005EFA2C /* LTCImagePickerCell.m */,
+				114D565E1E2A16E7005EFA2C /* LTCImageContainer.h */,
+				114D565F1E2A16E7005EFA2C /* LTCImageContainer.m */,
+				114D56571E29FD55005EFA2C /* Category Selection */,
+				114D56541E29F227005EFA2C /* LTCInputAlertController.h */,
+				114D56551E29F227005EFA2C /* LTCInputAlertController.m */,
+				114D564D1E29E9D1005EFA2C /* Categories.plist */,
+				114D562D1E29984D005EFA2C /* Main.storyboard */,
+				114D56301E29984D005EFA2C /* Assets.xcassets */,
+				114D56321E29984D005EFA2C /* LaunchScreen.storyboard */,
+				114D56521E29EF9F005EFA2C /* Localizable.strings */,
+				114D56351E29984D005EFA2C /* Info.plist */,
+				114D56211E29984D005EFA2C /* Supporting Files */,
+			);
+			path = "LTC Safety";
+			sourceTree = "<group>";
+		};
+		114D56211E29984D005EFA2C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				114D56221E29984D005EFA2C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		114D56571E29FD55005EFA2C /* Category Selection */ = {
+			isa = PBXGroup;
+			children = (
+				114D56471E29E2F6005EFA2C /* LTCCategoryViewController.h */,
+				114D56481E29E2F6005EFA2C /* LTCCategoryViewController.m */,
+				114D564F1E29EC07005EFA2C /* LTCCategoryLoader.h */,
+				114D56501E29EC07005EFA2C /* LTCCategoryLoader.m */,
+				114D564A1E29E8EB005EFA2C /* LTCCategory.h */,
+				114D564B1E29E8EB005EFA2C /* LTCCategory.m */,
+			);
+			name = "Category Selection";
+			sourceTree = "<group>";
+		};
+		31A9E2BDF1A9D165A41A4206 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7CDB5F12A79B98CC0FF673FE /* Pods-LTC Safety.debug.xcconfig */,
+				73BED73E25018C2E7F8E793F /* Pods-LTC Safety.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		A5BDE5A081C05455ABE64398 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				041EC08CFBA473A2839D37E0 /* libPods-LTC Safety.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		114D561D1E29984D005EFA2C /* LTC Safety */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 114D56381E29984D005EFA2C /* Build configuration list for PBXNativeTarget "LTC Safety" */;
+			buildPhases = (
+				B4EA48366F6FC9D49BF47AD5 /* [CP] Check Pods Manifest.lock */,
+				114D561A1E29984D005EFA2C /* Sources */,
+				114D561B1E29984D005EFA2C /* Frameworks */,
+				114D561C1E29984D005EFA2C /* Resources */,
+				2347D78162E1F43E9B7DFFA0 /* [CP] Embed Pods Frameworks */,
+				C84DE430AED51CC8D436A69E /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "LTC Safety";
+			productName = "LTC Safety";
+			productReference = 114D561E1E29984D005EFA2C /* LTC Safety.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		114D56161E29984D005EFA2C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Allan Kerr";
+				TargetAttributes = {
+					114D561D1E29984D005EFA2C = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 5U667GTF3W;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 114D56191E29984D005EFA2C /* Build configuration list for PBXProject "LTC Safety" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 114D56151E29984D005EFA2C;
+			productRefGroup = 114D561F1E29984D005EFA2C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				114D561D1E29984D005EFA2C /* LTC Safety */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		114D561C1E29984D005EFA2C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114D56531E29EF9F005EFA2C /* Localizable.strings in Resources */,
+				114D564E1E29E9D1005EFA2C /* Categories.plist in Resources */,
+				114D56341E29984D005EFA2C /* LaunchScreen.storyboard in Resources */,
+				114D56311E29984D005EFA2C /* Assets.xcassets in Resources */,
+				114D562F1E29984D005EFA2C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2347D78162E1F43E9B7DFFA0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B4EA48366F6FC9D49BF47AD5 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		C84DE430AED51CC8D436A69E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		114D561A1E29984D005EFA2C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				114D565A1E29FE39005EFA2C /* LTCImagePickerCell.m in Sources */,
+				114D56261E29984D005EFA2C /* AppDelegate.m in Sources */,
+				114D564C1E29E8EB005EFA2C /* LTCCategory.m in Sources */,
+				114D563D1E29A27C005EFA2C /* LTCButtonTableViewCell.m in Sources */,
+				114D56561E29F227005EFA2C /* LTCInputAlertController.m in Sources */,
+				114D56511E29EC07005EFA2C /* LTCCategoryLoader.m in Sources */,
+				114D56601E2A16E7005EFA2C /* LTCImageContainer.m in Sources */,
+				114D56421E29ACA0005EFA2C /* LTCNewConcernController.m in Sources */,
+				114D56291E29984D005EFA2C /* MasterViewController.m in Sources */,
+				114D56231E29984D005EFA2C /* main.m in Sources */,
+				114D56491E29E2F6005EFA2C /* LTCCategoryViewController.m in Sources */,
+				114D562C1E29984D005EFA2C /* DetailViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		114D562D1E29984D005EFA2C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				114D562E1E29984D005EFA2C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		114D56321E29984D005EFA2C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				114D56331E29984D005EFA2C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		114D56361E29984D005EFA2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		114D56371E29984D005EFA2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		114D56391E29984D005EFA2C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CDB5F12A79B98CC0FF673FE /* Pods-LTC Safety.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5U667GTF3W;
+				INFOPLIST_FILE = "LTC Safety/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kerr.prototype.LTC-Safety";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		114D563A1E29984D005EFA2C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 73BED73E25018C2E7F8E793F /* Pods-LTC Safety.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 5U667GTF3W;
+				INFOPLIST_FILE = "LTC Safety/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.kerr.prototype.LTC-Safety";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		114D56191E29984D005EFA2C /* Build configuration list for PBXProject "LTC Safety" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				114D56361E29984D005EFA2C /* Debug */,
+				114D56371E29984D005EFA2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		114D56381E29984D005EFA2C /* Build configuration list for PBXNativeTarget "LTC Safety" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				114D56391E29984D005EFA2C /* Debug */,
+				114D563A1E29984D005EFA2C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 114D56161E29984D005EFA2C /* Project object */;
+}

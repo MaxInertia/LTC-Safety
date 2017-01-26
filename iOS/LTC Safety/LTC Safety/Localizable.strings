@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  LTC Safety
+
+  Created by Allan Kerr on 2017-01-13.
+  Copyright © 2017 Allan Kerr. All rights reserved.
+*/
+
+// Misc
+"OK" = "OK";
+"CANCEL" = "Cancel";
+
+// Category Titles
+"CATEGORY_1" = "Category One";
+"CATEGORY_2" = "Category Two";
+"CATEGORY_3" = "Category Three";
+"CATEGORY_4" = "Category Four";
+"CATEGORY_5" = "Category Five";
+"CATEGORY_6" = "Category Six";
+"CATEGORY_OTHER" = "Other...";
+
+// Other
+"CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
