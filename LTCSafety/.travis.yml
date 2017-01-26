@@ -5,6 +5,7 @@ mvn test -B
 mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 dist: trusty
 sudo: false
+script: mvn verify
 notifications:
   slack: cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
     on_success: always
