@@ -5,6 +5,6 @@ script: mvn test -f LTCSafety/pom.xml
 notifications:
   slack: 
     rooms:
-      -cmpt371team2:<dCejYqfn5bhvaeXZImuUmDT0>
+      -<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>#buildstatus
     on_success: always
     on_failure: always
