@@ -10,4 +10,5 @@ pod 'AFNetworking'
 pod 'GoogleAPIClientForREST'
 pod 'Firebase/Core'
 pod 'Firebase/Messaging'
+pod 'UICKeyChainStore'
 end

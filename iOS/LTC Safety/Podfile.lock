@@ -51,6 +51,7 @@ PODS:
   - GTMSessionFetcher/Core (1.1.6)
   - GTMSessionFetcher/Full (1.1.6):
     - GTMSessionFetcher/Core (= 1.1.6)
+  - UICKeyChainStore (2.1.0)
   - XLForm (3.3.0)
 
 DEPENDENCIES:
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Messaging
   - GoogleAPIClientForREST
+  - UICKeyChainStore
   - XLForm (from `https://github.com/xmartlabs/XLForm.git`)
 
 EXTERNAL SOURCES:
@@ -81,8 +83,9 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
+  UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   XLForm: d5c391dfc62865927b5bcab0a5a0dbfb3e02b0ec
 
-PODFILE CHECKSUM: afca90dff005862a05506e17161ff3afc582e03d
+PODFILE CHECKSUM: e7871a7567eb4b4160bdf709cee5a563ea7f965c
 
 COCOAPODS: 1.0.1

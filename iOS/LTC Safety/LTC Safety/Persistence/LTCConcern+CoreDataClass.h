@@ -14,7 +14,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCConcern : NSManagedObject
-
+@property (nonatomic, copy) NSString *ownerToken;
 @end
 
 NS_ASSUME_NONNULL_END
