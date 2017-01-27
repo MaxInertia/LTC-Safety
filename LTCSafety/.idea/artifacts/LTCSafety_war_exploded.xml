@@ -43,6 +43,7 @@
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-nop:1.7.21" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
           <element id="library" level="project" name="Maven: com.googlecode.objectify:objectify:5.1.13" />
+          <element id="library" level="project" name="Maven: io.jsonwebtoken:jjwt:0.7.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">

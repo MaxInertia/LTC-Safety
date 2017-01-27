@@ -4,13 +4,16 @@
         <servlet-class>com.google.api.server.spi.EndpointsServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value></param-value>
+            <param-value>com.cs371group2.client.ClientApi</param-value>
         </init-param>
         <init-param>
             <param-name>restricted</param-name>
             <param-value>false</param-value>
         </init-param>
     </servlet>
+    <listener>
+        <listener-class>com.cs371group2.InitContextListener</listener-class>
+    </listener>
     <servlet-mapping>
         <servlet-name>EndpointsServlet</servlet-name>
         <url-pattern>/_ah/api/*</url-pattern>

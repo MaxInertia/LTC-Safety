@@ -6,7 +6,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <groupId>com.cs371group2</groupId>
-    <artifactId>LTC Safety</artifactId>
+    <artifactId>LTC-Safety</artifactId>
 
     <properties>
         <app.id>ltc-safety</app.id>
@@ -53,6 +53,11 @@
             <groupId>com.googlecode.objectify</groupId>
             <artifactId>objectify</artifactId>
             <version>5.1.13</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.7.0</version>
         </dependency>
 
         <!-- Test Dependencies -->
