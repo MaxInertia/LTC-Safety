@@ -1,4 +1,5 @@
 language: java
+mvn test -B
 jdk:
   - oraclejdk7
 notifications:
