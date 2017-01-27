@@ -1,8 +1,7 @@
 language: java
+mvn test -B
 jdk:
   - oraclejdk7
-mvn test -B
-sudo: false
 script: mvn verify
 notifications:
   slack: '<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>'
