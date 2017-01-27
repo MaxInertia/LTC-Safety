@@ -1,7 +1,7 @@
 language: java
 jdk:
   - oraclejdk7
-script: mvn test -f ./LTCSafety/pom.xml
+script: mvn test -f LTCSafety/pom.xml
 notifications:
   slack: 
     rooms:
