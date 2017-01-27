@@ -2,6 +2,7 @@ language: java
 jdk:
   - oraclejdk7
 script: mvn test -f LTCSafety/pom.xml
+mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 notifications:
   slack: 
     rooms:
