@@ -1,7 +1,7 @@
 language: java
-mvn test -B
 jdk:
   - oraclejdk7
+script: mvn test -B
 notifications:
   slack: 
     rooms:
