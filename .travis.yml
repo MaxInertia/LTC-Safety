@@ -1,10 +1,10 @@
 language: java
 jdk:
   - oraclejdk7
-script: mvn test
+script: mvn test -Bf LTC-Safety/LTCSafety/pom.xml
 notifications:
   slack: 
     rooms:
-      -'<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>#buildstatus'
+      -cmpt371team2:<dCejYqfn5bhvaeXZImuUmDT0>
     on_success: always
     on_failure: always
