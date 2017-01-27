@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "cmpt371group2.ltc_prototype"
+        minSdkVersion 18
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+
+    // Step 1:
+    // The excluded dependency was ignored due to potential conflicts with the internal version provided by Android.
+    compile ([group: 'com.appspot.ltc_safety', name: 'client', version: 'v1-1.22.0-SNAPSHOT']) {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+    // Step 2:
+    compile([group: 'com.google.api-client', name: 'google-api-client-android', version: '1.22.0']) {
+        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+    }
+
+    /* Step 3: Three options for JSON support:
+               1) Import the following library:  import com.google.api.client.extensions.android.json.AndroidJsonFactory; into Java source.
+               2) Add this line directly above this block comment: compile ([group: 'com.google.api-client', name: 'google-http-client-gson', version: '1.22.0'])
+               3) Or add this line directly above this block comment: compile ([group: 'com.google.api-client', name: 'google-http-client-jackson2', version: '1.22.0'])
+    */
+
+    // 'androidTestCompile' causes a Dependency Error: Resolved versions for app (1.3.9) and test app (2.0.1) differ
+    // The error is resolved by compiling the dependency: compile([group: 'com.google.code.findbugs', name: 'jsr305', version: '2.0.1'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile([group: 'com.google.code.findbugs', name: 'jsr305', version: '2.0.1'])
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
+}
