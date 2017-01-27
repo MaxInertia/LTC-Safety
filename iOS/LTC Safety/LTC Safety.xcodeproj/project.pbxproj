@@ -1,562 +1,1279 @@
-// !$*UTF8*$!
-{
-	archiveVersion = 1;
-	classes = {
-	};
-	objectVersion = 46;
-	objects = {
-
-/* Begin PBXBuildFile section */
-		1107E7721E3B0CE700675786 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7711E3B0CE700675786 /* main.m */; };
-		1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7741E3B0CE700675786 /* AppDelegate.m */; };
-		1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */; };
-		1107E77B1E3B0CE700675786 /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E77A1E3B0CE700675786 /* MasterViewController.m */; };
-		1107E77E1E3B0CE700675786 /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E77D1E3B0CE700675786 /* DetailViewController.m */; };
-		1107E7811E3B0CE700675786 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E77F1E3B0CE700675786 /* Main.storyboard */; };
-		1107E7831E3B0CE700675786 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7821E3B0CE700675786 /* Assets.xcassets */; };
-		1107E7861E3B0CE700675786 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */; };
-		1107E7911E3B0CE800675786 /* LTC_SafetyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7901E3B0CE800675786 /* LTC_SafetyTests.m */; };
-		1107E79C1E3B0CE800675786 /* LTC_SafetyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E79B1E3B0CE800675786 /* LTC_SafetyUITests.m */; };
-/* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		1107E78D1E3B0CE800675786 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1107E7651E3B0CE700675786 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1107E76C1E3B0CE700675786;
-			remoteInfo = "LTC Safety";
-		};
-		1107E7981E3B0CE800675786 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 1107E7651E3B0CE700675786 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 1107E76C1E3B0CE700675786;
-			remoteInfo = "LTC Safety";
-		};
-/* End PBXContainerItemProxy section */
-
-/* Begin PBXFileReference section */
-		1107E76D1E3B0CE700675786 /* LTC Safety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTC Safety.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1107E7711E3B0CE700675786 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		1107E7731E3B0CE700675786 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		1107E7741E3B0CE700675786 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1107E7771E3B0CE700675786 /* LTC_Safety.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTC_Safety.xcdatamodel; sourceTree = "<group>"; };
-		1107E7791E3B0CE700675786 /* MasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
-		1107E77A1E3B0CE700675786 /* MasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
-		1107E77C1E3B0CE700675786 /* DetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
-		1107E77D1E3B0CE700675786 /* DetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
-		1107E7801E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1107E7821E3B0CE700675786 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1107E7851E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		1107E7871E3B0CE700675786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1107E78C1E3B0CE800675786 /* LTC SafetyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LTC SafetyTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1107E7901E3B0CE800675786 /* LTC_SafetyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTC_SafetyTests.m; sourceTree = "<group>"; };
-		1107E7921E3B0CE800675786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1107E7971E3B0CE800675786 /* LTC SafetyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LTC SafetyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1107E79B1E3B0CE800675786 /* LTC_SafetyUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTC_SafetyUITests.m; sourceTree = "<group>"; };
-		1107E79D1E3B0CE800675786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-/* End PBXFileReference section */
-
-/* Begin PBXFrameworksBuildPhase section */
-		1107E76A1E3B0CE700675786 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E7891E3B0CE800675786 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E7941E3B0CE800675786 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXFrameworksBuildPhase section */
-
-/* Begin PBXGroup section */
-		1107E7641E3B0CE700675786 = {
-			isa = PBXGroup;
-			children = (
-				1107E76F1E3B0CE700675786 /* LTC Safety */,
-				1107E78F1E3B0CE800675786 /* LTC SafetyTests */,
-				1107E79A1E3B0CE800675786 /* LTC SafetyUITests */,
-				1107E76E1E3B0CE700675786 /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		1107E76E1E3B0CE700675786 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				1107E76D1E3B0CE700675786 /* LTC Safety.app */,
-				1107E78C1E3B0CE800675786 /* LTC SafetyTests.xctest */,
-				1107E7971E3B0CE800675786 /* LTC SafetyUITests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		1107E76F1E3B0CE700675786 /* LTC Safety */ = {
-			isa = PBXGroup;
-			children = (
-				1107E7731E3B0CE700675786 /* AppDelegate.h */,
-				1107E7741E3B0CE700675786 /* AppDelegate.m */,
-				1107E7791E3B0CE700675786 /* MasterViewController.h */,
-				1107E77A1E3B0CE700675786 /* MasterViewController.m */,
-				1107E77C1E3B0CE700675786 /* DetailViewController.h */,
-				1107E77D1E3B0CE700675786 /* DetailViewController.m */,
-				1107E77F1E3B0CE700675786 /* Main.storyboard */,
-				1107E7821E3B0CE700675786 /* Assets.xcassets */,
-				1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */,
-				1107E7871E3B0CE700675786 /* Info.plist */,
-				1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */,
-				1107E7701E3B0CE700675786 /* Supporting Files */,
-			);
-			path = "LTC Safety";
-			sourceTree = "<group>";
-		};
-		1107E7701E3B0CE700675786 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				1107E7711E3B0CE700675786 /* main.m */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		1107E78F1E3B0CE800675786 /* LTC SafetyTests */ = {
-			isa = PBXGroup;
-			children = (
-				1107E7901E3B0CE800675786 /* LTC_SafetyTests.m */,
-				1107E7921E3B0CE800675786 /* Info.plist */,
-			);
-			path = "LTC SafetyTests";
-			sourceTree = "<group>";
-		};
-		1107E79A1E3B0CE800675786 /* LTC SafetyUITests */ = {
-			isa = PBXGroup;
-			children = (
-				1107E79B1E3B0CE800675786 /* LTC_SafetyUITests.m */,
-				1107E79D1E3B0CE800675786 /* Info.plist */,
-			);
-			path = "LTC SafetyUITests";
-			sourceTree = "<group>";
-		};
-/* End PBXGroup section */
-
-/* Begin PBXNativeTarget section */
-		1107E76C1E3B0CE700675786 /* LTC Safety */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1107E7A01E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC Safety" */;
-			buildPhases = (
-				1107E7691E3B0CE700675786 /* Sources */,
-				1107E76A1E3B0CE700675786 /* Frameworks */,
-				1107E76B1E3B0CE700675786 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "LTC Safety";
-			productName = "LTC Safety";
-			productReference = 1107E76D1E3B0CE700675786 /* LTC Safety.app */;
-			productType = "com.apple.product-type.application";
-		};
-		1107E78B1E3B0CE800675786 /* LTC SafetyTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1107E7A31E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC SafetyTests" */;
-			buildPhases = (
-				1107E7881E3B0CE800675786 /* Sources */,
-				1107E7891E3B0CE800675786 /* Frameworks */,
-				1107E78A1E3B0CE800675786 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1107E78E1E3B0CE800675786 /* PBXTargetDependency */,
-			);
-			name = "LTC SafetyTests";
-			productName = "LTC SafetyTests";
-			productReference = 1107E78C1E3B0CE800675786 /* LTC SafetyTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		1107E7961E3B0CE800675786 /* LTC SafetyUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1107E7A61E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC SafetyUITests" */;
-			buildPhases = (
-				1107E7931E3B0CE800675786 /* Sources */,
-				1107E7941E3B0CE800675786 /* Frameworks */,
-				1107E7951E3B0CE800675786 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				1107E7991E3B0CE800675786 /* PBXTargetDependency */,
-			);
-			name = "LTC SafetyUITests";
-			productName = "LTC SafetyUITests";
-			productReference = 1107E7971E3B0CE800675786 /* LTC SafetyUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
-/* End PBXNativeTarget section */
-
-/* Begin PBXProject section */
-		1107E7651E3B0CE700675786 /* Project object */ = {
-			isa = PBXProject;
-			attributes = {
-				LastUpgradeCheck = 0820;
-				ORGANIZATIONNAME = "CS371 Group 2";
-				TargetAttributes = {
-					1107E76C1E3B0CE700675786 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5U667GTF3W;
-						ProvisioningStyle = Automatic;
-					};
-					1107E78B1E3B0CE800675786 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5U667GTF3W;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 1107E76C1E3B0CE700675786;
-					};
-					1107E7961E3B0CE800675786 = {
-						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 5U667GTF3W;
-						ProvisioningStyle = Automatic;
-						TestTargetID = 1107E76C1E3B0CE700675786;
-					};
-				};
-			};
-			buildConfigurationList = 1107E7681E3B0CE700675786 /* Build configuration list for PBXProject "LTC Safety" */;
-			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
-			hasScannedForEncodings = 0;
-			knownRegions = (
-				en,
-				Base,
-			);
-			mainGroup = 1107E7641E3B0CE700675786;
-			productRefGroup = 1107E76E1E3B0CE700675786 /* Products */;
-			projectDirPath = "";
-			projectRoot = "";
-			targets = (
-				1107E76C1E3B0CE700675786 /* LTC Safety */,
-				1107E78B1E3B0CE800675786 /* LTC SafetyTests */,
-				1107E7961E3B0CE800675786 /* LTC SafetyUITests */,
-			);
-		};
-/* End PBXProject section */
-
-/* Begin PBXResourcesBuildPhase section */
-		1107E76B1E3B0CE700675786 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1107E7861E3B0CE700675786 /* LaunchScreen.storyboard in Resources */,
-				1107E7831E3B0CE700675786 /* Assets.xcassets in Resources */,
-				1107E7811E3B0CE700675786 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E78A1E3B0CE800675786 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E7951E3B0CE800675786 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		1107E7691E3B0CE700675786 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1107E77E1E3B0CE700675786 /* DetailViewController.m in Sources */,
-				1107E77B1E3B0CE700675786 /* MasterViewController.m in Sources */,
-				1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */,
-				1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */,
-				1107E7721E3B0CE700675786 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E7881E3B0CE800675786 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1107E7911E3B0CE800675786 /* LTC_SafetyTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		1107E7931E3B0CE800675786 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1107E79C1E3B0CE800675786 /* LTC_SafetyUITests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		1107E78E1E3B0CE800675786 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1107E76C1E3B0CE700675786 /* LTC Safety */;
-			targetProxy = 1107E78D1E3B0CE800675786 /* PBXContainerItemProxy */;
-		};
-		1107E7991E3B0CE800675786 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 1107E76C1E3B0CE700675786 /* LTC Safety */;
-			targetProxy = 1107E7981E3B0CE800675786 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		1107E77F1E3B0CE700675786 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1107E7801E3B0CE700675786 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1107E7851E3B0CE700675786 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
-/* Begin XCBuildConfiguration section */
-		1107E79E1E3B0CE800675786 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		1107E79F1E3B0CE800675786 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		1107E7A11E3B0CE800675786 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC Safety/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-Safety";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		1107E7A21E3B0CE800675786 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC Safety/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-Safety";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		1107E7A41E3B0CE800675786 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC SafetyTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-SafetyTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LTC Safety.app/LTC Safety";
-			};
-			name = Debug;
-		};
-		1107E7A51E3B0CE800675786 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC SafetyTests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-SafetyTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LTC Safety.app/LTC Safety";
-			};
-			name = Release;
-		};
-		1107E7A71E3B0CE800675786 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC SafetyUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-SafetyUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "LTC Safety";
-			};
-			name = Debug;
-		};
-		1107E7A81E3B0CE800675786 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEVELOPMENT_TEAM = 5U667GTF3W;
-				INFOPLIST_FILE = "LTC SafetyUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.cs371group2.LTC-SafetyUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_TARGET_NAME = "LTC Safety";
-			};
-			name = Release;
-		};
-/* End XCBuildConfiguration section */
-
-/* Begin XCConfigurationList section */
-		1107E7681E3B0CE700675786 /* Build configuration list for PBXProject "LTC Safety" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1107E79E1E3B0CE800675786 /* Debug */,
-				1107E79F1E3B0CE800675786 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		1107E7A01E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC Safety" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1107E7A11E3B0CE800675786 /* Debug */,
-				1107E7A21E3B0CE800675786 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		1107E7A31E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC SafetyTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1107E7A41E3B0CE800675786 /* Debug */,
-				1107E7A51E3B0CE800675786 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-		1107E7A61E3B0CE800675786 /* Build configuration list for PBXNativeTarget "LTC SafetyUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1107E7A71E3B0CE800675786 /* Debug */,
-				1107E7A81E3B0CE800675786 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
-/* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1107E7771E3B0CE700675786 /* LTC_Safety.xcdatamodel */,
-			);
-			currentVersion = 1107E7771E3B0CE700675786 /* LTC_Safety.xcdatamodel */;
-			path = LTC_Safety.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
-	};
-	rootObject = 1107E7651E3B0CE700675786 /* Project object */;
-}
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>archiveVersion</key>
+	<string>1</string>
+	<key>classes</key>
+	<dict/>
+	<key>objectVersion</key>
+	<string>46</string>
+	<key>objects</key>
+	<dict>
+		<key>1107E7641E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E76F1E3B0CE700675786</string>
+				<string>1107E78F1E3B0CE800675786</string>
+				<string>1107E79A1E3B0CE800675786</string>
+				<string>1107E76E1E3B0CE700675786</string>
+				<string>7F0F27BA039A0647912F860D</string>
+				<string>33572C11EE12445930039E5A</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7651E3B0CE700675786</key>
+		<dict>
+			<key>attributes</key>
+			<dict>
+				<key>LastUpgradeCheck</key>
+				<string>0820</string>
+				<key>ORGANIZATIONNAME</key>
+				<string>CS371 Group 2</string>
+				<key>TargetAttributes</key>
+				<dict>
+					<key>1107E76C1E3B0CE700675786</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>8.2.1</string>
+						<key>DevelopmentTeam</key>
+						<string>5U667GTF3W</string>
+						<key>ProvisioningStyle</key>
+						<string>Automatic</string>
+					</dict>
+					<key>1107E78B1E3B0CE800675786</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>8.2.1</string>
+						<key>DevelopmentTeam</key>
+						<string>5U667GTF3W</string>
+						<key>ProvisioningStyle</key>
+						<string>Automatic</string>
+						<key>TestTargetID</key>
+						<string>1107E76C1E3B0CE700675786</string>
+					</dict>
+					<key>1107E7961E3B0CE800675786</key>
+					<dict>
+						<key>CreatedOnToolsVersion</key>
+						<string>8.2.1</string>
+						<key>DevelopmentTeam</key>
+						<string>5U667GTF3W</string>
+						<key>ProvisioningStyle</key>
+						<string>Automatic</string>
+						<key>TestTargetID</key>
+						<string>1107E76C1E3B0CE700675786</string>
+					</dict>
+				</dict>
+			</dict>
+			<key>buildConfigurationList</key>
+			<string>1107E7681E3B0CE700675786</string>
+			<key>compatibilityVersion</key>
+			<string>Xcode 3.2</string>
+			<key>developmentRegion</key>
+			<string>English</string>
+			<key>hasScannedForEncodings</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXProject</string>
+			<key>knownRegions</key>
+			<array>
+				<string>en</string>
+				<string>Base</string>
+			</array>
+			<key>mainGroup</key>
+			<string>1107E7641E3B0CE700675786</string>
+			<key>productRefGroup</key>
+			<string>1107E76E1E3B0CE700675786</string>
+			<key>projectDirPath</key>
+			<string></string>
+			<key>projectReferences</key>
+			<array/>
+			<key>projectRoot</key>
+			<string></string>
+			<key>targets</key>
+			<array>
+				<string>1107E76C1E3B0CE700675786</string>
+				<string>1107E78B1E3B0CE800675786</string>
+				<string>1107E7961E3B0CE800675786</string>
+			</array>
+		</dict>
+		<key>1107E7681E3B0CE700675786</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>1107E79E1E3B0CE800675786</string>
+				<string>1107E79F1E3B0CE800675786</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>1107E7691E3B0CE700675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>1107E77E1E3B0CE700675786</string>
+				<string>1107E77B1E3B0CE700675786</string>
+				<string>1107E7781E3B0CE700675786</string>
+				<string>1107E7751E3B0CE700675786</string>
+				<string>1107E7721E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E76A1E3B0CE700675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>AE87409090197A139FDE78B6</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E76B1E3B0CE700675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>1107E7861E3B0CE700675786</string>
+				<string>1107E7831E3B0CE700675786</string>
+				<string>1107E7811E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E76C1E3B0CE700675786</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>1107E7A01E3B0CE800675786</string>
+			<key>buildPhases</key>
+			<array>
+				<string>2F80B75405FDF028AEEF412E</string>
+				<string>1107E7691E3B0CE700675786</string>
+				<string>1107E76A1E3B0CE700675786</string>
+				<string>1107E76B1E3B0CE700675786</string>
+				<string>56902A825EB318A365C0D17B</string>
+				<string>976FA7981468B014217F129D</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>LTC Safety</string>
+			<key>productName</key>
+			<string>LTC Safety</string>
+			<key>productReference</key>
+			<string>1107E76D1E3B0CE700675786</string>
+			<key>productType</key>
+			<string>com.apple.product-type.application</string>
+		</dict>
+		<key>1107E76D1E3B0CE700675786</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.application</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>LTC Safety.app</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>1107E76E1E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E76D1E3B0CE700675786</string>
+				<string>1107E78C1E3B0CE800675786</string>
+				<string>1107E7971E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Products</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E76F1E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7731E3B0CE700675786</string>
+				<string>1107E7741E3B0CE700675786</string>
+				<string>1107E7791E3B0CE700675786</string>
+				<string>1107E77A1E3B0CE700675786</string>
+				<string>1107E77C1E3B0CE700675786</string>
+				<string>1107E77D1E3B0CE700675786</string>
+				<string>1107E77F1E3B0CE700675786</string>
+				<string>1107E7821E3B0CE700675786</string>
+				<string>1107E7841E3B0CE700675786</string>
+				<string>1107E7871E3B0CE700675786</string>
+				<string>1107E7761E3B0CE700675786</string>
+				<string>1107E7701E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>LTC Safety</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7701E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7711E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Supporting Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7711E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>main.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7721E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7711E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7731E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>AppDelegate.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7741E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>AppDelegate.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7751E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7741E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7761E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7771E3B0CE700675786</string>
+			</array>
+			<key>currentVersion</key>
+			<string>1107E7771E3B0CE700675786</string>
+			<key>isa</key>
+			<string>XCVersionGroup</string>
+			<key>path</key>
+			<string>LTC_Safety.xcdatamodeld</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+			<key>versionGroupType</key>
+			<string>wrapper.xcdatamodel</string>
+		</dict>
+		<key>1107E7771E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>wrapper.xcdatamodel</string>
+			<key>path</key>
+			<string>LTC_Safety.xcdatamodel</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7781E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7761E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7791E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>MasterViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E77A1E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>MasterViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E77B1E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E77A1E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E77C1E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.h</string>
+			<key>path</key>
+			<string>DetailViewController.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E77D1E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>DetailViewController.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E77E1E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E77D1E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E77F1E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7801E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7801E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/Main.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7811E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E77F1E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7821E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>folder.assetcatalog</string>
+			<key>path</key>
+			<string>Assets.xcassets</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7831E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7821E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7841E3B0CE700675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7851E3B0CE700675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXVariantGroup</string>
+			<key>name</key>
+			<string>LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7851E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>file.storyboard</string>
+			<key>name</key>
+			<string>Base</string>
+			<key>path</key>
+			<string>Base.lproj/LaunchScreen.storyboard</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7861E3B0CE700675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7841E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7871E3B0CE700675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7881E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>1107E7911E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E7891E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E78A1E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E78B1E3B0CE800675786</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>1107E7A31E3B0CE800675786</string>
+			<key>buildPhases</key>
+			<array>
+				<string>1107E7881E3B0CE800675786</string>
+				<string>1107E7891E3B0CE800675786</string>
+				<string>1107E78A1E3B0CE800675786</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>1107E78E1E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>LTC SafetyTests</string>
+			<key>productName</key>
+			<string>LTC SafetyTests</string>
+			<key>productReference</key>
+			<string>1107E78C1E3B0CE800675786</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.unit-test</string>
+		</dict>
+		<key>1107E78C1E3B0CE800675786</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>LTC SafetyTests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>1107E78D1E3B0CE800675786</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>1107E7651E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>1107E76C1E3B0CE700675786</string>
+			<key>remoteInfo</key>
+			<string>LTC Safety</string>
+		</dict>
+		<key>1107E78E1E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>1107E76C1E3B0CE700675786</string>
+			<key>targetProxy</key>
+			<string>1107E78D1E3B0CE800675786</string>
+		</dict>
+		<key>1107E78F1E3B0CE800675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E7901E3B0CE800675786</string>
+				<string>1107E7921E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>LTC SafetyTests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7901E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>LTC_SafetyTests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7911E3B0CE800675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E7901E3B0CE800675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E7921E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E7931E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>1107E79C1E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E7941E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E7951E3B0CE800675786</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXResourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+		</dict>
+		<key>1107E7961E3B0CE800675786</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>1107E7A61E3B0CE800675786</string>
+			<key>buildPhases</key>
+			<array>
+				<string>1107E7931E3B0CE800675786</string>
+				<string>1107E7941E3B0CE800675786</string>
+				<string>1107E7951E3B0CE800675786</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array>
+				<string>1107E7991E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>LTC SafetyUITests</string>
+			<key>productName</key>
+			<string>LTC SafetyUITests</string>
+			<key>productReference</key>
+			<string>1107E7971E3B0CE800675786</string>
+			<key>productType</key>
+			<string>com.apple.product-type.bundle.ui-testing</string>
+		</dict>
+		<key>1107E7971E3B0CE800675786</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>wrapper.cfbundle</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>LTC SafetyUITests.xctest</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>1107E7981E3B0CE800675786</key>
+		<dict>
+			<key>containerPortal</key>
+			<string>1107E7651E3B0CE700675786</string>
+			<key>isa</key>
+			<string>PBXContainerItemProxy</string>
+			<key>proxyType</key>
+			<string>1</string>
+			<key>remoteGlobalIDString</key>
+			<string>1107E76C1E3B0CE700675786</string>
+			<key>remoteInfo</key>
+			<string>LTC Safety</string>
+		</dict>
+		<key>1107E7991E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXTargetDependency</string>
+			<key>target</key>
+			<string>1107E76C1E3B0CE700675786</string>
+			<key>targetProxy</key>
+			<string>1107E7981E3B0CE800675786</string>
+		</dict>
+		<key>1107E79A1E3B0CE800675786</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>1107E79B1E3B0CE800675786</string>
+				<string>1107E79D1E3B0CE800675786</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>path</key>
+			<string>LTC SafetyUITests</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E79B1E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>LTC_SafetyUITests.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E79C1E3B0CE800675786</key>
+		<dict>
+			<key>fileRef</key>
+			<string>1107E79B1E3B0CE800675786</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+		<key>1107E79D1E3B0CE800675786</key>
+		<dict>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Info.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>1107E79E1E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INFINITE_RECURSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>ENABLE_TESTABILITY</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_DYNAMIC_NO_PIC</key>
+				<string>NO</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_OPTIMIZATION_LEVEL</key>
+				<string>0</string>
+				<key>GCC_PREPROCESSOR_DEFINITIONS</key>
+				<array>
+					<string>DEBUG=1</string>
+					<string>$(inherited)</string>
+				</array>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>10.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>ONLY_ACTIVE_ARCH</key>
+				<string>YES</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>1107E79F1E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>ALWAYS_SEARCH_USER_PATHS</key>
+				<string>NO</string>
+				<key>CLANG_ANALYZER_NONNULL</key>
+				<string>YES</string>
+				<key>CLANG_CXX_LANGUAGE_STANDARD</key>
+				<string>gnu++0x</string>
+				<key>CLANG_CXX_LIBRARY</key>
+				<string>libc++</string>
+				<key>CLANG_ENABLE_MODULES</key>
+				<string>YES</string>
+				<key>CLANG_ENABLE_OBJC_ARC</key>
+				<string>YES</string>
+				<key>CLANG_WARN_BOOL_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_CONSTANT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_DIRECT_OBJC_ISA_USAGE</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_DOCUMENTATION_COMMENTS</key>
+				<string>YES</string>
+				<key>CLANG_WARN_EMPTY_BODY</key>
+				<string>YES</string>
+				<key>CLANG_WARN_ENUM_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INFINITE_RECURSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_INT_CONVERSION</key>
+				<string>YES</string>
+				<key>CLANG_WARN_OBJC_ROOT_CLASS</key>
+				<string>YES_ERROR</string>
+				<key>CLANG_WARN_SUSPICIOUS_MOVE</key>
+				<string>YES</string>
+				<key>CLANG_WARN_UNREACHABLE_CODE</key>
+				<string>YES</string>
+				<key>CLANG_WARN__DUPLICATE_METHOD_MATCH</key>
+				<string>YES</string>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>COPY_PHASE_STRIP</key>
+				<string>NO</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_NS_ASSERTIONS</key>
+				<string>NO</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_C_LANGUAGE_STANDARD</key>
+				<string>gnu99</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
+				<string>YES</string>
+				<key>GCC_WARN_ABOUT_RETURN_TYPE</key>
+				<string>YES_ERROR</string>
+				<key>GCC_WARN_UNDECLARED_SELECTOR</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNINITIALIZED_AUTOS</key>
+				<string>YES_AGGRESSIVE</string>
+				<key>GCC_WARN_UNUSED_FUNCTION</key>
+				<string>YES</string>
+				<key>GCC_WARN_UNUSED_VARIABLE</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>10.2</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>TARGETED_DEVICE_FAMILY</key>
+				<string>1,2</string>
+				<key>VALIDATE_PRODUCT</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>1107E7A01E3B0CE800675786</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>1107E7A11E3B0CE800675786</string>
+				<string>1107E7A21E3B0CE800675786</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>1107E7A11E3B0CE800675786</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>303C46FFCEF3160E4E7E22EC</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC Safety/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-Safety</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>1107E7A21E3B0CE800675786</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>AA62F4312605DAD40A46B339</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>ASSETCATALOG_COMPILER_APPICON_NAME</key>
+				<string>AppIcon</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC Safety/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-Safety</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>1107E7A31E3B0CE800675786</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>1107E7A41E3B0CE800675786</string>
+				<string>1107E7A51E3B0CE800675786</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>1107E7A41E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC SafetyTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-SafetyTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/LTC Safety.app/LTC Safety</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>1107E7A51E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>BUNDLE_LOADER</key>
+				<string>$(TEST_HOST)</string>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC SafetyTests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-SafetyTests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_HOST</key>
+				<string>$(BUILT_PRODUCTS_DIR)/LTC Safety.app/LTC Safety</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>1107E7A61E3B0CE800675786</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>1107E7A71E3B0CE800675786</string>
+				<string>1107E7A81E3B0CE800675786</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
+		<key>1107E7A71E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC SafetyUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-SafetyUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>LTC Safety</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
+		<key>1107E7A81E3B0CE800675786</key>
+		<dict>
+			<key>buildSettings</key>
+			<dict>
+				<key>DEVELOPMENT_TEAM</key>
+				<string>5U667GTF3W</string>
+				<key>INFOPLIST_FILE</key>
+				<string>LTC SafetyUITests/Info.plist</string>
+				<key>LD_RUNPATH_SEARCH_PATHS</key>
+				<string>$(inherited) @executable_path/Frameworks @loader_path/Frameworks</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>com.cs371group2.LTC-SafetyUITests</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>TEST_TARGET_NAME</key>
+				<string>LTC Safety</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
+		</dict>
+		<key>2F80B75405FDF028AEEF412E</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Check Pods Manifest.lock</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>diff "${PODS_ROOT}/../Podfile.lock" "${PODS_ROOT}/Manifest.lock" &gt; /dev/null
+if [[ $? != 0 ]] ; then
+    cat &lt;&lt; EOM
+error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.
+EOM
+    exit 1
+fi
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>303C46FFCEF3160E4E7E22EC</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-LTC Safety.debug.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>33572C11EE12445930039E5A</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>5125757F956CF6FE965BC070</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Frameworks</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5125757F956CF6FE965BC070</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>path</key>
+			<string>libPods-LTC Safety.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
+		<key>56902A825EB318A365C0D17B</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Embed Pods Frameworks</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety-frameworks.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>7F0F27BA039A0647912F860D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>303C46FFCEF3160E4E7E22EC</string>
+				<string>AA62F4312605DAD40A46B339</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>976FA7981468B014217F129D</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array/>
+			<key>inputPaths</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXShellScriptBuildPhase</string>
+			<key>name</key>
+			<string>[CP] Copy Pods Resources</string>
+			<key>outputPaths</key>
+			<array/>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
+			<key>shellPath</key>
+			<string>/bin/sh</string>
+			<key>shellScript</key>
+			<string>"${SRCROOT}/Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety-resources.sh"
+</string>
+			<key>showEnvVarsInLog</key>
+			<string>0</string>
+		</dict>
+		<key>AA62F4312605DAD40A46B339</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>name</key>
+			<string>Pods-LTC Safety.release.xcconfig</string>
+			<key>path</key>
+			<string>Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>AE87409090197A139FDE78B6</key>
+		<dict>
+			<key>fileRef</key>
+			<string>5125757F956CF6FE965BC070</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
+	</dict>
+	<key>rootObject</key>
+	<string>1107E7651E3B0CE700675786</string>
+</dict>
+</plist>
