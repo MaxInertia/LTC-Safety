@@ -1,9 +1,10 @@
 language: java
-mvn test -B
 jdk:
   - oraclejdk7
 script: mvn verify
 notifications:
-  slack: '<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>'
+  slack: 
+    rooms:
+      -'<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>#buildstatus'
     on_success: always
     on_failure: always
