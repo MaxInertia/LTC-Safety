@@ -1,8 +1,6 @@
 language: java
 jdk:
   - oraclejdk7
-sudo: false
-script: mvn verify
 notifications:
   slack: cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
     on_success: always
