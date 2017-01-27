@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Objective-C" userDefinedModelVersionIdentifier="">
     <entity name="Event" representedClassName="Event" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date">
+            <userInfo/>
+        </attribute>
+        <userInfo/>
+    </entity>
+    <entity name="LTCConcern" representedClassName=".LTCConcern" syncable="YES">
+        <attribute name="actionsTaken" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="concernNature" attributeType="String" syncable="YES"/>
+        <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="LTCLocation" inverseName="location" inverseEntity="LTCLocation" syncable="YES"/>
+        <relationship name="reporter" maxCount="1" deletionRule="Cascade" destinationEntity="LTCReporter" inverseName="report" inverseEntity="LTCReporter" syncable="YES"/>
+    </entity>
+    <entity name="LTCLocation" representedClassName=".LTCLocation" syncable="YES">
+        <attribute name="facilityName" attributeType="String" syncable="YES"/>
+        <attribute name="roomName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="location" maxCount="1" deletionRule="Deny" destinationEntity="LTCConcern" inverseName="location" inverseEntity="LTCConcern" syncable="YES"/>
+    </entity>
+    <entity name="LTCReporter" representedClassName=".LTCReporter" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="report" maxCount="1" deletionRule="Deny" destinationEntity="LTCConcern" inverseName="reporter" inverseEntity="LTCConcern" syncable="YES"/>
     </entity>
     <elements>
         <element name="Event" positionX="261" positionY="189" width="128" height="60"/>
+        <element name="LTCConcern" positionX="450" positionY="189" width="128" height="103"/>
+        <element name="LTCLocation" positionX="637" positionY="297" width="128" height="88"/>
+        <element name="LTCReporter" positionX="288" positionY="297" width="128" height="103"/>
     </elements>
 </model>
