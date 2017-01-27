@@ -2,6 +2,6 @@ language: java
 jdk:
   - oraclejdk7
 notifications:
-  slack: cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
+  slack: '<cmpt371team2>:<dCejYqfn5bhvaeXZImuUmDT0>'
     on_success: always
     on_failure: always
