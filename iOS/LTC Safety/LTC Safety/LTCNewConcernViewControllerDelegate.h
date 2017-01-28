@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LTCConcern+CoreDataClass.h"
 
 @class LTCNewConcernViewController;
 @protocol LTCNewConcernViewControllerDelegate <NSObject>
 @required
-- (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(id)concern;
+- (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern;
 @end

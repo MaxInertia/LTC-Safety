@@ -1,46 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
-   <Group
-      location = "container:"
-      name = "Peristence">
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCConcern+CoreDataClass.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCConcern+CoreDataClass.m">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCConcern+CoreDataProperties.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCConcern+CoreDataProperties.m">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCLocation+CoreDataClass.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCLocation+CoreDataClass.m">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCLocation+CoreDataProperties.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCLocation+CoreDataProperties.m">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCReporter+CoreDataClass.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCReporter+CoreDataClass.m">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCReporter+CoreDataProperties.h">
-      </FileRef>
-      <FileRef
-         location = "group:LTC Safety/Persistence/LTCReporter+CoreDataProperties.m">
-      </FileRef>
-   </Group>
    <FileRef
       location = "group:LTC Safety.xcodeproj">
    </FileRef>

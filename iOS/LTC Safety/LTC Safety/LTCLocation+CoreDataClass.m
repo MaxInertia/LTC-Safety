@@ -7,7 +7,7 @@
 //
 
 #import "LTCLocation+CoreDataClass.h"
-#import "LTCConcern.h"
+#import "LTCConcern+CoreDataClass.h"
 @implementation LTCLocation
 
 @end

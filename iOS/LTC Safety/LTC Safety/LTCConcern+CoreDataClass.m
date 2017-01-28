@@ -7,8 +7,8 @@
 //
 
 #import "LTCConcern+CoreDataClass.h"
-#import "LTCLocation.h"
-#import "LTCReporter.h"
+#import "LTCLocation+CoreDataClass.h"
+#import "LTCReporter+CoreDataClass.h"
 
 @interface LTCConcern ()
 // Store the owner token to keychain on save and awake from fetch

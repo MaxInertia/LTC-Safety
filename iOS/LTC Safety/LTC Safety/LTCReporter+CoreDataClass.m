@@ -7,7 +7,7 @@
 //
 
 #import "LTCReporter+CoreDataClass.h"
-#import "LTCConcern.h"
+#import "LTCConcern+CoreDataClass.h"
 @implementation LTCReporter
 
 @end
