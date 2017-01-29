@@ -12,8 +12,8 @@
 @interface LTCConcernViewModel : NSObject
 @property (readonly, nonatomic, assign) NSUInteger sectionCount;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
-- (void)addConcern:(LTCConcern *)concern;
+- (void)addConcern:(LTCConcern *)concern error:(NSError **)error;
+- (void)removeConcern:(LTCConcern *)concern error:(NSError **)error;
 - (LTCConcern *)concernAtIndexPath:(NSIndexPath *)indexPath;
 - (NSUInteger )rowCountForSection:(NSUInteger)section;
-- (void)removeConcern:(LTCConcern *)concern;
 @end

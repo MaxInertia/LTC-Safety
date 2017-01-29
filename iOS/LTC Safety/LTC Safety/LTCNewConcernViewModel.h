@@ -11,5 +11,5 @@
 
 @interface LTCNewConcernViewModel : XLFormDescriptor
 @property (readonly, nonatomic, weak) LTCConcern *concern;
-- (instancetype)init;
+- (instancetype)initWithContext:(NSManagedObjectContext *)context;
 @end

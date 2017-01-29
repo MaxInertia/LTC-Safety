@@ -7,49 +7,63 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "LTCConcern+CoreDataClass.h"
+#import "LTCReporter+CoreDataClass.h"
+#import "LTCLocation+CoreDataClass.h"
+#import "LTCConcernViewModel.h"
+#import "LTCCoreDataTestCase.h"
 @import CoreData;
 
-@interface LTCConcernViewModelTests : XCTestCase
-@property (nonatomic,retain) NSPersistentContainer *container;
+@interface LTCConcernViewModelTests : LTCCoreDataTestCase
+
 @end
 
 @implementation LTCConcernViewModelTests
 
 - (void)setUp {
     [super setUp];
-    
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-    
-    // In UI tests it is usually best to stop immediately when a failure occurs.
-    self.continueAfterFailure = NO;
-    // UI tests must launch the application that they test. Doing this in setup will make sure it happens for each test method.
-    [[[XCUIApplication alloc] init] launch];
-    
-    // Set up in memory persistent store for testing
-    NSPersistentStoreDescription *description = [[NSPersistentStoreDescription alloc] init];
-    description.type = NSInMemoryStoreType;
-    
-    self.container = [[NSPersistentContainer alloc] initWithName:@"LTC_Safety"];
-    self.container.persistentStoreDescriptions = @[description];
-    [self.container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-        if (error != nil) {
-            XCTFail("Failed to load in memory persistent store.");
-        }
-    }];
 }
 
 - (void)tearDown {
-    self.container = nil;
     [super tearDown];
 }
 
-- (void)testaddConcernTest {
+- (void)testAddConcern {
+    
+    XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
 
+    LTCLocation *location = [[LTCLocation alloc] initWithContext:self.container.viewContext];
+    location.roomName = @"A room name";
+    location.facilityName = @"A facility name";
+    
+    LTCReporter *reporter = [[LTCReporter alloc] initWithContext:self.container.viewContext];
+    reporter.name = @"A reporter name";
+    reporter.phoneNumber = @"A reporter phone number";
+    reporter.email = @"A reporter email";
+    
+    LTCConcern *concern = [LTCConcern concernInManagedObjectContext:self.container.viewContext];
+    concern.reporter = reporter;
+    concern.location = location;
+    concern.concernNature = @"The nature of the concern";
+    concern.actionsTaken = @"The actions taken";
+    
+    NSError *error = nil;
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
+    [viewModel addConcern:concern error:&error];
+    
+    XCTAssertNil(error, @"%@", error);
 }
 
-- (void)testExample {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testRemoveConcern {
+    
+}
+
+- (void)testConcernAtIndexPath {
+    
+}
+
+- (void)testRowCountForSection {
+
 }
 
 @end
