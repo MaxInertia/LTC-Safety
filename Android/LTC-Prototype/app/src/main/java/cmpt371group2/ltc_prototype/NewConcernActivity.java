@@ -33,5 +33,6 @@ public class NewConcernActivity extends AppCompatActivity {
                 Toast.LENGTH_LONG).show();
             }
         });
+
     }
 }

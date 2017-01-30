@@ -15,7 +15,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".NewConcernActivity">
+        <activity
+            android:name=".NewConcernActivity"
+            android:label="Concern Form">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity"/>

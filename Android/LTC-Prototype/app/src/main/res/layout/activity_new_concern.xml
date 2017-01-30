@@ -90,7 +90,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
+            android:layout_height="55dp"/>
 
         <!-- Reporter Details -->
         <LinearLayout
@@ -167,7 +167,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="80dp"/>
+            android:layout_height="55dp"/>
 
         <!-- Submit Report Button -->
         <Button

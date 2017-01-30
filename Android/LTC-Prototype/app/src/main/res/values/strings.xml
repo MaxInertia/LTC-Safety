@@ -10,6 +10,7 @@
     <string name="email_field">Email:</string>
     <string name="description_label">Description:</string>
     <string name="actions_taken_label">Actions Taken:</string>
+    <string name="new_concern">New Concern</string>
 
     <string-array name="concern_types">
         <item>Near miss</item>
