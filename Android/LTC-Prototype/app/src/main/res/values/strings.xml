@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">LTC-Prototype</string>
+    <string name="name_field_hint">Name here</string>
+    <string name="phone_field_hint">Phone number here</string>
+    <string name="email_field_hint">Email here</string>
+    <string name="submit_concern_button_text">Submit Concern</string>
+    <string name="concern_type_label">Concern Type:</string>
+    <string name="name_field">Name:</string>
+    <string name="phone_number_field">Phone number:</string>
+    <string name="email_field">Email:</string>
+    <string name="description_label">Description:</string>
+    <string name="actions_taken_label">Actions Taken:</string>
+    <string name="new_concern">New Concern</string>
+
+    <string-array name="concern_types">
+        <item>Near miss</item>
+        <item>Mental abuse</item>
+        <item>Physical abuse</item>
+        <item>Witnessed fall</item>
+        <item>Equipment failure</item>
+        <item>Infection Control</item>
+        <item>Medication problem</item>
+        <item>Resident aggression</item>
+        <item>Environment problem</item>
+        <item>Improper equipment use</item>
+        <item>No response to requests</item>
+    </string-array>
 </resources>

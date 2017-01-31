@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new_concern"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cmpt371group2.ltc_prototype.NewConcernActivity">
+    <!--android:background="@color/viewBackground"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <!-- Dummy item to prevent AutoCompleteTextView from receiving focus -->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px">
+
+            <!-- :nextFocusUp and :nextFocusLeft have been set to the id of this component
+            to prevent the dummy from receiving focus again -->
+            <AutoCompleteTextView android:id="@+id/autotext"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:nextFocusUp="@id/autotext"
+                android:nextFocusLeft="@id/autotext"/>
+        </LinearLayout>
+
+        <!-- Concern Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border">
+
+            <!-- Concern Type Dropdown list -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center_vertical|start">
+                <TextView
+                    android:text="@string/concern_type_label"
+                    android:textSize="@dimen/new_concern_label_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Spinner
+                    android:id="@+id/ConcernTypeSpinner"
+                    android:textSize="@dimen/new_concern_label_text_size"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <TextView
+                android:text="@string/description_label"
+                android:textSize="@dimen/new_concern_label_text_size"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:id="@+id/description_field"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:gravity="center" />
+
+            <TextView
+                android:text="@string/actions_taken_label"
+                android:textSize="@dimen/new_concern_label_text_size"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:id="@+id/actions_taken_field"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:layout_width="match_parent"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="55dp"/>
+
+        <!-- Reporter Details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border">
+
+            <!-- Reporter Name field -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center_vertical|start">
+                <TextView
+                    android:text="@string/name_field"
+                    android:textSize="@dimen/new_concern_label_text_size"
+                    android:gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/NameField"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:layout_width="match_parent"
+                    android:gravity="center" />
+            </LinearLayout>
+
+
+            <!-- Reporter Phone number field -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|start"
+                android:padding="10dp">
+                <TextView
+                    android:text="@string/phone_number_field"
+                    android:textSize="@dimen/new_concern_label_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:id="@+id/PhoneNumberField"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:layout_width="match_parent"
+                    android:gravity="center" />
+            </LinearLayout>
+
+            <!-- Reporter Email field -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center_vertical|start">
+
+                <TextView
+                    android:text="@string/email_field"
+                    android:textSize="@dimen/new_concern_label_text_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:id="@+id/EmailField"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
+                    android:gravity="center" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="55dp"/>
+
+        <!-- Submit Report Button -->
+        <Button
+            android:text="@string/submit_concern_button_text"
+            android:textSize="24sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/submit_concern_button" />
+
+    </LinearLayout>
+</ScrollView>
