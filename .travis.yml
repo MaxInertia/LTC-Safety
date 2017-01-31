@@ -4,18 +4,12 @@ jdk:
 script: mvn test -f LTCSafety/pom.xml
 after_success:
   if [[ $TRAVIS_BRANCH == 'development' ]]
-    #unit tests for development and smoke test
-    
-    #git checkout master && \
-    #git merge development && \ 
-    #git push
-    
-  else if [[ $TRAVIS_BRANCH == 'master' ]]
+
 
   fi
 notifications:
   slack: 
-    rooms:
-      cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0#buildstatus
+    cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
     on_success: change
     on_failure: always
+  email: false
