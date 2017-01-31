@@ -5,7 +5,9 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 
 /**
- * Created by Brandon on 2017-01-30.
+ * Administrative API class used for requesting and granting account authorization
+ *
+ * Created on 2017-01-30.
  */
 @Api(name = "admin",
         title = "Admin API",
@@ -38,8 +40,25 @@ public class AdminApi {
         assert(accountDao.load(user.getId()) != null);
     }
 
+    /**
+     * Used by administrators to modify the account type of a user
+     *
+     * @param userId The userID of the account to modify
+     * @param accountType The user's new account type
+     */
     @ApiMethod(name = "grantAccess", path = "/admin/grantAccess")
-    public void grantAccess(String userId, AccountType accessType){
+    public void grantAccess(String userId, AccountType accountType){
 
+        //Create a new AccountDao
+        AccountDao accountDao = new AccountDao();
+
+        //Load the user's account via dao
+        Account userAccount = accountDao.load(userId);
+
+        //Assign the user account the given access type
+        userAccount.setAccessType(accountType);
+
+        //Updates the user account in the database via dao
+        accountDao.save(userAccount);
     }
 }

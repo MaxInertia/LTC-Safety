@@ -5,6 +5,8 @@ import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
 /**
+ * Account entity for storing information in a database about a user's account
+ *
  * Created on 2017-01-30.
  */
 @Entity
@@ -16,11 +18,11 @@ public class Account {
 
     /** Current verification status of the account */
     @Index
-    private AccountType isVerified;
+    private AccountType accessType;
 
     public Account(String id, AccountType isVerified) {
         this.id = id;
-        this.isVerified = isVerified;
+        this.accessType = isVerified;
     }
 
     public String getId() {
@@ -31,16 +33,16 @@ public class Account {
         this.id = id;
     }
 
-    public AccountType getIsVerified() {
-        return isVerified;
+    public AccountType getAccessType() {
+        return accessType;
     }
 
-    public void setIsVerified(AccountType isVerified) {
-        this.isVerified = isVerified;
+    public void setAccessType(AccountType accessType) {
+        this.accessType = accessType;
     }
 
     @Override
     public String toString(){
-        return "Account:\nID: " + this.id + this.isVerified.toString();
+        return "Account:\nID: " + this.id + this.accessType.toString();
     }
 }
