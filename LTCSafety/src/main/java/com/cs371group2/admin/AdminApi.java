@@ -1,4 +1,4 @@
-package com.cs371group2;
+package com.cs371group2.admin;
 
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
@@ -15,6 +15,7 @@ public class AdminApi {
 
     @ApiMethod(name = "requestAccess", path = "/admin/requestAccess")
     public void requestAccess(User user){
+
         // use user object's id as the key
         // create an AccountDao and account entity using the user id as the key
         // The dao should automatically create a user entity if it doesn't exist
@@ -22,5 +23,5 @@ public class AdminApi {
     }
 
     @ApiMethod(name = "grantAccess", path = "/admin/grantAccess")
-    public void grantAccess(){}
+    public void grantAccess(String userId, AccountType accessType){}
 }
