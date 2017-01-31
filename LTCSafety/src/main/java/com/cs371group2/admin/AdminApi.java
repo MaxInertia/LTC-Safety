@@ -14,7 +14,6 @@ import com.google.api.server.spi.config.ApiMethod;
         version = "v1")
 public class AdminApi {
 
-
     /**
      * Requests user access for users that are signing in for their first time
      *
@@ -26,18 +25,14 @@ public class AdminApi {
         //Create a new AccountDao
         AccountDao accountDao = new AccountDao();
 
-        //If this is the first time a user is attempting to sign-in
+        //If this is the first time a user is attempting to sign-in, create a new account and save it
         if(accountDao.load(user.getId()) == null){
-
-            //Create a new, unverified user account
-            Account userAccount = new Account(user.getId(), AccountType.UNVERIFIED);
-
-            //Save the user account to the database
+            Account userAccount = new Account(user.getId());
             accountDao.save(userAccount);
         }
 
         //Assert that the user account is in the database
-        assert(accountDao.load(user.getId()) != null);
+        //assert(accountDao.load(user.getId()) != null);
     }
 
     /**
@@ -49,16 +44,10 @@ public class AdminApi {
     @ApiMethod(name = "grantAccess", path = "/admin/grantAccess")
     public void grantAccess(String userId, AccountType accountType){
 
-        //Create a new AccountDao
+        //Assign the user account the given access type and updates its database entry
         AccountDao accountDao = new AccountDao();
-
-        //Load the user's account via dao
         Account userAccount = accountDao.load(userId);
-
-        //Assign the user account the given access type
         userAccount.setAccessType(accountType);
-
-        //Updates the user account in the database via dao
         accountDao.save(userAccount);
     }
 }

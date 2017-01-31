@@ -8,6 +8,10 @@
             <param-value>com.cs371group2.client.ClientApi</param-value>
         </init-param>
         <init-param>
+            <param-name>admin</param-name>
+            <param-value>com.cs371group2.admin.AdminApi</param-value>
+        </init-param>
+        <init-param>
             <param-name>restricted</param-name>
             <param-value>false</param-value>
         </init-param>

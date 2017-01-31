@@ -14,12 +14,13 @@ public enum AccountType {
     UNVERIFIED,
 
     /**
-     * User accounts should be able to submit and retract concerns
+     * User accounts should be able to view and respond to concerns, as well as estimate completion time.
      */
     USER,
 
     /**
-     * Admin accounts should be able to view and respond to concerns, as well as estimate completion time
+     * Admin accounts should be able to view and respond to concerns, as well as estimate completion time.
+     * On top of this, admin accounts should be able to change the AccountType of other user accounts.
      */
     ADMIN
 }

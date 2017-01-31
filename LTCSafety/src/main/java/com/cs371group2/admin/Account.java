@@ -20,9 +20,14 @@ public class Account {
     @Index
     private AccountType accessType;
 
-    public Account(String id, AccountType isVerified) {
+
+    /**
+     * Creates a new account with the given ID
+     * @param id The account ID
+     */
+    public Account(String id) {
         this.id = id;
-        this.accessType = isVerified;
+        accessType = AccountType.UNVERIFIED;
     }
 
     public String getId() {
