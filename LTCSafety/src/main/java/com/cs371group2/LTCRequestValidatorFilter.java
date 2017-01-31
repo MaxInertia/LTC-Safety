@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Brandon on 2017-01-29.
+ * HTTP Filter for ensuring authorized-access only
+ * Created on 2017-01-29.
  */
 public class LTCRequestValidatorFilter implements Filter {
     /**
@@ -16,27 +17,40 @@ public class LTCRequestValidatorFilter implements Filter {
      */
     private static final Logger LOGGER = Logger.getLogger( ValidationResult.class.getName() );
 
-    //private RequestValidator requestValidator;
-
+    /**
+     * Initializes the filter
+     *
+     * @param filterConfig Configuration for the filter
+     * @throws ServletException
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        //requestValidator = new RequestValidator(ApiKeys.TWILIO_AUTH_TOKEN);
-        System.out.println("Ayyy");
-        LOGGER.log(Level.WARNING, "Filtering reached!");
+        //LOGGER.log(Level.WARNING, "Filtering initialized!");
     }
 
+    /**
+     * Performs filtering in a chain by validating firebase tokens to ensure authorized access
+     *
+     * @param request The servlet request
+     * @param response The servlet response
+     * @param chain The next filter in the chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
 
-        System.out.println("Ayyy");
-        LOGGER.log(Level.WARNING, "Filtering reached!");
+        //LOGGER.log(Level.WARNING, "doFilter reached!");
+
         boolean isValidRequest = false;
+
         if (request instanceof HttpServletRequest) {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            //TwilioRequestValidator validator = new TwilioRequestValidator(requestValidator);
-            //isValidRequest = validator.validate(httpRequest);
+
+            //TODO VALIDATE THE REQUEST HERE AND SET isValidRequest TO THE RESULT
         }
+
         if(isValidRequest) {
             chain.doFilter(request, response);
         } else {

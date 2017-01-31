@@ -23,7 +23,7 @@
 		const email = txtEmail.value;
 		const password = txtPassword.value;
 		const auth = firebase.auth();
-
+		console.log("swag");
 		//Sign in
 		const promise = auth.signInWithEmailAndPassword(email,password);
 		//Catch error if cannot sign in
@@ -46,8 +46,10 @@
 
 	//Add a realtime listener
 	firebase.auth().onAuthStateChanged(firebaseUser =>{
+
 		if(firebaseUser){
 			console.log(firebaseUser);
+			window.location.
 			window.location.replace("home.html");
 		}else{
 			console.log('not log in');
