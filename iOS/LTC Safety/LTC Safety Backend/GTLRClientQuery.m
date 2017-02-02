@@ -48,7 +48,7 @@
                                HTTPMethod:@"POST"
                        pathParameterNames:nil];
   query.bodyObject = object;
-  query.expectedObjectClass = [GTLRClient_OwnerToken class];
+  query.expectedObjectClass = [GTLRClient_SubmitConcernResponse class];
   query.loggingName = @"client.submitConcern";
   return query;
 }

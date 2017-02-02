@@ -9,12 +9,56 @@
 #import "GTLRClientObjects.h"
 
 // ----------------------------------------------------------------------------
+// Constants
+
+// GTLRClient.ConcernStatusType
+NSString * const kGTLRClient_ConcernStatusType_Pending      = @"PENDING";
+NSString * const kGTLRClient_ConcernStatusType_Resolved     = @"RESOLVED";
+NSString * const kGTLRClient_ConcernStatusType_Responding24 = @"RESPONDING24";
+NSString * const kGTLRClient_ConcernStatusType_Responding48 = @"RESPONDING48";
+NSString * const kGTLRClient_ConcernStatusType_Responding72 = @"RESPONDING72";
+NSString * const kGTLRClient_ConcernStatusType_Retracted    = @"RETRACTED";
+NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRClient_Concern
+//
+
+@implementation GTLRClient_Concern
+@dynamic archived, data, identifier, statuses, submissionDate;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"identifier" : @"id" };
+}
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"statuses" : [GTLRClient_ConcernStatus class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
 //
 //   GTLRClient_ConcernData
 //
 
 @implementation GTLRClient_ConcernData
 @dynamic actionsTaken, concernNature, location, reporter;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRClient_ConcernStatus
+//
+
+@implementation GTLRClient_ConcernStatus
+@dynamic creationDate, type;
 @end
 
 
@@ -45,4 +89,14 @@
 
 @implementation GTLRClient_Reporter
 @dynamic email, name, phoneNumber;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRClient_SubmitConcernResponse
+//
+
+@implementation GTLRClient_SubmitConcernResponse
+@dynamic concern, ownerToken;
 @end

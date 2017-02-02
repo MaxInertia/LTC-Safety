@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
 //   +[GTLQueryClient queryForSubmitConcernWithObject:]
 
 /**
- *  Fetches a @c GTLRClient_OwnerToken.
+ *  Fetches a @c GTLRClient_SubmitConcernResponse.
  *
  *  @param object The @c GTLRClient_ConcernData to include in the query.
  *
