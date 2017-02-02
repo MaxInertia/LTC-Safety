@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		015F40978A875849A889A693 /* libPods-LTC SafetyTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA86E1F930EFEC0549C534D /* libPods-LTC SafetyTests.a */; };
 		0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */; };
+		0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5321CF1E43DEFC00EC3A69 /* LTCReporterTests.m */; };
 		1107E7721E3B0CE700675786 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7711E3B0CE700675786 /* main.m */; };
 		1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7741E3B0CE700675786 /* AppDelegate.m */; };
 		1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */; };
@@ -62,6 +63,7 @@
 
 /* Begin PBXFileReference section */
 		0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCLocationTests.m; sourceTree = "<group>"; };
+		0C5321CF1E43DEFC00EC3A69 /* LTCReporterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCReporterTests.m; sourceTree = "<group>"; };
 		1107E76D1E3B0CE700675786 /* LTC Safety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTC Safety.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1107E7711E3B0CE700675786 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1107E7731E3B0CE700675786 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
+				0C5321CF1E43DEFC00EC3A69 /* LTCReporterTests.m */,
 				0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */,
 				117DBD701E42ED17002F2EED /* LTCClientApiTests.m */,
 				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
@@ -603,6 +606,7 @@
 				117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */,
 				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
 				0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */,
+				0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */,
 				117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,
 				117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */,
