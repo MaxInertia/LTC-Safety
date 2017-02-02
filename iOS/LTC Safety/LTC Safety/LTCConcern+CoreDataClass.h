@@ -2,7 +2,7 @@
 //  LTCConcern+CoreDataClass.h
 //  
 //
-//  Created by Allan Kerr on 2017-01-27.
+//  Created by Allan Kerr on 2017-02-01.
 //
 //
 
@@ -13,13 +13,13 @@
 #import "LTCReporter+CoreDataClass.h"
 #import "GTLRClient.h"
 
-@class LTCLocation, LTCReporter;
+@class LTCConcernStatus, LTCLocation, LTCReporter;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCConcern : NSManagedObject
 @property (nonatomic, copy) NSString *ownerToken;
-+ (instancetype)concernWithConcern:(GTLRClient_Concern *)concern;
++ (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
 @end
 
 NS_ASSUME_NONNULL_END

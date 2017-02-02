@@ -10,12 +10,22 @@
 #import "LTCConcern+CoreDataClass.h"
 @implementation LTCReporter
 
-/*- (instancetype)initWithContext:(NSManagedObjectContext *)moc {
-    NSEntityDescription *description = [NSEntityDescription entityForName:@"LTCReporter" inManagedObjectContext:moc];
-    if (self = [super initWithEntity:description insertIntoManagedObjectContext:moc]) {
-        
++ (instancetype)reporterWithData:(nonnull GTLRClient_Reporter *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
+    
+    NSAssert(data != nil, @"The reporter data must be non-null");
+    NSAssert(context != nil, @"The managed object context must be non-null");
+    
+    NSEntityDescription *description = [NSEntityDescription entityForName:@"LTCReporter" inManagedObjectContext:context];
+    return [[LTCReporter alloc] initWithData:data entity:description insertIntoManagedObjectContext:context];
+}
+
+- (instancetype)initWithData:(nonnull GTLRClient_Reporter *)data entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
+    if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
+        self.name = data.name;
+        self.phoneNumber = data.phoneNumber;
+        self.email = data.email;
     }
     return self;
-}*/
+}
 
 @end

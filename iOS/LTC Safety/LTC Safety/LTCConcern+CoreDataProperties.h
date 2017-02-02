@@ -17,8 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nullable, nonatomic, copy) NSString *actionsTaken;
 @property (nullable, nonatomic, copy) NSString *concernNature;
+@property (nullable, nonatomic, copy) NSString *identifier;
 @property (nullable, nonatomic, copy) NSDate *submissionDate;
-@property (nonatomic) int64_t identifier;
 @property (nullable, nonatomic, retain) LTCLocation *location;
 @property (nullable, nonatomic, retain) LTCReporter *reporter;
 @property (nullable, nonatomic, retain) NSOrderedSet<LTCConcernStatus *> *statuses;

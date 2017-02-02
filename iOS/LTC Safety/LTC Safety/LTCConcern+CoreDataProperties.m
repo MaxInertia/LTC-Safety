@@ -16,8 +16,8 @@
 
 @dynamic actionsTaken;
 @dynamic concernNature;
-@dynamic submissionDate;
 @dynamic identifier;
+@dynamic submissionDate;
 @dynamic location;
 @dynamic reporter;
 @dynamic statuses;

@@ -9,8 +9,8 @@
     <entity name="LTCConcern" representedClassName=".LTCConcern" syncable="YES">
         <attribute name="actionsTaken" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="concernNature" attributeType="String" syncable="YES"/>
-        <attribute name="identifier" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="submissionDate" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="identifier" attributeType="String" customClassName="NSNumber" syncable="YES"/>
+        <attribute name="submissionDate" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="LTCLocation" inverseName="location" inverseEntity="LTCLocation" syncable="YES"/>
         <relationship name="reporter" maxCount="1" deletionRule="Cascade" destinationEntity="LTCReporter" inverseName="report" inverseEntity="LTCReporter" syncable="YES"/>
         <relationship name="statuses" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LTCConcernStatus" inverseName="status" inverseEntity="LTCConcernStatus" syncable="YES"/>
@@ -32,10 +32,10 @@
         <relationship name="report" maxCount="1" deletionRule="Deny" destinationEntity="LTCConcern" inverseName="reporter" inverseEntity="LTCConcern" syncable="YES"/>
     </entity>
     <elements>
-        <element name="LTCConcern" positionX="450" positionY="99" width="128" height="148"/>
+        <element name="Event" positionX="628" positionY="-72" width="128" height="60"/>
+        <element name="LTCConcern" positionX="450" positionY="99" width="128" height="150"/>
+        <element name="LTCConcernStatus" positionX="477" positionY="486" width="128" height="88"/>
         <element name="LTCLocation" positionX="637" positionY="297" width="128" height="90"/>
         <element name="LTCReporter" positionX="288" positionY="297" width="128" height="103"/>
-        <element name="Event" positionX="628" positionY="-72" width="128" height="60"/>
-        <element name="LTCConcernStatus" positionX="477" positionY="486" width="128" height="88"/>
     </elements>
 </model>

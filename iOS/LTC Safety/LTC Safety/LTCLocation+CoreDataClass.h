@@ -8,13 +8,14 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "GTLRClient.h"
 
 @class LTCConcern;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCLocation : NSManagedObject
-
++ (instancetype)locationWithData:(nonnull GTLRClient_Location *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -9,9 +9,10 @@
 #import <XCTest/XCTest.h>
 #import "GTLRClient.h"
 #import "LTCConcern+CoreDataClass.h"
+#import "LTCCoreDataTestCase.h"
 
-@interface LTCConcernTests : XCTestCase
-
+@interface LTCConcernTests : LTCCoreDataTestCase
+@property (nonatomic, strong) GTLRClient_Concern *concern;
 @end
 
 @implementation LTCConcernTests
@@ -28,7 +29,7 @@
 
     GTLRClient_Concern *concern = [[GTLRClient_Concern alloc] init];
     concern.archived = @NO;
-    concern.identifier = @100000000;
+    concern.identifier = [NSNumber numberWithLongLong:123456];
     
     concern.submissionDate = [GTLRDateTime dateTimeWithDate:[NSDate date]];
     
@@ -54,12 +55,13 @@
     
     concern.data = data;
     
-    LTCConcern *localConcern = [LTCConcern concernWithConcern:concern];
+    
+    LTCConcern *localConcern = [LTCConcern concernWithData:concern inManagedObjectContext:self.container.viewContext];
     XCTAssertNotNil(localConcern);
     
-    XCTAssertEqual(concern.submissionDate.date, localConcern.submissionDate);
+    XCTAssertTrue([concern.submissionDate.date isEqualToDate:localConcern.submissionDate]);
     
-    XCTAssertEqual([concern.identifier unsignedLongValue], localConcern.identifier);
+    XCTAssertEqual([concern.identifier stringValue], localConcern.identifier);
     XCTAssertEqual(concern.data.actionsTaken, localConcern.actionsTaken);
     XCTAssertEqual(concern.data.concernNature, localConcern.concernNature);
     
@@ -75,7 +77,7 @@
         LTCConcernStatus *localStatus = [localConcern.statuses objectAtIndex:i];
 
         XCTAssertEqual(status.type, localStatus.concernType);
-        XCTAssertEqual(status.creationDate.date, localStatus.creationDate);
+        XCTAssertTrue([status.creationDate.date isEqualToDate:localStatus.creationDate]);
     }
 }
 
