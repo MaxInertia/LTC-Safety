@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="LTCSafety:war exploded">
-    <output-path>$PROJECT_DIR$/target/LTC Safety-1.0-SNAPSHOT</output-path>
+    <output-path>$PROJECT_DIR$/target/LTC-Safety-1.0-SNAPSHOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -8,7 +8,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: com.google.appengine:appengine-api-1.0-sdk:1.9.48" />
-          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-framework:2.0.0-beta.5" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-framework:2.0.0-beta.12" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:19.0" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.6.4" />
           <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.6.4" />
@@ -41,13 +41,50 @@
           <element id="library" level="project" name="Maven: org.yaml:snakeyaml:1.12" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
           <element id="library" level="project" name="Maven: org.slf4j:slf4j-nop:1.7.21" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-control-appengine:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-control:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: com.google.api.grpc:googleapis-common-protos:0.0.3" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.0.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-stub:0.15.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-core:0.15.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf:0.15.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf-lite:0.15.0" />
+          <element id="library" level="project" name="Maven: com.google.auto.value:auto-value:1.1" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-api-client:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: com.google.api-client:google-api-client-protobuf:1.22.0" />
+          <element id="library" level="project" name="Maven: com.google.http-client:google-http-client-protobuf:1.22.0" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-config:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: com.google.apis:google-api-services-servicemanagement:v1-rev14-1.22.0" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java-util:3.0.0-beta-4" />
+          <element id="library" level="project" name="Maven: com.google.code.gson:gson:2.3" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-protos:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-all:0.15.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-auth:0.15.0" />
+          <element id="library" level="project" name="Maven: com.google.auth:google-auth-library-credentials:0.4.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-netty:0.15.0" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http2:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec-http:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-codec:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-handler:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-buffer:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-common:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-transport:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.netty:netty-resolver:4.1.1.Final" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-okhttp:0.15.0" />
+          <element id="library" level="project" name="Maven: com.squareup.okio:okio:1.6.0" />
+          <element id="library" level="project" name="Maven: com.squareup.okhttp:okhttp:2.5.0" />
+          <element id="library" level="project" name="Maven: io.grpc:grpc-protobuf-nano:0.15.0" />
+          <element id="library" level="project" name="Maven: com.google.protobuf.nano:protobuf-javanano:3.0.0-alpha-5" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-framework-auth:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: com.google.endpoints:endpoints-management-auth:1.0.0-beta.12" />
+          <element id="library" level="project" name="Maven: org.bitbucket.b_c:jose4j:0.5.1" />
           <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
           <element id="library" level="project" name="Maven: com.googlecode.objectify:objectify:5.1.13" />
           <element id="library" level="project" name="Maven: io.jsonwebtoken:jjwt:0.7.0" />
         </element>
       </element>
       <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/target/LTC Safety-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
+        <element id="file-copy" path="$PROJECT_DIR$/target/LTC-Safety-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       </element>
       <element id="javaee-facet-resources" facet="LTCSafety/web/Web" />
     </root>
