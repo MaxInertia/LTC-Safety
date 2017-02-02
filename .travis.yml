@@ -1,5 +1,4 @@
 language: objective-c
-os: osx
 osx_image: xcode8.2
 xcode_project: iOS/LTC Safety/LTC Safety.xcodeproj
 xcode_scheme: iOS/LTC Safety/LTC Safety
