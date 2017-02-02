@@ -35,6 +35,10 @@
 		117DBD661E42DED9002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */; };
 		117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */; };
+		117DBD6F1E42EC63002F2EED /* LTCNewConcernViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD6E1E42EC63002F2EED /* LTCNewConcernViewModelTests.m */; };
+		117DBD711E42ED17002F2EED /* LTCClientApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD701E42ED17002F2EED /* LTCClientApiTests.m */; };
+		117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */; };
+		117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
 /* End PBXBuildFile section */
@@ -111,6 +115,12 @@
 		117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCConcern+CoreDataProperties.m"; path = "LTC Safety/LTCConcern+CoreDataProperties.m"; sourceTree = "<group>"; };
 		117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcern_Testing.h; sourceTree = "<group>"; };
 		117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcern_Testing.m; sourceTree = "<group>"; };
+		117DBD6E1E42EC63002F2EED /* LTCNewConcernViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCNewConcernViewModelTests.m; sourceTree = "<group>"; };
+		117DBD701E42ED17002F2EED /* LTCClientApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCClientApiTests.m; sourceTree = "<group>"; };
+		117DBD721E42F0E2002F2EED /* GTLRClientServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLRClientServiceMock.h; sourceTree = "<group>"; };
+		117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLRClientServiceMock.m; sourceTree = "<group>"; };
+		117DBD781E42F2DB002F2EED /* GTLRClientObjects_Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLRClientObjects_Testing.h; sourceTree = "<group>"; };
+		117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLRClientObjects_Testing.m; sourceTree = "<group>"; };
 		1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCoreDataTestCase.m; sourceTree = "<group>"; };
 		1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCCoreDataTestCase.h; sourceTree = "<group>"; };
 		303C46FFCEF3160E4E7E22EC /* Pods-LTC Safety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig"; sourceTree = "<group>"; };
@@ -208,12 +218,13 @@
 			isa = PBXGroup;
 			children = (
 				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
+				117DBD701E42ED17002F2EED /* LTCClientApiTests.m */,
+				117DBD6E1E42EC63002F2EED /* LTCNewConcernViewModelTests.m */,
 				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
-				1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */,
-				1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */,
 				1107E7921E3B0CE800675786 /* Info.plist */,
-				117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */,
-				117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */,
+				117DBD771E42F2BD002F2EED /* Test Cases */,
+				117DBD761E42F2AD002F2EED /* Mocks */,
+				117DBD751E42F299002F2EED /* Extensions */,
 			);
 			path = "LTC SafetyTests";
 			sourceTree = "<group>";
@@ -274,6 +285,35 @@
 				1133DF7C1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m */,
 			);
 			name = Persistence;
+			sourceTree = "<group>";
+		};
+		117DBD751E42F299002F2EED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */,
+				117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */,
+				117DBD781E42F2DB002F2EED /* GTLRClientObjects_Testing.h */,
+				117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
+		117DBD761E42F2AD002F2EED /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				117DBD721E42F0E2002F2EED /* GTLRClientServiceMock.h */,
+				117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */,
+			);
+			name = Mocks;
+			sourceTree = "<group>";
+		};
+		117DBD771E42F2BD002F2EED /* Test Cases */ = {
+			isa = PBXGroup;
+			children = (
+				1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */,
+				1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */,
+			);
+			name = "Test Cases";
 			sourceTree = "<group>";
 		};
 		33572C11EE12445930039E5A /* Frameworks */ = {
@@ -559,7 +599,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1133DF6F1E3C54020033BEA7 /* LTCConcernViewModelTests.m in Sources */,
+				117DBD711E42ED17002F2EED /* LTCClientApiTests.m in Sources */,
+				117DBD6F1E42EC63002F2EED /* LTCNewConcernViewModelTests.m in Sources */,
+				117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */,
 				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
+				117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,
 				117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */,
 			);
