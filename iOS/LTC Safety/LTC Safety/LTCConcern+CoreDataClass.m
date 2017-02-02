@@ -10,6 +10,7 @@
 #import "LTCConcernStatus+CoreDataClass.h"
 #import "LTCLocation+CoreDataClass.h"
 #import "LTCReporter+CoreDataClass.h"
+#import "UICKeyChainStore.h"
 
 @interface LTCConcern ()
 // Store the owner token to keychain on save and awake from fetch
@@ -18,19 +19,38 @@
 @end
 
 @implementation LTCConcern
+@synthesize ownerToken = _ownerToken;
 
-+ (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
+- (void)didSave {
+    NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
+    [keychain setValue:self.ownerToken forKey:self.identifier];
+    
+    [super didSave];
+}
+
+- (void)awakeFromFetch {
+    
+    [super awakeFromFetch];
+    
+    NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
+    self.ownerToken = [keychain valueForKey:self.identifier];
+}
+
++ (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data ownerToken:(NSString *)ownerToken inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
     
     NSAssert(data != nil, @"The concern data must be non-null");
     NSAssert(context != nil, @"The managed object context must be non-null");
     
     NSEntityDescription *description = [NSEntityDescription entityForName:@"LTCConcern" inManagedObjectContext:context];
-    return [[LTCConcern alloc] initWithData:data entity:description insertIntoManagedObjectContext:context];
+    return [[LTCConcern alloc] initWithData:data ownerToken:ownerToken entity:description insertIntoManagedObjectContext:context];
 }
 
-- (instancetype)initWithData:(nonnull GTLRClient_Concern *)concernData entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
+- (instancetype)initWithData:(nonnull GTLRClient_Concern *)concernData ownerToken:(NSString *)ownerToken entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
-                
+        
+        self.ownerToken = ownerToken;
         self.identifier = [concernData.identifier stringValue];
         self.submissionDate = concernData.submissionDate.date;
         self.actionsTaken = concernData.data.actionsTaken;

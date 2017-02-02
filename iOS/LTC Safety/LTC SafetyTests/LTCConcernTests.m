@@ -56,7 +56,7 @@
     concern.data = data;
     
     
-    LTCConcern *localConcern = [LTCConcern concernWithData:concern inManagedObjectContext:self.container.viewContext];
+    LTCConcern *localConcern = [LTCConcern concernWithData:concern ownerToken:@"token" inManagedObjectContext:self.container.viewContext];
     XCTAssertNotNil(localConcern);
     
     XCTAssertTrue([concern.submissionDate.date isEqualToDate:localConcern.submissionDate]);

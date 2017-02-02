@@ -13,6 +13,7 @@
 #import "LTCConcernViewModel.h"
 #import "LTCCoreDataTestCase.h"
 #import "UICKeyChainStore.h"
+#import "LTCConcern_Testing.h"
 @import CoreData;
 
 @interface LTCConcernViewModelTests : LTCCoreDataTestCase
@@ -29,43 +30,30 @@
     [super tearDown];
 }
 
-- (LTCConcern*)testConcernCreation {
-    LTCLocation *location = [[LTCLocation alloc] initWithContext:self.container.viewContext];
-    location.roomName = @"A room name";
-    location.facilityName = @"A facility name";
-    
-    LTCReporter *reporter = [[LTCReporter alloc] initWithContext:self.container.viewContext];
-    reporter.name = @"A reporter name";
-    reporter.phoneNumber = @"A reporter phone number";
-    reporter.email = @"A reporter email";
-    
-    LTCConcern *concern = [LTCConcern concernWithConcern:nil];
-    concern.reporter = reporter;
-    concern.location = location;
-    concern.concernNature = @"The nature of the concern";
-    concern.actionsTaken = @"The actions taken";
-    
-    return concern;
-}
-
 - (void)testAddConcern {
     
     XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
 
-    LTCConcern *concern = self.testConcernCreation;
+    LTCConcern *concern = [LTCConcern testConcernWithContext:self.container.viewContext];
     
     NSError *error = nil;
     LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
     [viewModel addConcern:concern error:&error];
+    
     XCTAssertNil(error, @"%@", error);
     XCTAssertFalse(concern.objectID.temporaryID);
+    
+    
+    NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];    
+    XCTAssertNotNil( [keychain valueForKey:concern.identifier]);
 }
 
 - (void)testRemoveConcern {
     
     XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
     
-    LTCConcern *concern = self.testConcernCreation;
+    LTCConcern *concern = [LTCConcern testConcernWithContext:self.container.viewContext];
 
     LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
     
@@ -82,10 +70,10 @@
     
     XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
 
-    LTCConcern *concern1 = self.testConcernCreation;
-    LTCConcern *concern2 = self.testConcernCreation;
-    LTCConcern *concern3 = self.testConcernCreation;
-    LTCConcern *concern4 = self.testConcernCreation;
+    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.container.viewContext];
 
     NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
     NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:1 inSection:0];
@@ -108,12 +96,13 @@
 }
 
 - (void)testRowCountForSection {
+    
     XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
     
-    LTCConcern *concern1 = self.testConcernCreation;
-    LTCConcern *concern2 = self.testConcernCreation;
-    LTCConcern *concern3 = self.testConcernCreation;
-    LTCConcern *concern4 = self.testConcernCreation;
+    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.container.viewContext];
     
     NSError *error = nil;
     LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
@@ -124,8 +113,6 @@
     [viewModel addConcern:concern4 error:&error];
 
     XCTAssertEqual([viewModel rowCountForSection:0], 4);
-    XCTAssertEqual([viewModel rowCountForSection:1], 0);
-
 }
 
 @end

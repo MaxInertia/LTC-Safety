@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCConcern : NSManagedObject
 @property (nonatomic, copy) NSString *ownerToken;
-+ (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
++ (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data ownerToken:(NSString *)ownerToken inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
 @end
 
 NS_ASSUME_NONNULL_END

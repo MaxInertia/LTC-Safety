@@ -34,6 +34,7 @@
 		117DBD611E42BEFA002F2EED /* GTLRClientService.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD5E1E42BEFA002F2EED /* GTLRClientService.m */; };
 		117DBD661E42DED9002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */; };
+		117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
 /* End PBXBuildFile section */
@@ -108,6 +109,8 @@
 		117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCConcern+CoreDataClass.m"; path = "LTC Safety/LTCConcern+CoreDataClass.m"; sourceTree = "<group>"; };
 		117DBD681E42E14A002F2EED /* LTCConcern+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "LTCConcern+CoreDataProperties.h"; path = "LTC Safety/LTCConcern+CoreDataProperties.h"; sourceTree = "<group>"; };
 		117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCConcern+CoreDataProperties.m"; path = "LTC Safety/LTCConcern+CoreDataProperties.m"; sourceTree = "<group>"; };
+		117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcern_Testing.h; sourceTree = "<group>"; };
+		117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcern_Testing.m; sourceTree = "<group>"; };
 		1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCoreDataTestCase.m; sourceTree = "<group>"; };
 		1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCCoreDataTestCase.h; sourceTree = "<group>"; };
 		303C46FFCEF3160E4E7E22EC /* Pods-LTC Safety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig"; sourceTree = "<group>"; };
@@ -205,10 +208,12 @@
 			isa = PBXGroup;
 			children = (
 				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
+				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
 				1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */,
 				1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */,
-				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
 				1107E7921E3B0CE800675786 /* Info.plist */,
+				117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */,
+				117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */,
 			);
 			path = "LTC SafetyTests";
 			sourceTree = "<group>";
@@ -556,6 +561,7 @@
 				1133DF6F1E3C54020033BEA7 /* LTCConcernViewModelTests.m in Sources */,
 				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,
+				117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
