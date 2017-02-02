@@ -15,10 +15,7 @@ import java.util.logging.Logger;
  */
 public final class ConcernData implements Validatable {
 
-    /**
-     * Logger definition for this class.
-     */
-    private static final Logger LOGGER = Logger.getLogger( ConcernData.class.getName() );
+    private static final Logger logger = Logger.getLogger(ConcernData.class.getName());
 
     private static final String CONCERN_NATURE_ERROR = "The nature of the concern must be specified when a concern is submitted";
     private static final String REPORTER_ERROR = "A reporter must be specified when a concern is submitted";
@@ -66,34 +63,36 @@ public final class ConcernData implements Validatable {
 
     @Override
     public ValidationResult validate() {
+
         if (concernNature == null) {
-            LOGGER.log(Level.FINE, "Validating unsuccessful: concernNature is null");
+            logger.log(Level.WARNING, "Validating unsuccessful: concernNature is null");
             return new ValidationResult(CONCERN_NATURE_ERROR);
         }
         if (reporter == null) {
-            LOGGER.log(Level.FINE, "Validating unsuccessful: reporter is null");
+            logger.log(Level.WARNING, "Validating unsuccessful: reporter is null");
             return new ValidationResult(REPORTER_ERROR);
         }
         if (location == null) {
-            LOGGER.log(Level.FINE, "Validating unsuccessful: location is null");
+            logger.log(Level.WARNING, "Validating unsuccessful: location is null");
             return new ValidationResult(LOCATION_ERROR);
         }
         ValidationResult reporterResult = reporter.validate();
         if (!reporterResult.isValid()) {
-            LOGGER.log(Level.FINE, "Validating unsuccessful: reporter is not valid");
+            logger.log(Level.WARNING, "Validating unsuccessful: reporter is not valid");
             return reporterResult;
         }
         ValidationResult locationResult = location.validate();
         if (!locationResult.isValid()) {
-            LOGGER.log(Level.FINE, "Validating unsuccessful: location is not valid");
+            logger.log(Level.WARNING, "Validating unsuccessful: location is not valid");
             return locationResult;
         }
-        LOGGER.log(Level.FINER, "Validation of Concern \"" + this.concernNature +"\" was successful.");
+
+        logger.log(Level.FINER, "Validation of Concern \"" + this.concernNature + "\" was successful.");
         return new ValidationResult();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Concern Nature: " + this.getConcernNature()
                 + "\nActions Taken: " + this.getActionsTaken()
                 + "\n" + this.getReporter().toString() + this.getLocation().toString() + "\n";

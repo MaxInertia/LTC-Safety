@@ -17,7 +17,7 @@ import java.util.logging.Logger;
         version = "v1")
 public final class ClientApi {
 
-    private static final Logger LOGGER = Logger.getLogger( ClientApi.class.getName() );
+    private static final Logger logger = Logger.getLogger( ClientApi.class.getName() );
 
     private static final String CONCERN_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
 
@@ -26,15 +26,14 @@ public final class ClientApi {
 
         ValidationResult result = data.validate();
         if (!result.isValid()) {
-            LOGGER.log(Level.WARNING, "Client tried submitting a concern with invalid data.");
+            logger.log(Level.WARNING, "Client tried submitting a concern with invalid data.");
             throw new BadRequestException(result.getErrorMessage());
         }
 
         Concern concern = new Concern(data);
         new ConcernDao().save(concern);
 
-        LOGGER.log(Level.INFO, "Client successfully submitted concern:\n" + concern.toString());
-
+        logger.log(Level.INFO, "Client successfully submitted concern:\n" + concern.toString());
         return new SubmitConcernResponse(concern);
     }
 
@@ -43,20 +42,20 @@ public final class ClientApi {
 
         ValidationResult result = token.validate();
         if (!result.isValid()) {
-            LOGGER.log(Level.WARNING, "Client tried retracting a concern with invalid token.");
+            logger.log(Level.WARNING, "Client tried retracting a concern with invalid token.");
             throw new BadRequestException(result.getErrorMessage());
         }
 
         ConcernDao dao = new ConcernDao();
         Concern concern = dao.load(token);
         if (concern == null) {
-            LOGGER.log(Level.WARNING, "Client tried retracting a concern but concern was not found.");
+            logger.log(Level.WARNING, "Client tried retracting a concern but concern was not found.");
             throw new NotFoundException(CONCERN_NOT_FOUND_ERROR);
         }
 
         concern.retract();
         dao.save(concern);
 
-        LOGGER.log(Level.INFO, "Client successfully retracted a concern.");
+        logger.log(Level.INFO, "Client successfully retracted a concern.");
     }
 }

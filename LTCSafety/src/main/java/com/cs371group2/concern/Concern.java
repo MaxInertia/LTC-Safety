@@ -22,7 +22,7 @@ public final class Concern {
     /**
      * Logger definition for this class.
      */
-    private static final Logger LOGGER = Logger.getLogger( Concern.class.getName() );
+    private static final Logger logger = Logger.getLogger(Concern.class.getName());
 
     /**
      * Used to uniquely identify concerns within the database. This value will be automatically
@@ -32,8 +32,8 @@ public final class Concern {
     private Long id;
 
     /**
-     * The status of the concern within the system detailing action that has been taken. The status
-     * changes as administrators acknowledge, respond to, and resolve concerns.
+     * The statuses that the concern has been through in its life cycle order by date with the
+     * current concern being the last.
      */
     @Index
     private SortedSet<ConcernStatus> statuses = new TreeSet<ConcernStatus>();
@@ -77,7 +77,8 @@ public final class Concern {
         return data;
     }
 
-    private Concern() {}
+    private Concern() {
+    }
 
     /**
      * Create a new concern
@@ -86,20 +87,14 @@ public final class Concern {
      * @precond data != null data is valid based on its validate method
      */
     public Concern(ConcernData data) {
-        if (data == null) {
-            LOGGER.log(Level.SEVERE, "Concern tried to be created with no data.");
-        }
-        assert data != null;
 
-        if (!data.validate().isValid()) {
-            LOGGER.log(Level.SEVERE, "Concern tried to be created with invalid data.");
-        }
+        assert data != null;
         assert data.validate().isValid();
 
         this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
         this.data = data;
 
-        LOGGER.log(Level.FINER, "Concern created: \n" + this.toString());
+        logger.log(Level.FINER, "Concern created: \n" + this.toString());
     }
 
     /**
@@ -114,7 +109,7 @@ public final class Concern {
 
         assert id != null;
 
-        LOGGER.log(Level.FINER, "Owner Token being created: ID# " + this.id);
+        logger.log(Level.FINER, "Owner Token being created: ID# " + this.id);
         return new OwnerToken(id);
     }
 
@@ -127,11 +122,11 @@ public final class Concern {
         statuses.add(new ConcernStatus(ConcernStatusType.RETRACTED));
         isArchived = true;
 
-        LOGGER.log(Level.FINER, "Concern Retracted: ID# " + this.id);
+        logger.log(Level.FINER, "Concern Retracted: ID# " + this.id);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Concern:\nID# " + this.id + this.getData().toString();
     }
 }

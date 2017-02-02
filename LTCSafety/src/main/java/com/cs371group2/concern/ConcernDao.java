@@ -17,12 +17,7 @@ import java.util.logging.Logger;
  */
 public class ConcernDao extends Dao<Concern> {
 
-    /**
-     * Logger definition for this class.
-     */
-    private static final Logger LOGGER = Logger.getLogger( ConcernDao.class.getName() );
-
-
+    private static final Logger logger = Logger.getLogger(ConcernDao.class.getName());
 
     /**
      * Creates a data access object for loading, saving, and deleting concerns.
@@ -41,9 +36,8 @@ public class ConcernDao extends Dao<Concern> {
      * signed JWS for parsing.
      */
     public Concern load(OwnerToken token) {
-        if(token == null){ LOGGER.log(Level.WARNING, "Concern tried to be loaded from datastore with null token."); }
+
         assert token != null;
-        if(!token.validate().isValid()){ LOGGER.log(Level.WARNING, "Concern tried to be loaded from datastore with invalid token."); }
         assert token.validate().isValid();
 
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
@@ -52,7 +46,7 @@ public class ConcernDao extends Dao<Concern> {
 
         Long id = Long.parseLong(claims.getSubject());
 
-        LOGGER.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
+        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
         return load(id);
     }
 }
