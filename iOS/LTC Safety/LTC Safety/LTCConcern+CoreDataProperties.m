@@ -2,7 +2,7 @@
 //  LTCConcern+CoreDataProperties.m
 //  
 //
-//  Created by Allan Kerr on 2017-01-27.
+//  Created by Allan Kerr on 2017-02-01.
 //
 //
 
@@ -16,7 +16,10 @@
 
 @dynamic actionsTaken;
 @dynamic concernNature;
-@dynamic reporter;
+@dynamic submissionDate;
+@dynamic identifier;
 @dynamic location;
+@dynamic reporter;
+@dynamic statuses;
 
 @end

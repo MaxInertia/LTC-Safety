@@ -30,6 +30,9 @@
 		1133DF801E3C583E0033BEA7 /* LTCLocation+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1133DF781E3C583E0033BEA7 /* LTCLocation+CoreDataProperties.m */; };
 		1133DF811E3C583E0033BEA7 /* LTCReporter+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1133DF7A1E3C583E0033BEA7 /* LTCReporter+CoreDataClass.m */; };
 		1133DF821E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1133DF7C1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m */; };
+		1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */; };
+		1178CD831E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 1178CD801E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m */; };
+		1178CD841E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 1178CD821E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		AE87409090197A139FDE78B6 /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5125757F956CF6FE965BC070 /* libPods-LTC Safety.a */; };
 /* End PBXBuildFile section */
@@ -99,6 +102,11 @@
 		1133DF7A1E3C583E0033BEA7 /* LTCReporter+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCReporter+CoreDataClass.m"; path = "LTC Safety/LTCReporter+CoreDataClass.m"; sourceTree = "<group>"; };
 		1133DF7B1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "LTCReporter+CoreDataProperties.h"; path = "LTC Safety/LTCReporter+CoreDataProperties.h"; sourceTree = "<group>"; };
 		1133DF7C1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCReporter+CoreDataProperties.m"; path = "LTC Safety/LTCReporter+CoreDataProperties.m"; sourceTree = "<group>"; };
+		1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernTests.m; sourceTree = "<group>"; };
+		1178CD7F1E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "LTCConcernStatus+CoreDataClass.h"; path = "LTC Safety/LTCConcernStatus+CoreDataClass.h"; sourceTree = "<group>"; };
+		1178CD801E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCConcernStatus+CoreDataClass.m"; path = "LTC Safety/LTCConcernStatus+CoreDataClass.m"; sourceTree = "<group>"; };
+		1178CD811E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "LTCConcernStatus+CoreDataProperties.h"; path = "LTC Safety/LTCConcernStatus+CoreDataProperties.h"; sourceTree = "<group>"; };
+		1178CD821E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "LTCConcernStatus+CoreDataProperties.m"; path = "LTC Safety/LTCConcernStatus+CoreDataProperties.m"; sourceTree = "<group>"; };
 		1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCoreDataTestCase.m; sourceTree = "<group>"; };
 		1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCCoreDataTestCase.h; sourceTree = "<group>"; };
 		303C46FFCEF3160E4E7E22EC /* Pods-LTC Safety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig"; sourceTree = "<group>"; };
@@ -191,6 +199,7 @@
 		1107E78F1E3B0CE800675786 /* LTC SafetyTests */ = {
 			isa = PBXGroup;
 			children = (
+				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
 				1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */,
 				1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */,
 				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
@@ -237,6 +246,10 @@
 		1133DF701E3C58330033BEA7 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				1178CD7F1E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.h */,
+				1178CD801E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m */,
+				1178CD811E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.h */,
+				1178CD821E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m */,
 				1133DF711E3C583E0033BEA7 /* LTCConcern+CoreDataClass.h */,
 				1133DF721E3C583E0033BEA7 /* LTCConcern+CoreDataClass.m */,
 				1133DF731E3C583E0033BEA7 /* LTCConcern+CoreDataProperties.h */,
@@ -471,8 +484,10 @@
 				1107E8091E3B467800675786 /* LTCConcernViewModel.m in Sources */,
 				1133DF811E3C583E0033BEA7 /* LTCReporter+CoreDataClass.m in Sources */,
 				1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */,
+				1178CD841E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m in Sources */,
 				1107E7721E3B0CE700675786 /* main.m in Sources */,
 				1107E7AF1E3B16D200675786 /* LTCNewConcernViewModel.m in Sources */,
+				1178CD831E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m in Sources */,
 				1107E8021E3B3FBD00675786 /* GTLRClientService.m in Sources */,
 				1107E8051E3B3FF100675786 /* LTCClientApi.m in Sources */,
 			);
@@ -483,6 +498,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1133DF6F1E3C54020033BEA7 /* LTCConcernViewModelTests.m in Sources */,
+				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
