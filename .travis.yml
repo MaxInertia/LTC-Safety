@@ -2,5 +2,5 @@ language: objective-c
 xcode_workspace: iOS/LTC Safety/LTC Safety.xcworkspace
 xcode_scheme: iOS/LTC Safety/LTC Safety
 xcode_sdk: iphonesimulator
-script: pod install
+install: pod install
 podfile: iOS/LTC Safety/Podfile
