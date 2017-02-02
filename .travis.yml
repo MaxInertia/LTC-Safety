@@ -9,7 +9,6 @@ after_success:
   fi
 notifications:
   slack: 
-    cmpt371team2:dCejYqfn5bhvaeXZImuUmDT0
     on_success: change
     on_failure: always
   email: false
