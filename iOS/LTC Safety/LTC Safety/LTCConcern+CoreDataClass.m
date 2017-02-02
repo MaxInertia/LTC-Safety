@@ -19,7 +19,6 @@
 @end
 
 @implementation LTCConcern
-@synthesize ownerToken = _ownerToken;
 
 - (void)didSave {
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
@@ -50,6 +49,7 @@
 - (instancetype)initWithData:(nonnull GTLRClient_Concern *)concernData ownerToken:(NSString *)ownerToken entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         
+        NSLog(@"%@", self.class);
         self.ownerToken = ownerToken;
         self.identifier = [concernData.identifier stringValue];
         self.submissionDate = concernData.submissionDate.date;

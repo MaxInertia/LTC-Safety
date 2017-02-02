@@ -31,19 +31,19 @@
 + (GTLRClient_ConcernData *)testConcernData {
     
     GTLRClient_Reporter *reporter = [[GTLRClient_Reporter alloc] init];
-    reporter.name = @"Name";
-    reporter.phoneNumber = @"Phone number";
-    reporter.email = @"Email";
+    reporter.name = [NSUUID UUID].UUIDString;
+    reporter.phoneNumber = [NSUUID UUID].UUIDString;
+    reporter.email = [NSUUID UUID].UUIDString;
     
     GTLRClient_Location *location = [[GTLRClient_Location alloc] init];
-    location.facilityName = @"Facility";
-    location.roomName = @"Room";
+    location.facilityName = [NSUUID UUID].UUIDString;
+    location.roomName = [NSUUID UUID].UUIDString;
     
     GTLRClient_ConcernData *data = [[GTLRClient_ConcernData alloc] init];
     data.reporter = reporter;
     data.location = location;
-    data.concernNature = @"Nature of concern";
-    data.actionsTaken = @"Actions taken";
+    data.concernNature = [NSUUID UUID].UUIDString;
+    data.actionsTaken = [NSUUID UUID].UUIDString;
     
     return data;
 }
