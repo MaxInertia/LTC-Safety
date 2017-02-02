@@ -49,7 +49,6 @@
 
 		if(firebaseUser){
 			console.log(firebaseUser);
-			window.location.
 			window.location.replace("home.html");
 		}else{
 			console.log('not log in');
