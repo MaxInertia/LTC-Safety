@@ -8,7 +8,6 @@ import com.cs371group2.DatastoreTest;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernStatus;
 import com.cs371group2.concern.ConcernTest;
 import com.googlecode.objectify.Key;
 import org.junit.Test;
@@ -46,7 +45,6 @@ public class ConcernDaoTest extends DatastoreTest {
                 data.getLocation().getFacilityName());
         assertEquals(loadedData.getLocation().getRoomName(), data.getLocation().getRoomName());
 
-        assertEquals(loadedConcern.getStatus(), ConcernStatus.PENDING);
         assertNotNull(loadedConcern.getSubmissionDate());
     }
 

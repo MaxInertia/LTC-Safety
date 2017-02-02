@@ -8,7 +8,7 @@ import com.cs371group2.ApiKeys;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernStatus;
+import com.cs371group2.concern.ConcernStatusType;
 import com.cs371group2.concern.ConcernTest;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -45,7 +45,7 @@ public class ClientApiTest extends DatastoreTest {
 
         ConcernData data = new ConcernTest().generateConcernData();
 
-        OwnerToken token = new ClientApi().submitConcern(data);
+        OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
                 .parseClaimsJws(token.getToken());
         Claims claims = claim.getBody();
@@ -67,7 +67,7 @@ public class ClientApiTest extends DatastoreTest {
                 data.getLocation().getFacilityName());
         assertEquals(loadedData.getLocation().getRoomName(), data.getLocation().getRoomName());
 
-        assertEquals(concern.getStatus(), ConcernStatus.PENDING);
+        assertEquals(concern.getStatuses().first().getType(), ConcernStatusType.PENDING);
         assertNotNull(concern.getSubmissionDate());
     }
 
@@ -79,7 +79,7 @@ public class ClientApiTest extends DatastoreTest {
     private void retractConcern() throws Exception {
 
         ConcernData data = new ConcernTest().generateConcernData();
-        OwnerToken token = new ClientApi().submitConcern(data);
+        OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         new ClientApi().retractConcern(token);
 
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
@@ -91,7 +91,7 @@ public class ClientApiTest extends DatastoreTest {
         Concern concern = ObjectifyService.ofy().load().key(key).now();
 
         assertTrue(concern.isArchived());
-        assertEquals(concern.getStatus(), ConcernStatus.RETRACTED);
+        assertEquals(concern.getStatuses().last().getType(), ConcernStatusType.RETRACTED);
     }
 
     /**

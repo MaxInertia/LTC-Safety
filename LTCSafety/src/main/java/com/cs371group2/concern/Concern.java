@@ -5,6 +5,8 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import java.util.Date;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,7 +36,7 @@ public final class Concern {
      * changes as administrators acknowledge, respond to, and resolve concerns.
      */
     @Index
-    private ConcernStatus status = ConcernStatus.PENDING;
+    private SortedSet<ConcernStatus> statuses = new TreeSet<ConcernStatus>();
 
     /**
      * Used to identify whether a concern is being actively tracked within the system. Once a
@@ -55,12 +57,16 @@ public final class Concern {
      */
     private ConcernData data;
 
+    public Long getId() {
+        return id;
+    }
+
     public Date getSubmissionDate() {
         return submissionDate;
     }
 
-    public ConcernStatus getStatus() {
-        return status;
+    public SortedSet<ConcernStatus> getStatuses() {
+        return statuses;
     }
 
     public boolean isArchived() {
@@ -71,6 +77,8 @@ public final class Concern {
         return data;
     }
 
+    private Concern() {}
+
     /**
      * Create a new concern
      *
@@ -78,13 +86,19 @@ public final class Concern {
      * @precond data != null data is valid based on its validate method
      */
     public Concern(ConcernData data) {
-        if(data == null){ LOGGER.log(Level.WARNING, "Concern tried to be created with no data."); }
+        if (data == null) {
+            LOGGER.log(Level.SEVERE, "Concern tried to be created with no data.");
+        }
         assert data != null;
 
-        if(!data.validate().isValid()){ LOGGER.log(Level.WARNING, "Concern tried to be created with invalid data."); }
+        if (!data.validate().isValid()) {
+            LOGGER.log(Level.SEVERE, "Concern tried to be created with invalid data.");
+        }
         assert data.validate().isValid();
 
+        this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
         this.data = data;
+
         LOGGER.log(Level.FINER, "Concern created: \n" + this.toString());
     }
 
@@ -97,8 +111,9 @@ public final class Concern {
      * in the datastore using the ConcernDao prior to generating the owner token.
      */
     public OwnerToken generateOwnerToken() {
-        if(id == null){ LOGGER.log(Level.WARNING, "Concern token tried to be created when concern id is null."); }
+
         assert id != null;
+
         LOGGER.log(Level.FINER, "Owner Token being created: ID# " + this.id);
         return new OwnerToken(id);
     }
@@ -109,8 +124,9 @@ public final class Concern {
      * @postcond The status has been changed to RETRACTED and isArchived is now true.
      */
     public void retract() {
-        status = ConcernStatus.RETRACTED;
+        statuses.add(new ConcernStatus(ConcernStatusType.RETRACTED));
         isArchived = true;
+
         LOGGER.log(Level.FINER, "Concern Retracted: ID# " + this.id);
     }
 
