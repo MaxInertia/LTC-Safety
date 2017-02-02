@@ -2,5 +2,4 @@ language: objective-c
 os: osx
 xcode_project: iOS/LTC Safety/LTC Safety.xcodeproj
 xcode_scheme: iOS/LTC Safety/LTC Safety
-script: pod install
 podfile: iOS/LTC Safety/Podfile
