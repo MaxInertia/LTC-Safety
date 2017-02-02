@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "GTLRClientObjects.h"
 #import "LTCConcernStatus+CoreDataClass.h"
+#import "LTCLocation+CoreDataClass.h"
+#import "LTCReporter+CoreDataClass.h"
+#import "GTLRClient.h"
 
 @class LTCLocation, LTCReporter;
 

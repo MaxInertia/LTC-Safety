@@ -39,6 +39,13 @@
 				</array>
 			</dict>
 		</dict>
+		<key>010AD2FA4E8AF155FE4EA87DD7428F86</key>
+		<dict>
+			<key>fileRef</key>
+			<string>3A7CE58C24766CA4C94C849DDCDD2292</string>
+			<key>isa</key>
+			<string>PBXBuildFile</string>
+		</dict>
 		<key>010DE146A1B1EEF6FA5AF47DB9CB11FD</key>
 		<dict>
 			<key>fileRef</key>
@@ -334,21 +341,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>09BFFC8A538CE6C70015BC1103B9EF4C</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libAFNetworking.a</string>
-			<key>path</key>
-			<string>libAFNetworking.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>0A08FC71C4E3B8E0F8734BCDA7CCA7CB</key>
 		<dict>
 			<key>fileRef</key>
@@ -378,6 +370,19 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>0AE5C145347BB5588E856EA8DE317E48</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-LTC Safety-frameworks.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>0B25C3C0FA802313526529E65A71B9CC</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -393,7 +398,7 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>0B9E53CE3604F29FD70572695A9A89D4</key>
+		<key>0C2E9AEDE8A9A97CF3452AC550019F3B</key>
 		<dict>
 			<key>includeInIndex</key>
 			<string>1</string>
@@ -402,7 +407,7 @@
 			<key>lastKnownFileType</key>
 			<string>text.xcconfig</string>
 			<key>path</key>
-			<string>Pods-LTC Safety.debug.xcconfig</string>
+			<string>Pods-LTC SafetyTests.release.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -436,20 +441,24 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>0D542D9705867BF79708E1C2AE1EE8DF</key>
+		<key>0D094A5CE93C39E0FDC9942CA85A6084</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
+			<key>children</key>
+			<array>
+				<string>253073E671A92EDA458B2B52011C241E</string>
+				<string>C1CE2E11AEA9CD647E5F3F48B51DBC26</string>
+				<string>2E903BE6B76ED202C99F93B67F04640F</string>
+				<string>8AC88CD442A4BDCD864781B327186738</string>
+				<string>96D7B0D5D7F1CCC8C6ED8B70225502CB</string>
+				<string>1D5B704E85FBD5E7B902E2C97AB23F7A</string>
+				<string>D08CDA522B615DE8D0AA922349775134</string>
+			</array>
 			<key>isa</key>
-			<string>PBXFileReference</string>
+			<string>PBXGroup</string>
 			<key>name</key>
-			<string>libPods-LTC Safety.a</string>
-			<key>path</key>
-			<string>libPods-LTC Safety.a</string>
+			<string>Products</string>
 			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>0DCEFCE3C38B54A40EEC1DDC218ABDB2</key>
 		<dict>
@@ -585,6 +594,19 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>144977114E65C1D3F0749A1EA5F1A8D8</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests-resources.sh</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>14CD3DFB4A25BAEFB205730FA6750025</key>
 		<dict>
 			<key>fileRef</key>
@@ -627,6 +649,46 @@
 			<string>11957CB7B81AF815AA97FC81E8871D92</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>1548833A1548A53B77698FB1C26711ED</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>0C2E9AEDE8A9A97CF3452AC550019F3B</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf-with-dsym</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>NO</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Release</string>
 		</dict>
 		<key>155227BC6AE7969FD99E9FDFD179D0D5</key>
 		<dict>
@@ -742,7 +804,7 @@
 			<key>productName</key>
 			<string>GoogleAPIClientForREST</string>
 			<key>productReference</key>
-			<string>76129A97FEAC2B8D2E5494A1D89FB2BA</string>
+			<string>C1CE2E11AEA9CD647E5F3F48B51DBC26</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -817,6 +879,21 @@
 			<string>A2DC4EFBD3AB96FE12A00CF5DD7170EE</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>1D5B704E85FBD5E7B902E2C97AB23F7A</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libUICKeyChainStore.a</string>
+			<key>path</key>
+			<string>libUICKeyChainStore.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>1D636B14D9D46AED64A414606144BDF2</key>
 		<dict>
@@ -1052,6 +1129,21 @@
 				</array>
 			</dict>
 		</dict>
+		<key>253073E671A92EDA458B2B52011C241E</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libAFNetworking.a</string>
+			<key>path</key>
+			<string>libAFNetworking.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>25C05F09EA40A780D764E73307F2D3DE</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -1162,7 +1254,7 @@
 		<key>2A33C7D698320650CC97A988080507A2</key>
 		<dict>
 			<key>fileRef</key>
-			<string>49D9F31C77524CFDB62169EAF814609A</string>
+			<string>58DA779C81FE79ECF1B5C4918146C533</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
@@ -1209,7 +1301,7 @@
 			<key>productName</key>
 			<string>XLForm</string>
 			<key>productReference</key>
-			<string>3289D4B0E37083703697083A747DEF8E</string>
+			<string>D08CDA522B615DE8D0AA922349775134</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -1287,6 +1379,21 @@
 			<string>Lib/UICKeyChainStore/UICKeyChainStore.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>2E903BE6B76ED202C99F93B67F04640F</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libGTMSessionFetcher.a</string>
+			<key>path</key>
+			<string>libGTMSessionFetcher.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>2EEC787D0421BBD9111392C2C2BA083A</key>
 		<dict>
@@ -1460,21 +1567,6 @@
 				</array>
 			</dict>
 		</dict>
-		<key>3289D4B0E37083703697083A747DEF8E</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libXLForm.a</string>
-			<key>path</key>
-			<string>libXLForm.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>33446101379C01FADC4E69A1BCED08E6</key>
 		<dict>
 			<key>fileRef</key>
@@ -1602,6 +1694,19 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>iOS</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>37461B85CC880DBDEA5616A64FFA2E2B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-LTC Safety.debug.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -1782,7 +1887,7 @@
 		<key>3CBA927ED10FCC170D496C3399B368D1</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>0B9E53CE3604F29FD70572695A9A89D4</string>
+			<string>37461B85CC880DBDEA5616A64FFA2E2B</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -2021,6 +2126,19 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>46798A0229B7AD0C4D45E3C6BB8EFD89</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>468B6F312176F0C8703F980C00A281DC</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -2085,19 +2203,6 @@
 			<string>XLFormRightImageButton.h</string>
 			<key>path</key>
 			<string>XLForm/XL/Helpers/Views/XLFormRightImageButton.h</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
-		<key>49D9F31C77524CFDB62169EAF814609A</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>sourcecode.c.objc</string>
-			<key>path</key>
-			<string>Pods-LTC Safety-dummy.m</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2458,6 +2563,19 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>58DA779C81FE79ECF1B5C4918146C533</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>sourcecode.c.objc</string>
+			<key>path</key>
+			<string>Pods-LTC Safety-dummy.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>58E59841940E9CACA7217BC57A76AE29</key>
 		<dict>
 			<key>fileRef</key>
@@ -2528,6 +2646,19 @@
 			<string>PBXGroup</string>
 			<key>name</key>
 			<string>Reachability</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>5B08AB4CA1A457F806EB151FBCA304E5</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests-frameworks.sh</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -2760,6 +2891,20 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
+		<key>6305CC83C403281BD2DF614B4108010D</key>
+		<dict>
+			<key>buildConfigurations</key>
+			<array>
+				<string>ADDC09831554916906CFDF6F52FE9CBC</string>
+				<string>1548833A1548A53B77698FB1C26711ED</string>
+			</array>
+			<key>defaultConfigurationIsVisible</key>
+			<string>0</string>
+			<key>defaultConfigurationName</key>
+			<string>Release</string>
+			<key>isa</key>
+			<string>XCConfigurationList</string>
+		</dict>
 		<key>6326594DB8022C87756CD17B56EFFA5B</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -2957,6 +3102,30 @@
 			<key>name</key>
 			<string>Debug</string>
 		</dict>
+		<key>6B8C65DD56EBBDB52C145296797B3495</key>
+		<dict>
+			<key>buildConfigurationList</key>
+			<string>6305CC83C403281BD2DF614B4108010D</string>
+			<key>buildPhases</key>
+			<array>
+				<string>B62E83BD304A44C9CF7EFA1989B19BB1</string>
+				<string>99D238C016C782F1F1FD564940B1906A</string>
+			</array>
+			<key>buildRules</key>
+			<array/>
+			<key>dependencies</key>
+			<array/>
+			<key>isa</key>
+			<string>PBXNativeTarget</string>
+			<key>name</key>
+			<string>Pods-LTC SafetyTests</string>
+			<key>productName</key>
+			<string>Pods-LTC SafetyTests</string>
+			<key>productReference</key>
+			<string>96D7B0D5D7F1CCC8C6ED8B70225502CB</string>
+			<key>productType</key>
+			<string>com.apple.product-type.library.static</string>
+		</dict>
 		<key>6C657A2BEE790A664952EAC8DB3B950D</key>
 		<dict>
 			<key>fileRef</key>
@@ -3025,6 +3194,19 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>6D0698E1E25BBF01CA6DDC057E9DEB19</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests.debug.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>6D5B1B5DE75630FEDDE5FD0D00DAB345</key>
 		<dict>
@@ -3221,21 +3403,6 @@
 				</array>
 			</dict>
 		</dict>
-		<key>76129A97FEAC2B8D2E5494A1D89FB2BA</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libGoogleAPIClientForREST.a</string>
-			<key>path</key>
-			<string>libGoogleAPIClientForREST.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>7751F83A23453C9957CBB11636DB1E2B</key>
 		<dict>
 			<key>fileRef</key>
@@ -3256,6 +3423,19 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>777D36AD1B9D772704AED6532DF6641B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.xcconfig</string>
+			<key>path</key>
+			<string>Pods-LTC Safety.release.xcconfig</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>77CF2A7107BC61A2E90025871305961D</key>
 		<dict>
@@ -3359,19 +3539,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>7D292166AF2ED84244BA370F99696D53</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text</string>
-			<key>path</key>
-			<string>Pods-LTC Safety-acknowledgements.markdown</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>7DB346D0F39D3F0E887471402A8071AB</key>
 		<dict>
 			<key>children</key>
@@ -3379,8 +3546,8 @@
 				<string>93A4A3777CF96A4AAC1D13BA6DCCEA73</string>
 				<string>0F75DF6C7C5F002280EC53F48E80B587</string>
 				<string>1DC0B04D6B4064E37B552B643464545F</string>
-				<string>A734B28393089B490502C73143F4B40D</string>
-				<string>F64CB609DAC28B9C68EB0CAB856E5710</string>
+				<string>0D094A5CE93C39E0FDC9942CA85A6084</string>
+				<string>874F388510F03CE588909A3D1C0A7F30</string>
 			</array>
 			<key>isa</key>
 			<string>PBXGroup</string>
@@ -3450,6 +3617,19 @@
 			<string>Release</string>
 			<key>isa</key>
 			<string>XCConfigurationList</string>
+		</dict>
+		<key>81140141393B94AC24E873201A5C37A6</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>8136E5A382A2F3B987FE11A104D6CB95</key>
 		<dict>
@@ -3608,19 +3788,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>867AF96C26EC3F90B4CFD252F4A15AF5</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.xcconfig</string>
-			<key>path</key>
-			<string>Pods-LTC Safety.release.xcconfig</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>86A8F60EA3E7DD71C060F37E14D3DE6B</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -3663,6 +3830,20 @@
 			<string>468B6F312176F0C8703F980C00A281DC</string>
 			<key>isa</key>
 			<string>PBXBuildFile</string>
+		</dict>
+		<key>874F388510F03CE588909A3D1C0A7F30</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>B587D9F012AAF2AE05E24F6AA78F438D</string>
+				<string>C8BF741283D6E3CB4DC257532A13E639</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Targets Support Files</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>88DEF19519262FF7658DC6B1C64F0AF0</key>
 		<dict>
@@ -3728,6 +3909,21 @@
 			<string>PBXHeadersBuildPhase</string>
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
+		</dict>
+		<key>8AC88CD442A4BDCD864781B327186738</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libPods-LTC Safety.a</string>
+			<key>path</key>
+			<string>libPods-LTC Safety.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
 		</dict>
 		<key>8B8996BCF44A66ACA8F753520C4A6513</key>
 		<dict>
@@ -3921,7 +4117,7 @@
 			<key>productName</key>
 			<string>AFNetworking</string>
 			<key>productReference</key>
-			<string>09BFFC8A538CE6C70015BC1103B9EF4C</string>
+			<string>253073E671A92EDA458B2B52011C241E</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -3986,7 +4182,7 @@
 			<key>productName</key>
 			<string>GTMSessionFetcher</string>
 			<key>productReference</key>
-			<string>C6E1A375E05451BDE1BBE5BCCC53E67D</string>
+			<string>2E903BE6B76ED202C99F93B67F04640F</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -4079,6 +4275,21 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>96D7B0D5D7F1CCC8C6ED8B70225502CB</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libPods-LTC SafetyTests.a</string>
+			<key>path</key>
+			<string>libPods-LTC SafetyTests.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>96D97326B6DF6226D92ADA505729B311</key>
 		<dict>
 			<key>children</key>
@@ -4119,6 +4330,19 @@
 			<string>AFNetworking.xcconfig</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>99D238C016C782F1F1FD564940B1906A</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>010AD2FA4E8AF155FE4EA87DD7428F86</string>
+			</array>
+			<key>isa</key>
+			<string>PBXFrameworksBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
 		</dict>
 		<key>9A231CE18527802713818446A101BEFB</key>
 		<dict>
@@ -4172,7 +4396,7 @@
 		<key>9C010397996AA93B883D431085022F32</key>
 		<dict>
 			<key>baseConfigurationReference</key>
-			<string>867AF96C26EC3F90B4CFD252F4A15AF5</string>
+			<string>777D36AD1B9D772704AED6532DF6641B</string>
 			<key>buildSettings</key>
 			<dict>
 				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -4375,38 +4599,12 @@
 			<key>runOnlyForDeploymentPostprocessing</key>
 			<string>0</string>
 		</dict>
-		<key>A731B1093EE618DC4D3D84318EAD68A7</key>
+		<key>A68A8574806F53EAFF97F2412F3932E1</key>
 		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
+			<key>fileRef</key>
+			<string>46798A0229B7AD0C4D45E3C6BB8EFD89</string>
 			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libUICKeyChainStore.a</string>
-			<key>path</key>
-			<string>libUICKeyChainStore.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
-		<key>A734B28393089B490502C73143F4B40D</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>09BFFC8A538CE6C70015BC1103B9EF4C</string>
-				<string>76129A97FEAC2B8D2E5494A1D89FB2BA</string>
-				<string>C6E1A375E05451BDE1BBE5BCCC53E67D</string>
-				<string>0D542D9705867BF79708E1C2AE1EE8DF</string>
-				<string>A731B1093EE618DC4D3D84318EAD68A7</string>
-				<string>3289D4B0E37083703697083A747DEF8E</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Products</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
+			<string>PBXBuildFile</string>
 		</dict>
 		<key>A7EE1446C047C300ECC54CAD4858BC33</key>
 		<dict>
@@ -4585,6 +4783,46 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>ADDC09831554916906CFDF6F52FE9CBC</key>
+		<dict>
+			<key>baseConfigurationReference</key>
+			<string>6D0698E1E25BBF01CA6DDC057E9DEB19</string>
+			<key>buildSettings</key>
+			<dict>
+				<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
+				<string>iPhone Developer</string>
+				<key>DEBUG_INFORMATION_FORMAT</key>
+				<string>dwarf</string>
+				<key>ENABLE_STRICT_OBJC_MSGSEND</key>
+				<string>YES</string>
+				<key>GCC_NO_COMMON_BLOCKS</key>
+				<string>YES</string>
+				<key>IPHONEOS_DEPLOYMENT_TARGET</key>
+				<string>9.0</string>
+				<key>MACH_O_TYPE</key>
+				<string>staticlib</string>
+				<key>MTL_ENABLE_DEBUG_INFO</key>
+				<string>YES</string>
+				<key>OTHER_LDFLAGS</key>
+				<string></string>
+				<key>OTHER_LIBTOOLFLAGS</key>
+				<string></string>
+				<key>PODS_ROOT</key>
+				<string>$(SRCROOT)</string>
+				<key>PRODUCT_BUNDLE_IDENTIFIER</key>
+				<string>org.cocoapods.${PRODUCT_NAME:rfc1034identifier}</string>
+				<key>PRODUCT_NAME</key>
+				<string>$(TARGET_NAME)</string>
+				<key>SDKROOT</key>
+				<string>iphoneos</string>
+				<key>SKIP_INSTALL</key>
+				<string>YES</string>
+			</dict>
+			<key>isa</key>
+			<string>XCBuildConfiguration</string>
+			<key>name</key>
+			<string>Debug</string>
+		</dict>
 		<key>AE6AEF737DC55AFD260639F114530062</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -4745,7 +4983,7 @@
 			<key>productName</key>
 			<string>UICKeyChainStore</string>
 			<key>productReference</key>
-			<string>A731B1093EE618DC4D3D84318EAD68A7</string>
+			<string>1D5B704E85FBD5E7B902E2C97AB23F7A</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -4792,6 +5030,27 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>B587D9F012AAF2AE05E24F6AA78F438D</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>D2BBF23947475222ACE2A1C45E14E61D</string>
+				<string>EA038FAE0F55815CF74FEC08D4B0FB5C</string>
+				<string>58DA779C81FE79ECF1B5C4918146C533</string>
+				<string>0AE5C145347BB5588E856EA8DE317E48</string>
+				<string>FE0AAD2C1803E9E4F703DE6B35632A8E</string>
+				<string>37461B85CC880DBDEA5616A64FFA2E2B</string>
+				<string>777D36AD1B9D772704AED6532DF6641B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-LTC Safety</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-LTC Safety</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
 		<key>B5CF67F7870BAB70A76E57479B706B42</key>
 		<dict>
 			<key>fileRef</key>
@@ -4820,6 +5079,19 @@
 			<string>AFNetworking/AFSecurityPolicy.h</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
+		</dict>
+		<key>B62E83BD304A44C9CF7EFA1989B19BB1</key>
+		<dict>
+			<key>buildActionMask</key>
+			<string>2147483647</string>
+			<key>files</key>
+			<array>
+				<string>A68A8574806F53EAFF97F2412F3932E1</string>
+			</array>
+			<key>isa</key>
+			<string>PBXSourcesBuildPhase</string>
+			<key>runOnlyForDeploymentPostprocessing</key>
+			<string>0</string>
 		</dict>
 		<key>B6DD83B3A88233A4EFA458D74866100D</key>
 		<dict>
@@ -4976,7 +5248,7 @@
 			<key>productName</key>
 			<string>Pods-LTC Safety</string>
 			<key>productReference</key>
-			<string>0D542D9705867BF79708E1C2AE1EE8DF</string>
+			<string>8AC88CD442A4BDCD864781B327186738</string>
 			<key>productType</key>
 			<string>com.apple.product-type.library.static</string>
 		</dict>
@@ -5223,6 +5495,21 @@
 				</array>
 			</dict>
 		</dict>
+		<key>C1CE2E11AEA9CD647E5F3F48B51DBC26</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libGoogleAPIClientForREST.a</string>
+			<key>path</key>
+			<string>libGoogleAPIClientForREST.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>C2201E34603B014192F0967473518496</key>
 		<dict>
 			<key>fileRef</key>
@@ -5350,21 +5637,6 @@
 			<key>isa</key>
 			<string>PBXBuildFile</string>
 		</dict>
-		<key>C6E1A375E05451BDE1BBE5BCCC53E67D</key>
-		<dict>
-			<key>explicitFileType</key>
-			<string>archive.ar</string>
-			<key>includeInIndex</key>
-			<string>0</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>name</key>
-			<string>libGTMSessionFetcher.a</string>
-			<key>path</key>
-			<string>libGTMSessionFetcher.a</string>
-			<key>sourceTree</key>
-			<string>BUILT_PRODUCTS_DIR</string>
-		</dict>
 		<key>C72E1965125CD6AD6C6A694BF8050D13</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -5477,6 +5749,27 @@
 			<string>GTLRUploadParameters.h</string>
 			<key>path</key>
 			<string>Source/Objects/GTLRUploadParameters.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>C8BF741283D6E3CB4DC257532A13E639</key>
+		<dict>
+			<key>children</key>
+			<array>
+				<string>81140141393B94AC24E873201A5C37A6</string>
+				<string>F7865A09151F285780DF6BE65773A57B</string>
+				<string>46798A0229B7AD0C4D45E3C6BB8EFD89</string>
+				<string>5B08AB4CA1A457F806EB151FBCA304E5</string>
+				<string>144977114E65C1D3F0749A1EA5F1A8D8</string>
+				<string>6D0698E1E25BBF01CA6DDC057E9DEB19</string>
+				<string>0C2E9AEDE8A9A97CF3452AC550019F3B</string>
+			</array>
+			<key>isa</key>
+			<string>PBXGroup</string>
+			<key>name</key>
+			<string>Pods-LTC SafetyTests</string>
+			<key>path</key>
+			<string>Target Support Files/Pods-LTC SafetyTests</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -5608,6 +5901,21 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
+		<key>D08CDA522B615DE8D0AA922349775134</key>
+		<dict>
+			<key>explicitFileType</key>
+			<string>archive.ar</string>
+			<key>includeInIndex</key>
+			<string>0</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>name</key>
+			<string>libXLForm.a</string>
+			<key>path</key>
+			<string>libXLForm.a</string>
+			<key>sourceTree</key>
+			<string>BUILT_PRODUCTS_DIR</string>
+		</dict>
 		<key>D141E0B0F904E2260AB11FE529BB66E6</key>
 		<dict>
 			<key>fileRef</key>
@@ -5621,6 +5929,19 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>D2BBF23947475222ACE2A1C45E14E61D</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text</string>
+			<key>path</key>
+			<string>Pods-LTC Safety-acknowledgements.markdown</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D2DC5B7FBF2E92D3530695A479AF7763</key>
 		<dict>
@@ -5683,7 +6004,7 @@
 			<key>mainGroup</key>
 			<string>7DB346D0F39D3F0E887471402A8071AB</string>
 			<key>productRefGroup</key>
-			<string>A734B28393089B490502C73143F4B40D</string>
+			<string>0D094A5CE93C39E0FDC9942CA85A6084</string>
 			<key>projectDirPath</key>
 			<string></string>
 			<key>projectReferences</key>
@@ -5696,6 +6017,7 @@
 				<string>18BB1DC1CC60AE71E00C32E1543F6EC7</string>
 				<string>93288D3C7D9417F5EFC1F383D8105F10</string>
 				<string>B9EB975B8669354BF9AF78FF03FCFF28</string>
+				<string>6B8C65DD56EBBDB52C145296797B3495</string>
 				<string>B3C223D9DFB3312762866D409EA60947</string>
 				<string>2BDE49906BCA6C0E0B7D0A7A51ABE400</string>
 			</array>
@@ -5750,19 +6072,6 @@
 				</array>
 			</dict>
 		</dict>
-		<key>D7EFB83D7A6499A5D76EB62D628C2B2C</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.plist.xml</string>
-			<key>path</key>
-			<string>Pods-LTC Safety-acknowledgements.plist</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>D9227EC8347084DF1A6FFEC78B0275BA</key>
 		<dict>
 			<key>fileRef</key>
@@ -5776,27 +6085,6 @@
 					<string>Public</string>
 				</array>
 			</dict>
-		</dict>
-		<key>D946F2ACD06298FED1473A36D1C9F886</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>7D292166AF2ED84244BA370F99696D53</string>
-				<string>D7EFB83D7A6499A5D76EB62D628C2B2C</string>
-				<string>49D9F31C77524CFDB62169EAF814609A</string>
-				<string>E4703737DCDD7E88E08E963E057F0045</string>
-				<string>E5E6E766DAF88E8AD7F8610711085A88</string>
-				<string>0B9E53CE3604F29FD70572695A9A89D4</string>
-				<string>867AF96C26EC3F90B4CFD252F4A15AF5</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Pods-LTC Safety</string>
-			<key>path</key>
-			<string>Target Support Files/Pods-LTC Safety</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>D9B5973421CA774F59D275701CEF4FA9</key>
 		<dict>
@@ -6048,19 +6336,6 @@
 			<key>name</key>
 			<string>Release</string>
 		</dict>
-		<key>E4703737DCDD7E88E08E963E057F0045</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-LTC Safety-frameworks.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>E48A41CCEFAEEAEFD801647EC5B8C866</key>
 		<dict>
 			<key>fileRef</key>
@@ -6074,19 +6349,6 @@
 					<string>Public</string>
 				</array>
 			</dict>
-		</dict>
-		<key>E5E6E766DAF88E8AD7F8610711085A88</key>
-		<dict>
-			<key>includeInIndex</key>
-			<string>1</string>
-			<key>isa</key>
-			<string>PBXFileReference</string>
-			<key>lastKnownFileType</key>
-			<string>text.script.sh</string>
-			<key>path</key>
-			<string>Pods-LTC Safety-resources.sh</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
 		</dict>
 		<key>E6C1D422E40E873D9CDFC8B9DEC0A805</key>
 		<dict>
@@ -6160,6 +6422,19 @@
 			<string>GTMSessionFetcherLogging.m</string>
 			<key>path</key>
 			<string>Source/GTMSessionFetcherLogging.m</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>EA038FAE0F55815CF74FEC08D4B0FB5C</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-LTC Safety-acknowledgements.plist</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
@@ -6657,19 +6932,6 @@
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>
-		<key>F64CB609DAC28B9C68EB0CAB856E5710</key>
-		<dict>
-			<key>children</key>
-			<array>
-				<string>D946F2ACD06298FED1473A36D1C9F886</string>
-			</array>
-			<key>isa</key>
-			<string>PBXGroup</string>
-			<key>name</key>
-			<string>Targets Support Files</string>
-			<key>sourceTree</key>
-			<string>&lt;group&gt;</string>
-		</dict>
 		<key>F675CC69EBCB4F887CD054A200997668</key>
 		<dict>
 			<key>includeInIndex</key>
@@ -6749,6 +7011,19 @@
 					<string>Public</string>
 				</array>
 			</dict>
+		</dict>
+		<key>F7865A09151F285780DF6BE65773A57B</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.plist.xml</string>
+			<key>path</key>
+			<string>Pods-LTC SafetyTests-acknowledgements.plist</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
 		</dict>
 		<key>F90D47FAAA0FA5079F46395E96BA49AF</key>
 		<dict>
@@ -6909,6 +7184,19 @@
 			<string>XLFormLeftRightSelectorCell.h</string>
 			<key>path</key>
 			<string>XLForm/XL/Cell/XLFormLeftRightSelectorCell.h</string>
+			<key>sourceTree</key>
+			<string>&lt;group&gt;</string>
+		</dict>
+		<key>FE0AAD2C1803E9E4F703DE6B35632A8E</key>
+		<dict>
+			<key>includeInIndex</key>
+			<string>1</string>
+			<key>isa</key>
+			<string>PBXFileReference</string>
+			<key>lastKnownFileType</key>
+			<string>text.script.sh</string>
+			<key>path</key>
+			<string>Pods-LTC Safety-resources.sh</string>
 			<key>sourceTree</key>
 			<string>&lt;group&gt;</string>
 		</dict>

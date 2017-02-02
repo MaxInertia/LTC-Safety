@@ -12,6 +12,7 @@
 #import "LTCLocation+CoreDataClass.h"
 #import "LTCConcernViewModel.h"
 #import "LTCCoreDataTestCase.h"
+#import "UICKeyChainStore.h"
 @import CoreData;
 
 @interface LTCConcernViewModelTests : LTCCoreDataTestCase
@@ -38,7 +39,7 @@
     reporter.phoneNumber = @"A reporter phone number";
     reporter.email = @"A reporter email";
     
-    LTCConcern *concern = [LTCConcern concernInManagedObjectContext:self.container.viewContext];
+    LTCConcern *concern = [LTCConcern concernWithConcern:nil];
     concern.reporter = reporter;
     concern.location = location;
     concern.concernNature = @"The nature of the concern";
