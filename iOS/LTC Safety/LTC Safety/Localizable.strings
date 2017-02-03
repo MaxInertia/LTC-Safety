@@ -28,14 +28,25 @@
 "OK" = "OK";
 "CANCEL" = "Cancel";
 
-// Category Titles
+// Value Selection
+"VALUE_OTHER" = "Other...";
+
+// Concern Nature Values
+"CATEGORY_OTHER_TITLE" = "Nature of Concern";
+"CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
 "CATEGORY_1" = "Category One";
 "CATEGORY_2" = "Category Two";
 "CATEGORY_3" = "Category Three";
 "CATEGORY_4" = "Category Four";
 "CATEGORY_5" = "Category Five";
 "CATEGORY_6" = "Category Six";
-"CATEGORY_OTHER" = "Other...";
 
-// Other
-"CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
+// Facility Values
+
+"FACILITY_OTHER_TITLE" = "Facility";
+"FACILITY_OTHER_PROMPT" = "Please specify the facility the concern occurred at.";
+"FACILITY_1" = "Facility One";
+"FACILITY_2" = "Facility Two";
+"FACILITY_3" = "Facility Three";
+"FACILITY_4" = "Facility Four";
+"FACILITY_5" = "Facility Five";
