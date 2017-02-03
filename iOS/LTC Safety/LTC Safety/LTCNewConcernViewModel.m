@@ -7,6 +7,8 @@
 //
 
 #import "LTCNewConcernViewModel.h"
+#import "LTCCategoryViewController.h"
+#import "LTCFacilityViewController.h"
 #import "LTCClientApi.h"
 
 NSString *const LTCContactInfoTitle               = @"CONTACT_INFO_TITLE";
@@ -146,9 +148,11 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         [self addFormSection:section];
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorConcernNature rowType:XLFormRowDescriptorTypeSelectorPush title:NSLocalizedString(LTCConcernNaturePrompt, nil)];
+        row.action.viewControllerClass = [LTCCategoryViewController class];
         [section addFormRow:row];
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorFacilityName rowType:XLFormRowDescriptorTypeSelectorPush title:NSLocalizedString(LTCFacilityPrompt, nil)];
+        row.action.viewControllerClass = [LTCFacilityViewController class];
         [section addFormRow:row];
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorRoomNumber rowType:XLFormRowDescriptorTypeName];
