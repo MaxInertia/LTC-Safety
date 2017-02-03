@@ -51,6 +51,9 @@ PODS:
   - GTMSessionFetcher/Core (1.1.6)
   - GTMSessionFetcher/Full (1.1.6):
     - GTMSessionFetcher/Core (= 1.1.6)
+  - OCHamcrest (6.0.0)
+  - OCMockito (4.0.1):
+    - OCHamcrest (~> 6.0)
   - UICKeyChainStore (2.1.0)
   - XLForm (3.3.0)
 
@@ -59,6 +62,7 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Messaging
   - GoogleAPIClientForREST
+  - OCMockito (~> 4.0)
   - UICKeyChainStore
   - XLForm (from `https://github.com/xmartlabs/XLForm.git`)
 
@@ -83,9 +87,11 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 33117db1b5f290c6fbf259585e4885b4c84b98d7
   GoogleUtilities: 56c5ac05b7aa5dc417a1bb85221a9516e04d7032
   GTMSessionFetcher: 6aacd0ab48ddf0c3633ab2642d792abfcad1b08a
+  OCHamcrest: fc8ab38149b97df8db8029a3f2157c951bf9081d
+  OCMockito: 62ddc6afff6a883f2864d51224b1dfdc0e9a7df7
   UICKeyChainStore: f1cbd42216a113f0165de1e733e62905b8823432
   XLForm: d5c391dfc62865927b5bcab0a5a0dbfb3e02b0ec
 
-PODFILE CHECKSUM: 95a483914952984c021d0acfee0e3875bef38894
+PODFILE CHECKSUM: 115088c12168325788084fcce4c38718e6a81329
 
 COCOAPODS: 1.0.1
