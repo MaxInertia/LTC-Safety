@@ -10,7 +10,7 @@
 
 @implementation LTCReporter (CoreDataProperties)
 
-+ (NSFetchRequest<LTCReporter *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCReporter"];
 }
 

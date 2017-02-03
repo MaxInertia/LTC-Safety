@@ -10,7 +10,7 @@
 
 @implementation LTCLocation (CoreDataProperties)
 
-+ (NSFetchRequest<LTCLocation *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCLocation"];
 }
 

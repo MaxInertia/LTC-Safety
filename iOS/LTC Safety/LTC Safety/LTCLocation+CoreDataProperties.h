@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCLocation (CoreDataProperties)
 
-+ (NSFetchRequest<LTCLocation *> *)fetchRequest;
++ (NSFetchRequest *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *facilityName;
 @property (nullable, nonatomic, copy) NSString *roomName;

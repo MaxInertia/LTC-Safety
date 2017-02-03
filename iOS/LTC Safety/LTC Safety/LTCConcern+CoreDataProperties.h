@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCConcern (CoreDataProperties)
 
-+ (NSFetchRequest<LTCConcern *> *)fetchRequest;
++ (NSFetchRequest *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *actionsTaken;
 @property (nullable, nonatomic, copy) NSString *concernNature;

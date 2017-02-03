@@ -10,7 +10,7 @@
 
 @implementation LTCConcernStatus (CoreDataProperties)
 
-+ (NSFetchRequest<LTCConcernStatus *> *)fetchRequest {
++ (NSFetchRequest *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCConcernStatus"];
 }
 
