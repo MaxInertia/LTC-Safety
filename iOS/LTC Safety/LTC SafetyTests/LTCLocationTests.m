@@ -30,7 +30,7 @@
     location.facilityName = @"Facility";
     location.roomName = @"Room";
     
-    LTCLocation *localLocation = [LTCLocation locationWithData:location inManagedObjectContext:self.container.viewContext];
+    LTCLocation *localLocation = [LTCLocation locationWithData:location inManagedObjectContext:self.context];
     XCTAssertNotNil(localLocation);
     
     XCTAssertEqual(location.facilityName, localLocation.facilityName);

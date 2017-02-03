@@ -34,7 +34,7 @@
 @implementation LTCNewConcernViewModelTests
 
 - (void)testInitWithContext {
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.context);
@@ -49,7 +49,7 @@
     
     SEL testSelector = @selector(testSubmissionCallback);
     
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     
     // Test setting it and then getting because they are inverses
     viewModel.submissionCallback = testSelector;    
@@ -63,7 +63,7 @@
     
     LTCClientApi *mockClient = mock([LTCClientApi class]);
 
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     viewModel.clientApi = mockClient;
     [viewModel submitConcernData:^(LTCConcern *concern, NSError *error){
         XCTAssertEqual(passedError, error);
@@ -81,7 +81,7 @@
     
     LTCClientApi *mockClient = mock([LTCClientApi class]);
     
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     viewModel.clientApi = mockClient;
     
     NSString *tokenValue = [NSUUID UUID].UUIDString;

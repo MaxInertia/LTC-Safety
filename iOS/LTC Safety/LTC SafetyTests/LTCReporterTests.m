@@ -31,7 +31,7 @@
     reporter.phoneNumber = @"Phone number";
     reporter.email = @"Email";
     
-    LTCReporter *localReporter = [LTCReporter reporterWithData:reporter inManagedObjectContext:self.container.viewContext];
+    LTCReporter *localReporter = [LTCReporter reporterWithData:reporter inManagedObjectContext:self.context];
     XCTAssertNotNil(localReporter);
     
     XCTAssertEqual(reporter.name, localReporter.name);

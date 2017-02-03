@@ -9,5 +9,5 @@
 @import CoreData;
 
 @interface LTCCoreDataTestCase : XCTestCase
-@property (readonly, nonatomic, strong) NSPersistentContainer *container;
+@property (readonly, nonatomic, strong) NSManagedObjectContext *context;
 @end

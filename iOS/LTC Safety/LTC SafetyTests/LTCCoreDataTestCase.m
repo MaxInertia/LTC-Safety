@@ -10,7 +10,8 @@
 #import "LTCCoreDataTestCase.h"
 
 @interface LTCCoreDataTestCase ()
-@property (readwrite, nonatomic, strong) NSPersistentContainer *container;
+@property (readwrite, nonatomic, strong) NSPersistentStoreCoordinator *coordinator;
+@property (readwrite, nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation LTCCoreDataTestCase
@@ -18,13 +19,20 @@
 - (void)setUp {
     [super setUp];
     
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"LTC_Safety" withExtension:@"momd"];
+    NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
-    // In UI tests it is usually best to stop immediately when a failure occurs.
-    self.continueAfterFailure = NO;
+    NSError *error = nil;
+    self.coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:model];
+    [self.coordinator addPersistentStoreWithType:NSInMemoryStoreType configuration:nil URL:nil options:nil error:&error];
     
+    XCTAssertNil(error);
+    
+    self.context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
+    [self.context setPersistentStoreCoordinator:self.coordinator];
+
     // Set up in memory persistent store for testing
-    NSPersistentStoreDescription *description = [[NSPersistentStoreDescription alloc] init];
+    /*NSPersistentStoreDescription *description = [[NSPersistentStoreDescription alloc] init];
     description.type = NSInMemoryStoreType;
     
     self.container = [[NSPersistentContainer alloc] initWithName:@"LTC_Safety"];
@@ -33,11 +41,11 @@
         if (error != nil) {
             XCTFail("Failed to load in memory persistent store.");
         }
-    }];
+    }];*/
 }
 
 - (void)tearDown {
-    self.container = nil;
+    //self.container = nil;
     [super tearDown];
 }
 

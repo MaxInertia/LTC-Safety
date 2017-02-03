@@ -30,7 +30,7 @@
     concernStatus.creationDate = [GTLRDateTime dateTimeWithDate:[NSDate date]];
     concernStatus.type = @"PENDING";
     
-    LTCConcernStatus *localConcernStatus = [LTCConcernStatus statusWithData:concernStatus inManagedObjectContext:self.container.viewContext];
+    LTCConcernStatus *localConcernStatus = [LTCConcernStatus statusWithData:concernStatus inManagedObjectContext:self.context];
     XCTAssertNotNil(localConcernStatus);
     
     XCTAssertEqual(concernStatus.type, localConcernStatus.concernType);

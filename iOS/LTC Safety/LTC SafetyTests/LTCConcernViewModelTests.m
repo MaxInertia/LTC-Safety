@@ -32,12 +32,12 @@
 
 - (void)testAddConcern {
     
-    XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
+    XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
 
-    LTCConcern *concern = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern = [LTCConcern testConcernWithContext:self.context];
     
     NSError *error = nil;
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
     [viewModel addConcern:concern error:&error];
     
     XCTAssertNil(error, @"%@", error);
@@ -51,11 +51,11 @@
 
 - (void)testRemoveConcern {
     
-    XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
+    XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
     
-    LTCConcern *concern = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern = [LTCConcern testConcernWithContext:self.context];
 
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
     
     [viewModel addConcern:(concern) error:nil];
     
@@ -68,12 +68,12 @@
 
 - (void)testConcernAtIndexPath {
     
-    XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
+    XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
 
-    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.context];
 
     NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
     NSIndexPath *indexPath2 = [NSIndexPath indexPathForRow:1 inSection:0];
@@ -81,7 +81,7 @@
     NSIndexPath *indexPath4 = [NSIndexPath indexPathForRow:3 inSection:0];
 
     NSError *error = nil;
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
 
     [viewModel addConcern:concern1 error:&error];
     [viewModel addConcern:concern2 error:&error];
@@ -97,15 +97,15 @@
 
 - (void)testRowCountForSection {
     
-    XCTAssertNotNil(self.container.viewContext, @"Attempted to run test with a nil object context.");
+    XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
     
-    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.container.viewContext];
-    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.container.viewContext];
+    LTCConcern *concern1 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern2 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern3 = [LTCConcern testConcernWithContext:self.context];
+    LTCConcern *concern4 = [LTCConcern testConcernWithContext:self.context];
     
     NSError *error = nil;
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
     
     [viewModel addConcern:concern1 error:&error];
     [viewModel addConcern:concern2 error:&error];

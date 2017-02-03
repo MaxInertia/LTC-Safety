@@ -30,7 +30,7 @@
     // Use the testing class extension to get a test concern
     GTLRClient_Concern *concern = [GTLRClient_Concern testConcern];
 
-    LTCConcern *localConcern = [LTCConcern concernWithData:concern ownerToken:@"token" inManagedObjectContext:self.container.viewContext];
+    LTCConcern *localConcern = [LTCConcern concernWithData:concern ownerToken:@"token" inManagedObjectContext:self.context];
     XCTAssertNotNil(localConcern);
     
     XCTAssertTrue([concern.submissionDate.date isEqualToDate:localConcern.submissionDate]);

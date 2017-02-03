@@ -30,7 +30,7 @@
 }
 
 - (void)testInitWithViewModel {
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModel];
     
     XCTAssertEqual(viewModel, viewController.viewModel);
@@ -39,7 +39,7 @@
 }
 
 - (void)testViewModel {
-    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModel];
     
     XCTAssertEqual(viewModel, viewController.viewModel);
@@ -49,7 +49,7 @@
 - (void)testSubmit {
  
     // Pass the mock view model
-    LTCNewConcernViewModelMock *viewModelMock = [[LTCNewConcernViewModelMock alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModelMock *viewModelMock = [[LTCNewConcernViewModelMock alloc] initWithContext:self.context];
     viewModelMock.simulateError = NO;
     
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModelMock];
@@ -62,7 +62,7 @@
 - (void)testSubmitError {
     
     // Pass the mock view model
-    LTCNewConcernViewModelMock *viewModelMock = [[LTCNewConcernViewModelMock alloc] initWithContext:self.container.viewContext];
+    LTCNewConcernViewModelMock *viewModelMock = [[LTCNewConcernViewModelMock alloc] initWithContext:self.context];
     viewModelMock.simulateError = YES;
     
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModelMock];
