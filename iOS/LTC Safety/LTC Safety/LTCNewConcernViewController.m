@@ -9,6 +9,7 @@
 #import "LTCNewConcernViewController.h"
 
 NSString *const LTCNewConcernTitle = @"NEW_CONCERN_TITLE";
+NSString *const LTCNewConcernError = @"NEW_CONCERN_ERROR_TITLE";
 
 @interface LTCNewConcernViewController ()
 @property (readonly, nonatomic, weak) LTCNewConcernViewModel *viewModel;
@@ -46,11 +47,21 @@ NSString *const LTCNewConcernTitle = @"NEW_CONCERN_TITLE";
     NSAssert([self.delegate conformsToProtocol:@protocol(LTCNewConcernViewControllerDelegate)], @"The %@ delegate does not conform to the delegate's protocal.", self.class);
 
     [self.viewModel submitConcernData:^(LTCConcern *concern, NSError *error){
+        
         if (error == nil) {
+            
             [self.delegate viewController:self didSubmitConcern:concern];
             [self dismissViewControllerAnimated:YES completion:nil];
+            
         } else {
-            // TODO display error
+            
+            // Display the user error message from the client API
+            NSString *errorMessage = [error.userInfo valueForKey:@"error"];
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCNewConcernError, nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancelAction];
+            
+            [self presentViewController:alert animated:YES completion:nil];
         }
     }];
 }
