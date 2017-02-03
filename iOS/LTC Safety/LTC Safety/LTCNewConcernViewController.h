@@ -12,5 +12,5 @@
 
 @interface LTCNewConcernViewController : XLFormViewController
 @property (nonatomic, weak) id <LTCNewConcernViewControllerDelegate>delegate;
-- (instancetype)initViewModel:(LTCNewConcernViewModel *)viewModel;
+- (instancetype)initWithViewModel:(LTCNewConcernViewModel *)viewModel;
 @end
