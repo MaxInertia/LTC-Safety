@@ -35,7 +35,7 @@
     self.service.simulateError = NO;
     clientApi.service = self.service;
     
-    GTLRClient_ConcernData *concern = [GTLRClient_Concern testConcernData];
+    GTLRClient_ConcernData *concern = [GTLRClient_ConcernData testConcernData];
     [clientApi submitConcern:concern completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){
         XCTAssertNotNil(response);
         XCTAssertNil(error);
@@ -48,7 +48,7 @@
     self.service.simulateError = YES;
     clientApi.service = self.service;
     
-    GTLRClient_ConcernData *concern = [GTLRClient_Concern testConcernData];
+    GTLRClient_ConcernData *concern = [GTLRClient_ConcernData testConcernData];
     [clientApi submitConcern:concern completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){
         XCTAssertNil(response);
         XCTAssertNotNil(error);

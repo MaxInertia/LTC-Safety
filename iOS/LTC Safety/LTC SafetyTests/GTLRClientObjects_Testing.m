@@ -18,7 +18,7 @@
     concern.archived = @NO;
     concern.identifier = [NSNumber numberWithLongLong:123456];
     concern.submissionDate = [GTLRDateTime dateTimeWithDate:[NSDate date]];
-    concern.data = [self testConcernData];
+    concern.data = [GTLRClient_ConcernData testConcernData];
 
     GTLRClient_ConcernStatus *status = [[GTLRClient_ConcernStatus alloc] init];
     status.creationDate = [GTLRDateTime dateTimeWithDate:[NSDate date]];
@@ -27,6 +27,10 @@
 
     return concern;
 }
+
+@end
+
+@implementation GTLRClient_ConcernData (Testing)
 
 + (GTLRClient_ConcernData *)testConcernData {
     
@@ -46,6 +50,22 @@
     data.actionsTaken = [NSUUID UUID].UUIDString;
     
     return data;
+}
+
+@end
+
+@implementation GTLRClient_SubmitConcernResponse (Testing)
+
++ (GTLRClient_SubmitConcernResponse *)testSubmitConcernResponse {
+    
+    GTLRClient_OwnerToken *ownerToken = [[GTLRClient_OwnerToken alloc] init];
+    ownerToken.token = [NSUUID UUID].UUIDString;
+    
+    GTLRClient_SubmitConcernResponse *submitConcernResponse = [[GTLRClient_SubmitConcernResponse alloc] init];
+    submitConcernResponse.concern = [GTLRClient_Concern testConcern];
+    submitConcernResponse.ownerToken = ownerToken;
+    
+    return submitConcernResponse;
 }
 
 @end

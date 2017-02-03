@@ -9,7 +9,6 @@
 #import <XCTest/XCTest.h>
 #import "LTCCoreDataTestCase.h"
 #import "LTCNewConcernViewModel.h"
-#import "GTLRClientObjects_Testing.h"
 #import "LTCClientApi.h"
 #import <OCHamcrest/OCHamcrest.h>
 #import <OCMockito/OCMockito.h>

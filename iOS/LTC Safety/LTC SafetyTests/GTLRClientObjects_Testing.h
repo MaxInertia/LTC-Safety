@@ -10,5 +10,12 @@
 
 @interface GTLRClient_Concern (Testing)
 + (GTLRClient_Concern *)testConcern;
+@end
+
+@interface GTLRClient_ConcernData (Testing)
 + (GTLRClient_ConcernData *)testConcernData;
+@end
+
+@interface GTLRClient_SubmitConcernResponse (Testing)
++ (GTLRClient_SubmitConcernResponse *)testSubmitConcernResponse;
 @end
