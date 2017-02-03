@@ -9,9 +9,10 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "LTCConcernDetailViewController.h"
-#import "LTC_Safety+CoreDataModel.h"
+#import "LTCConcernViewModel.h"
 
-@interface LTCConcernViewController : UITableViewController
+@interface LTCConcernViewController : UIViewController
 @property (strong, nonatomic) LTCConcernDetailViewController *detailViewController;
+@property (nonatomic, strong) LTCConcernViewModel *viewModel;
 @end
 

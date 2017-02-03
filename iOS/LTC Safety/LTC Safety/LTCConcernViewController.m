@@ -8,15 +8,19 @@
 
 #import "LTCConcernViewController.h"
 #import "LTCNewConcernViewControllerDelegate.h"
-#import "LTCConcernViewModel.h"
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
-@property (nonatomic, strong) LTCConcernViewModel *viewModel;
+
 @end
 
 @implementation LTCConcernViewController
 
 #pragma mark - LTCNewConcernViewController delegate
+
+- (IBAction)presentCreateConcernController:(id)sender {
+    
+}
+
 
 - (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern {
     
