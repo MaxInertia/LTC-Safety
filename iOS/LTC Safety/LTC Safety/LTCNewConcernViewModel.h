@@ -10,6 +10,7 @@
 #import "LTCConcern+CoreDataClass.h"
 
 @interface LTCNewConcernViewModel : XLFormDescriptor
-@property (readonly, nonatomic, weak) LTCConcern *concern;
+@property (nonatomic, assign) SEL submissionCallback;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
+- (void)submitConcernData:(void (^)(LTCConcern *concern, NSError *error))completion;
 @end
