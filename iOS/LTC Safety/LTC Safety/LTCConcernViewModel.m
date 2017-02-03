@@ -9,7 +9,7 @@
 #import "LTCConcernViewModel.h"
 
 @interface LTCConcernViewModel () <NSFetchedResultsControllerDelegate>
-@property (strong, nonatomic) NSFetchedResultsController<LTCConcern *> *fetchedResultsController;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end
 
