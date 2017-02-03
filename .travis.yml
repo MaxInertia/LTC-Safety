@@ -2,4 +2,5 @@ language: objective-c
 osx_image: xcode8.2
 xcode_project: iOS/LTC Safety/LTC Safety.xcodeproj
 xcode_scheme: iOS/LTC Safety/LTC SafetyTests
+xcode_sdk: iphonesimulator10.2
 podfile: iOS/LTC Safety/Podfile
