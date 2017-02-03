@@ -1,6 +1,4 @@
 language: objective-c
 osx_image: xcode8.2
-xcode_workspace: iOS/LTC Safety/LTC Safety.xcworkspace
-xcode_scheme: iOS/LTC Safety/LTC Safety
-script: pod install
-podfile: iOS/LTC Safety/Podfile
+xcode_project: LTC-Safety/iOS/LTC Safety/LTC Safety.xcodeproj
+podfile: LTC-Safety/iOS/LTC Safety/Podfile
