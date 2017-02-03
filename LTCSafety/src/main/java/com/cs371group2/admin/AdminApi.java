@@ -74,10 +74,9 @@ public class AdminApi {
      * @precond admin != null, userId != null, accountType != null
      * @postcond Desired user account's access level has been modified
      */
-    @ApiMethod(name = "grantAccess", path = "/admin/grantAccess", httpMethod = ApiMethod.HttpMethod.GET)
-    public void grantAccess(User admin, String userId, AccountType accountType) throws UnauthorizedException{
+    @ApiMethod(name = "setAccountAccess", path = "/admin/setAccountAccess")
+    public void setAccountAccess(User admin, String userId, AccountType accountType) throws UnauthorizedException{
 
-        assert(admin != null);
         assert(userId != null);
         assert(accountType != null);
 
@@ -96,5 +95,11 @@ public class AdminApi {
 
         LOGGER.log(Level.INFO, "Account " + userId +
                 " has had it's access level changed to " + accountType.toString());
+    }
+
+    /** This method is only used for testing access the API through gapi */
+    @ApiMethod(name = "accessTest", path = "/admin/accessTest")
+    public void accessTest(){
+        LOGGER.log(Level.FINE, "API has been accessed!");
     }
 }
