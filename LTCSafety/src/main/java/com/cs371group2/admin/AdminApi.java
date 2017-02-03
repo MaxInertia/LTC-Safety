@@ -1,13 +1,13 @@
 package com.cs371group2.admin;
 
+import com.google.api.server.spi.auth.EspAuthenticator;
 import com.google.api.server.spi.auth.common.User;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiIssuer;
 import com.google.api.server.spi.config.ApiIssuerAudience;
 import com.google.api.server.spi.config.ApiMethod;
-import com.google.api.server.spi.auth.EspAuthenticator;
+import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,7 +44,7 @@ public class AdminApi {
      * @precond User is non-null
      * @postcond An account has been created for the user with an access type of "UNVERIFIED"
      */
-    @ApiMethod(name = "requestAccess", path = "/admin/requestAccess", httpMethod = ApiMethod.HttpMethod.GET)
+    @ApiMethod(name = "requestAccess", path = "admin/requestAccess", httpMethod = ApiMethod.HttpMethod.GET)
     public void requestAccess(User user){
 
         assert(user != null);
@@ -74,8 +74,8 @@ public class AdminApi {
      * @precond admin != null, userId != null, accountType != null
      * @postcond Desired user account's access level has been modified
      */
-    @ApiMethod(name = "setAccountAccess", path = "/admin/setAccountAccess")
-    public void setAccountAccess(User admin, String userId, AccountType accountType) throws UnauthorizedException{
+    @ApiMethod(name = "setAccountAccess", path = "admin/setAccountAccess")
+    public void setAccountAccess(User admin, @Named("UserId") String userId, @Named("Type") AccountType accountType) throws UnauthorizedException{
 
         assert(userId != null);
         assert(accountType != null);
@@ -98,8 +98,8 @@ public class AdminApi {
     }
 
     /** This method is only used for testing access the API through gapi */
-    @ApiMethod(name = "accessTest", path = "/admin/accessTest")
+    @ApiMethod(name = "accessTest", path = "admin/accessTest")
     public void accessTest(){
-        LOGGER.log(Level.FINE, "API has been accessed!");
+        LOGGER.log(Level.INFO, "API has been accessed!");
     }
 }
