@@ -44,4 +44,87 @@ public class FirebaseAuthenticator implements Authenticator {
 
         return null;
     }
+
+    /**
+     * Checks the given firebase token and returns whether the associated account is an admin account or not
+     *
+     * @param token The user's firebase token to check for administrative access level
+     * @return Whether the user is an admin or not
+     */
+    public boolean isAdmin(String token){
+
+        assert(token != null);
+
+        try{
+            FirebaseTokenVerifier verifier = new FirebaseTokenVerifier();
+            FirebaseToken decodedToken = verifier.verify(token);
+
+            if(decodedToken.getEmailVerified() == false)
+                return false;
+
+            AccountDao dao = new AccountDao();
+            Account userAccount = dao.load(decodedToken.getUid());
+
+
+            if(userAccount == null){
+                return false;
+            }
+
+            if(userAccount.getAccessType() != AccountType.ADMIN){
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (GeneralSecurityException e) {
+            LOGGER.log(Level.WARNING, "Token receieved was null or empty");
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally{
+            return false;
+        }
+    }
+
+    /**
+     * Checks the given firebase token and returns whether the associated account is verified or not
+     *
+     * @param token The user's firebase token to check if verified or not
+     * @return Whether the user is verified or not
+     */
+    public boolean isVerified(String token){
+
+        assert(token != null);
+
+        try{
+            FirebaseTokenVerifier verifier = new FirebaseTokenVerifier();
+            FirebaseToken decodedToken = verifier.verify(token);
+
+            if(decodedToken.getEmailVerified() == false)
+                return false;
+
+            AccountDao dao = new AccountDao();
+            Account userAccount = dao.load(decodedToken.getUid());
+
+            if(userAccount == null)
+                return false;
+
+            if(userAccount.getAccessType() == AccountType.UNVERIFIED){
+                return false;
+            } else {
+                return true;
+            }
+
+        } catch (GeneralSecurityException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally{
+            return false;
+        }
+    }
+
+
 }
