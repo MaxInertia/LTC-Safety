@@ -1,6 +1,8 @@
 package com.cs371group2.admin;
 
 /**
+ * Object representing a firebase token containing a unique user ID and an associated email
+ *
  * Created on 2017-02-03.
  */
 public class FirebaseToken {
