@@ -15,5 +15,5 @@ after_success: # push to branch 'ios-app-build' to indicate that it compiled suc
   - git config --global user.name "Travis CI"
   #- git update-index --assume-unchanged .travis.yml
   - git fetch
-  - git checkout ios-app-build .travis.yml
+  - git checkout ios-app-build -- .travis.yml
   - git push origin ios-app:ios-app-build
