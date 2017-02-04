@@ -94,8 +94,20 @@ public final class ConcernData implements Validatable {
 
     @Override
     public String toString(){
-        return "Concern Nature: " + this.getConcernNature()
-                + "\nActions Taken: " + this.getActionsTaken()
-                + "\n" + this.getReporter().toString() + this.getLocation().toString() + "\n";
+        String returnString;
+        if(this.getReporter() == null){
+            returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nActions Taken: " + this.getActionsTaken()
+                    + "\n" + "NO REPORTER" + this.getLocation().toString() + "\n";
+        }else if(this.getLocation() == null){
+            returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nActions Taken: " + this.getActionsTaken()
+                    + "\n" + this.getReporter().toString() + "NO LOCATION" + "\n";
+        }else{
+            returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nActions Taken: " + this.getActionsTaken()
+                    + "\n" + this.getReporter().toString() + this.getLocation().toString() + "\n";
+        }
+        return returnString;
     }
 }

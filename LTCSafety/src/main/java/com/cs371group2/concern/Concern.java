@@ -116,6 +116,6 @@ public final class Concern {
 
     @Override
     public String toString(){
-        return "Concern:\nID# " + this.id + this.getData().toString();
+        return "Concern:\nID# " + this.id +  "\n" + this.getData().toString();
     }
 }
