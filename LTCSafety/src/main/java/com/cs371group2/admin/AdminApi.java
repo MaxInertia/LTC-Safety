@@ -99,7 +99,8 @@ public class AdminApi {
 
     /** This method is only used for testing access the API through gapi */
     @ApiMethod(name = "accessTest", path = "admin/accessTest")
-    public void accessTest(){
-        LOGGER.log(Level.INFO, "API has been accessed!");
+    public void accessTest(@Named("token") String token) {
+
+        LOGGER.log(Level.INFO, "API has been accessed! " + token);
     }
 }

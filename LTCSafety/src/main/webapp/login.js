@@ -31,8 +31,7 @@
             console.log(e.message);
         });
 
-    })
-    ;
+    });
 
     //Add Signup Event
     btnSignUp.addEventListener('click', function (e) {
@@ -48,18 +47,23 @@
             console.log(e.message);
         })
         ;
-    })
-    ;
+    });
 
     //Add a realtime listener
     firebase.auth().onAuthStateChanged(function (firebaseUser) {
-
+        
         if (firebaseUser) {
+            const promise = firebaseUser.getToken();
+            promise .then(function (rawToken) {
+                console.log(rawToken);
 
-            // Pass firebaseUser.getToken() to the endpoint for authenticating
+                gapi.client.admin.accessTest({'token': rawToken}).execute(
+                    function (resp) {
+                        console.log("Response");
+                        window.location.replace("home.html");
+                    });
+            });
 
-            console.log(firebaseUser);
-            window.location.replace("home.html");
         } else {
             console.log('not log in');
 
