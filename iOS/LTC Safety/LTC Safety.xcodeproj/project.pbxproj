@@ -57,6 +57,11 @@
 		117DBDED1E445FF7002F2EED /* LTCInputAlertControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDEC1E445FF7002F2EED /* LTCInputAlertControllerTests.m */; };
 		117DBDEF1E446702002F2EED /* LTCValueSelectionViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDEE1E446702002F2EED /* LTCValueSelectionViewModelTests.m */; };
 		117DBDF11E44824C002F2EED /* LTCValueSelectionControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDF01E44824C002F2EED /* LTCValueSelectionControllerTests.m */; };
+		117DBDF41E44F173002F2EED /* LTCPersistentContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDF31E44F173002F2EED /* LTCPersistentContainer.m */; };
+		117DBDF81E458242002F2EED /* LTCConcernTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDF71E458242002F2EED /* LTCConcernTableViewCell.m */; };
+		117DBDFA1E458BB7002F2EED /* LTCPersistentContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDF91E458BB7002F2EED /* LTCPersistentContainerTests.m */; };
+		117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */; };
+		117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
 /* End PBXBuildFile section */
@@ -165,6 +170,14 @@
 		117DBDEC1E445FF7002F2EED /* LTCInputAlertControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCInputAlertControllerTests.m; sourceTree = "<group>"; };
 		117DBDEE1E446702002F2EED /* LTCValueSelectionViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCValueSelectionViewModelTests.m; sourceTree = "<group>"; };
 		117DBDF01E44824C002F2EED /* LTCValueSelectionControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCValueSelectionControllerTests.m; sourceTree = "<group>"; };
+		117DBDF21E44F173002F2EED /* LTCPersistentContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTCPersistentContainer.h; path = "LTC Safety/LTCPersistentContainer.h"; sourceTree = "<group>"; };
+		117DBDF31E44F173002F2EED /* LTCPersistentContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTCPersistentContainer.m; path = "LTC Safety/LTCPersistentContainer.m"; sourceTree = "<group>"; };
+		117DBDF51E456CAA002F2EED /* LTCConcernViewModelDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcernViewModelDelegate.h; sourceTree = "<group>"; };
+		117DBDF61E458242002F2EED /* LTCConcernTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcernTableViewCell.h; sourceTree = "<group>"; };
+		117DBDF71E458242002F2EED /* LTCConcernTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernTableViewCell.m; sourceTree = "<group>"; };
+		117DBDF91E458BB7002F2EED /* LTCPersistentContainerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCPersistentContainerTests.m; sourceTree = "<group>"; };
+		117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernTableViewCellTests.m; sourceTree = "<group>"; };
+		117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernViewControllerTests.m; sourceTree = "<group>"; };
 		1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCCoreDataTestCase.m; sourceTree = "<group>"; };
 		1196A7FF1E3EB6B900FFA757 /* LTCCoreDataTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCCoreDataTestCase.h; sourceTree = "<group>"; };
 		303C46FFCEF3160E4E7E22EC /* Pods-LTC Safety.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.debug.xcconfig"; sourceTree = "<group>"; };
@@ -233,22 +246,25 @@
 				1107E8041E3B3FF100675786 /* LTCClientApi.m */,
 				1107E7731E3B0CE700675786 /* AppDelegate.h */,
 				1107E7741E3B0CE700675786 /* AppDelegate.m */,
+				117DBDF51E456CAA002F2EED /* LTCConcernViewModelDelegate.h */,
 				1107E8071E3B467800675786 /* LTCConcernViewModel.h */,
 				1107E8081E3B467800675786 /* LTCConcernViewModel.m */,
 				1107E7791E3B0CE700675786 /* LTCConcernViewController.h */,
 				1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */,
 				1107E77C1E3B0CE700675786 /* LTCConcernDetailViewController.h */,
 				1107E77D1E3B0CE700675786 /* LTCConcernDetailViewController.m */,
+				117DBDF61E458242002F2EED /* LTCConcernTableViewCell.h */,
+				117DBDF71E458242002F2EED /* LTCConcernTableViewCell.m */,
 				117DBDD21E444852002F2EED /* Value Selection */,
 				1107E8061E3B44CD00675786 /* Submit Concern */,
 				1107E77F1E3B0CE700675786 /* Main.storyboard */,
-				1107E7821E3B0CE700675786 /* Assets.xcassets */,
 				1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */,
 				1107E7871E3B0CE700675786 /* Info.plist */,
 				117DBDE71E4459C7002F2EED /* Categories.plist */,
 				117DBDD31E444890002F2EED /* Facilities.plist */,
 				117DBD7F1E43FCE0002F2EED /* Localizable.strings */,
 				1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */,
+				1107E7821E3B0CE700675786 /* Assets.xcassets */,
 				1107E7701E3B0CE700675786 /* Supporting Files */,
 			);
 			path = "LTC Safety";
@@ -265,7 +281,10 @@
 		1107E78F1E3B0CE800675786 /* LTC SafetyTests */ = {
 			isa = PBXGroup;
 			children = (
+				117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */,
+				117DBDF91E458BB7002F2EED /* LTCPersistentContainerTests.m */,
 				117DBD8A1E4411C8002F2EED /* LTCNewConcernViewModelTests.m */,
+				117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */,
 				117DBD811E44052F002F2EED /* LTCNewConcernViewControllerTests.m */,
 				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
 				0C5321D11E43E0B700EC3A69 /* LTCConcernStatusTests.m */,
@@ -323,6 +342,8 @@
 		1133DF701E3C58330033BEA7 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				117DBDF21E44F173002F2EED /* LTCPersistentContainer.h */,
+				117DBDF31E44F173002F2EED /* LTCPersistentContainer.m */,
 				117DBD681E42E14A002F2EED /* LTCConcern+CoreDataProperties.h */,
 				117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */,
 				117DBD621E42DED9002F2EED /* LTCConcern+CoreDataClass.h */,
@@ -662,6 +683,7 @@
 				117DBD5F1E42BEFA002F2EED /* GTLRClientObjects.m in Sources */,
 				117DBDD71E4449F9002F2EED /* LTCRowValue.m in Sources */,
 				117DBDDA1E444BEE002F2EED /* LTCValueSelectionController.m in Sources */,
+				117DBDF81E458242002F2EED /* LTCConcernTableViewCell.m in Sources */,
 				1107E7AB1E3B14A800675786 /* LTCNewConcernViewController.m in Sources */,
 				1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */,
 				1107E8091E3B467800675786 /* LTCConcernViewModel.m in Sources */,
@@ -673,6 +695,7 @@
 				117DBDE31E44558A002F2EED /* LTCValueSelectionViewModel.m in Sources */,
 				117DBDE61E445964002F2EED /* LTCFacilityViewController.m in Sources */,
 				117DBD601E42BEFA002F2EED /* GTLRClientQuery.m in Sources */,
+				117DBDF41E44F173002F2EED /* LTCPersistentContainer.m in Sources */,
 				1107E7721E3B0CE700675786 /* main.m in Sources */,
 				117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */,
 				1107E7AF1E3B16D200675786 /* LTCNewConcernViewModel.m in Sources */,
@@ -692,12 +715,15 @@
 				117DBDED1E445FF7002F2EED /* LTCInputAlertControllerTests.m in Sources */,
 				117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */,
 				117DBDEA1E445D27002F2EED /* LTCRowValueTests.m in Sources */,
+				117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */,
 				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
 				117DBDF11E44824C002F2EED /* LTCValueSelectionControllerTests.m in Sources */,
 				0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */,
 				117DBD851E4407CD002F2EED /* LTCNewConcernViewModelMock.m in Sources */,
 				0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */,
+				117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */,
 				117DBD8B1E4411C8002F2EED /* LTCNewConcernViewModelTests.m in Sources */,
+				117DBDFA1E458BB7002F2EED /* LTCPersistentContainerTests.m in Sources */,
 				0C5321D21E43E0B700EC3A69 /* LTCConcernStatusTests.m in Sources */,
 				117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,

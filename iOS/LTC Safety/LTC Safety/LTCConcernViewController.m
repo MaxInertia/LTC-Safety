@@ -8,33 +8,18 @@
 
 #import "LTCConcernViewController.h"
 #import "LTCNewConcernViewControllerDelegate.h"
+#import "LTCConcernViewModel.h"
+#import "LTCNewConcernViewController.h"
+#import "LTCNewConcernViewModel.h"
+#import "LTCConcernTableViewCell.h"
 
-@interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
-
+@interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
+@property (nonatomic, weak) IBOutlet UITableView *tableView;
 @end
 
 @implementation LTCConcernViewController
 
-#pragma mark - LTCNewConcernViewController delegate
 
-- (IBAction)presentCreateConcernController:(id)sender {
-    
-}
-
-
-- (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern {
-    
-}
-
-#pragma mark - UITableView data source
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return nil;
-}
 
 @end
