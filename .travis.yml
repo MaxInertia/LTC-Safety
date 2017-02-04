@@ -1,0 +1,14 @@
+language: java
+jdk:
+  - oraclejdk7
+script: mvn test -f LTCSafety/pom.xml
+after_success:
+  if [[ $TRAVIS_BRANCH == 'development' ]]
+
+
+  fi
+notifications:
+  slack: 
+    on_success: change
+    on_failure: always
+  email: false
