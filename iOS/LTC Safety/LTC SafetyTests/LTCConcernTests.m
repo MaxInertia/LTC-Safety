@@ -35,7 +35,7 @@
     
     XCTAssertTrue([concern.submissionDate.date isEqualToDate:localConcern.submissionDate]);
     
-    XCTAssertEqual([concern.identifier stringValue], localConcern.identifier);
+    XCTAssertTrue([concern.identifier.stringValue isEqualToString:localConcern.identifier]);
     XCTAssertEqual(concern.data.actionsTaken, localConcern.actionsTaken);
     XCTAssertEqual(concern.data.concernNature, localConcern.concernNature);
     

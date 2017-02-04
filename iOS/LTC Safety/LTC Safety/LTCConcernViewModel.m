@@ -63,7 +63,7 @@
 
 - (NSUInteger )rowCountForSection:(NSUInteger)section {
     
-    NSAssert1(section >= 0 && section < self.fetchedResultsController.sections.count, @"Section out of bounds for row count: %lu", section);
+    NSAssert1(section >= 0 && section < self.fetchedResultsController.sections.count, @"Section out of bounds for row count: %lu", (unsigned long)section);
     
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     return [sectionInfo numberOfObjects];
@@ -79,7 +79,7 @@
 
 - (LTCConcern *)concernAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSAssert1(indexPath.section >= 0 && indexPath.section < self.fetchedResultsController.sections.count, @"Attempted to get concern in out of bounds section: %lu", indexPath.section);
+    NSAssert1(indexPath.section >= 0 && indexPath.section < self.fetchedResultsController.sections.count, @"Attempted to get concern in out of bounds section: %lu", (unsigned long)indexPath.section);
     
     return [self.fetchedResultsController objectAtIndexPath:indexPath];
 }

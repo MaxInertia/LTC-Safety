@@ -116,7 +116,7 @@
         XCTAssertEqual(roomNumberValue, concern.location.roomName);
         XCTAssertEqual(actionsTakenValue, concern.actionsTaken);
         
-        XCTAssertEqual(concern.identifier, identifierValue.stringValue);
+        XCTAssertTrue([concern.identifier isEqualToString:identifierValue.stringValue]);
         XCTAssertEqual(concern.ownerToken, tokenValue);
         
         XCTAssertEqual(1, concern.statuses.count);

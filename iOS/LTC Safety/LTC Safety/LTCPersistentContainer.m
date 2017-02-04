@@ -45,7 +45,7 @@
         NSURL *storeURL = [self _peristentStoreURLForName:name];
         self.storeCoordinator = [self _loadStoreCoordinatorAtURL:storeURL withObjectModel:self.managedObjectModel error:&error];
         
-        NSAssert1(self.storeCoordinator.persistentStores.count == 1, @"Unexpected number of stores for coordinator: %lu", self.storeCoordinator.persistentStores.count);
+        NSAssert1(self.storeCoordinator.persistentStores.count == 1, @"Unexpected number of stores for coordinator: %lu", (unsigned long)self.storeCoordinator.persistentStores.count);
         
         self.viewContext = [self _loadObjectContextWithStoreCoordinator:self.storeCoordinator];
     }

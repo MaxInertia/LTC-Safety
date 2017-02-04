@@ -35,7 +35,6 @@
 		117DBD5F1E42BEFA002F2EED /* GTLRClientObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD5A1E42BEFA002F2EED /* GTLRClientObjects.m */; };
 		117DBD601E42BEFA002F2EED /* GTLRClientQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD5C1E42BEFA002F2EED /* GTLRClientQuery.m */; };
 		117DBD611E42BEFA002F2EED /* GTLRClientService.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD5E1E42BEFA002F2EED /* GTLRClientService.m */; };
-		117DBD661E42DED9002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */; };
 		117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */; };
 		117DBD711E42ED17002F2EED /* LTCClientApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD701E42ED17002F2EED /* LTCClientApiTests.m */; };
@@ -62,6 +61,7 @@
 		117DBDFA1E458BB7002F2EED /* LTCPersistentContainerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDF91E458BB7002F2EED /* LTCPersistentContainerTests.m */; };
 		117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */; };
 		117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */; };
+		117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
 /* End PBXBuildFile section */
@@ -674,7 +674,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1133DF7F1E3C583E0033BEA7 /* LTCLocation+CoreDataClass.m in Sources */,
-				117DBD661E42DED9002F2EED /* LTCConcern+CoreDataClass.m in Sources */,
 				1107E77E1E3B0CE700675786 /* LTCConcernDetailViewController.m in Sources */,
 				1107E77B1E3B0CE700675786 /* LTCConcernViewController.m in Sources */,
 				1133DF821E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m in Sources */,
@@ -694,6 +693,7 @@
 				1178CD841E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m in Sources */,
 				117DBDE31E44558A002F2EED /* LTCValueSelectionViewModel.m in Sources */,
 				117DBDE61E445964002F2EED /* LTCFacilityViewController.m in Sources */,
+				117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */,
 				117DBD601E42BEFA002F2EED /* GTLRClientQuery.m in Sources */,
 				117DBDF41E44F173002F2EED /* LTCPersistentContainer.m in Sources */,
 				1107E7721E3B0CE700675786 /* main.m in Sources */,
