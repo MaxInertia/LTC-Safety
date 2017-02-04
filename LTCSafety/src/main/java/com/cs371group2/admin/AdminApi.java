@@ -45,9 +45,11 @@ public class AdminApi {
      * @postcond An account has been created for the user with an access type of "UNVERIFIED"
      */
     @ApiMethod(name = "requestAccess", path = "admin/requestAccess", httpMethod = ApiMethod.HttpMethod.GET)
-    public void requestAccess(User user){
+    public void requestAccess(User user) throws UnauthorizedException{
 
-        assert(user != null);
+        if (user == null) {
+            throw new UnauthorizedException("User requesting access was null");
+        }
 
         //Create a new AccountDao
         AccountDao accountDao = new AccountDao();
@@ -77,8 +79,13 @@ public class AdminApi {
     @ApiMethod(name = "setAccountAccess", path = "admin/setAccountAccess")
     public void setAccountAccess(User admin, @Named("UserId") String userId, @Named("Type") AccountType accountType) throws UnauthorizedException{
 
+        if (admin == null) {
+            throw new UnauthorizedException("User requesting access was null");
+        }
+
         assert(userId != null);
         assert(accountType != null);
+
 
         AccountDao accountDao = new AccountDao();
         Account adminAccount = accountDao.load(admin.getId());
