@@ -12,18 +12,13 @@
 #import "LTCReporter+CoreDataClass.h"
 #import "UICKeyChainStore.h"
 
-@interface LTCConcern ()
-// Store the owner token to keychain on save and awake from fetch
-- (void)didSave;
-- (void)awakeFromFetch;
-@end
-
 @implementation LTCConcern
 
 - (void)didSave {
+    
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
-    [keychain setValue:self.ownerToken forKey:self.identifier];
+    [keychain setString:self.ownerToken forKey:self.identifier];
     
     [super didSave];
 }
@@ -34,7 +29,7 @@
     
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
-    self.ownerToken = [keychain valueForKey:self.identifier];
+    self.ownerToken = [keychain stringForKey:self.identifier];
 }
 
 + (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data ownerToken:(NSString *)ownerToken inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
