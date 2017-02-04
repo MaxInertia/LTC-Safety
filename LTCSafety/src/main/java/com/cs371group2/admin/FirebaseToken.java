@@ -13,6 +13,9 @@ public class FirebaseToken {
     /** The email associated with this token */
     private String email;
 
+    /** Whether the token is email verified or not */
+    private boolean emailVerified;
+
     public String getUid() {
         return uid;
     }
@@ -21,9 +24,20 @@ public class FirebaseToken {
         return email;
     }
 
-    /** Creates a firebase token with the given user ID and email */
-    public FirebaseToken(String uid, String email) {
+    public boolean getEmailVerified() {
+        return emailVerified;
+    }
+
+    /**
+     * Creates a firebase token with the given user ID and email
+     *
+     * @param uid The unique ID of the user
+     * @param email The email of the user
+     * @param emailVerification Whether the email has been verified or not
+     */
+    public FirebaseToken(String uid, String email, boolean emailVerification) {
         this.uid = uid;
         this.email = email;
+        this.emailVerified = emailVerification;
     }
 }

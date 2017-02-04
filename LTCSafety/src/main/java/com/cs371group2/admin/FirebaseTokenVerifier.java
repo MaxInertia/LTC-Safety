@@ -21,6 +21,7 @@ import java.security.PublicKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * Object for verifying a string firebase token and breaking it down into a FirebaseToken
@@ -29,22 +30,29 @@ import java.util.Map;
  */
 public class FirebaseTokenVerifier {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FirebaseTokenVerifier.class.getName());
+    private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(FirebaseTokenVerifier.class.getName());
 
     private static final String PUBLIC_KEYS_URI = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
 
     private static final String EMAIL_CLAIM = "email";
 
+    private static final String EMAIL_VERIFIED_CLAIM = "email_verified";
+
     /**
+     * Verifies a firebase token in the form of a string and returns a FirebaseToken
+     * object representing the token's information
      *
-     * @param token
-     * @return
-     * @throws GeneralSecurityException
-     * @throws IOException
+     * @param token The unverified token
+     *
+     * @return A FirebaseToken object representing the verified token
+     *
+     * @throws GeneralSecurityException If the token was null, invalid, or had issues verified throw this
+     * @throws IOException If there was an issue loading the key as a JSON object
      */
     public FirebaseToken verify(String token) throws GeneralSecurityException, IOException {
         if (token == null || token.isEmpty()) {
-            throw new SignatureException("");
+            LOGGER.log(Level.WARNING, "Token receieved was null or empty");
+            throw new SignatureException("Token was null or empty");
         }
         // get public keys
         JsonObject publicKeys = getPublicKeysJson();
@@ -54,25 +62,30 @@ public class FirebaseTokenVerifier {
         for (Map.Entry<String, JsonElement> entry : publicKeys.entrySet()) {
             try {
                 // get public key
-                logger.info(entry.getKey());
+                LOGGER.info(entry.getKey());
                 PublicKey publicKey = getPublicKey(entry);
 
                 // validate claim set
                 Jws<Claims> jws = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
                 String uuid = jws.getBody().getSubject();
                 String email = (String)jws.getBody().get(EMAIL_CLAIM);
-                return new FirebaseToken(uuid, email);
+                boolean verifiedEmail = (boolean)jws.getBody().get(EMAIL_VERIFIED_CLAIM);
+                return new FirebaseToken(uuid, email, verifiedEmail);
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
             }
         }
-        throw new SignatureException("");
+
+        LOGGER.log(Level.WARNING, "Token was not found in map of keys");
+        throw new SignatureException("Did not find token in map of keys");
     }
 
     /**
+     * Returns a PublicKey based on the given map entry
      *
-     * @param entry
-     * @return
+     * @param entry The map entry to find the public key for
+     *
+     * @return The public key of the entry
      * @throws GeneralSecurityException
      */
     private PublicKey getPublicKey(Map.Entry<String, JsonElement> entry) throws GeneralSecurityException, IOException {
@@ -83,7 +96,7 @@ public class FirebaseTokenVerifier {
                 .replaceAll("\n", "")
                 .trim();
 
-        logger.info(publicKeyPem);
+        LOGGER.info(publicKeyPem);
 
         // generate x509 cert
         InputStream inputStream = new ByteArrayInputStream(entry.getValue().getAsString().getBytes("UTF-8"));
@@ -94,9 +107,10 @@ public class FirebaseTokenVerifier {
     }
 
     /**
+     * Gets all the public keys as a Json object
      *
-     * @return
-     * @throws IOException
+     * @return The public keys as a Json object
+     * @throws IOException If parsing fails, throws this exception
      */
     private JsonObject getPublicKeysJson() throws IOException {
         // get public keys
