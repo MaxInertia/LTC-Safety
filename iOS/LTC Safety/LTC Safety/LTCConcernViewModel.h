@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "LTCConcern+CoreDataClass.h"
+#import "LTCConcernViewModelDelegate.h"
 
 @interface LTCConcernViewModel : NSObject
 @property (readonly, nonatomic, assign) NSUInteger sectionCount;
+@property (readonly, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (readonly, strong, nonatomic) NSManagedObjectContext *objectContext;
+@property (nonatomic, weak) id <LTCConcernViewModelDelegate>delegate;
 - (instancetype)initWithContext:(NSManagedObjectContext *)context;
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error;
 - (void)removeConcern:(LTCConcern *)concern error:(NSError **)error;

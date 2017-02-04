@@ -14,6 +14,9 @@
 #import "LTCCoreDataTestCase.h"
 #import "UICKeyChainStore.h"
 #import "LTCConcern_Testing.h"
+#import <OCHamcrest/OCHamcrest.h>
+#import <OCMockito/OCMockito.h>
+
 @import CoreData;
 
 @interface LTCConcernViewModelTests : LTCCoreDataTestCase
@@ -40,30 +43,46 @@
     LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
     [viewModel addConcern:concern error:&error];
     
-    XCTAssertNil(error, @"%@", error);
+    XCTAssertNil(error);
     XCTAssertFalse(concern.objectID.temporaryID);
     
-    
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
-    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];    
-    XCTAssertNotNil( [keychain valueForKey:concern.identifier]);
+    UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
+    
+    XCTAssertTrue([[keychain stringForKey:concern.identifier] isEqualToString:concern.ownerToken]);
 }
 
 - (void)testRemoveConcern {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
     
-    LTCConcern *concern = [LTCConcern testConcernWithContext:self.context];
-
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
-    
-    [viewModel addConcern:(concern) error:nil];
+    id <LTCConcernViewModelDelegate> delegate = mockProtocol(@protocol(LTCConcernViewModelDelegate));
     
     NSError *error = nil;
-    [viewModel removeConcern:(concern) error:(&error)];
+    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
     
-    XCTAssertNil(error, @"%@", error);
+    // Add mock delegate
+    viewModel.delegate = delegate;
+    
+    LTCConcern *concern = [LTCConcern testConcernWithContext:self.context];
+    [viewModel addConcern:concern error:&error];
+    
+    ([verify(delegate) viewModelWillBeginUpdates:anything()]);
+    ([verify(delegate) viewModel:anything() didInsertConcernsAtIndexPaths:anything()]);
+    ([verify(delegate) viewModelDidFinishUpdates:anything()]);
 
+    XCTAssertNil(error);
+    XCTAssertEqual([viewModel concernAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].identifier, concern.identifier);
+    
+    error = nil;
+    [viewModel removeConcern:concern error:&error];
+    XCTAssertNil(error);
+    
+    XCTAssertEqual([viewModel rowCountForSection:0], 0);
+    
+    ([verify(delegate) viewModelWillBeginUpdates:anything()]);
+    ([verify(delegate) viewModel:anything() didDeleteConcernsAtIndexPaths:anything()]);
+    ([verify(delegate) viewModelDidFinishUpdates:anything()]);    
 }
 
 - (void)testConcernAtIndexPath {
@@ -88,11 +107,10 @@
     [viewModel addConcern:concern3 error:&error];
     [viewModel addConcern:concern4 error:&error];
 
-    XCTAssertEqual(concern1, [viewModel concernAtIndexPath:(indexPath1)]);
-    XCTAssertEqual(concern2, [viewModel concernAtIndexPath:(indexPath2)]);
-    XCTAssertEqual(concern3, [viewModel concernAtIndexPath:(indexPath3)]);
-    XCTAssertEqual(concern4, [viewModel concernAtIndexPath:(indexPath4)]);
-
+    XCTAssertEqual(concern1, [viewModel concernAtIndexPath:(indexPath4)]);
+    XCTAssertEqual(concern2, [viewModel concernAtIndexPath:(indexPath3)]);
+    XCTAssertEqual(concern3, [viewModel concernAtIndexPath:(indexPath2)]);
+    XCTAssertEqual(concern4, [viewModel concernAtIndexPath:(indexPath1)]);
 }
 
 - (void)testRowCountForSection {
@@ -113,6 +131,7 @@
     [viewModel addConcern:concern4 error:&error];
 
     XCTAssertEqual([viewModel rowCountForSection:0], 4);
+    XCTAssertEqual([viewModel sectionCount], 1);
 }
 
 @end

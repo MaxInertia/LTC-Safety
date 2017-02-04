@@ -31,6 +31,7 @@
     concern.actionsTaken = @"The actions taken";
     concern.identifier = @"1234678990";
     concern.submissionDate = [NSDate date];
+    concern.ownerToken = [NSUUID UUID].UUIDString;
     
     NSMutableOrderedSet *statuses = [[NSMutableOrderedSet alloc] initWithCapacity:5];
     for (int i = 0; i < 5; i++) {
