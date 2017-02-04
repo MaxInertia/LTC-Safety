@@ -28,6 +28,38 @@
 			<key>title</key>
 			<string>FACILITY_5</string>
 		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_6</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_7</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_8</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_9</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_10</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_11</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_12</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>FACILITY_13</string>
+		</dict>
 	</array>
 </dict>
 </plist>

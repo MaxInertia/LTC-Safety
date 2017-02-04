@@ -6,6 +6,9 @@
   Copyright © 2017 Allan Kerr. All rights reserved.
 */
 
+// Concern View Title
+"CONCERN_VIEW_TITLE" = "LTC Safety";
+
 // Submit Concern Title
 "NEW_CONCERN_TITLE" = "New Concern";
 "NEW_CONCERN_ERROR_TITLE" = "Submission Failed";
@@ -45,8 +48,16 @@
 
 "FACILITY_OTHER_TITLE" = "Facility";
 "FACILITY_OTHER_PROMPT" = "Please specify the facility the concern occurred at.";
-"FACILITY_1" = "Facility One";
-"FACILITY_2" = "Facility Two";
-"FACILITY_3" = "Facility Three";
-"FACILITY_4" = "Facility Four";
-"FACILITY_5" = "Facility Five";
+"FACILITY_1" = "The Franklin";
+"FACILITY_2" = "Circle Drive Special Care Home Inc";
+"FACILITY_3" = "Central Haven Special Care Home";
+"FACILITY_4" = "Preston Extendicare";
+"FACILITY_5" = "Luther Special Care Home";
+"FACILITY_6" = "Sherbrooke Community Centre";
+"FACILITY_7" = "Oliver Place";
+"FACILITY_8" = "Saskatoon Convalescent Home";
+"FACILITY_9" = "Parkridge Centre";
+"FACILITY_10" = "Saint Ann's Senior Citizens Village Corp";
+"FACILITY_11" = "Samaritan Place";
+"FACILITY_12" = "Stensrud Lodge";
+"FACILITY_13" = "Sunnyside Adventist Care Centre";

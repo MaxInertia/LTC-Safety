@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "LTCConcern+CoreDataClass.h"
+#import "GTLRClient.h"
 
 typedef void(^LTCSubmitConcernCompletion)(GTLRClient_SubmitConcernResponse *concernResponse, NSError *error);
 typedef void(^LTCRetractConcernCompletion)(NSError *error);
