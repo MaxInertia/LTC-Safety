@@ -10,15 +10,23 @@
 #import "LTCCoreDataTestCase.h"
 
 @interface LTCCoreDataTestCase ()
+
+/**
+ The store coordinator that the managed object context belongs to.
+ */
 @property (readwrite, nonatomic, strong) NSPersistentStoreCoordinator *coordinator;
 @property (readwrite, nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation LTCCoreDataTestCase
 
+/**
+ Creates a new in-memory managed object context for unit testing classes that use Core Data
+ */
 - (void)setUp {
     [super setUp];
     
+    // Load the xcdatamodel from the application bundle
     NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"LTC_Safety" withExtension:@"momd"];
     NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     
@@ -30,28 +38,6 @@
     
     self.context = [[NSManagedObjectContext alloc] initWithConcurrencyType:NSMainQueueConcurrencyType];
     [self.context setPersistentStoreCoordinator:self.coordinator];
-
-    // Set up in memory persistent store for testing
-    /*NSPersistentStoreDescription *description = [[NSPersistentStoreDescription alloc] init];
-    description.type = NSInMemoryStoreType;
-    
-    self.container = [[NSPersistentContainer alloc] initWithName:@"LTC_Safety"];
-    self.container.persistentStoreDescriptions = @[description];
-    [self.container loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-        if (error != nil) {
-            XCTFail("Failed to load in memory persistent store.");
-        }
-    }];*/
-}
-
-- (void)tearDown {
-    //self.container = nil;
-    [super tearDown];
-}
-
-- (void)testExample {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
 @end

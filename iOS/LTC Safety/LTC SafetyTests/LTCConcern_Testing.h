@@ -9,8 +9,15 @@
 #import "LTCConcern+CoreDataClass.h"
 
 /**
-    Provides a class extension on LTCConcern to easilly create concerns populated with data for testing purposes.
+    Provides a class extension on LTCConcern to easily create concerns populated with data for testing purposes.
  */
 @interface LTCConcern (Testing)
+
+/**
+ Creates an LTCConcern object pre-populated with test data.
+
+ @param context The context that the concern should be inserted into. Although the entity isn't saved, Core Data requires that all entities are initialized with a valid object context.
+ @return The LTCConcern object.
+ */
 + (instancetype)testConcernWithContext:(NSManagedObjectContext *)context;
 @end

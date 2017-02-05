@@ -32,6 +32,9 @@
     NSAssert(self.concern != nil, @"Cell finished configuration with a nil concern.");
 }
 
+/**
+ Performs initial setup that is independent of the concern that the cell is configured for.
+ */
 - (void)awakeFromNib {
     [super awakeFromNib];
     

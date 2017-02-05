@@ -10,6 +10,11 @@
 
 @implementation LTCCategoryViewController
 
+/**
+ The file name for the properties file that the value options are loaded from.
+ 
+ @return The file name for the properties file that the category options are loaded from.
+ */
 - (NSString *)fileName {
     return @"Categories";
 }

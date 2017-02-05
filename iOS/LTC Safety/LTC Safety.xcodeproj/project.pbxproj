@@ -38,11 +38,9 @@
 		117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD691E42E14A002F2EED /* LTCConcern+CoreDataProperties.m */; };
 		117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */; };
 		117DBD711E42ED17002F2EED /* LTCClientApiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD701E42ED17002F2EED /* LTCClientApiTests.m */; };
-		117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */; };
 		117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */; };
 		117DBD801E43FCE0002F2EED /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 117DBD7F1E43FCE0002F2EED /* Localizable.strings */; };
 		117DBD821E44052F002F2EED /* LTCNewConcernViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD811E44052F002F2EED /* LTCNewConcernViewControllerTests.m */; };
-		117DBD851E4407CD002F2EED /* LTCNewConcernViewModelMock.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD841E4407CD002F2EED /* LTCNewConcernViewModelMock.m */; };
 		117DBD8B1E4411C8002F2EED /* LTCNewConcernViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD8A1E4411C8002F2EED /* LTCNewConcernViewModelTests.m */; };
 		117DBDD41E444890002F2EED /* Facilities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 117DBDD31E444890002F2EED /* Facilities.plist */; };
 		117DBDD71E4449F9002F2EED /* LTCRowValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDD61E4449F9002F2EED /* LTCRowValue.m */; };
@@ -142,14 +140,10 @@
 		117DBD6B1E42E557002F2EED /* LTCConcern_Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcern_Testing.h; sourceTree = "<group>"; };
 		117DBD6C1E42E584002F2EED /* LTCConcern_Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcern_Testing.m; sourceTree = "<group>"; };
 		117DBD701E42ED17002F2EED /* LTCClientApiTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCClientApiTests.m; sourceTree = "<group>"; };
-		117DBD721E42F0E2002F2EED /* GTLRClientServiceMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLRClientServiceMock.h; sourceTree = "<group>"; };
-		117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLRClientServiceMock.m; sourceTree = "<group>"; };
 		117DBD781E42F2DB002F2EED /* GTLRClientObjects_Testing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTLRClientObjects_Testing.h; sourceTree = "<group>"; };
 		117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTLRClientObjects_Testing.m; sourceTree = "<group>"; };
 		117DBD7F1E43FCE0002F2EED /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		117DBD811E44052F002F2EED /* LTCNewConcernViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCNewConcernViewControllerTests.m; sourceTree = "<group>"; };
-		117DBD831E4407CD002F2EED /* LTCNewConcernViewModelMock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCNewConcernViewModelMock.h; sourceTree = "<group>"; };
-		117DBD841E4407CD002F2EED /* LTCNewConcernViewModelMock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCNewConcernViewModelMock.m; sourceTree = "<group>"; };
 		117DBD8A1E4411C8002F2EED /* LTCNewConcernViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCNewConcernViewModelTests.m; sourceTree = "<group>"; };
 		117DBDD31E444890002F2EED /* Facilities.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Facilities.plist; sourceTree = "<group>"; };
 		117DBDD51E4449F9002F2EED /* LTCRowValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCRowValue.h; sourceTree = "<group>"; };
@@ -298,7 +292,6 @@
 				117DBDE91E445D27002F2EED /* LTCRowValueTests.m */,
 				1107E7921E3B0CE800675786 /* Info.plist */,
 				117DBD771E42F2BD002F2EED /* Test Cases */,
-				117DBD761E42F2AD002F2EED /* Mocks */,
 				117DBD751E42F299002F2EED /* Extensions */,
 			);
 			path = "LTC SafetyTests";
@@ -373,17 +366,6 @@
 				117DBD791E42F306002F2EED /* GTLRClientObjects_Testing.m */,
 			);
 			name = Extensions;
-			sourceTree = "<group>";
-		};
-		117DBD761E42F2AD002F2EED /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				117DBD721E42F0E2002F2EED /* GTLRClientServiceMock.h */,
-				117DBD731E42F0E2002F2EED /* GTLRClientServiceMock.m */,
-				117DBD831E4407CD002F2EED /* LTCNewConcernViewModelMock.h */,
-				117DBD841E4407CD002F2EED /* LTCNewConcernViewModelMock.m */,
-			);
-			name = Mocks;
 			sourceTree = "<group>";
 		};
 		117DBD771E42F2BD002F2EED /* Test Cases */ = {
@@ -713,13 +695,11 @@
 				117DBD821E44052F002F2EED /* LTCNewConcernViewControllerTests.m in Sources */,
 				117DBDEF1E446702002F2EED /* LTCValueSelectionViewModelTests.m in Sources */,
 				117DBDED1E445FF7002F2EED /* LTCInputAlertControllerTests.m in Sources */,
-				117DBD741E42F0E2002F2EED /* GTLRClientServiceMock.m in Sources */,
 				117DBDEA1E445D27002F2EED /* LTCRowValueTests.m in Sources */,
 				117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */,
 				1178CD7E1E42B947004CDD94 /* LTCConcernTests.m in Sources */,
 				117DBDF11E44824C002F2EED /* LTCValueSelectionControllerTests.m in Sources */,
 				0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */,
-				117DBD851E4407CD002F2EED /* LTCNewConcernViewModelMock.m in Sources */,
 				0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */,
 				117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */,
 				117DBD8B1E4411C8002F2EED /* LTCNewConcernViewModelTests.m in Sources */,

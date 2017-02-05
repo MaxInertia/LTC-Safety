@@ -10,20 +10,19 @@
 #import "LTCValueSelectionViewModel.h"
 #import "LTCRowValue.h"
 
+/**
+ Tests for the LTCValueSelectionViewModel class.
+ */
 @interface LTCValueSelectionViewModelTests : XCTestCase
 
 @end
 
 @implementation LTCValueSelectionViewModelTests
 
-- (void)setUp {
-    [super setUp];
-}
-
-- (void)tearDown {
-    [super tearDown];
-}
-
+/**
+ Tests that the LTCValueSelectionViewModel class's designated constructor properly parses a value selection configuration file in the expected format.
+ @note A test case using an unexpected format is not needed because correctness can be guaranteed at compile time. Any errors will trigger assertions during development.
+ */
 - (void)testViewModelForFileName {
     
     NSString *fileName = @"Categories";

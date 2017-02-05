@@ -9,22 +9,19 @@
 #import <XCTest/XCTest.h>
 #import "LTCInputAlertController.h"
 
+/**
+ Tests for the LTCInputAlertController class.
+ */
 @interface LTCInputAlertControllerTests : XCTestCase
 
 @end
 
+
 @implementation LTCInputAlertControllerTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
-}
-
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
-}
-
+/**
+ Tests that the designated LTCInputAlertController constructor creates an object with a valid title, message, textfield, and two buttons.
+ */
 - (void)testAlertControllerWithTitle {
     
     NSString *title = @"Title";

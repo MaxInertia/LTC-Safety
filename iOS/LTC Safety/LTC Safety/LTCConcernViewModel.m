@@ -9,7 +9,7 @@
 #import "LTCConcernViewModel.h"
 
 @interface LTCConcernViewModel () <NSFetchedResultsControllerDelegate>
-@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+@property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (readwrite, strong, nonatomic) NSManagedObjectContext *objectContext;
 @end
 
@@ -33,7 +33,17 @@
 
 #pragma mark - Fetched results controller
 
+/**
+ Loads a fetch result controller for the current managed object context for fetching concerns from the sqlite file.
+
+ @todo Error handling needs to be fixed for this method in case loading the fetched results controller fails.
+ @pre context != nil
+ @param context The context that the fetch result controller uses to fetch its data.
+ @return A non-nil fetched results controller that can be used for fetching concerns from disk.
+ */
 - (NSFetchedResultsController *)_loadFetchedResultsControllerForContext:(NSManagedObjectContext *)context {
+    
+    NSAssert(context != nil, @"Attempted to load a fetched results controller with a nil context.");
     
     NSFetchRequest *fetchRequest = [LTCConcern fetchRequest];
     [fetchRequest setFetchBatchSize:20];
@@ -88,7 +98,8 @@
     
     NSAssert(concern != nil, @"Attempted to remove a nil concern.");
     NSAssert(error != nil, @"Attempted to call remove concern without an error handler.");
-
+    NSAssert([concern.managedObjectContext isEqual:self.objectContext], @"Attempted to remove a concern that was not a part of the managed object context.");
+    
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     [context deleteObject:concern];
     [self.objectContext save:error];
@@ -110,6 +121,9 @@
     [self.delegate viewModelDidFinishUpdates:self];
 }
 
+/**
+ Notifies the delegate whenever the the fetched results controller is updated.
+ */
 - (void)controller:(NSFetchedResultsController *)controller didChangeObject:(id)anObject
        atIndexPath:(NSIndexPath *)indexPath forChangeType:(NSFetchedResultsChangeType)type
       newIndexPath:(NSIndexPath *)newIndexPath {

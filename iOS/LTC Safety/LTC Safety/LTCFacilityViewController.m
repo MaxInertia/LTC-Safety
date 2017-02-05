@@ -10,6 +10,11 @@
 
 @implementation LTCFacilityViewController
 
+/**
+ The file name for the properties file that the value options are loaded from.
+
+ @return The file name for the properties file that the facility options are loaded from.
+ */
 - (NSString *)fileName {
     return @"Facilities";
 }

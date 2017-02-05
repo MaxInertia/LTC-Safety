@@ -13,11 +13,18 @@
 #import "LTCPersistentContainer.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
+
+/**
+ The persistent container that manages the application-wide managed object context used for loading and saving concerns.
+ */
 @property (nonatomic, strong) LTCPersistentContainer *persistentContainer;
 @end
 
 @implementation AppDelegate
 
+/**
+ Performs setup for the application. This method is responsible for setting up the persistence container, app-wide navigation bar appearance and initializing the split view controller.
+ */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     // Set up application wide persistence container and managed object context
@@ -50,6 +57,9 @@
     return YES;
 }
 
+/**
+ Called when the application is going to terminate. This causes the persistent container to save all entities.
+ */
 - (void)applicationWillTerminate:(UIApplication *)application {
     
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
@@ -62,6 +72,9 @@
     }
 }
 
+/**
+ Determines whether the concern detail view controller should be displayed based on whether it has a non-nil concern.
+ */
 - (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
     
     return [secondaryViewController isKindOfClass:[UINavigationController class]] &&

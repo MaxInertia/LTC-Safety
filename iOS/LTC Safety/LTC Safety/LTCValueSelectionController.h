@@ -9,8 +9,22 @@
 #import <UIKit/UIKit.h>
 #import <XLForm/XLForm.h>
 
+/**
+ The LTCValueSelectionController class is used for providing the client with a set of predefined options to choose from when filling in data in the new concern view controller.
+ @attention For all intents and purposes this class is abstract and should not instantiated. It must be subclasses so that -fileName can be overriden.
+ */
 @interface LTCValueSelectionController : XLFormViewController <XLFormRowDescriptorViewController>
-@property (readonly, nonatomic, assign) BOOL hasOther;
+
+/**
+ The file name for the properties file that the value options are loaded from.
+ 
+ @attention This must be overriden by subclasses to provide the filename the options should be loaded from.
+ @return The file name for the properties file that the category options are loaded from.
+ */
 @property (readonly, nonatomic, copy) NSString *fileName;
+
+/**
+ The row descriptor required by XLForms for passing the selected value back to the parent XLFormViewController.
+ */
 @property (nonatomic) XLFormRowDescriptor *rowDescriptor;
 @end

@@ -34,6 +34,8 @@
 
 + (GTLRClient_ConcernData *)testConcernData {
     
+    // [NSUUID UUID].UUIDString generates unique random data every time for testing purposes
+    
     GTLRClient_Reporter *reporter = [[GTLRClient_Reporter alloc] init];
     reporter.name = [NSUUID UUID].UUIDString;
     reporter.phoneNumber = [NSUUID UUID].UUIDString;

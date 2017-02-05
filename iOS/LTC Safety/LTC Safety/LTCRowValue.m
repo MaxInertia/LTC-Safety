@@ -22,6 +22,7 @@ NSString *const LTCTitleKey = @"title";
     NSAssert(dictionary != nil, @"Attempted to create a row value with a null dictionary.");
     NSAssert([dictionary valueForKey:LTCTitleKey] != nil, @"Row value dictionary did not contain expected key:%@", LTCTitleKey);
     
+    // Extract the tag and call the designated initializer
     NSString *tag = [dictionary valueForKey:LTCTitleKey];
     return (self = [self initWithTag:tag]);
 }

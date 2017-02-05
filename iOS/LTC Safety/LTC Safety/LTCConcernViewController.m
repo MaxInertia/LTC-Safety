@@ -14,12 +14,26 @@
 #import "LTCConcernTableViewCell.h"
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
+
+/**
+ The button that the user clicks to present the form for submitting a new concern.
+ */
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
+
+/**
+ <#Description#>
+ */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @end
 
 @implementation LTCConcernViewController
 
+
+/**
+ Sets the view model to provide the view controller with a new source of data. This should only be called once when the concern view controller is first initialized.
+
+ @param viewModel The view model that will provide the view controller its concern data for displaying.
+ */
 - (void)setViewModel:(LTCConcernViewModel *)viewModel {
     
     NSAssert1(_viewModel == nil, @"Attempted to set %@'s view model when it already exists.", self);
@@ -28,6 +42,9 @@
     _viewModel = viewModel;
 }
 
+/**
+ Initial setup for the view controller to configure the title and add concern button.
+ */
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -39,9 +56,13 @@
     self.addConcernButton.layer.cornerRadius = 2.5f;
     self.addConcernButton.layer.borderColor = [[UIColor colorWithRed:0xE2/255.0 green:0xE2/255.0 blue:0xE2/255.0 alpha:0xE2/255.0] CGColor];
     self.addConcernButton.layer.borderWidth = 1.0f;
-    
 }
 
+/**
+ Action callback triggered when the add concern button is clicked.
+
+ @param sender The sender of the action.
+ */
 - (IBAction)presentCreateConcernController:(id)sender {
     
     LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.viewModel.objectContext];
@@ -51,7 +72,6 @@
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentViewController:navController animated:YES completion:nil];
 }
-
 
 - (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern {
     
@@ -79,6 +99,8 @@
     [cell configureWithConcern:concern];
     return cell;
 }
+
+#pragma mark - LTCConcernViewModel delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
