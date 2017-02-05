@@ -15,7 +15,7 @@ script:
             git config --global user.name "Travis CI"
             git push origin ios-app:ios-app-build
         fi
-    elif [[ "$TRAVIS_BRANCH" -eq "ios-dev-build" ]]
+    elif [[ "$TRAVIS_BRANCH" -eq "ios-dev-build" ]] ; then
         rc=xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test
     fi
     
