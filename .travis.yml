@@ -7,7 +7,7 @@ script:
 after_success:
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - if [ "${TRAVIS_BRANCH}" == "web-backend" ] ; then git push web-backend:web-backend-build ; fi
+  - if [ "${TRAVIS_BRANCH}" == "web-backend" ] ; then git push origin web-backend:web-backend-build ; fi
 notifications:
   slack: 
     on_success: change
