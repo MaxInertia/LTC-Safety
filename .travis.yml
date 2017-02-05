@@ -1,19 +1,11 @@
 language: objective-c
 osx_image: xcode7.3
-#xcode_project: "LTC-Safety/iOS/LTC Safety/LTC Safety.xcodeproj"
-#xcode_workspace: "iOS/LTC Safety/LTC Safety.xcworkspace"
-#xcode_scheme: "LTC Safety"
-#podfile: LTC-Safety/iOS/LTC Safety/Podfile
-#xcode_sdk: iphonesimulator
-#configuration: Debug
 
 script:    
-    xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build
-    
+  - if [ "${TRAVIS_BRANCH}" == "ios-app" ] ; then xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build ; fi
+  - if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test ; fi
+
 after_success: # push to branch 'ios-app-build' to indicate that it compiled successfully (essentially a fastforward merge)
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  #- git update-index --assume-unchanged .travis.yml
-  - git fetch
-  - git checkout ios-app-build .travis.yml
-  - git push origin ios-app:ios-app-build
+  - if [ "${TRAVIS_BRANCH}" == "ios-app" ] ; then git push origin ios-app:ios-app-build ; fi
