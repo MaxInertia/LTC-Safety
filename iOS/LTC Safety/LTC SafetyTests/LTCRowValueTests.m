@@ -15,6 +15,7 @@
 
 @implementation LTCRowValueTests
 
+
 - (void)testInit {
     
     NSString *tag = @"FACILITY_1";

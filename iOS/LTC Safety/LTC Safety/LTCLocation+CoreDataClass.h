@@ -14,7 +14,20 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ The LTC Location class will represent a concern's facility name and room number.
+ */
 @interface LTCLocation : NSManagedObject
+
+/**
+ Creates a new concern location given a datastore concern location object and a context to save the location into.
+ @pre           The data must be non-nil.
+ @pre           The context must be non-nil.
+ @param data    The datastore concern location data that will be used to create the local concern location.
+ @param context The context that the local concern location will be saved into.
+ 
+ @return The local concern location.
+ */
 + (instancetype)locationWithData:(nonnull GTLRClient_Location *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
 @end
 

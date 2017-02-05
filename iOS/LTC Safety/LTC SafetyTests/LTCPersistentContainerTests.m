@@ -13,13 +13,18 @@
 - (NSPersistentStoreCoordinator *)_loadStoreCoordinatorAtURL:(NSURL *)url withObjectModel:(NSManagedObjectModel *)model error:(NSError **)error;
 - (NSManagedObjectModel *)_loadObjectModelWithName:(NSString *)name;
 @end
-
+/**
+ Tests the functionality of the LTC persistent container view model.
+ */
 @interface LTCPersistentContainerTests : XCTestCase
 
 @end
 
 @implementation LTCPersistentContainerTests
 
+/**
+ Testing the initialization of a persistent container by allocating a new persistent container and then checking that the managedObjectModel, storeCoordinator, viewContext are all not nil. The test then checks that there is 1 persistent store and that there are entities for a LTCConcern, LTCReporter, LTCLocation, and LTCConcern Status.
+ */
 - (void)testInitWithName {
     NSString *name = @"LTC_Safety";
     LTCPersistentContainer *container = [[LTCPersistentContainer alloc] initWithName:name];
@@ -37,6 +42,9 @@
     XCTAssertNotNil(entities[@"LTCConcernStatus"]);
 }
 
+/**
+ Testing the initialization of a persistent container with corrupt data by providing it with a bad url path and checking that there is 1 persistent store and that it's type is in memory store.
+ */
 - (void)testInitWithCorruptDatabaseAndFailedLoad {
  
     LTCPersistentContainer *container = [[LTCPersistentContainer alloc] init];

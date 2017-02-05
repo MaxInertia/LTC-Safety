@@ -19,6 +19,15 @@
     return [[LTCConcernStatus alloc] initWithData:data entity:description insertIntoManagedObjectContext:context];
 }
 
+/**
+ Constructs the concern status given data passed through the statusWithData method.
+
+ @param data    The datastore concern status data that will be passed to create the local concern status.
+ @param entity  The entity description for this object.
+ @param context The context object space this concern status will be stored in.
+
+ @return The constructed LTCConcernStatus
+ */
 - (instancetype)initWithData:(nonnull GTLRClient_ConcernStatus *)data entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         self.creationDate = data.creationDate.date;

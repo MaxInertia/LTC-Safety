@@ -14,6 +14,9 @@
 
 @implementation LTCConcern
 
+/**
+ Called when the concern is about to be saved. Allows for setup of the concern.
+ */
 - (void)didSave {
     
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
@@ -23,6 +26,9 @@
     [super didSave];
 }
 
+/**
+ Called when the concern is about to be read from disk. Allows for setup of the concern.
+ */
 - (void)awakeFromFetch {
     
     [super awakeFromFetch];
@@ -41,6 +47,16 @@
     return [[LTCConcern alloc] initWithData:data ownerToken:ownerToken entity:description insertIntoManagedObjectContext:context];
 }
 
+/**
+ Conctructs the concern object given data passed through the concernWithData method.
+ 
+ @param concernData The datastore object that will be passed to create the local concern.
+ @param ownerToken  The ownerToken to be saved into the local concern that allows the client to have access to the data once it is in the datastore.
+ @param entity      The entity description for this object.
+ @param context     The object space this concern will be stored in.
+
+ @return The constructed LTCConcern
+ */
 - (instancetype)initWithData:(nonnull GTLRClient_Concern *)concernData ownerToken:(NSString *)ownerToken entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         

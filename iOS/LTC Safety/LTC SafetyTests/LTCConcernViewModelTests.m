@@ -19,6 +19,9 @@
 
 @import CoreData;
 
+/**
+ Unit tests for the LTCConcernViewModelTests class.
+ */
 @interface LTCConcernViewModelTests : LTCCoreDataTestCase
 
 @end
@@ -33,6 +36,9 @@
     [super tearDown];
 }
 
+/**
+ Tests the addition of a concrn by creating a viewModel and then adding a newly allocated concern to it. If there is no error, the objectID.temporaryID is false, and the keychain has stored the correct owner token, the test passes.
+ */
 - (void)testAddConcern {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
@@ -52,6 +58,9 @@
     XCTAssertTrue([[keychain stringForKey:concern.identifier] isEqualToString:concern.ownerToken]);
 }
 
+/**
+ Tests the retraction of a concern. The test adds a concern to the allocated viewModel, then checks for errors, then removes the concern from the viewModel and checks again for any errors and also checks that the row count for the section is 0.
+ */
 - (void)testRemoveConcern {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
@@ -85,6 +94,9 @@
     ([verify(delegate) viewModelDidFinishUpdates:anything()]);    
 }
 
+/**
+ Tests the concern at index path method in the concern view model by adding 4 concern to an allocated view model and making sure that the index paths of each of the models can be accessed and that they have been set in ascending order.
+ */
 - (void)testConcernAtIndexPath {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
@@ -113,6 +125,9 @@
     XCTAssertEqual(concern4, [viewModel concernAtIndexPath:(indexPath1)]);
 }
 
+/**
+ Tests the row count method in the concern view model by creating 4 concerns and adding them to a view model and then making sure that the row cound is also returned as 4 and that there is 1 section.
+ */
 - (void)testRowCountForSection {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
