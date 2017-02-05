@@ -1,6 +1,0 @@
-language: objective-c
-osx_image: xcode7.3
-xcode_workspace: "iOS/LTC Safety/LTC Safety.xcworkspace"
-xcode_scheme: "LTC Safety"
-xcode_sdk: iphonesimulator
-configuration: Debug

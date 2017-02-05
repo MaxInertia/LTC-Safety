@@ -8,4 +8,4 @@ script:
 after_success: # push to branch 'ios-app-build' to indicate that it compiled successfully (essentially a fastforward merge)
   - git config --global user.email "builds@travis-ci.com"
   - git config --global user.name "Travis CI"
-  - if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] git push origin ios-app:ios-app-build
+  - if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then git push origin ios-app:ios-app-build ; fi
