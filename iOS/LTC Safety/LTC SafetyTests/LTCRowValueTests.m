@@ -18,7 +18,6 @@
 
 @implementation LTCRowValueTests
 
-
 /**
  Tests that the LTCRowValue class can parse a dictionary in the expected value selection configuration file format. 
  @note A test for an unexpected format is not needed because the format can be guaranteed to be correct at compile time. Any failure will result in an assertion during development.

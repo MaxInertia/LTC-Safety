@@ -14,6 +14,11 @@
 
 @implementation LTCClientApi
 
+/**
+ Constructor for the LTCClientApi that defines the service to be a newly allocated GTLRClientService.
+
+ @return The LTCClientApi
+ */
 - (instancetype)init {
     if (self = [super init]) {
         self.service = [[GTLRClientService alloc] init];
@@ -31,7 +36,6 @@
         completion(object, error);
     }];
 }
-
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
  
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");

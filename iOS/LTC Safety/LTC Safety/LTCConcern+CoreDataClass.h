@@ -17,7 +17,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
 /**
  This class is an extension of the LTCConcern entity in the xcdatamodel. It is used to model concerns within the application and allows them to persistent when the managed object context is saved or loaded.
  */

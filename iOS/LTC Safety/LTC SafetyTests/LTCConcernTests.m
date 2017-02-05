@@ -11,9 +11,16 @@
 #import "LTCConcern+CoreDataClass.h"
 #import "LTCCoreDataTestCase.h"
 
+/**
+ Unit tests for the LTCConcern Core Data class.
+ */
 @interface LTCConcernTests : LTCCoreDataTestCase
+/**
+ The datastore concern that will be used to compare with the local concern.
+ */
 @property (nonatomic, strong) GTLRClient_Concern *concern;
 @end
+
 
 @implementation LTCConcernTests
 
@@ -25,7 +32,10 @@
     [super tearDown];
 }
 
-- (void)testConcernWithConcern {
+/**
+ Tests the concern with data method by creating a local concern and a datastore concern then comparing them to make sure all of their data is the same.
+ */
+- (void)testConcernWithData {
 
     // Use the testing class extension to get a test concern
     GTLRClient_Concern *concern = [GTLRClient_Concern testConcern];

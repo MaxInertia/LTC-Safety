@@ -27,12 +27,18 @@
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorSubmitConcern;
 @end
 
+/**
+ Tests the functionality of the new concern view model.
+ */
 @interface LTCNewConcernViewModelTests : LTCCoreDataTestCase
 
 @end
 
 @implementation LTCNewConcernViewModelTests
 
+/**
+ Testing the initialization of the LTCNewConcernViewModel by allocating a new view model and checking that the client api, the context, and all of the rows are not nil. Test also checks that the sections count is 4.
+ */
 - (void)testInitWithContext {
     LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.context];
     
@@ -45,6 +51,9 @@
     }
 }
 
+/**
+ Tests the submission callback of the view model by setting the sumbission callback and then calling the submission callback and making sure the same value is achieved.
+ */
 - (void)testSubmissionCallback {
     
     SEL testSelector = @selector(testSubmissionCallback);
@@ -56,6 +65,9 @@
     XCTAssertTrue([NSStringFromSelector(viewModel.submissionCallback) isEqualToString:NSStringFromSelector(testSelector)]);
 }
 
+/**
+ Testing the submission of a concern with an error by calling submitConcernData with a concern with an error message. Test asserts that the passed error is returned and that the concern is nil.
+ */
 - (void)testSubmitConcernDataError {
     
     NSString *identifier = [NSBundle mainBundle].bundleIdentifier;
@@ -77,6 +89,9 @@
     completion(nil, passedError);
 }
 
+/**
+ Testing submission of concern data. The test creates a random concern and populates the form with that concerns contents. The test then checks that each proporty of the concern is equal to each property for the text field values.
+ */
 - (void)testSubmitConcernData {
     
     LTCClientApi *mockClient = mock([LTCClientApi class]);

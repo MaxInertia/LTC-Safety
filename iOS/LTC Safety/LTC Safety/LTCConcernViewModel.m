@@ -16,6 +16,14 @@
 @implementation LTCConcernViewModel
 @dynamic sectionCount;
 
+/**
+ Constructor method for the concern view model. Initialized a new view model with a new
+ NSFetchedResultsController and a passed in NSManagedObjectContext
+ 
+ @param context The NSManagedObjectContext that objects can be saved into.
+
+ @return The LTCConcernViewModel just created
+ */
 - (instancetype)initWithContext:(NSManagedObjectContext *)context {
     
     NSAssert(context != nil, @"Attempted to initialize the concern view model with a nil context.");
@@ -79,6 +87,12 @@
     return [sectionInfo numberOfObjects];
 }
 
+/**
+ Adds a concern to the core data local datastore.
+
+ @param concern The concern to be stored
+ @param error   <#error description#>
+ */
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error {
     
     NSAssert(concern != nil, @"Attempted to add a nil concern.");

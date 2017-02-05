@@ -14,7 +14,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/**
+ The LTC Concern Status class will represent a concern's current or past status. This status includes the creation date, and the status itself.
+ */
 @interface LTCConcernStatus : NSManagedObject
+/**
+ Creates a new concern status given a datastore concern status object and a context to save the status into.
+ @pre           The data must be non-nil.
+ @pre           The context must be non-nil.
+ @param data    The datastore concern status data that will be used to create the local concern status.
+ @param context The context that the local concern status will be saved into.
+
+ @return The local concern status.
+ */
 + (instancetype)statusWithData:(nonnull GTLRClient_ConcernStatus *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context;
 @end
 
