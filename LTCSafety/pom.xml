@@ -155,6 +155,26 @@
               <artifactId>gcloud-maven-plugin</artifactId>
               <version>${gcloud.plugin.version}</version>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <tags>
+                        <tag>
+                            <name>precond</name>
+                            <placement>a</placement>
+                            <head>Pre-condition:</head>
+                        </tag>
+                        <tag>
+                            <name>postcond</name>
+                            <placement>a</placement>
+                            <head>Post-condition:</head>
+                        </tag>
+                    </tags>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
