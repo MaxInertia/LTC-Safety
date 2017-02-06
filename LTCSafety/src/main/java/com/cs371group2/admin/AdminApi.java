@@ -8,11 +8,14 @@ import com.google.api.server.spi.config.ApiIssuerAudience;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.UnauthorizedException;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Administrative API class used for requesting and granting account authorization
+ * Administrative API class used for requesting and granting account authorization.
  *
  * Created on 2017-01-30.
  */
@@ -37,39 +40,52 @@ public class AdminApi {
     private static final Logger LOGGER = Logger.getLogger( AdminApi.class.getName() );
 
     /**
-     * Requests user access for users that are signing in for their first time
+     * Requests user-level access for people that are signing in for their first time. This will create
+     * an account and set it's access level as unverified.
      *
-     * @param user The user to request access for
+     * @param userToken The user token to request access for
      *
      * @precond User is non-null
      * @postcond An account has been created for the user with an access type of "UNVERIFIED"
      */
     @ApiMethod(name = "requestAccess", path = "admin/requestAccess", httpMethod = ApiMethod.HttpMethod.GET)
-    public void requestAccess(User user) throws UnauthorizedException{
+    public void requestAccess(@Named("User") String userToken) throws UnauthorizedException{
 
-        if (user == null) {
+        if (userToken == null) {
             throw new UnauthorizedException("User requesting access was null");
         }
 
-        //Create a new AccountDao
-        AccountDao accountDao = new AccountDao();
+        FirebaseAuthenticator verifier = new FirebaseAuthenticator();
+        boolean isVerified = verifier.isVerified(userToken);
 
-        //If this is the first time a user is attempting to sign-in, create a new account and save it
-        if(accountDao.load(user.getId()) == null){
-            Account userAccount = new Account(user.getId());
-            accountDao.save(userAccount);
+        if(!isVerified) {
+            try {
+                FirebaseToken user = new FirebaseTokenVerifier().verify(userToken);
+
+                AccountDao accountDao = new AccountDao();
+
+                //If this is the first time a user is attempting to sign-in, create a new account and save it
+                if (accountDao.load(user.getUid()) == null) {
+                    Account userAccount = new Account(user.getUid());
+                    //accountDao.save(userAccount);
+                }
+
+                LOGGER.log(Level.INFO, "User " + user.getEmail() + " has requested account verification");
+
+                //Assert that the user account is in the database
+                assert (accountDao.load(user.getUid()) != null);
+            } catch (GeneralSecurityException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        LOGGER.log(Level.INFO, "User " + user.getId() + " has requested account verification");
-
-        //Assert that the user account is in the database
-        assert(accountDao.load(user.getId()) != null);
     }
 
     /**
      * Used by administrators to modify the account type of a user
      *
-     * @param admin The admin account that is granting access
+     * @param admin The firebase token of the admin that is granting access
      * @param userId The userID of the account to modify
      * @param accountType The user's new account type
      *
@@ -77,23 +93,24 @@ public class AdminApi {
      * @postcond Desired user account's access level has been modified
      */
     @ApiMethod(name = "setAccountAccess", path = "admin/setAccountAccess")
-    public void setAccountAccess(User admin, @Named("UserId") String userId, @Named("Type") AccountType accountType) throws UnauthorizedException{
+    public void setAccountAccess(@Named("Admin")String admin, @Named("UserId") String userId, @Named("Type") AccountType accountType) throws UnauthorizedException{
 
         if (admin == null) {
-            throw new UnauthorizedException("User requesting access was null");
+            throw new UnauthorizedException("Admin making access changes was null");
         }
 
         assert(userId != null);
         assert(accountType != null);
 
+        FirebaseAuthenticator verifier = new FirebaseAuthenticator();
+        boolean isAdmin = verifier.isAdmin(admin);
 
-        AccountDao accountDao = new AccountDao();
-        Account adminAccount = accountDao.load(admin.getId());
-
-        if(adminAccount.getAccessType() != AccountType.ADMIN) {
+        if(!isAdmin) {
             LOGGER.log(Level.FINE, "Non-admin attempted to modify a user's access level");
             throw new UnauthorizedException("Non-admin attempted to modify a user's access level");
         }
+
+        AccountDao accountDao = new AccountDao();
 
         //Assign the user account the given access type and updates its database entry
         Account userAccount = accountDao.load(userId);

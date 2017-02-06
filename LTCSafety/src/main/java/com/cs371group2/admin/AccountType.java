@@ -9,7 +9,7 @@ package com.cs371group2.admin;
  */
 public enum AccountType {
     /**
-     * If an account is unverified, it should not be able to perform user or administrator functionality
+     * If an account is unverified, it should not be able to perform user or administrator functionality.
      */
     UNVERIFIED,
 

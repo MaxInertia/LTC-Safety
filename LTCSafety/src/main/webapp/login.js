@@ -57,7 +57,7 @@
             promise .then(function (rawToken) {
                 console.log(rawToken);
 
-                gapi.client.admin.accessTest({'token': rawToken}).execute(
+                gapi.client.admin.requestAccess({'User': rawToken}).execute(
                     function (resp) {
                         console.log("Response");
                         window.location.replace("home.html");
