@@ -71,6 +71,11 @@ public final class Concern {
         return data;
     }
 
+    /* No-arg constructor for loading the entity from the datastore. */
+    private Concern() {
+
+    }
+
     /**
      * Create a new concern
      *
