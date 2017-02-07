@@ -1,4 +1,4 @@
-package com.cs371group2.client;
+package account;
 
 import com.cs371group2.Dao;
 
@@ -9,5 +9,9 @@ public class AccountDao extends Dao<Account> {
 
     public AccountDao() {
         super(Account.class);
+    }
+
+    public Account load(String id) {
+        return null;
     }
 }
