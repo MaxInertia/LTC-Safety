@@ -4,6 +4,7 @@ import com.cs371group2.ValidationResult;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
+import com.cs371group2.concern.ConcernStatus;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.BadRequestException;
@@ -38,7 +39,7 @@ public final class ClientApi {
     }
 
     @ApiMethod(name = "retractConcern", path = "/concern/retract")
-    public void retractConcern(OwnerToken token) throws BadRequestException, NotFoundException {
+    public ConcernStatus retractConcern(OwnerToken token) throws BadRequestException, NotFoundException {
 
         ValidationResult result = token.validate();
         if (!result.isValid()) {
@@ -57,5 +58,6 @@ public final class ClientApi {
         dao.save(concern);
 
         logger.log(Level.INFO, "Client successfully retracted a concern.");
+        return concern.getStatuses().last();
     }
 }

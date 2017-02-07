@@ -1,8 +1,8 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="LTCSafety:war">
+  <artifact type="war" name="LTC-Safety:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="LTC-Safety-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="LTCSafety:war exploded" />
+      <element id="artifact" artifact-name="LTC-Safety:war exploded" />
     </root>
   </artifact>
 </component>
