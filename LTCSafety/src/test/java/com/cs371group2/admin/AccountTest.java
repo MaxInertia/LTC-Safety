@@ -1,5 +1,7 @@
 package com.cs371group2.admin;
 
+import account.Account;
+import account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
 
 /**
@@ -11,4 +13,15 @@ import com.cs371group2.DatastoreTest;
  */
 public class AccountTest extends DatastoreTest {
 
+    private String testId = "";
+
+    /**
+     * Generates a new account with all instance variables initialized to be valid strings. This is
+     * used as a helper method to construct new concern data.
+     *
+     * @return A new account data object with all instance variables initialized.
+     */
+    public Account generateAccount() {
+        return new Account(testId, AccountPermissions.ADMIN);
+    }
 }
