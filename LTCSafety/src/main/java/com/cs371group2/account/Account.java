@@ -1,4 +1,4 @@
-package account;
+package com.cs371group2.account;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -33,4 +33,9 @@ public class Account {
     public AccountPermissions getPermissions() {return permissions;}
 
     public void setPermissions(AccountPermissions permissions) {this.permissions = permissions;}
+
+    @Override
+    public String toString() {
+        return ("Account ID: " + id + " Account Permissions: " + permissions.toString());
+    }
 }

@@ -1,7 +1,7 @@
 package com.cs371group2.admin;
 
-import account.Account;
-import account.AccountPermissions;
+import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
 
 /**

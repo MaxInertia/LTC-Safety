@@ -1,4 +1,4 @@
-package account;
+package com.cs371group2.account;
 
 /**
  * This enum represents the permission level of an account, which is used to dictate which operations
