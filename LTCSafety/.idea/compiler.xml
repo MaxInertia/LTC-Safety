@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="LTC-Safety" />
+        <module name="LTCSafety" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="LTC-Safety" target="1.7" />
+      <module name="LTCSafety" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

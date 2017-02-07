@@ -8,7 +8,7 @@ import com.googlecode.objectify.annotation.Index;
  * Created on 2017-02-06.
  */
 @Entity
-public class Account {
+public final class Account {
     /**
      * The id associated with this account.
      */

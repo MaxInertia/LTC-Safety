@@ -22,26 +22,29 @@ public class AccountDao extends Dao<Account> {
     }
 
     public Account load(String id) {
-        return null;
+        assert (id != null);
+
+        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
+        return super.load(id);
     }
 
     /**
      * Saves an account synchronously to the datastore. If an account with the same
      * identifier already exists it will be overwritten.
      *
-     * @param entity The entity to be saved to the datastore.
-     * @return The key used to load the entity from the datastore.
-     * @precond entity != null
-     * @postcond The entity has been saved to the datastore for future loading and / or deleting. If
+     * @param account The account to be saved to the datastore.
+     * @return The key used to load the account from the datastore.
+     * @precond account and it's fields are non-null
+     * @postcond The account has been saved to the datastore for future loading and / or deleting. If
      * the entity has an identifier of type long it will have been populated with the entity's
      * unique identifier.
      */
-    public Key<Account> save(Account entity) {
+    public Key<Account> save(Account account) {
+        assert (account != null);
+        assert (account.getId() != null);
+        assert (account.getPermissions() != null);
 
-        assert (entity.getId() != null);
-        assert (entity.getPermissions() != null);
-
-        logger.log(Level.FINER,"Successfully saved Entity " + entity.toString() + " to the datastore.");
-        return ObjectifyService.ofy().save().entity(entity).now();
+        logger.log(Level.FINER,"Successfully saved Entity " + account.toString() + " to the datastore.");
+        return super.save(account);
     }
 }

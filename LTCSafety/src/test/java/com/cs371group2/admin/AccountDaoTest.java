@@ -1,5 +1,6 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
 import com.google.api.server.spi.response.BadRequestException;
@@ -17,7 +18,7 @@ import static org.junit.Assert.assertNull;
  *
  * Created on 2017-02-06.
  */
-public class AccountDaoTest {
+public class AccountDaoTest extends DatastoreTest {
 
     /**
      * Assert that the two accounts are equal based on the test parameters for the data access
@@ -34,7 +35,7 @@ public class AccountDaoTest {
     }
 
     /**
-     * Test for testing the saving, loading, and deleting of entities. This creates an entity, saves
+     * Test for testing the saving, loading, and deleting of accounts. This creates an account, saves
      * it, loads it using multiple methods, then deletes it.
      */
     @Test
@@ -63,11 +64,10 @@ public class AccountDaoTest {
     }
 
 
-
     /**
      * Ensures that submission fails when the account's id is null
      */
-    @Test(expected = BadRequestException.class)
+    @Test(expected = AssertionError.class)
     public void nullId() throws Exception {
         Account testAccount = new AccountTest().generateAccount();
         testAccount.setId(null);
@@ -78,18 +78,7 @@ public class AccountDaoTest {
     /**
      * Ensures that submission fails when the account permissions are null
      */
-    @Test(expected = BadRequestException.class)
-    public void invalidId() throws Exception {
-        Account testAccount = new AccountTest().generateAccount();
-        testAccount.setId("This is an invalid ID");
-        AccountDao dao = new AccountDao();
-        dao.save(testAccount);
-    }
-
-    /**
-     * Ensures that submission fails when the account permissions are null
-     */
-    @Test(expected = BadRequestException.class)
+    @Test(expected = AssertionError.class)
     public void nullPermissions() throws Exception {
         Account testAccount = new AccountTest().generateAccount();
         testAccount.setPermissions(null);

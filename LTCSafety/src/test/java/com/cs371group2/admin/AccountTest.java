@@ -13,7 +13,8 @@ import com.cs371group2.DatastoreTest;
  */
 public class AccountTest extends DatastoreTest {
 
-    private String testId = "";
+    //Test ID for
+    private String testId = "5oz3HPPnZuUzV4hcwXqtgG6tjc03";
 
     /**
      * Generates a new account with all instance variables initialized to be valid strings. This is
