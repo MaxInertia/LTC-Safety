@@ -1,0 +1,22 @@
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    # Android SDK Tools
+    - platform-tools
+    - tools
+    # Project BuildTools version
+    - build-tools-25.0.2
+    # Compile SDK
+    - android-25
+    # System images for emulator - can be used for testing
+    #- sys-img-armeabi-v7a-android-22
+    #- sys-img-armeabi-v7a-android-17
+    # Other components
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-19
+    
+script: cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build
+    
