@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.client.model;
 
 /**
- * Model definition for OwnerToken.
+ * Model definition for ConcernStatus.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the User API. For a detailed explanation see:
@@ -29,37 +29,58 @@ package com.appspot.ltc_safety.client.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class OwnerToken extends com.google.api.client.json.GenericJson {
+public final class ConcernStatus extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String token;
+  private com.google.api.client.util.DateTime creationDate;
+
+  /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String type;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getToken() {
-    return token;
+  public com.google.api.client.util.DateTime getCreationDate() {
+    return creationDate;
   }
 
   /**
-   * @param token token or {@code null} for none
+   * @param creationDate creationDate or {@code null} for none
    */
-  public OwnerToken setToken(java.lang.String token) {
-    this.token = token;
+  public ConcernStatus setCreationDate(com.google.api.client.util.DateTime creationDate) {
+    this.creationDate = creationDate;
+    return this;
+  }
+
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.String getType() {
+    return type;
+  }
+
+  /**
+   * @param type type or {@code null} for none
+   */
+  public ConcernStatus setType(java.lang.String type) {
+    this.type = type;
     return this;
   }
 
   @Override
-  public OwnerToken set(String fieldName, Object value) {
-    return (OwnerToken) super.set(fieldName, value);
+  public ConcernStatus set(String fieldName, Object value) {
+    return (ConcernStatus) super.set(fieldName, value);
   }
 
   @Override
-  public OwnerToken clone() {
-    return (OwnerToken) super.clone();
+  public ConcernStatus clone() {
+    return (ConcernStatus) super.clone();
   }
 
 }

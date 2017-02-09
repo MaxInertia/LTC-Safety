@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 
+
 group = 'com.appspot.ltc_safety'
 archivesBaseName = 'client'
 version = 'v1-1.22.0-SNAPSHOT'
