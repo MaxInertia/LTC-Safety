@@ -2,11 +2,12 @@ package com.cs371group2.admin;
 
 /**
  * This object represents a concern request containing an offset and a limit,
- * both of which will be to access the concern database.
+ * both of which will be to access the concern database. It will also include all
+ * necessary functionality for authenticating the requester.
  *
  * Created on 2017-02-08.
  */
-public class ConcernRequest {
+public class ConcernRequest extends AdminRequest {
 
     /** The offset in the database to begin loading the concerns from */
     private int offset;

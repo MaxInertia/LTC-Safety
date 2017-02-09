@@ -30,13 +30,13 @@ public class AccountTest extends DatastoreTest {
     }
 
     @Test(expected = AssertionError.class)
-    private void NullIdTest() throws Exception{
+    public void NullIdTest() throws Exception{
         Account account = new Account(null, AccountPermissions.ADMIN);
         assertNull(account);
     }
 
     @Test(expected = AssertionError.class)
-    private void NullPermissionTest() throws Exception{
+    public void NullPermissionTest() throws Exception{
         Account account = new Account(testId, null);
         assertNull(account);
     }

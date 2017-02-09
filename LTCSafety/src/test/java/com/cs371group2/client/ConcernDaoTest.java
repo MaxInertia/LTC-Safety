@@ -93,14 +93,23 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         LinkedList<Concern> concernList;
 
-        concernList = dao.load(0, -1);
-        assertNull(concernList);
-
-        concernList = dao.load(-1, 5);
-        assertNull(concernList);
-
         concernList = dao.load(0, 5);
         assertNotNull(concernList);
+    }
 
+    @Test (expected = AssertionError.class)
+    public void LoadInvalidOffsetTest(){
+        ConcernDao dao = new ConcernDao();
+        LinkedList<Concern> concernList;
+
+        concernList = dao.load(-1, 5);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void LoadInvalidLimitTest(){
+        ConcernDao dao = new ConcernDao();
+        LinkedList<Concern> concernList;
+
+        concernList = dao.load(0, -1);
     }
 }
