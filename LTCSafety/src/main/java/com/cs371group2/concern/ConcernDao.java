@@ -7,6 +7,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,4 +50,15 @@ public class ConcernDao extends Dao<Concern> {
         logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
         return load(id);
     }
+
+    /**
+     * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
+     *
+     * @param offset The offset to begin loading from
+     * @param limit The maximum amount of concerns to load
+     * @return A list of entities in the datastore from the given offset and limit
+     * @precond offset != null && offset >= 0
+     * @precond limit != null && limit > 0
+     */
+    public LinkedList<Concern> load(int offset, int limit){ return null; }
 }
