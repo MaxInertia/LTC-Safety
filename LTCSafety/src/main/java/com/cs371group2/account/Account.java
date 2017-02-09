@@ -22,6 +22,9 @@ public final class Account {
     private AccountPermissions permissions;
 
     public Account(String accountId, AccountPermissions accountPermissions){
+        assert(accountId != null);
+        assert(accountPermissions != null);
+
         id = accountId;
         permissions = accountPermissions;
     }

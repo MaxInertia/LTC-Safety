@@ -19,8 +19,13 @@ public class ConcernRequest {
      *
      * @param requestOffset The offset to begin loading at the datastore
      * @param requestLimit The maximum amount of concerns to load
+     * @precond requestOffset >= 0
+     * @precond requestLimit > 0
      */
     public ConcernRequest(int requestOffset, int requestLimit){
+        assert(requestOffset >= 0);
+        assert(requestLimit > 0);
+
         offset = requestOffset;
         limit = requestLimit;
     }

@@ -3,7 +3,6 @@ package com.cs371group2.admin;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
-import com.google.api.server.spi.response.BadRequestException;
 import com.googlecode.objectify.Key;
 import org.junit.Test;
 

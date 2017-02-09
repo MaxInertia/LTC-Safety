@@ -3,6 +3,9 @@ package com.cs371group2.admin;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertNull;
 
 /**
  * These tests are created for the Account class to ensure that account data is properly validated when
@@ -24,5 +27,17 @@ public class AccountTest extends DatastoreTest {
      */
     public Account generateAccount() {
         return new Account(testId, AccountPermissions.ADMIN);
+    }
+
+    @Test(expected = AssertionError.class)
+    private void NullIdTest() throws Exception{
+        Account account = new Account(null, AccountPermissions.ADMIN);
+        assertNull(account);
+    }
+
+    @Test(expected = AssertionError.class)
+    private void NullPermissionTest() throws Exception{
+        Account account = new Account(testId, null);
+        assertNull(account);
     }
 }
