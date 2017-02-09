@@ -12,6 +12,8 @@ import com.cs371group2.concern.ConcernTest;
 import com.googlecode.objectify.Key;
 import org.junit.Test;
 
+import java.util.LinkedList;
+
 /**
  * This class is used to test the Dao class and the ConcernDao class. This class tests the base data
  * access object class due to it being abstract making it difficult to test directly. As a result,
@@ -80,5 +82,25 @@ public class ConcernDaoTest extends DatastoreTest {
         // Assert its been deleted
         Concern deletedConcern = dao.load(concern.generateOwnerToken());
         assertNull(deletedConcern);
+    }
+
+    /**
+     * Test for testing the loading a list of concerns using an offset and limits
+     * @throws Exception
+     */
+    @Test
+    public void LoadListTest() throws Exception {
+        ConcernDao dao = new ConcernDao();
+        LinkedList<Concern> concernList;
+
+        concernList = dao.load(0, -1);
+        assertNull(concernList);
+
+        concernList = dao.load(-1, 5);
+        assertNull(concernList);
+
+        concernList = dao.load(0, 5);
+        assertNotNull(concernList);
+
     }
 }

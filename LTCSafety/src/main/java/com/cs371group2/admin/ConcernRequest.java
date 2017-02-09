@@ -14,6 +14,17 @@ public class ConcernRequest {
     /** The maximum number of elements to be loaded from the database */
     private int limit;
 
+    /**
+     * Creates a concern request for the given offset and limit
+     *
+     * @param requestOffset The offset to begin loading at the datastore
+     * @param requestLimit The maximum amount of concerns to load
+     */
+    public ConcernRequest(int requestOffset, int requestLimit){
+        offset = requestOffset;
+        limit = requestLimit;
+    }
+
     public int getOffset() {
         return offset;
     }
