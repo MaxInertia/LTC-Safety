@@ -2,6 +2,8 @@ package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
 
+import java.util.Set;
+
 /**
  * This class represents a firebase authenticator object for ensuring that a user has the correct admission levels
  * when accessing functionality that requires firebase authentication.
@@ -19,4 +21,12 @@ public class FirebaseAuthenticator extends Authenticator {
      */
     @Override
     public Account authenticate(String token){ return null; }
+
+    /**
+     * Creates an authenticator class that contains the given permission verifiers
+     */
+
+    public FirebaseAuthenticator(Set<PermissionVerifier> verifiers){
+        super(verifiers);
+    }
 }

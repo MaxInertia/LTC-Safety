@@ -8,7 +8,7 @@ import com.cs371group2.account.Account;
  *
  * Created on 2017-02-09.
  */
-public class PermissionVerifier {
+public abstract class PermissionVerifier {
 
     /**
      * Checks if the given account is verified.

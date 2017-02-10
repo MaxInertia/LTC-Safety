@@ -32,12 +32,10 @@ public class AccountTest extends DatastoreTest {
     @Test(expected = AssertionError.class)
     public void NullIdTest() throws Exception{
         Account account = new Account(null, AccountPermissions.ADMIN);
-        assertNull(account);
     }
 
     @Test(expected = AssertionError.class)
     public void NullPermissionTest() throws Exception{
         Account account = new Account(testId, null);
-        assertNull(account);
     }
 }

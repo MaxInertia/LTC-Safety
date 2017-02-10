@@ -31,11 +31,17 @@ public final class Account {
 
     public String getId() {return id;}
 
-    public void setId(String id) {this.id = id;}
+    public void setId(String id) {
+        assert(id != null);
+        this.id = id;
+    }
 
     public AccountPermissions getPermissions() {return permissions;}
 
-    public void setPermissions(AccountPermissions permissions) {this.permissions = permissions;}
+    public void setPermissions(AccountPermissions permissions) {
+        assert(permissions != null);
+        this.permissions = permissions;
+    }
 
     @Override
     public String toString() {

@@ -10,7 +10,7 @@ import java.util.Set;
  *
  * Created on 2017-02-09.
  */
-public class Authenticator {
+public abstract class Authenticator {
 
     private Set<PermissionVerifier> permissionVerifiers;
 
