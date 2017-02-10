@@ -3,11 +3,15 @@ package com.cs371group2.concern;
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.client.OwnerToken;
+import com.google.appengine.api.datastore.Query;
+import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,5 +64,13 @@ public class ConcernDao extends Dao<Concern> {
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
      */
-    public LinkedList<Concern> load(int offset, int limit){ return null; }
+    public List<Concern> load(int offset, int limit){
+        assert(offset >= 0);
+        assert(limit > 0);
+
+        List<Concern> filteredList = ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
+                                                                                    .offset(offset).limit(limit).list();
+
+        return filteredList;
+    }
 }

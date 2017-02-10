@@ -50,7 +50,7 @@ public final class Concern {
      * The exact date and time the concern was submitted.
      */
     @Index
-    private final Date submissionDate = new Date();
+    private Date submissionDate = new Date();
 
     /**
      * The user submitted data relating to the concern such as nature, location, and reporter.

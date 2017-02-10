@@ -13,6 +13,8 @@ import com.googlecode.objectify.Key;
 import org.junit.Test;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.ConcurrentNavigableMap;
 
 /**
  * This class is used to test the Dao class and the ConcernDao class. This class tests the base data
@@ -85,22 +87,41 @@ public class ConcernDaoTest extends DatastoreTest {
     }
 
     /**
-     * Test for testing the loading a list of concerns using an offset and limits
+     * Test for testing the loading a list of concerns using an offset and limits, ensuring that they are indeed
+     * being loaded based on date
      * @throws Exception
      */
     @Test
     public void LoadListTest() throws Exception {
         ConcernDao dao = new ConcernDao();
-        LinkedList<Concern> concernList;
+        ConcernTest concernTest = new ConcernTest();
 
-        concernList = dao.load(0, 5);
-        assertNotNull(concernList);
+        ConcernData concernData = concernTest.generateConcernData();
+
+        Concern curConcern = new Concern(concernData);
+        dao.save(curConcern);
+
+        //Loads the only concern added to the database
+        List<Concern> concernList = dao.load(0, 1);
+
+        assertEquals(curConcern, concernList.get(0));
+
+        concernData = concernTest.generateConcernData();
+
+        curConcern = new Concern(concernData);
+
+        dao.save(curConcern);
+
+        //Loads the first concern which should now be the second element in the list, hence offset 1
+        concernList = dao.load(1, 1);
+
+        assertEquals(curConcern, concernList.get(0));
     }
 
     @Test (expected = AssertionError.class)
     public void LoadInvalidOffsetTest(){
         ConcernDao dao = new ConcernDao();
-        LinkedList<Concern> concernList;
+        List<Concern> concernList;
 
         concernList = dao.load(-1, 5);
     }
@@ -108,7 +129,7 @@ public class ConcernDaoTest extends DatastoreTest {
     @Test (expected = AssertionError.class)
     public void LoadInvalidLimitTest(){
         ConcernDao dao = new ConcernDao();
-        LinkedList<Concern> concernList;
+        List<Concern> concernList;
 
         concernList = dao.load(0, -1);
     }
