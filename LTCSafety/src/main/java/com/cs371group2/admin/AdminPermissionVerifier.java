@@ -1,6 +1,7 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountPermissions;
 
 /**
  * Specialized verifier object for checking if the given account and access token is verified and has
@@ -20,6 +21,12 @@ public class AdminPermissionVerifier extends PermissionVerifier {
      * @precond token != null and its fields are non-null.
      */
     public boolean hasPermission(Account account, AccessToken token){
-        return false;
+        assert(account != null);
+        assert(token != null);
+
+        if(!token.isVerified() || account.getPermissions() != AccountPermissions.ADMIN)
+            return false;
+        else
+            return true;
     }
 }

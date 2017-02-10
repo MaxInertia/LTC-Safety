@@ -1,6 +1,7 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountPermissions;
 
 /**
  * This object serves as a verifier class for accounts with functionality for checking
@@ -20,6 +21,12 @@ public abstract class PermissionVerifier {
      * @precond token != null and its fields are non-null.
      */
     public boolean hasPermission(Account account, AccessToken token){
-        return false;
+        assert(account != null);
+        assert(token != null);
+
+        if(!token.isVerified())
+            return false;
+        else
+            return true;
     }
 }
