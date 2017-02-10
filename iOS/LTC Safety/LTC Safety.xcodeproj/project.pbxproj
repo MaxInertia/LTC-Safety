@@ -15,13 +15,13 @@
 		0CA7AFD21E49B47D005B489B /* LTCConcernDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */; };
 		0CBD7E5B1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7E5A1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m */; };
 		0CBD7E631E4D82500043F7C0 /* LTCConcernDetailViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7E5E1E4D81730043F7C0 /* LTCConcernDetailViewControllerTests.m */; };
+		0CBD7E671E4D8F2D0043F7C0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0CBD7E661E4D8F2D0043F7C0 /* LaunchScreen.storyboard */; };
 		1107E7721E3B0CE700675786 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7711E3B0CE700675786 /* main.m */; };
 		1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7741E3B0CE700675786 /* AppDelegate.m */; };
 		1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */; };
 		1107E77B1E3B0CE700675786 /* LTCConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */; };
 		1107E7811E3B0CE700675786 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E77F1E3B0CE700675786 /* Main.storyboard */; };
 		1107E7831E3B0CE700675786 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7821E3B0CE700675786 /* Assets.xcassets */; };
-		1107E7861E3B0CE700675786 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */; };
 		1107E79C1E3B0CE800675786 /* LTC_SafetyUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E79B1E3B0CE800675786 /* LTC_SafetyUITests.m */; };
 		1107E7AB1E3B14A800675786 /* LTCNewConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7AA1E3B14A800675786 /* LTCNewConcernViewController.m */; };
 		1107E7AF1E3B16D200675786 /* LTCNewConcernViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7AE1E3B16D200675786 /* LTCNewConcernViewModel.m */; };
@@ -94,6 +94,7 @@
 		0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewModel.m; sourceTree = "<group>"; };
 		0CBD7E5A1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewModelTests.m; sourceTree = "<group>"; };
 		0CBD7E5E1E4D81730043F7C0 /* LTCConcernDetailViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewControllerTests.m; sourceTree = "<group>"; };
+		0CBD7E661E4D8F2D0043F7C0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1107E76D1E3B0CE700675786 /* LTC Safety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTC Safety.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1107E7711E3B0CE700675786 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1107E7731E3B0CE700675786 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTCConcernViewController.m; sourceTree = "<group>"; };
 		1107E7801E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1107E7821E3B0CE700675786 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		1107E7851E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1107E7871E3B0CE700675786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1107E78C1E3B0CE800675786 /* LTC SafetyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LTC SafetyTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1107E7921E3B0CE800675786 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -261,7 +261,7 @@
 				117DBDD21E444852002F2EED /* Value Selection */,
 				1107E8061E3B44CD00675786 /* Submit Concern */,
 				1107E77F1E3B0CE700675786 /* Main.storyboard */,
-				1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */,
+				0CBD7E661E4D8F2D0043F7C0 /* LaunchScreen.storyboard */,
 				1107E7871E3B0CE700675786 /* Info.plist */,
 				117DBDE71E4459C7002F2EED /* Categories.plist */,
 				117DBDD31E444890002F2EED /* Facilities.plist */,
@@ -543,10 +543,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1107E7861E3B0CE700675786 /* LaunchScreen.storyboard in Resources */,
 				117DBD801E43FCE0002F2EED /* Localizable.strings in Resources */,
 				1107E7831E3B0CE700675786 /* Assets.xcassets in Resources */,
 				117DBDE81E4459C7002F2EED /* Categories.plist in Resources */,
+				0CBD7E671E4D8F2D0043F7C0 /* LaunchScreen.storyboard in Resources */,
 				117DBDD41E444890002F2EED /* Facilities.plist in Resources */,
 				1107E7811E3B0CE700675786 /* Main.storyboard in Resources */,
 			);
@@ -755,14 +755,6 @@
 				1107E7801E3B0CE700675786 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1107E7851E3B0CE700675786 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
