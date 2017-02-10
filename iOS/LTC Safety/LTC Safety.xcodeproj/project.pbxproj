@@ -62,6 +62,7 @@
 		117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
+		F057D4711E4E53AB00D209D5 /* TestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = F057D4701E4E53AB00D209D5 /* TestCase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,7 @@
 		71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LTC Safety.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA62F4312605DAD40A46B339 /* Pods-LTC Safety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.release.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.release.xcconfig"; sourceTree = "<group>"; };
 		E3971ED1FE2AA790BAF64378 /* Pods-LTC SafetyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC SafetyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC SafetyTests/Pods-LTC SafetyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F057D4701E4E53AB00D209D5 /* TestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestCase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +304,7 @@
 			children = (
 				1107E79B1E3B0CE800675786 /* LTC_SafetyUITests.m */,
 				1107E79D1E3B0CE800675786 /* Info.plist */,
+				F057D4701E4E53AB00D209D5 /* TestCase.m */,
 			);
 			path = "LTC SafetyUITests";
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1107E79C1E3B0CE800675786 /* LTC_SafetyUITests.m in Sources */,
+				F057D4711E4E53AB00D209D5 /* TestCase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
