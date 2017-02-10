@@ -1,0 +1,63 @@
+/* 
+  Localizable.strings
+  LTC Safety
+
+  Created by Allan Kerr on 2017-01-13.
+  Copyright © 2017 Allan Kerr. All rights reserved.
+*/
+
+// Concern View Title
+"CONCERN_VIEW_TITLE" = "LTC Safety";
+
+// Submit Concern Title
+"NEW_CONCERN_TITLE" = "New Concern";
+"NEW_CONCERN_ERROR_TITLE" = "Submission Failed";
+
+// Submit Concern Section Titles
+"CONTACT_INFO_TITLE" = "Contact Information";
+"CONCERN_INFO_TITLE" = "Tell us about your concern";
+"ACTIONS_TAKEN_TITLE" = "What actions have been taken?";
+
+// Submit Concern Prompts
+"REPORTER_NAME_PROMPT" = "First and Last Name";
+"PHONE_NUMBER_PROMPT" = "Phone Number";
+"EMAIL_ADDRESS_PROMPT" = "Email Address";
+"CONCERN_NATURE_PROMPT" = "Nature of Concern";
+"FACILITY_PROMPT" = "Facility";
+"ROOM_NUMBER_PROMPT" = "Room Number";
+"SUBMIT_CONCERN_PROMPT" = "Submit Concern";
+
+// Misc
+"OK" = "OK";
+"CANCEL" = "Cancel";
+
+// Value Selection
+"VALUE_OTHER" = "Other...";
+
+// Concern Nature Values
+"CATEGORY_OTHER_TITLE" = "Nature of Concern";
+"CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
+"CATEGORY_1" = "Category One";
+"CATEGORY_2" = "Category Two";
+"CATEGORY_3" = "Category Three";
+"CATEGORY_4" = "Category Four";
+"CATEGORY_5" = "Category Five";
+"CATEGORY_6" = "Category Six";
+
+// Facility Values
+
+"FACILITY_OTHER_TITLE" = "Facility";
+"FACILITY_OTHER_PROMPT" = "Please specify the facility the concern occurred at.";
+"FACILITY_1" = "The Franklin";
+"FACILITY_2" = "Circle Drive Special Care Home Inc";
+"FACILITY_3" = "Central Haven Special Care Home";
+"FACILITY_4" = "Preston Extendicare";
+"FACILITY_5" = "Luther Special Care Home";
+"FACILITY_6" = "Sherbrooke Community Centre";
+"FACILITY_7" = "Oliver Place";
+"FACILITY_8" = "Saskatoon Convalescent Home";
+"FACILITY_9" = "Parkridge Centre";
+"FACILITY_10" = "Saint Ann's Senior Citizens Village Corp";
+"FACILITY_11" = "Samaritan Place";
+"FACILITY_12" = "Stensrud Lodge";
+"FACILITY_13" = "Sunnyside Adventist Care Centre";
