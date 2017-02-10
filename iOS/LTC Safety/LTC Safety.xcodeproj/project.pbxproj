@@ -11,11 +11,14 @@
 		0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */; };
 		0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5321CF1E43DEFC00EC3A69 /* LTCReporterTests.m */; };
 		0C5321D21E43E0B700EC3A69 /* LTCConcernStatusTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C5321D11E43E0B700EC3A69 /* LTCConcernStatusTests.m */; };
+		0CA7AFD11E49B47D005B489B /* LTCConcernDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA7AFCE1E49B47D005B489B /* LTCConcernDetailViewController.m */; };
+		0CA7AFD21E49B47D005B489B /* LTCConcernDetailViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */; };
+		0CBD7E5B1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7E5A1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m */; };
+		0CBD7E631E4D82500043F7C0 /* LTCConcernDetailViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CBD7E5E1E4D81730043F7C0 /* LTCConcernDetailViewControllerTests.m */; };
 		1107E7721E3B0CE700675786 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7711E3B0CE700675786 /* main.m */; };
 		1107E7751E3B0CE700675786 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7741E3B0CE700675786 /* AppDelegate.m */; };
 		1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1107E7761E3B0CE700675786 /* LTC_Safety.xcdatamodeld */; };
 		1107E77B1E3B0CE700675786 /* LTCConcernViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */; };
-		1107E77E1E3B0CE700675786 /* LTCConcernDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1107E77D1E3B0CE700675786 /* LTCConcernDetailViewController.m */; };
 		1107E7811E3B0CE700675786 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E77F1E3B0CE700675786 /* Main.storyboard */; };
 		1107E7831E3B0CE700675786 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7821E3B0CE700675786 /* Assets.xcassets */; };
 		1107E7861E3B0CE700675786 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1107E7841E3B0CE700675786 /* LaunchScreen.storyboard */; };
@@ -85,6 +88,12 @@
 		0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCLocationTests.m; sourceTree = "<group>"; };
 		0C5321CF1E43DEFC00EC3A69 /* LTCReporterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCReporterTests.m; sourceTree = "<group>"; };
 		0C5321D11E43E0B700EC3A69 /* LTCConcernStatusTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernStatusTests.m; sourceTree = "<group>"; };
+		0CA7AFCD1E49B47D005B489B /* LTCConcernDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcernDetailViewController.h; sourceTree = "<group>"; };
+		0CA7AFCE1E49B47D005B489B /* LTCConcernDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewController.m; sourceTree = "<group>"; };
+		0CA7AFCF1E49B47D005B489B /* LTCConcernDetailViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTCConcernDetailViewModel.h; sourceTree = "<group>"; };
+		0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewModel.m; sourceTree = "<group>"; };
+		0CBD7E5A1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewModelTests.m; sourceTree = "<group>"; };
+		0CBD7E5E1E4D81730043F7C0 /* LTCConcernDetailViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewControllerTests.m; sourceTree = "<group>"; };
 		1107E76D1E3B0CE700675786 /* LTC Safety.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTC Safety.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1107E7711E3B0CE700675786 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		1107E7731E3B0CE700675786 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -92,8 +101,6 @@
 		1107E7771E3B0CE700675786 /* LTC_Safety.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LTC_Safety.xcdatamodel; sourceTree = "<group>"; };
 		1107E7791E3B0CE700675786 /* LTCConcernViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCConcernViewController.h; sourceTree = "<group>"; };
 		1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTCConcernViewController.m; sourceTree = "<group>"; };
-		1107E77C1E3B0CE700675786 /* LTCConcernDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCConcernDetailViewController.h; sourceTree = "<group>"; };
-		1107E77D1E3B0CE700675786 /* LTCConcernDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LTCConcernDetailViewController.m; sourceTree = "<group>"; };
 		1107E7801E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1107E7821E3B0CE700675786 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1107E7851E3B0CE700675786 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -245,8 +252,10 @@
 				1107E8081E3B467800675786 /* LTCConcernViewModel.m */,
 				1107E7791E3B0CE700675786 /* LTCConcernViewController.h */,
 				1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */,
-				1107E77C1E3B0CE700675786 /* LTCConcernDetailViewController.h */,
-				1107E77D1E3B0CE700675786 /* LTCConcernDetailViewController.m */,
+				0CA7AFCD1E49B47D005B489B /* LTCConcernDetailViewController.h */,
+				0CA7AFCE1E49B47D005B489B /* LTCConcernDetailViewController.m */,
+				0CA7AFCF1E49B47D005B489B /* LTCConcernDetailViewModel.h */,
+				0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */,
 				117DBDF61E458242002F2EED /* LTCConcernTableViewCell.h */,
 				117DBDF71E458242002F2EED /* LTCConcernTableViewCell.m */,
 				117DBDD21E444852002F2EED /* Value Selection */,
@@ -277,8 +286,9 @@
 			children = (
 				117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */,
 				117DBDF91E458BB7002F2EED /* LTCPersistentContainerTests.m */,
+				0CBD7E5E1E4D81730043F7C0 /* LTCConcernDetailViewControllerTests.m */,
+				0CBD7E5A1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m */,
 				117DBD8A1E4411C8002F2EED /* LTCNewConcernViewModelTests.m */,
-				117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */,
 				117DBD811E44052F002F2EED /* LTCNewConcernViewControllerTests.m */,
 				1178CD7D1E42B947004CDD94 /* LTCConcernTests.m */,
 				0C5321D11E43E0B700EC3A69 /* LTCConcernStatusTests.m */,
@@ -286,6 +296,7 @@
 				0C5321CD1E43DE6700EC3A69 /* LTCLocationTests.m */,
 				117DBD701E42ED17002F2EED /* LTCClientApiTests.m */,
 				1133DF6E1E3C54020033BEA7 /* LTCConcernViewModelTests.m */,
+				117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */,
 				117DBDF01E44824C002F2EED /* LTCValueSelectionControllerTests.m */,
 				117DBDEC1E445FF7002F2EED /* LTCInputAlertControllerTests.m */,
 				117DBDEE1E446702002F2EED /* LTCValueSelectionViewModelTests.m */,
@@ -656,10 +667,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				1133DF7F1E3C583E0033BEA7 /* LTCLocation+CoreDataClass.m in Sources */,
-				1107E77E1E3B0CE700675786 /* LTCConcernDetailViewController.m in Sources */,
 				1107E77B1E3B0CE700675786 /* LTCConcernViewController.m in Sources */,
 				1133DF821E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m in Sources */,
 				1133DF801E3C583E0033BEA7 /* LTCLocation+CoreDataProperties.m in Sources */,
+				0CA7AFD11E49B47D005B489B /* LTCConcernDetailViewController.m in Sources */,
 				117DBDE01E4454E7002F2EED /* LTCCategoryViewController.m in Sources */,
 				117DBD5F1E42BEFA002F2EED /* GTLRClientObjects.m in Sources */,
 				117DBDD71E4449F9002F2EED /* LTCRowValue.m in Sources */,
@@ -681,6 +692,7 @@
 				1107E7721E3B0CE700675786 /* main.m in Sources */,
 				117DBD6A1E42E14A002F2EED /* LTCConcern+CoreDataProperties.m in Sources */,
 				1107E7AF1E3B16D200675786 /* LTCNewConcernViewModel.m in Sources */,
+				0CA7AFD21E49B47D005B489B /* LTCConcernDetailViewModel.m in Sources */,
 				1178CD831E42BB7D004CDD94 /* LTCConcernStatus+CoreDataClass.m in Sources */,
 				1107E8051E3B3FF100675786 /* LTCClientApi.m in Sources */,
 			);
@@ -702,11 +714,13 @@
 				0C5321CE1E43DE6700EC3A69 /* LTCLocationTests.m in Sources */,
 				0C5321D01E43DEFC00EC3A69 /* LTCReporterTests.m in Sources */,
 				117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */,
+				0CBD7E631E4D82500043F7C0 /* LTCConcernDetailViewControllerTests.m in Sources */,
 				117DBD8B1E4411C8002F2EED /* LTCNewConcernViewModelTests.m in Sources */,
 				117DBDFA1E458BB7002F2EED /* LTCPersistentContainerTests.m in Sources */,
 				0C5321D21E43E0B700EC3A69 /* LTCConcernStatusTests.m in Sources */,
 				117DBD7A1E42F306002F2EED /* GTLRClientObjects_Testing.m in Sources */,
 				1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */,
+				0CBD7E5B1E4C302E0043F7C0 /* LTCConcernDetailViewModelTests.m in Sources */,
 				117DBD6D1E42E584002F2EED /* LTCConcern_Testing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

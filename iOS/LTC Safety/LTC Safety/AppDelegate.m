@@ -75,8 +75,7 @@
 /**
  Determines whether the concern detail view controller should be displayed based on whether it has a non-nil concern.
  */
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {    
     return [secondaryViewController isKindOfClass:[UINavigationController class]] &&
     [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[LTCConcernDetailViewController class]] &&
     ([(LTCConcernDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] concern] == nil);

@@ -15,7 +15,8 @@
 
 // Submit Concern Section Titles
 "CONTACT_INFO_TITLE" = "Contact Information";
-"CONCERN_INFO_TITLE" = "Tell us about your concern";
+"CONCERN_INFO_TITLE" = "Te
+ll us about your concern";
 "ACTIONS_TAKEN_TITLE" = "What actions have been taken?";
 
 // Submit Concern Prompts
@@ -27,9 +28,19 @@
 "ROOM_NUMBER_PROMPT" = "Room Number";
 "SUBMIT_CONCERN_PROMPT" = "Submit Concern";
 
+// Detail View Concern Prompts
+"DETAIL_CONCERN_TITLE" = "View Concern";
+"DETAIL_EDIT_CONCERN" = "Edit";
+"RETRACT_CONCERN" = "Retract";
+"DETAIL_CONCERN_INFO_TITLE" = "Concern Information";
+"DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
+"DETAIL_DATE_SUBMITTED" = "Date submitted";
+"DETAIL_CONCERN_STATUS" = "Status";
+
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";
+
 
 // Value Selection
 "VALUE_OTHER" = "Other...";

@@ -20,4 +20,5 @@
  @return The LTCConcern object.
  */
 + (instancetype)testConcernWithContext:(NSManagedObjectContext *)context;
+
 @end
