@@ -29,7 +29,7 @@ public class AccountTest extends DatastoreTest {
         return new Account(testId, AccountPermissions.ADMIN);
     }
 
-    @Test(expected = AssertionError.class)
+    @Test (expected = AssertionError.class)
     public void NullIdTest() throws Exception{
         Account account = new Account(null, AccountPermissions.ADMIN);
     }
