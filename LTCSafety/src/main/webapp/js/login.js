@@ -29,6 +29,11 @@ app.controller('formCtrl', function ($scope, $location) {
 
     $scope.auth.onAuthStateChanged(function (firebaseUser) {
         if (firebaseUser) {
+            const promise = firebaseUser.getToken();
+            promise .then(function (rawToken) {
+                console.log(rawToken);
+            });
+
             window.location.replace("home.html");
         }
     });

@@ -22,11 +22,15 @@ public class ConcernRequest extends AdminRequest {
      * @param requestLimit The maximum amount of concerns to load
      * @precond requestOffset >= 0
      * @precond requestLimit > 0
+     * @precond token != null or empty
      */
-    public ConcernRequest(int requestOffset, int requestLimit){
+    public ConcernRequest(int requestOffset, int requestLimit, String token){
         assert(requestOffset >= 0);
         assert(requestLimit > 0);
+        assert(token != null);
+        assert(!token.isEmpty());
 
+        accessToken = token;
         offset = requestOffset;
         limit = requestLimit;
     }
