@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -16,18 +17,7 @@ import static org.junit.Assert.assertTrue;
  *
  * Created on 2017-02-10.
  */
-public class FirebaseAuthenticatorTest {
-
-    @Test (expected = AssertionError.class)
-    public void NullSetTest(){
-        Authenticator auth = new FirebaseAuthenticator(null);
-    }
-
-    @Test
-    public void EmptySetTest(){
-        Set<PermissionVerifier> set = new HashSet<PermissionVerifier>();
-        Authenticator auth = new FirebaseAuthenticator(set);
-    }
+public class AdminAuthenticatorTest {
 
     /**
      * Tests the authenticate function by providing a null token, which should be asserted.
@@ -36,7 +26,7 @@ public class FirebaseAuthenticatorTest {
     public void NullTokenTest() throws GeneralSecurityException, IOException {
         Set<PermissionVerifier> set = new HashSet<PermissionVerifier>();
         set.add(new AdminPermissionVerifier());
-        Authenticator auth = new FirebaseAuthenticator(set);
+        Authenticator auth = new AdminAuthenticator();
         auth.authenticate(null);
     }
 
@@ -49,18 +39,30 @@ public class FirebaseAuthenticatorTest {
         AdminPermissionVerifier verifier = new AdminPermissionVerifier();
         set.add(verifier);
         String token = "";
-        Authenticator auth = new FirebaseAuthenticator(set);
+        Authenticator auth = new AdminAuthenticator();
+
+        auth.authenticate(token);
+    }
+
+    /**
+     * Tests authenticate() with an empty string.
+     */
+    @Test (expected = IOException.class)
+    public void InvalidTokenTest() throws GeneralSecurityException, IOException {
+        Set<PermissionVerifier> set = new HashSet<PermissionVerifier>();
+        AdminPermissionVerifier verifier = new AdminPermissionVerifier();
+        set.add(verifier);
+        String token = "this is an invalid test token :)";
+        Authenticator auth = new AdminAuthenticator();
 
         auth.authenticate(token);
     }
 
     @Test
     public void GetPermissionsTest(){
-        Set<PermissionVerifier> set = new HashSet<PermissionVerifier>();
-        AdminPermissionVerifier verifier = new AdminPermissionVerifier();
-        set.add(verifier);
-        Authenticator auth = new FirebaseAuthenticator(set);
+        Authenticator auth = new AdminAuthenticator();
         Set<PermissionVerifier> testSet = auth.getPermissionVerifiers();
-        assertEquals(testSet, set);
+        assertNotNull(testSet);
+        assertTrue(testSet.size() == 1);
     }
 }
