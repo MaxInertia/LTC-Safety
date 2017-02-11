@@ -2,6 +2,8 @@ package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.Set;
 
 /**
@@ -21,17 +23,23 @@ public abstract class Authenticator {
      * @return The account associated with the given token\
      * @precond token is valid and non-null
      */
-    public Account authenticate(String token) { return null; }
+    public Account authenticate(String token) throws GeneralSecurityException, IOException { return null; }
 
     /**
      * Returns a set of permission verifiers to be checked against an account.
      *
      * @return The set of permission verifiers
      */
-    protected Set<PermissionVerifier> getPermissionVerifiers(){ return null; }
+    protected Set<PermissionVerifier> getPermissionVerifiers(){ return permissionVerifiers; }
 
     /**
-     * Creates an authenticator class that contains the given permission verifiers
+     * Creates an authenticator class that contains the given permission verifiers.
+     *
+     * @param  verifiers The set of permission verifiers to use when authenticating.
+     * @precond permissionVerifiers != null
      */
-    public Authenticator(Set<PermissionVerifier> verifiers){}
+    public Authenticator(Set<PermissionVerifier> verifiers){
+        assert(verifiers != null);
+        permissionVerifiers = verifiers;
+    }
 }
