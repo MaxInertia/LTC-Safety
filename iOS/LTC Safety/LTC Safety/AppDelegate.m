@@ -11,6 +11,7 @@
 #import "LTCConcernViewController.h"
 #import "LTCConcernDetailViewController.h"
 #import "LTCPersistentContainer.h"
+@import Firebase;
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -61,8 +62,17 @@
  Called when the application is going to terminate. This causes the persistent container to save all entities.
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
+
+    [FIRApp configure];
     
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    
+    [FIRAnalytics logEventWithName:kFIREventSelectContent
+                                               parameters:@{
+                                                            kFIRParameterItemID:@"1",
+                                                            kFIRParameterItemName:@"App Termination",
+                                                            kFIRParameterContentType:@"Application has terminated"
+                                                            }];
     
     NSAssert(context != nil, @"Application terminated with nil object context.");
     

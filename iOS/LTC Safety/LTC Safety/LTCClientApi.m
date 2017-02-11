@@ -7,6 +7,7 @@
 //
 
 #import "LTCClientApi.h"
+@import Firebase;
 
 @interface LTCClientApi ()
 @property (nonatomic, strong) GTLRClientService *service;
@@ -27,17 +28,28 @@
 }
 
 - (void)submitConcern:(GTLRClient_ConcernData *)concern completion:(LTCSubmitConcernCompletion)completion {
-
+    [FIRApp configure];
     NSAssert(concern != nil, @"Attempted to submit a nil concern");
     NSAssert(completion != nil, @"Attempted to submit a concern with a nil completion block");
-    
+   [FIRAnalytics logEventWithName:kFIREventSelectContent
+                                               parameters:@{
+                                                            kFIRParameterItemID:@"2",
+                                                            kFIRParameterItemName:@"Submission",
+                                                            kFIRParameterContentType:@"Concern has been submitted"
+                                                            }];
     GTLRClientQuery_SubmitConcern *query = [GTLRClientQuery_SubmitConcern queryWithObject:concern];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
         completion(object, error);
     }];
 }
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
- 
+ [FIRApp configure];
+    [FIRAnalytics logEventWithName:kFIREventSelectContent
+                        parameters:@{
+                                     kFIRParameterItemID:@"3",
+                                     kFIRParameterItemName:@"Retraction",
+                                     kFIRParameterContentType:@"Concern has been retracted"
+                                     }];
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");
     NSAssert(completion != nil, @"Attempted to retract a concern with a nil completion block");
     
