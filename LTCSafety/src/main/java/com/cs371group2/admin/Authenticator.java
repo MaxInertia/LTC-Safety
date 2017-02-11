@@ -4,6 +4,7 @@ import com.cs371group2.account.Account;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Set;
  */
 public abstract class Authenticator {
 
-    private Set<PermissionVerifier> permissionVerifiers;
+    Set<PermissionVerifier> permissionVerifiers;
 
     /**
      * Authenticates the given token and returns the account associated with it
@@ -35,11 +36,9 @@ public abstract class Authenticator {
     /**
      * Creates an authenticator class that contains the given permission verifiers.
      *
-     * @param  verifiers The set of permission verifiers to use when authenticating.
-     * @precond permissionVerifiers != null
+     * @postcond permissionVerifiers != null
      */
-    public Authenticator(Set<PermissionVerifier> verifiers){
-        assert(verifiers != null);
-        permissionVerifiers = verifiers;
+    public Authenticator(){
+        permissionVerifiers = new HashSet<PermissionVerifier>();
     }
 }

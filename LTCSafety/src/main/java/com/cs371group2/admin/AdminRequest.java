@@ -1,11 +1,16 @@
 package com.cs371group2.admin;
 
-import com.google.api.server.spi.config.Authenticator;
-
 /**
- * Created by Brandon on 2017-02-09.
+ * Represents a request that requires administrative privileges to be successful
+ * Created on 2017-02-09.
  */
 public class AdminRequest extends AuthenticatedRequest{
 
-    protected Authenticator getAuthenticator(){ return null; }
+    /**
+     * Returns a reference to an admin authenticator
+     * @return An admin authenticator
+     */
+    protected Authenticator getAuthenticator(){
+        return new AdminAuthenticator();
+    }
 }

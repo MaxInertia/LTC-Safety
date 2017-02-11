@@ -9,10 +9,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -56,15 +53,15 @@ public class FirebaseAuthenticator extends Authenticator {
             }
         }
 
-        return null;
+        return account;
     }
 
     /**
-     * Creates an authenticator class that contains the given permission verifiers
+     * Creates a firebase authenticator class that contains the given permission verifiers
      */
 
-    public FirebaseAuthenticator(Set<PermissionVerifier> verifiers){
-        super(verifiers);
+    public FirebaseAuthenticator(){
+        super();
     }
 
 
@@ -121,6 +118,8 @@ public class FirebaseAuthenticator extends Authenticator {
                 return new AccessToken(uuid, email, name, verifiedEmail);
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
+            } catch (MalformedJwtException e){
+                throw new IOException();
             }
         }
 

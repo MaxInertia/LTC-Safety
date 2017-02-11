@@ -1,20 +1,39 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
-import com.google.api.server.spi.config.Authenticator;
+
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * Created by Brandon on 2017-02-09.
  */
-public class AuthenticatedRequest {
+public abstract class AuthenticatedRequest {
 
     /**
-     * The firebase token of the user to be checked for authenticity
+     * The access token of the user to be checked for authenticity
      */
     private String accessToken;
 
-    public Account authenticate(){ return null; }
+    /**
+     * Authenticates the requests token and returns the account associated with it if successful. If not,
+     * throws an exception
+     *
+     * @return The account of the authenticated user
+     * @throws GeneralSecurityException If the accessToken does not have the required permission, throw this
+     * @throws IOException If the accessToken is not in the correct format or unreadable, throw this
+     */
+    public Account authenticate() throws GeneralSecurityException, IOException{
+        Account account = getAuthenticator().authenticate(accessToken);
+        return account;
+    }
 
-    protected Authenticator getAuthenticator(){ return null; };
+    /**
+     * Returns a reference to a FirebaseAuthenticator
+     * @return The firebase authenticator to use
+     */
+    protected Authenticator getAuthenticator(){
+        return new FirebaseAuthenticator();
+    };
 
 }
