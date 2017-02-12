@@ -1,7 +1,6 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.account.Account;
-import com.cs371group2.account.AccountPermissions;
 
 /**
  * This object serves as a verifier class for accounts with functionality for checking
@@ -10,6 +9,7 @@ import com.cs371group2.account.AccountPermissions;
  * Created on 2017-02-09.
  */
 public abstract class PermissionVerifier {
+
 
     /**
      * Checks if the given account is verified.
@@ -24,9 +24,6 @@ public abstract class PermissionVerifier {
         assert(account != null);
         assert(token != null);
 
-        if(!token.isVerified())
-            return false;
-        else
-            return true;
+        return token.isEmailVerified();
     }
 }

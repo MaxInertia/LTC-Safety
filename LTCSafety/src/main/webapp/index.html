@@ -12,6 +12,20 @@
   <link href="css/webflow.css" rel="stylesheet" type="text/css">
   <link href="css/ltc-safety.webflow.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+
+
+  <script>
+      function init() {
+          gapi.client.load('admin', 'v1', function () {
+              console.log("Yay");
+
+          }, '//' + window.location.host + '/_ah/api');
+      }
+      ;
+  </script>
+
+  <script src="https://apis.google.com/js/client.js?onload=init"></script>
+
   <script type="text/javascript">
     WebFont.load({
       google: {

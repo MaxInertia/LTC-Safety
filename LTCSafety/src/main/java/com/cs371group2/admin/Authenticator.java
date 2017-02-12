@@ -1,9 +1,14 @@
 package com.cs371group2.admin;
 
+import android.util.Pair;
 import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountDao;
+import com.google.api.server.spi.response.UnauthorizedException;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.AbstractMap;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,9 +18,10 @@ import java.util.Set;
  *
  * Created on 2017-02-09.
  */
-public abstract class Authenticator {
+public abstract class Authenticator{
 
-    Set<PermissionVerifier> permissionVerifiers;
+
+    private Collection<PermissionVerifier> permissionVerifiers;
 
     /**
      * Authenticates the given token and returns the account associated with it
@@ -24,21 +30,21 @@ public abstract class Authenticator {
      * @return The account associated with the given token\
      * @precond token is valid and non-null
      */
-    public Account authenticate(String token) throws GeneralSecurityException, IOException { return null; }
+    public Account authenticate(String token) throws UnauthorizedException {
+        Pair<Account, AccessToken> infoPair = authenticateAccount(token);
 
-    /**
-     * Returns a set of permission verifiers to be checked against an account.
-     *
-     * @return The set of permission verifiers
-     */
-    protected Set<PermissionVerifier> getPermissionVerifiers(){ return permissionVerifiers; }
+        for (PermissionVerifier verifier : permissionVerifiers){
+            if(verifier.hasPermission(infoPair.first, infoPair.second) == false){
+                throw new UnauthorizedException("User attempted access without proper permissions.");
+            }
+        }
 
-    /**
-     * Creates an authenticator class that contains the given permission verifiers.
-     *
-     * @postcond permissionVerifiers != null
-     */
-    public Authenticator(){
-        permissionVerifiers = new HashSet<PermissionVerifier>();
+        return infoPair.first;
+    }
+
+    protected abstract Pair<Account, AccessToken> authenticateAccount(String token) throws UnauthorizedException;
+
+    public void setPermissionVerifiers(Collection<PermissionVerifier> permissionVerifiers) {
+        this.permissionVerifiers = permissionVerifiers;
     }
 }

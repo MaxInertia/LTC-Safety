@@ -59,7 +59,7 @@ public class AccessToken {
         return name;
     }
 
-    public boolean isVerified() {
+    public boolean isEmailVerified() {
         return isVerified;
     }
 }

@@ -1,11 +1,13 @@
 package com.cs371group2.admin;
 
+import android.util.Pair;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -15,10 +17,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.security.AccessControlContext;
 import java.security.GeneralSecurityException;
 import java.security.PublicKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -30,7 +34,7 @@ import java.util.Set;
  *
  * Created on 2017-02-09.
  */
-public class FirebaseAuthenticator extends Authenticator {
+public class FirebaseAuthenticator extends Authenticator{
 
     /**
      * Authenticates the given firebase token and returns the account associated with it
@@ -40,30 +44,24 @@ public class FirebaseAuthenticator extends Authenticator {
      * @precond token is valid and non-null
      */
     @Override
-    public Account authenticate(String token) throws GeneralSecurityException, IOException {
+    protected Pair<Account, AccessToken> authenticateAccount(String token) throws UnauthorizedException {
+
         assert(token != null);
-        AccessToken accessToken = verifyToken(token);
 
-        AccountDao dao = new AccountDao();
-        Account account = dao.load(accessToken.getId());
+        try {
+            AccessToken accessToken = verifyToken(token);
 
-        for (PermissionVerifier verifier : getPermissionVerifiers()){
-            if(verifier.hasPermission(account, accessToken) == false){
-                throw new GeneralSecurityException("User attempted access without proper permissions.");
-            }
+            LOGGER.log(Level.WARNING, "Access token id was: " + accessToken.getId());
+
+            AccountDao dao = new AccountDao();
+            Account account = dao.load(accessToken.getId());
+
+            return new Pair<Account, AccessToken>(account, accessToken);
+
+        } catch (GeneralSecurityException | IOException e) {
+            throw new UnauthorizedException(e);
         }
-
-        return account;
     }
-
-    /**
-     * Creates a firebase authenticator class that contains the given permission verifiers
-     */
-
-    public FirebaseAuthenticator(){
-        super();
-    }
-
 
     /**
      *
@@ -78,7 +76,7 @@ public class FirebaseAuthenticator extends Authenticator {
 
     private static final String EMAIL_CLAIM = "email";
 
-    private static final String NAME_CLAIM = "name";
+    private static final String NAME_CLAIM = "user_id";
 
     private static final String EMAIL_VERIFIED_CLAIM = "email_verified";
 
@@ -111,11 +109,16 @@ public class FirebaseAuthenticator extends Authenticator {
 
                 // validate claim set
                 Jws<Claims> jws = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
+
+                for ( String key : jws.getBody().keySet()){
+                    System.out.println("KEY: " + key + " VALUE: " + jws.getBody().get(key));
+                }
+
                 String uuid = jws.getBody().getSubject();
                 String email = (String)jws.getBody().get(EMAIL_CLAIM);
                 String name = (String)jws.getBody().get(NAME_CLAIM);
                 boolean verifiedEmail = (boolean)jws.getBody().get(EMAIL_VERIFIED_CLAIM);
-                return new AccessToken(uuid, email, name, verifiedEmail);
+                return new AccessToken(email, uuid, name, verifiedEmail);
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
             } catch (MalformedJwtException e){

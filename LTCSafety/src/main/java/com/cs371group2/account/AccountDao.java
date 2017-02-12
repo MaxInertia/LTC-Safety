@@ -25,7 +25,8 @@ public class AccountDao extends Dao<Account> {
         assert (id != null);
 
         logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
-        return super.load(id);
+        //return super.load(id);
+        return ObjectifyService.ofy().load().type(Account.class).id(id).now();
     }
 
     /**

@@ -29,11 +29,19 @@ public class AccountTest extends DatastoreTest {
         return new Account(testId, AccountPermissions.ADMIN);
     }
 
+    /**
+     * Tests with a null id for the account constructor
+     * @throws AssertionError
+     */
     @Test (expected = AssertionError.class)
     public void NullIdTest() throws Exception{
         Account account = new Account(null, AccountPermissions.ADMIN);
     }
 
+    /**
+     * Tests with a null permission for the account constructor
+     * @throws AssertionError
+     */
     @Test(expected = AssertionError.class)
     public void NullPermissionTest() throws Exception{
         Account account = new Account(testId, null);
