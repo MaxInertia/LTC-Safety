@@ -11,7 +11,7 @@
 #import "LTCConcernViewController.h"
 #import "LTCConcernDetailViewController.h"
 #import "LTCPersistentContainer.h"
-@import Firebase;
+#import "Logger.h"
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -27,10 +27,10 @@
  Performs setup for the application. This method is responsible for setting up the persistence container, app-wide navigation bar appearance and initializing the split view controller.
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
+
+    [Logger log :@"Info" :@"Setting up the application"];
     // Set up application wide persistence container and managed object context
     self.persistentContainer = [[LTCPersistentContainer alloc] initWithName:@"LTC_Safety"];
-    
     NSAssert(self.persistentContainer != nil, @"Failed to initialize a persistent container.");
     
     // Set global navigation bar coloring
@@ -63,17 +63,10 @@
  */
 - (void)applicationWillTerminate:(UIApplication *)application {
 
-    [FIRApp configure];
     
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
     
-    [FIRAnalytics logEventWithName:kFIREventSelectContent
-                                               parameters:@{
-                                                            kFIRParameterItemID:@"1",
-                                                            kFIRParameterItemName:@"App Termination",
-                                                            kFIRParameterContentType:@"Application has terminated"
-                                                            }];
-    
+    [Logger log :@"Info" :@"Application has terminated"];
     NSAssert(context != nil, @"Application terminated with nil object context.");
     
     NSError *error = nil;

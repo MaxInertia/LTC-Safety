@@ -62,6 +62,8 @@
 		117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
+		F0260C451E5101B800FD1B1A /* Logger.m in Sources */ = {isa = PBXBuildFile; fileRef = F0260C441E5101B800FD1B1A /* Logger.m */; };
+		F0260C481E51171900FD1B1A /* LTCLogLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = F0260C471E51171900FD1B1A /* LTCLogLevel.m */; };
 		F03D88B21E4FB0C70015FC4A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F03D88B11E4FB0C70015FC4A /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -181,6 +183,10 @@
 		71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LTC Safety.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA62F4312605DAD40A46B339 /* Pods-LTC Safety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.release.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.release.xcconfig"; sourceTree = "<group>"; };
 		E3971ED1FE2AA790BAF64378 /* Pods-LTC SafetyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC SafetyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC SafetyTests/Pods-LTC SafetyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F0260C431E50FE4000FD1B1A /* Logger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Logger.h; path = "LTC Safety/Logger.h"; sourceTree = "<group>"; };
+		F0260C441E5101B800FD1B1A /* Logger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Logger.m; path = "LTC Safety/Logger.m"; sourceTree = "<group>"; };
+		F0260C471E51171900FD1B1A /* LTCLogLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTCLogLevel.m; sourceTree = "<group>"; };
+		F0260C491E51175600FD1B1A /* LTCLogLevel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTCLogLevel.h; sourceTree = "<group>"; };
 		F03D88B11E4FB0C70015FC4A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -214,6 +220,7 @@
 		1107E7641E3B0CE700675786 = {
 			isa = PBXGroup;
 			children = (
+				F0260C461E5116F000FD1B1A /* Logging */,
 				1133DF701E3C58330033BEA7 /* Persistence */,
 				1107E7F81E3B3FBD00675786 /* LTC Safety Backend */,
 				1107E76F1E3B0CE700675786 /* LTC Safety */,
@@ -418,6 +425,17 @@
 				6485DAB2DCFECD32288053DC /* Pods-LTC SafetyTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		F0260C461E5116F000FD1B1A /* Logging */ = {
+			isa = PBXGroup;
+			children = (
+				F0260C431E50FE4000FD1B1A /* Logger.h */,
+				F0260C441E5101B800FD1B1A /* Logger.m */,
+				F0260C491E51175600FD1B1A /* LTCLogLevel.h */,
+				F0260C471E51171900FD1B1A /* LTCLogLevel.m */,
+			);
+			name = Logging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -668,6 +686,7 @@
 				117DBD5F1E42BEFA002F2EED /* GTLRClientObjects.m in Sources */,
 				117DBDD71E4449F9002F2EED /* LTCRowValue.m in Sources */,
 				117DBDDA1E444BEE002F2EED /* LTCValueSelectionController.m in Sources */,
+				F0260C451E5101B800FD1B1A /* Logger.m in Sources */,
 				117DBDF81E458242002F2EED /* LTCConcernTableViewCell.m in Sources */,
 				1107E7AB1E3B14A800675786 /* LTCNewConcernViewController.m in Sources */,
 				1107E7781E3B0CE700675786 /* LTC_Safety.xcdatamodeld in Sources */,
@@ -679,6 +698,7 @@
 				1178CD841E42BB7D004CDD94 /* LTCConcernStatus+CoreDataProperties.m in Sources */,
 				117DBDE31E44558A002F2EED /* LTCValueSelectionViewModel.m in Sources */,
 				117DBDE61E445964002F2EED /* LTCFacilityViewController.m in Sources */,
+				F0260C481E51171900FD1B1A /* LTCLogLevel.m in Sources */,
 				117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */,
 				117DBD601E42BEFA002F2EED /* GTLRClientQuery.m in Sources */,
 				117DBDF41E44F173002F2EED /* LTCPersistentContainer.m in Sources */,

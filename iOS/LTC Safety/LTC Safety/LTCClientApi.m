@@ -7,8 +7,7 @@
 //
 
 #import "LTCClientApi.h"
-@import Firebase;
-
+#import "Logger.h"
 @interface LTCClientApi ()
 @property (nonatomic, strong) GTLRClientService *service;
 @end
@@ -28,38 +27,29 @@
 }
 
 - (void)submitConcern:(GTLRClient_ConcernData *)concern completion:(LTCSubmitConcernCompletion)completion {
-    [FIRApp configure];
+    [Logger log :@"Info" :@"Submitting a concern"];
     NSAssert(concern != nil, @"Attempted to submit a nil concern");
     NSAssert(completion != nil, @"Attempted to submit a concern with a nil completion block");
-   [FIRAnalytics logEventWithName:kFIREventSelectContent
-                                               parameters:@{
-                                                            kFIRParameterItemID:@"2",
-                                                            kFIRParameterItemName:@"Submission",
-                                                            kFIRParameterContentType:@"Concern has been submitted"
-                                                            }];
     GTLRClientQuery_SubmitConcern *query = [GTLRClientQuery_SubmitConcern queryWithObject:concern];
+    
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
         completion(object, error);
     }];
+    [Logger log :@"Info" :@"Concern has been submitted"];
 }
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
- [FIRApp configure];
-    [FIRAnalytics logEventWithName:kFIREventSelectContent
-                        parameters:@{
-                                     kFIRParameterItemID:@"3",
-                                     kFIRParameterItemName:@"Retraction",
-                                     kFIRParameterContentType:@"Concern has been retracted"
-                                     }];
+    [Logger log :@"Info" :@"Retracting a concern"];
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");
     NSAssert(completion != nil, @"Attempted to retract a concern with a nil completion block");
     
     GTLRClient_OwnerToken *clientToken = [[GTLRClient_OwnerToken alloc] init];
     clientToken.token = ownerToken;
-    
+
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
         completion(error);
     }];
+    [Logger log :@"Info" :@"Concern has been retracted"];
 }
 
 @end

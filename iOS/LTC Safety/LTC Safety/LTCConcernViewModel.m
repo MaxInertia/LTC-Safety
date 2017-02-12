@@ -7,7 +7,7 @@
 //
 
 #import "LTCConcernViewModel.h"
-
+#import "Logger.h"
 @interface LTCConcernViewModel () <NSFetchedResultsControllerDelegate>
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (readwrite, strong, nonatomic) NSManagedObjectContext *objectContext;
@@ -94,11 +94,12 @@
  @param error   <#error description#>
  */
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error {
-    
+    [Logger log :@"Info" :@"Adding a concern"];
     NSAssert(concern != nil, @"Attempted to add a nil concern.");
     NSAssert(error != nil, @"Attempted to call add concern without an error handler.");
     
     [self.objectContext save:error];
+    [Logger log :@"Info" :@"Concern added"];
 }
 
 - (LTCConcern *)concernAtIndexPath:(NSIndexPath *)indexPath {
@@ -109,14 +110,16 @@
 }
 
 - (void)removeConcern:(LTCConcern *)concern error:(NSError **)error {
-    
+    [Logger log :@"Info" :@"Removing a concern"];
     NSAssert(concern != nil, @"Attempted to remove a nil concern.");
     NSAssert(error != nil, @"Attempted to call remove concern without an error handler.");
     NSAssert([concern.managedObjectContext isEqual:self.objectContext], @"Attempted to remove a concern that was not a part of the managed object context.");
     
     NSManagedObjectContext *context = [self.fetchedResultsController managedObjectContext];
     [context deleteObject:concern];
+    
     [self.objectContext save:error];
+    [Logger log :@"Info" :@"Concern removed"];
 }
 
 #pragma mark - NSFetchedResultsController delegate

@@ -21,11 +21,12 @@
 }
 
 - (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
     [[[XCUIApplication alloc] init] terminate];
 }
-
+/**
+ Tests that a concern may be submitted without crashing
+ */
 - (void)testValid {
   
     
@@ -78,6 +79,9 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
+/**
+ Tests that the submission is rejected if both email and phone are missing
+ */
 - (void)testNullEmailPhone {
     
     
@@ -122,6 +126,9 @@
     XCTAssert(app.alerts.element.staticTexts[@"Either a phone number or an email address must be provided when submitting a concern." ].exists);
 }
 
+/**
+ Tests that concern is rejected if name is missing
+ */
 - (void)testNullName {
     
     
@@ -171,6 +178,9 @@
     XCTAssert(app.alerts.element.staticTexts[@"A first and last name must be provided when submitting a concern." ].exists);
 }
 
+/**
+ Tests that concern is accepted if email is missing but phone number is not
+ */
 - (void)testNullEmail {
     
     
@@ -211,6 +221,9 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
+/**
+ Tests that concern is accepted if phone is missing but email is not
+ */
 - (void)testNullPhone {
     
     
@@ -258,6 +271,9 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
+/**
+ Tests that submission is rejected if no concern is given
+ */
 - (void)testNullConcern {
     
     
@@ -311,6 +327,9 @@
     XCTAssert(app.alerts.element.staticTexts[@"The nature of the concern must be specified when a concern is submitted" ].exists);
 }
 
+/**
+ Tests that submission is rejected if no facility is given
+ */
 - (void)testNullFacility {
     
     
@@ -365,6 +384,9 @@
     XCTAssert(app.alerts.element.staticTexts[@"A facility name must be provided when submitting a concern." ].exists);
 }
 
+/**
+ Tests that submission is accepted if room is null
+ */
 - (void)testNullRoom {
     
     
@@ -413,6 +435,9 @@
     // Use XCTAssert and related functions to verify your tests produce the correct results.
 }
 
+/**
+ Tests that submission is accepted if actions is null
+ */
 - (void)testNullActions {
     
     
