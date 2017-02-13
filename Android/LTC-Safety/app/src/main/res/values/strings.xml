@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">LTC-Safety</string>
+    <string name="new_concern_text">New Safety Concern</string>
+
+    <string name="submit_concern_button_text">Submit Safety Concern</string>
+    <string name="nameTextField_hint">First and Last Name</string>
+    <string name="actionsTakenTextField_hint">Actions Taken</string>
+    <string name="phoneNumberField_hint">Phone Number</string>
+    <string name="emailTextField_hint">Email Address</string>
 </resources>
