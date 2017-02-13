@@ -19,10 +19,12 @@ typedef NS_ENUM(NSUInteger, LTCLogLevel) {
 @interface LTCLogLevelEnum : NSObject
 /**
  Converts a LTCLogLevel to a String
+ @param value   The LTCLogLevel to convert to a string
  */
 + (NSString *)stringValue:(LTCLogLevel)value;
 /**
  Converts a String to a LTCLogLevel
+ @param value   The string to convert to a LTCLogLevel
  */
 + (LTCLogLevel)enumValue:(NSString *)value;
 @end

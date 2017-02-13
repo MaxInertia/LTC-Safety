@@ -94,12 +94,12 @@
  @param error   <#error description#>
  */
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error {
-    [Logger log :@"Info" :@"Adding a concern"];
+    [Logger log :@"Adding a concern" level:kLTCLogLevelInfo];
     NSAssert(concern != nil, @"Attempted to add a nil concern.");
     NSAssert(error != nil, @"Attempted to call add concern without an error handler.");
     
     [self.objectContext save:error];
-    [Logger log :@"Info" :@"Concern added"];
+    [Logger log:@"Concern added" level:kLTCLogLevelInfo];
 }
 
 - (LTCConcern *)concernAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,7 +110,7 @@
 }
 
 - (void)removeConcern:(LTCConcern *)concern error:(NSError **)error {
-    [Logger log :@"Info" :@"Removing a concern"];
+    [Logger log:@"Removing a concern" level:kLTCLogLevelInfo];
     NSAssert(concern != nil, @"Attempted to remove a nil concern.");
     NSAssert(error != nil, @"Attempted to call remove concern without an error handler.");
     NSAssert([concern.managedObjectContext isEqual:self.objectContext], @"Attempted to remove a concern that was not a part of the managed object context.");
@@ -119,7 +119,7 @@
     [context deleteObject:concern];
     
     [self.objectContext save:error];
-    [Logger log :@"Info" :@"Concern removed"];
+    [Logger log :@"Concern removed" level:kLTCLogLevelInfo];
 }
 
 #pragma mark - NSFetchedResultsController delegate

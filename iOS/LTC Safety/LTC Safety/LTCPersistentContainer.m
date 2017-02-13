@@ -9,6 +9,7 @@
 #import "LTCPersistentContainer.h"
 #import <CoreData/CoreData.h>
 #import "Logger.h"
+#import "LTCLogLevel.h"
 @interface LTCPersistentContainer ()
 @property (strong, readwrite) NSManagedObjectContext *viewContext;
 @property (strong, readwrite) NSManagedObjectModel *managedObjectModel;
@@ -41,7 +42,7 @@
  @return A persistent container initialized with the given name.
  */
 - (instancetype)initWithName:(NSString *)name {
-    [Logger log :@"Info" :@"Initializing with name"];
+    [Logger log :@"Initializing with name" level:kLTCLogLevelInfo];
     if (self = [super init]) {
         
         self.managedObjectModel = [self _loadObjectModelWithName:name];
@@ -63,7 +64,7 @@
     NSAssert(self.managedObjectModel, @"Persistant container finished initialization with a nil object model.");
     NSAssert(self.storeCoordinator, @"Persistant container finished initialization with a nil store coordinator.");
     NSAssert(self.storeCoordinator, @"Persistant container finished initialization with a nil managed object context.");
-    [Logger log :@"Info" :@"Initialized with name"];
+    [Logger log : @"Initialized with name" level:kLTCLogLevelInfo];
     return self;
 }
 /**

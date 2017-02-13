@@ -29,12 +29,12 @@
  @return The constructed LTCConcernStatus
  */
 - (instancetype)initWithData:(nonnull GTLRClient_ConcernStatus *)data entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
-    [Logger log :@"Info" :@"Initializing concern status"];
+    [Logger log :@"Initializing concern status"  level:kLTCLogLevelInfo];
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         self.creationDate = data.creationDate.date;
         self.concernType = data.type;
     }
-    [Logger log :@"Info" :@"Concern status initialized"];
+    [Logger log :@"Concern status initialized"  level:kLTCLogLevelInfo];
     return self;
 }
 

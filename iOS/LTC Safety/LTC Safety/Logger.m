@@ -7,16 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "LTCLogLevel.h"
+#import "Logger.h"
 @import Firebase;
 
-@implementation Logger : NSObject ;
+@implementation Logger
 
-+ (void)log:(NSString *) level :(NSString *)message{
++ (void)configure {
     [FIRApp configure];
+}
+
++ (void)log:(NSString *)message level:(LTCLogLevel)level{
+ 
     [FIRAnalytics logEventWithName:kFIREventSelectContent
                         parameters:@{
-                                     kFIRParameterItemID:@"level",
-                                     kFIRParameterItemName:@"message",
+                                     kFIRParameterItemID:[LTCLogLevelEnum stringValue:level],
+                                     kFIRParameterItemName:message,
                                      kFIRParameterContentType:@"log"
                                      }];
 }
