@@ -29,6 +29,11 @@ public final class Account {
         permissions = accountPermissions;
     }
 
+    /**
+     * No-arg constructor required for being loaded from the datastore.
+     */
+    private Account() {}
+
     public String getId() {return id;}
 
     public void setId(String id) {
