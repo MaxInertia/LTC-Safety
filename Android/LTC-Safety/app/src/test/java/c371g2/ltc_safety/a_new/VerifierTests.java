@@ -28,19 +28,19 @@ public class VerifierTests {
 
     @Test
     public void test_EmailAddressVerifier_validInputs() {
-        String[] numbers = {"valid.email@hotmail.ca", "abc@xyz.ca", "abc@xyz.com"}; // Three strings, the first two separated by '@', the second two separated by '.'
+        String[] emailAddresses = {"valid.email@hotmail.ca", "abc@xyz.ca", "abc@xyz.com"}; // Three strings, the first two separated by '@', the second two separated by '.'
 
-        for(int i=0; i<numbers.length; i++) {
-            assertTrue(emailAddressVerifier.verify(numbers[i]));
+        for(int i=0; i<emailAddresses.length; i++) {
+            assertTrue(emailAddressVerifier.verify(emailAddresses[i]));
         }
     }
 
     @Test
     public void test_NameVerifier_validInputs() {
-        String[] numbers = {"Barack Obama", "Donald Trump", "Elvis"}; // Three strings, the first two separated by '@', the second two separated by '.'
+        String[] names = {"Barack Obama", "Donald Trump", "Elvis"};
 
-        for(int i=0; i<numbers.length; i++) {
-            assertTrue(nameVerifier.verify(numbers[i]));
+        for(int i=0; i<names.length; i++) {
+            assertTrue(nameVerifier.verify(names[i]));
         }
     }
 

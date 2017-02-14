@@ -1,15 +1,11 @@
 package c371g2.ltc_safety.a_new;
 
-import android.support.test.filters.MediumTest;
-import android.support.test.filters.SmallTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.IOException;
-
-import c371g2.ltc_safety.a_main.MainActivity;
 
 import static org.junit.Assert.fail;
 
@@ -18,7 +14,6 @@ import static org.junit.Assert.fail;
  * device (real or emulated) to run.
  */
 @RunWith(AndroidJUnit4.class)
-@MediumTest
 public class NewConcernTests {
 
     @Test
@@ -71,5 +66,4 @@ public class NewConcernTests {
             fail("NewConcernViewModel.submitConcern(...) threw an IOException.");
         }
     }
-
 }

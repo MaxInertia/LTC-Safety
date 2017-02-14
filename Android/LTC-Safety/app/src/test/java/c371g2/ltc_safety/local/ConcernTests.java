@@ -5,34 +5,9 @@ import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * A very basic test class for confirming that all setters and getters are working for the classes
- * in the 'local' package: Concern, Location, and Reporter.
+ * Tests the methods in the Concern class.
  */
-public class LocalTests {
-
-    @Test
-    public void test_getName() {
-        String testName = "Jessica Jones";
-        Reporter reporter = new Reporter(testName,null,null);
-
-        assertTrue(reporter.getName().equals(testName));
-    }
-
-    @Test
-    public void test_getPhoneNumber() {
-        String testNumber = "1231231234";
-        Reporter reporter = new Reporter(null,null,testNumber);
-
-        assertTrue(reporter.getPhoneNumber().equals(testNumber));
-    }
-
-    @Test
-    public void test_getEmailAddress() {
-        String email = "Valid.Email.Address@Form.com";
-        Reporter reporter = new Reporter(null,email,null);
-
-        assertTrue(reporter.getEmailAddress().equals(email));
-    }
+public class ConcernTests {
 
     @Test
     public void test_getReporterDetailsThroughConcern() {
@@ -44,22 +19,6 @@ public class LocalTests {
         assertTrue(concern.getReporterName().equals(testName));
         assertTrue(concern.getReporterEmailAddress().equals(testEmail));
         assertTrue(concern.getReporterPhoneNumber().equals(testNumber));
-    }
-
-    @Test
-    public void test_getFacility() {
-        String facilityName = "Luther Care Home";
-        Location location = new Location(facilityName,null);
-
-        assertTrue(location.getFacilityName().equals(facilityName));
-    }
-
-    @Test
-    public void test_getRoom() {
-        String roomName = "G-007";
-        Location location = new Location(null,roomName);
-
-        assertTrue(location.getRoomName().equals(roomName));
     }
 
     @Test
