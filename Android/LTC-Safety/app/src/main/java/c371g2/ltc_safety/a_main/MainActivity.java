@@ -11,7 +11,7 @@ import c371g2.ltc_safety.R;
  * and a list of all previously submitted concerns that, when pressed, brings the user to the
  * ConcernDetailActivity.
  * Activity: ~ View-Controller
- * @Invariants none
+ * @Invariants The number of rows in the ListView is equal to Concern.list.size()
  * @HistoryProperties none
  */
 public class MainActivity extends AppCompatActivity {

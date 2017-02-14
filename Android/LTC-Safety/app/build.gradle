@@ -12,6 +12,10 @@ android {
 
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //jackOptions {
+        //    enabled true
+        //}
     }
     buildTypes {
         release {
@@ -24,6 +28,10 @@ android {
     }
     lintOptions {
         abortOnError false // Prevents premature build crash
+    }
+    compileOptions {
+        targetCompatibility 1.7
+        sourceCompatibility 1.7
     }
 }
 
