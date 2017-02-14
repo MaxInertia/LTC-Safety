@@ -6,18 +6,29 @@ android:
     # Android SDK Tools
     - platform-tools
     - tools
+    
     # Project BuildTools version
     - build-tools-25.0.2
+    
     # Compile SDK
     - android-25
+    
     # System images for emulator - can be used for testing
-    - sys-img-armeabi-v7a-android-22
-    - sys-img-x86-android-22
+    #- sys-img-armeabi-v7a-android-22
+    #- sys-img-x86-android-22
     #- sys-img-armeabi-v7a-android-17
+    
     # Other components
-    #- extra-google-m2repository
-    #- extra-android-m2repository
+    - extra-android-support
+    - extra-google-google_play_service
+    - extra-google-m2repository
+    - extra-android-m2repository
     #- addon-google_apis-google-19
+    
+env:
+  global:
+   # install timeout in minutes (2 minutes by default)
+    - ADB_INSTALL_TIMEOUT=8
 
 # Emulator Management: Create, Start and Wait
 before_script:
