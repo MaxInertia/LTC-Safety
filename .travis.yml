@@ -16,11 +16,18 @@ android:
     # Other components
     - extra-google-m2repository
     - extra-android-m2repository
-    - addon-google_apis-google-19
+    #- addon-google_apis-google-19
+
+# Emulator Management: Create, Start and Wait
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - emulator -avd test -no-skin -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
     
 script: 
     - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build -x test ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew --continue test connectedAndroidTest ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && android list target &&./gradlew --continue test connectedAndroidTest ; fi
     
 after_success:
     - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then git push origin android-app:android-app-build ; fi
