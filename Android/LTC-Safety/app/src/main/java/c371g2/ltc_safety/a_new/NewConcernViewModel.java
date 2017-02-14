@@ -1,5 +1,8 @@
 package c371g2.ltc_safety.a_new;
 
+import java.io.IOException;
+import c371g2.ltc_safety.a_main.ViewModelObserver;
+
 /**
  * This class acts as an interface between the app view in the new concern activity and the model.
  * @Invariants none
@@ -21,8 +24,10 @@ class NewConcernViewModel {
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
     static void submitConcern(String concernType, String actionsTaken, String facultyName,
-                                        String reporterName, String emailAddress, String phoneNumber) {
+                              String reporterName, String emailAddress, String phoneNumber) throws IOException {
         // TODO: Use verifier-classes to confirm input is sufficient to submit as concern
         // TODO: Use 'client' API here to generate and submit concern
+        // TODO: Use ViewModelObserver interface to update concern list
+        throw new IOException(); // Temporary placeholder for the submit method in API which throws IOException when it fails
     }
 }

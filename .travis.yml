@@ -20,7 +20,7 @@ android:
     
 script: 
     - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew test connectedAndroidTest ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew --continue test connectedAndroidTest ; fi
     
 after_success:
     - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then git push origin android-app:android-app-build ; fi

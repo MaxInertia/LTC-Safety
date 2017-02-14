@@ -9,7 +9,7 @@ import c371g2.ltc_safety.R;
  * This activity displays a form with various fields for specifying a safety concern. A concern with
  * sufficient details can be submitted to the database.
  * Activity: ~ View-Controller
- * @Invariants The number of rows in the ListView is equal to Concern.list.size()
+ * @Invariants none
  * @HistoryProperties none
  */
 public class NewConcernActivity extends AppCompatActivity {

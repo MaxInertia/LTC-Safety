@@ -2,6 +2,7 @@ package c371g2.ltc_safety.local;
 
 import android.os.Bundle;
 import android.support.test.filters.SmallTest;
+import android.support.test.filters.Suppress;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -10,8 +11,9 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Tests the methods inside the 'local' package that must be run on a device; emulator or real.
+ * Tests the methods inside the 'local' package that must be run on a device (real or emulated).
  */
+@Suppress
 @RunWith(AndroidJUnit4.class)
 @SmallTest
 public class Local_InstrumentedTests {
