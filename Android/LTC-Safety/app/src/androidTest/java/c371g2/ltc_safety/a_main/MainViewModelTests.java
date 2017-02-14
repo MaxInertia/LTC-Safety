@@ -1,6 +1,5 @@
 package c371g2.ltc_safety.a_main;
 
-import android.support.test.filters.MediumTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -13,13 +12,10 @@ import c371g2.ltc_safety.local.Concern;
 import static junit.framework.Assert.fail;
 
 /**
- * This class is used to test methods in the MainViewModel class. This test class requires a device
- * (real or emulated) to run.
+ * This class runs tests on the methods in the MainViewModel class.
  */
 @RunWith(AndroidJUnit4.class)
-@MediumTest
-public class MainTests {
-
+public class MainViewModelTests {
     @Test
     public void test_writeAndReadDeviceData() {
         // The following values do not need to be valid. The data that is used to create concerns
@@ -52,5 +48,4 @@ public class MainTests {
         }
         fail();
     }
-
 }
