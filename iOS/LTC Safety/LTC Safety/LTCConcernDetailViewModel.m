@@ -13,7 +13,7 @@
 NSString *const LTCDetailContactInfoTitle               = @"CONTACT_INFO_TITLE";            //Contact Information
 NSString *const LTCDetailConcernInfoTitle               = @"DETAIL_CONCERN_INFO_TITLE";     //Concern Information
 NSString *const LTCDetailActionsTakenTitle              = @"DETAIL_ACTIONS_TAKEN_TITLE";    //Actions Taken
-NSString *const LTCSubmissionDate                       = @"DETAIL_DATE_SUBMITTED";         //Date submitted
+NSString *const LTCDetailConcernStatusLog               = @"DETAIL_STATUS_LOG";         //Date submitted
 NSString *const LTCSubmissionStatus                     = @"DETAIL_CONCERN_STATUS";         //Status
 NSString *const LTCRetractConcernPrompt                 = @"RETRACT_CONCERN_PROMPT";         //Retract
 
@@ -31,7 +31,6 @@ NSString *const LTCDetailDescriptorConcernNature        = @"CONCERN_NATURE";
 NSString *const LTCDetailDescriptorFacilityName         = @"FACILITY_NAME";
 NSString *const LTCDetailDescriptorRoomNumber           = @"ROOM_NUMBER";
 NSString *const LTCDetailDescriptorActionsTaken         = @"ACTIONS_TAKEN";
-NSString *const LTCDetailDescriptorSubmittionDate       = @"SUBMISSION_DATE";
 NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 
 
@@ -124,31 +123,24 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRoomNumber rowType:XLFormRowDescriptorTypeInfo title:@"Room"];
         row.value = concern.location.roomName;
         [section addFormRow:row];
-        section = [XLFormSectionDescriptor formSection];
-        
-        section.title = NSLocalizedString(LTCDetailActionsTakenTitle, nil);
-        [self addFormSection:section];
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorActionsTaken rowType:XLFormRowDescriptorTypeInfo title:@"Actions Taken"];
         row.value = concern.actionsTaken;
         [section addFormRow:row];
         section = [XLFormSectionDescriptor formSection];
         
-        section.title = NSLocalizedString(LTCSubmissionDate, nil);
+        section.title = NSLocalizedString(LTCDetailConcernStatusLog, nil);
         [self addFormSection:section];
-        NSString *dateString = [NSDateFormatter localizedStringFromDate: concern.statuses.firstObject.creationDate
-                                                              dateStyle:NSDateFormatterMediumStyle
-                                                              timeStyle:NSDateFormatterShortStyle];
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorSubmittionDate rowType:XLFormRowDescriptorTypeInfo title:@"Submission Date"];
-        row.value = dateString;
-        [section addFormRow:row];
-        section = [XLFormSectionDescriptor formSection];
+        NSString *dateString;
+        for (LTCConcernStatus* status in concern.statuses){
+            dateString = [NSDateFormatter localizedStringFromDate: status.creationDate
+                                                        dateStyle:NSDateFormatterMediumStyle
+                                                        timeStyle:NSDateFormatterShortStyle];
+            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus rowType:XLFormRowDescriptorTypeInfo title:status.concernType];
+            row.value = dateString;
+            [section addFormRow:row];
 
-        section.title = NSLocalizedString(LTCSubmissionStatus, nil);
-        [self addFormSection:section];
+        }
         
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus rowType:XLFormRowDescriptorTypeInfo title:@"Concern Status"];
-        row.value = concern.statuses.lastObject.concernType;
-        [section addFormRow:row];
         section = [XLFormSectionDescriptor formSection];
         [self addFormSection:section];
         

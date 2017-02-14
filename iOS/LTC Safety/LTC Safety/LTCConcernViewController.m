@@ -109,9 +109,6 @@
     LTCConcernDetailViewModel *viewModel = [[LTCConcernDetailViewModel alloc] initWithConcern:selectedConcrn];
     LTCConcernDetailViewController *viewController = [[LTCConcernDetailViewController alloc] initWithViewModel:viewModel];
     
-    //UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    //[self presentViewController:navController animated:YES completion:nil];
-    
     [self.navigationController pushViewController:viewController animated:YES];
     
     

@@ -8,6 +8,8 @@
 
 #import "LTCConcernViewModel.h"
 
+NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatusNotification";
+
 @interface LTCConcernViewModel () <NSFetchedResultsControllerDelegate>
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (readwrite, strong, nonatomic) NSManagedObjectContext *objectContext;
@@ -35,7 +37,14 @@
 
         self.fetchedResultsController.delegate = self;
         self.objectContext = context;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updatedConcernStatus:) name:LTCUpdatedConcernStatusNotification object:nil];
+        
+        
     }
+    
+    
+    
     return self;
 }
 
@@ -161,6 +170,28 @@
         case NSFetchedResultsChangeMove:
             [self.delegate viewModel:self didMoveConcernFromIndexPath:indexPath toIndexPath:newIndexPath];
             break;
+    }
+}
+
+- (void)_updatedConcernStatus:(NSNotification *)notification{
+    GTLRClient_UpdateConcernStatusResponse *testStatus = notification.userInfo[@"status"];
+    
+    NSString *identifier = [testStatus.concernId stringValue];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %@", identifier];
+    
+    NSFetchRequest *request = [LTCConcern fetchRequest];
+    [request setPredicate:predicate];
+    
+    
+    NSError *error = nil;
+    NSArray *result = [self.objectContext executeFetchRequest:request error:&error];
+    LTCConcern *concern = [result firstObject];
+    
+    NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
+    
+    if (error == nil && concern != nil) {
+        LTCConcernStatus *status = [LTCConcernStatus statusWithData:testStatus.status inManagedObjectContext:self.objectContext];
+        [concern addStatusesObject:status];
     }
 }
 

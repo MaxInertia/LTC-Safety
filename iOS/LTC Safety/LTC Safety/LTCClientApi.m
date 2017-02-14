@@ -46,7 +46,7 @@
     
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
-        completion(error);
+        completion(object, error);
     }];
 }
 

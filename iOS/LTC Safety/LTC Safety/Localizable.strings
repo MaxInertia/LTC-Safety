@@ -34,8 +34,9 @@ ll us about your concern";
 "RETRACT_CONCERN" = "Retract";
 "DETAIL_CONCERN_INFO_TITLE" = "Concern Information";
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
-"DETAIL_DATE_SUBMITTED" = "Date submitted";
+"DETAIL_STATUS_LOG" = "Concern Status Log";
 "DETAIL_CONCERN_STATUS" = "Status";
+"RETRACT_CONCERN_PROMPT" = "Retract";
 
 // Misc
 "OK" = "OK";

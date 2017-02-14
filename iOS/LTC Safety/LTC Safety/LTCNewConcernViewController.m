@@ -56,7 +56,7 @@ NSString *const LTCNewConcernError = @"NEW_CONCERN_ERROR_TITLE";
  @post The delegate is notified that a concern was submitted to the client API on the backend. If the submission fails an alert controller is presented to display the error message to the user.
  */
 - (void)submit {
-    
+
     NSAssert(self.delegate != nil, @"Attempted to submit a concern with no delegate to receive the message.");
     NSAssert([self.delegate conformsToProtocol:@protocol(LTCNewConcernViewControllerDelegate)], @"The %@ delegate does not conform to the delegate's protocal.", self.class);
 
