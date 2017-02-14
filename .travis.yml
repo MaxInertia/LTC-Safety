@@ -12,6 +12,7 @@ android:
     - android-25
     # System images for emulator - can be used for testing
     - sys-img-armeabi-v7a-android-22
+    - sys-img-x86-android-22
     #- sys-img-armeabi-v7a-android-17
     # Other components
     - extra-google-m2repository
