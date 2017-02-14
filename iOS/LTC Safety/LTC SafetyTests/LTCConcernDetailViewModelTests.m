@@ -43,12 +43,12 @@
     XCTAssertEqual([viewModel formRowWithTag:@"FACILITY_NAME"].value, testConcern.location.facilityName);
     XCTAssertEqual([viewModel formRowWithTag:@"ROOM_NUMBER"].value, testConcern.location.roomName);
     XCTAssertEqual([viewModel formRowWithTag:@"ACTIONS_TAKEN"].value, testConcern.actionsTaken);
-    XCTAssertTrue([[viewModel formRowWithTag:@"SUBMISSION_DATE"].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
-    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_STATUS"].value, testConcern.statuses.lastObject.concernType);
+    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_STATUS"].title , testConcern.statuses.firstObject.concernType);
+    XCTAssertTrue([[viewModel formRowWithTag:@"CONCERN_STATUS"].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 7);
+    XCTAssertEqual(viewModel.formSections.count, 5);
     
 }
 @end
