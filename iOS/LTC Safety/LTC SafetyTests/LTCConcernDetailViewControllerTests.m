@@ -48,7 +48,9 @@
     XCTAssertEqual(viewModel, viewController.viewModel);
     XCTAssertNotNil(viewController.title);
 }
-
+/**
+ Tests that the retract functionality works by mocking a client api and a notification center then using those to check that the client api catches the notification that was thrown by the retract concern method
+ */
 - (void)testRetract {
     LTCClientApi *mockApi = mock([LTCClientApi class]);
     NSNotificationCenter *mockCenter = mock([NSNotificationCenter class]);

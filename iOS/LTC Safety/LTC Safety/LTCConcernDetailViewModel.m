@@ -19,9 +19,6 @@ NSString *const LTCRetractConcernPrompt                 = @"RETRACT_CONCERN_PROM
 
 
 
-
-
-
 // The row desriptors for unique identification
 NSString *const LTCDetailDescriptorRetractConcern       = @"RETRACT_CONCERN";
 NSString *const LTCDetailDescriptorReporterName         = @"REPORTER_NAME";
@@ -32,6 +29,8 @@ NSString *const LTCDetailDescriptorFacilityName         = @"FACILITY_NAME";
 NSString *const LTCDetailDescriptorRoomNumber           = @"ROOM_NUMBER";
 NSString *const LTCDetailDescriptorActionsTaken         = @"ACTIONS_TAKEN";
 NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
+
+
 
 
 
@@ -75,9 +74,12 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 
     // Set the retract row discriptor's formSelector
     XLFormRowDescriptor *descriptor =  [self formRowWithTag:LTCDetailDescriptorRetractConcern];
-    NSAssert1(descriptor != nil, @"Unable to find descriptor with tag %@", LTCDetailDescriptorRetractConcern);
+    //NSAssert1(descriptor != nil, @"Unable to find descriptor with tag %@", LTCDetailDescriptorRetractConcern);
     
-    descriptor.action.formSelector = retractCallback;}
+    if(![self.concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
+       descriptor.action.formSelector = retractCallback;
+    }
+}
 
 - (instancetype)initWithConcern:(LTCConcern *)concern {
     
@@ -148,10 +150,14 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         
         section = [XLFormSectionDescriptor formSection];
         [self addFormSection:section];
-        
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRetractConcern rowType:XLFormRowDescriptorTypeButton title:NSLocalizedString(LTCRetractConcernPrompt, nil)];
-        [section addFormRow: row];
+
+        if(![concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
+            [section addFormRow: row];
+
+        }
         
+
     }
     NSAssert1(self != nil, @"Failed to initialize %@", self.class);
     NSAssert(self.clientApi != nil, @"Client API was nil after the detail concern view model initializer finished.");

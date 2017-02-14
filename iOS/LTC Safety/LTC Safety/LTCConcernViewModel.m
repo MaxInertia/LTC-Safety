@@ -172,11 +172,13 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
             break;
     }
 }
-
+/**
+    Is called whenever a updateConcernStatus notification is sent out in the app. This method will use teh notifications user info to append a specified concern status to the specified concern's list of status.
+ */
 - (void)_updatedConcernStatus:(NSNotification *)notification{
-    GTLRClient_UpdateConcernStatusResponse *testStatus = notification.userInfo[@"status"];
+    GTLRClient_UpdateConcernStatusResponse *newConcernStatusResponse = notification.userInfo[@"status"];
     
-    NSString *identifier = [testStatus.concernId stringValue];
+    NSString *identifier = [newConcernStatusResponse.concernId stringValue];
     NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %@", identifier];
     
     NSFetchRequest *request = [LTCConcern fetchRequest];
@@ -190,9 +192,11 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
     NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
     
     if (error == nil && concern != nil) {
-        LTCConcernStatus *status = [LTCConcernStatus statusWithData:testStatus.status inManagedObjectContext:self.objectContext];
+        LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
         [concern addStatusesObject:status];
     }
+    [self.objectContext save:nil];
+
 }
 
 @end

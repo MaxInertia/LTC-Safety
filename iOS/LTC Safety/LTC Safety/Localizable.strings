@@ -15,8 +15,7 @@
 
 // Submit Concern Section Titles
 "CONTACT_INFO_TITLE" = "Contact Information";
-"CONCERN_INFO_TITLE" = "Te
-ll us about your concern";
+"CONCERN_INFO_TITLE" = "Tell us about your concern";
 "ACTIONS_TAKEN_TITLE" = "What actions have been taken?";
 
 // Submit Concern Prompts
@@ -37,6 +36,7 @@ ll us about your concern";
 "DETAIL_STATUS_LOG" = "Concern Status Log";
 "DETAIL_CONCERN_STATUS" = "Status";
 "RETRACT_CONCERN_PROMPT" = "Retract";
+
 
 // Misc
 "OK" = "OK";

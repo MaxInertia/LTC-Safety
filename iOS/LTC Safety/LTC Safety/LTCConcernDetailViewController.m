@@ -71,7 +71,8 @@ NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
                 [super.navigationController popViewControllerAnimated:YES];
             }];
             [alert addAction:cancelAction];
-            
+            // remove the button from the view model
+//            [self.viewModel ]
         }
         [self presentViewController:alert animated:YES completion:nil];
 
