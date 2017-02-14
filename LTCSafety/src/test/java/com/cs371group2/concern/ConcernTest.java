@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.client.ClientApi;
+import com.cs371group2.concern.Location.TestHook_MutableLocation;
 import com.google.api.server.spi.response.BadRequestException;
 import org.junit.Test;
 
@@ -25,21 +26,23 @@ public class ConcernTest extends DatastoreTest {
      *
      * @return A new concern data object with all instance variables initialized.
      */
-    public ConcernData generateConcernData() {
-        ConcernData data = new ConcernData();
-        data.actionsTaken = "These are some actions taken";
-        data.concernNature = "A type of concern";
+    public ConcernData.TestHook_MutableConcernData generateConcernData() {
 
-        Location location = new Location();
-        location.facilityName = "Test Facility";
-        location.roomName = "Room Name";
-        data.location = location;
+        Location.TestHook_MutableLocation location = new TestHook_MutableLocation(
+                "Test Facility",
+                "Room Name");
 
-        Reporter reporter = new Reporter();
-        reporter.email = "email@gmail.com";
-        reporter.phoneNumber = "306 700 7600";
-        reporter.name = "First Andlast";
-        data.reporter = reporter;
+        Reporter.TestHook_MutableReporter reporter = new Reporter.TestHook_MutableReporter(
+                "First and Last",
+                "email@gmail.com",
+                "306 700 7600");
+
+        ConcernData.TestHook_MutableConcernData data = new ConcernData.TestHook_MutableConcernData(
+                "A type of concern",
+                "These are some actions taken",
+                reporter,
+                location);
+
         return data;
     }
 
@@ -49,9 +52,9 @@ public class ConcernTest extends DatastoreTest {
     @Test(expected = BadRequestException.class)
     public void nullNatureOfSafetyConcern() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.concernNature = null;
-        new ClientApi().submitConcern(data);
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.setConcernNature(null);
+        new ClientApi().submitConcern(data.build());
     }
 
     /**
@@ -60,9 +63,9 @@ public class ConcernTest extends DatastoreTest {
     @Test(expected = BadRequestException.class)
     public void nullReporterName() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.reporter.name = null;
-        new ClientApi().submitConcern(data);
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableReporter().setName(null);
+        new ClientApi().submitConcern(data.build());
     }
 
     /**
@@ -71,10 +74,10 @@ public class ConcernTest extends DatastoreTest {
     @Test(expected = BadRequestException.class)
     public void nullPhoneNumberAndEmail() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.reporter.phoneNumber = null;
-        data.reporter.email = null;
-        new ClientApi().submitConcern(data);
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableReporter().setPhoneNumber(null);
+        data.getMutableReporter().setEmail(null);
+        new ClientApi().submitConcern(data.build());
     }
 
     /**
@@ -83,9 +86,9 @@ public class ConcernTest extends DatastoreTest {
     @Test
     public void nullEmail() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.reporter.email = null;
-        assertNotNull(new ClientApi().submitConcern(data));
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableReporter().setEmail(null);
+        assertNotNull(new ClientApi().submitConcern(data.build()));
     }
 
     /**
@@ -94,9 +97,9 @@ public class ConcernTest extends DatastoreTest {
     @Test
     public void nullPhoneNumber() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.reporter.phoneNumber = null;
-        assertNotNull(new ClientApi().submitConcern(data));
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableReporter().setPhoneNumber(null);
+        assertNotNull(new ClientApi().submitConcern(data.build()));
     }
 
     /**
@@ -106,8 +109,8 @@ public class ConcernTest extends DatastoreTest {
     @Test(expected = BadRequestException.class)
     public void nullFacility() throws Exception {
 
-        ConcernData data = generateConcernData();
-        data.location.facilityName = null;
-        new ClientApi().submitConcern(data);
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableLocation().setFacilityName(null);
+        new ClientApi().submitConcern(data.build());
     }
 }

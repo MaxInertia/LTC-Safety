@@ -11,6 +11,9 @@ import java.util.logging.Logger;
  * This data is not part of the concern class to separate the object that is sent using Cloud
  * Endpoints from the object that will be stored in the data store.
  *
+ * @History Properties concern nature, actions taken, reporter, and location are all guaranteed to be constant during the
+ * entire duration of a concern data instance.
+ *
  * Created on 2017-01-17.
  */
 public final class ConcernData implements Validatable {
@@ -26,24 +29,96 @@ public final class ConcernData implements Validatable {
      * environment, and aggressive resident behaviors. This must be non-null
      * when submitted by a user.
      */
-    String concernNature;
+    private String concernNature;
 
     /**
      * A description of any actions taken by the reporter regarding the submitted concern. This may
      * be null if no actions have been taken.
      */
-    String actionsTaken;
+    private String actionsTaken;
 
     /**
      * The name and contact information of the reporter. A reporter must be present for all
      * submitted concerns.
      */
-    Reporter reporter;
+    private Reporter reporter;
 
     /**
      * The location the concern occurred at. A location must be present for all submitted concerns.
      */
-    Location location;
+    private Location location;
+
+    /**
+     * TestHook_MutableConcernData is a test hook to make ConcernData testable without exposing its
+     * members. An instance of TestHook_MutableConcernData can be used to construct new concern data
+     * instances and set values for testing purposes.
+     */
+    public static class TestHook_MutableConcernData {
+
+        /**
+         * The concern data being built.
+         */
+        private ConcernData data = new ConcernData();
+
+        /**
+         * The mutable reporter to allow modification after being passed to the constructor.
+         */
+        private Reporter.TestHook_MutableReporter mutableReporter;
+
+        /**
+         * The mutable location to allow modification after being passed to the constructor.
+         */
+        private Location.TestHook_MutableLocation mutableLocation;
+
+        public Reporter.TestHook_MutableReporter getMutableReporter() {
+            return mutableReporter;
+        }
+
+        public Location.TestHook_MutableLocation getMutableLocation() {
+            return mutableLocation;
+        }
+
+        /**
+         * Constructs a new mutable concern data.
+         *
+         * @param concernNature The category the concern falls under.
+         * @param actionsTaken Descriptions of any actions taken by the reporter.
+         * @param reporter The reporter of the concern.
+         * @param location The location the concern occurred at.
+         */
+        public TestHook_MutableConcernData(String concernNature, String actionsTaken,
+                Reporter.TestHook_MutableReporter reporter,
+                Location.TestHook_MutableLocation location) {
+            setConcernNature(concernNature);
+            setActionsTaken(actionsTaken);
+            this.mutableReporter = reporter;
+            this.mutableLocation = location;
+        }
+
+        public void setConcernNature(String concernNature) {
+            this.data.concernNature = concernNature;
+        }
+
+        public void setActionsTaken(String actionsTaken) {
+            this.data.actionsTaken = actionsTaken;
+        }
+
+        /**
+         * Converts the mutable concern data to a concern data instance to be used for testing. Once
+         * built the concern data is immutable regardless of whether the mutable reporter it was
+         * created with is modified.
+         *
+         * @return The immutable concern data reference containing the mutable concern data's data.
+         */
+        public ConcernData build() {
+            ConcernData immutable = new ConcernData();
+            immutable.concernNature = this.data.concernNature;
+            immutable.actionsTaken = this.data.actionsTaken;
+            immutable.location = this.mutableLocation.build();
+            immutable.reporter = this.mutableReporter.build();
+            return immutable;
+        }
+    }
 
     public String getConcernNature() {
         return concernNature;
@@ -87,26 +162,27 @@ public final class ConcernData implements Validatable {
             return locationResult;
         }
 
-        logger.log(Level.FINER, "Validation of Concern \"" + this.concernNature + "\" was successful.");
+        logger.log(Level.FINER,
+                "Validation of Concern \"" + this.concernNature + "\" was successful.");
         return new ValidationResult();
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         String returnString;
-        if(this.getReporter() == null && this.getLocation() == null){
+        if (this.getReporter() == null && this.getLocation() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + "NO REPORTER\nNO LOCATION\n";
-        }else if(this.getReporter() == null){
+        } else if (this.getReporter() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + "NO REPORTER" + this.getLocation().toString() + "\n";
-        }else if(this.getLocation() == null){
+        } else if (this.getLocation() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + this.getReporter().toString() + "NO LOCATION" + "\n";
-        }else{
+        } else {
             returnString = "Concern Nature: " + this.getConcernNature()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + this.getReporter().toString() + this.getLocation().toString() + "\n";

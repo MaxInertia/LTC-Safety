@@ -10,11 +10,8 @@ import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
 import com.googlecode.objectify.Key;
-import org.junit.Test;
-
-import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.ConcurrentNavigableMap;
+import org.junit.Test;
 
 /**
  * This class is used to test the Dao class and the ConcernDao class. This class tests the base data
@@ -62,7 +59,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
 
         // Save the object
-        ConcernData data = new ConcernTest().generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData().build();
         Concern concern = new Concern(data);
         Key<Concern> key = dao.save(concern);
 
@@ -96,7 +93,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         ConcernTest concernTest = new ConcernTest();
 
-        ConcernData concernData = concernTest.generateConcernData();
+        ConcernData concernData = concernTest.generateConcernData().build();
 
         Concern curConcern = new Concern(concernData);
         dao.save(curConcern);
@@ -106,7 +103,7 @@ public class ConcernDaoTest extends DatastoreTest {
 
         assertEquals(curConcern, concernList.get(0));
 
-        concernData = concernTest.generateConcernData();
+        concernData = concernTest.generateConcernData().build();
 
         curConcern = new Concern(concernData);
 

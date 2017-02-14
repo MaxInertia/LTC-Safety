@@ -40,7 +40,7 @@ public class ClientApiTest extends DatastoreTest {
      */
     private void submitConcern() throws Exception {
 
-        ConcernData data = new ConcernTest().generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData().build();
 
         OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
@@ -77,7 +77,7 @@ public class ClientApiTest extends DatastoreTest {
      */
     private void retractConcern() throws Exception {
 
-        ConcernData data = new ConcernTest().generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData().build();
         OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         UpdateConcernStatusResponse response = new ClientApi().retractConcern(token);
 
