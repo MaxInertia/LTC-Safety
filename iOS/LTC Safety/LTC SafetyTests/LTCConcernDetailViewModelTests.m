@@ -33,24 +33,22 @@
  */
 - (void)testInitWithConcern {
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
-    
     LTCConcernDetailViewModel *viewModel = [[LTCConcernDetailViewModel alloc] initWithConcern:testConcern];
     
-    
     //access each row in viewModel to make sure the test concern was added correctly
-    XCTAssertEqual([viewModel formRowWithTag:@"REPORTER_NAME"].title, testConcern.reporter.name);
-    XCTAssertEqual([viewModel formRowWithTag:@"EMAIL_ADDRESS"].title, testConcern.reporter.email);
-    XCTAssertEqual([viewModel formRowWithTag:@"PHONE_NUMBER"].title, testConcern.reporter.phoneNumber);
-    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_NATURE"].title, testConcern.concernNature);
-    XCTAssertEqual([viewModel formRowWithTag:@"FACILITY_NAME"].title, testConcern.location.facilityName);
-    XCTAssertEqual([viewModel formRowWithTag:@"ROOM_NUMBER"].title, testConcern.location.roomName);
-    XCTAssertEqual([viewModel formRowWithTag:@"ACTIONS_TAKEN"].title, testConcern.actionsTaken);
-    XCTAssertTrue([[viewModel formRowWithTag:@"SUBMISSION_DATE"].title isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
-    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_STATUS"].title, testConcern.statuses.lastObject.concernType);
+    XCTAssertEqual([viewModel formRowWithTag:@"REPORTER_NAME"].value, testConcern.reporter.name);
+    XCTAssertEqual([viewModel formRowWithTag:@"EMAIL"].value, testConcern.reporter.email);
+    XCTAssertEqual([viewModel formRowWithTag:@"PHONE_NUMBER"].value, testConcern.reporter.phoneNumber);
+    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_NATURE"].value, testConcern.concernNature);
+    XCTAssertEqual([viewModel formRowWithTag:@"FACILITY_NAME"].value, testConcern.location.facilityName);
+    XCTAssertEqual([viewModel formRowWithTag:@"ROOM_NUMBER"].value, testConcern.location.roomName);
+    XCTAssertEqual([viewModel formRowWithTag:@"ACTIONS_TAKEN"].value, testConcern.actionsTaken);
+    XCTAssertTrue([[viewModel formRowWithTag:@"SUBMISSION_DATE"].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
+    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_STATUS"].value, testConcern.statuses.lastObject.concernType);
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 6);
+    XCTAssertEqual(viewModel.formSections.count, 7);
     
 }
 @end
