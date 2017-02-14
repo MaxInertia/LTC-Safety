@@ -79,7 +79,7 @@ public class ClientApiTest extends DatastoreTest {
 
         ConcernData data = new ConcernTest().generateConcernData();
         OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
-        ConcernStatus returnedStatus = new ClientApi().retractConcern(token);
+        UpdateConcernStatusResponse response = new ClientApi().retractConcern(token);
 
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
                 .parseClaimsJws(token.getToken());
@@ -91,8 +91,7 @@ public class ClientApiTest extends DatastoreTest {
 
         assertTrue(concern.isArchived());
         assertEquals(concern.getStatuses().last().getType(), ConcernStatusType.RETRACTED);
-        assertEquals(concern.getStatuses().last(), returnedStatus);
-
+        assertEquals(concern.getStatuses().last(), response.getStatus());
     }
 
     /**

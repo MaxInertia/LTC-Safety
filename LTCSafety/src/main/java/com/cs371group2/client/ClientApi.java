@@ -8,6 +8,7 @@ import com.cs371group2.concern.ConcernStatus;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 
 import java.util.logging.Level;
@@ -39,7 +40,7 @@ public final class ClientApi {
     }
 
     @ApiMethod(name = "retractConcern", path = "/concern/retract")
-    public ConcernStatus retractConcern(OwnerToken token) throws BadRequestException, NotFoundException {
+    public UpdateConcernStatusResponse retractConcern(OwnerToken token) throws BadRequestException, NotFoundException, ConflictException {
 
         ValidationResult result = token.validate();
         if (!result.isValid()) {
@@ -54,10 +55,16 @@ public final class ClientApi {
             throw new NotFoundException(CONCERN_NOT_FOUND_ERROR);
         }
 
-        concern.retract();
-        dao.save(concern);
+        if (!concern.isRetracted()) {
+            ConcernStatus status = concern.retract();
+            dao.save(concern);
 
-        logger.log(Level.INFO, "Client successfully retracted a concern.");
-        return concern.getStatuses().last();
+            logger.log(Level.INFO, "Client successfully retracted a concern.");
+            return new UpdateConcernStatusResponse(concern.getId(), status);
+
+        } else {
+            logger.log(Level.WARNING, "Attempted to retract a concern that has already been retracted.");
+            throw new ConflictException("Attempted to retract a concern that has already been retracted.");
+        }
     }
 }

@@ -73,6 +73,18 @@ public final class Concern {
         return isArchived;
     }
 
+    /**
+     * Determines whether the concerns most recent status update was to retracted.
+     * @precond The concern has at least one status.
+     * @return True if the concern is currently retracted.
+     */
+    public boolean isRetracted() {
+
+        assert !statuses.isEmpty();
+
+        return statuses.last().getType().equals(ConcernStatusType.RETRACTED);
+    }
+
     public ConcernData getData() {
         return data;
     }
@@ -117,12 +129,16 @@ public final class Concern {
      * Updates the concern entity to reflect that the concern has been retracted.
      *
      * @postcond The status has been changed to RETRACTED and isArchived is now true.
+     * @return The retracted status that has been set as the concern's current status.
      */
-    public void retract() {
-        statuses.add(new ConcernStatus(ConcernStatusType.RETRACTED));
+    public ConcernStatus retract() {
+        ConcernStatus status = new ConcernStatus(ConcernStatusType.RETRACTED);
+        statuses.add(status);
         isArchived = true;
 
         logger.log(Level.FINER, "Concern Retracted: ID# " + this.id);
+
+        return status;
     }
 
     @Override
