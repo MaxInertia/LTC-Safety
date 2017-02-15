@@ -19,16 +19,16 @@ public class AdminApiTest {
 
     @Test
     public void getConcernsTest() throws GeneralSecurityException, IOException {
+    /*
+        ConcernDao dao = new ConcernDao();
 
-        //ConcernDao dao = new ConcernDao();
+        ConcernData.TestHook_MutableConcernData concernData =
+        new ConcernTest().generateConcernData();
+        dao.save(new Concern(concernData.build()));
 
-        //ConcernData concernData = new ConcernTest().generateConcernData();
-
-        //dao.save(new Concern(concernData));
-
-        //AdminApi api = new AdminApi();
-        //List<Concern> concerns = api.getConcerns(new ConcernRequest(0, 1, TEST_TOKEN));
-        //assertNotNull(concerns);
-
+        AdminApi api = new AdminApi();
+        List<Concern> concerns = api.requestConcernList(new ConcernRequest(0, 1, "x5gvMAYGfNcKv74VyHFgr4Ytcge2"));
+        assertNotNull(concerns);
+        */
     }
 }

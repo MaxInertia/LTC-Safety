@@ -1,11 +1,7 @@
 package com.cs371group2.admin;
 
-import com.cs371group2.ApiKeys;
-import com.cs371group2.ValidationResult;
 import com.cs371group2.client.OwnerToken;
-import io.jsonwebtoken.*;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +11,7 @@ import java.util.logging.Logger;
  *
  * Created on 2017-02-08.
  */
-public class ConcernRequest extends AdminRequest {
+public final class ConcernRequest extends AdminRequest {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
@@ -27,6 +23,8 @@ public class ConcernRequest extends AdminRequest {
     /** The maximum number of elements to be loaded from the database */
     private int limit;
 
+    private String accessToken;
+
     public int getOffset() {
         return offset;
     }
@@ -35,29 +33,34 @@ public class ConcernRequest extends AdminRequest {
         return limit;
     }
 
-/**
-    @Override
-    public ValidationResult validate() {
+    /**
+     * TestHook_MutableConcernData is a test hook to make ConcernRequest testable without exposing its
+     * members. An instance of TestHook_MutableConcernRequest can be used to construct new concern request
+     * instances and set values for testing purposes.
+     */
+    public static class TestHook_MutableConcernRequest {
+        int mutableLimit;
+        int mutableOffset;
+        String mutableToken;
 
-        if (accessToken == null) {
-            logger.log(Level.FINE, "Tried to validate a null owner token.");
-            return new ValidationResult(NULL_TOKEN_ERROR);
-        }
-        try {
-            Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
-                    .parseClaimsJws(accessToken);
-            Claims claims = claim.getBody();
-
-            // Ensuring that the parsing is correct despite the result not being used
-            Long.parseLong(claims.getSubject());
-
-        } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | NumberFormatException e) {
-
-            logger.log(Level.FINE, "Owner token validation failed due to " + e.getMessage());
-            return new ValidationResult(e.getMessage());
+        public TestHook_MutableConcernRequest(int limit, int offset, String token) {
+            this.mutableLimit = limit;
+            this.mutableOffset = offset;
+            this.mutableToken = token;
         }
 
-        logger.log(Level.FINER, "Owner token validation successful.");
-        return new ValidationResult();
-    } */
+        public ConcernRequest build(){
+            ConcernRequest immutable = new ConcernRequest();
+            immutable.limit = this.mutableLimit;
+            immutable.offset = this.mutableOffset;
+            immutable.accessToken = this.mutableToken;
+            return immutable;
+        }
+
+        public void setMutableLimit(int mutableLimit) { this.mutableLimit = mutableLimit; }
+
+        public void setMutableOffset(int mutableOffset) { this.mutableOffset = mutableOffset; }
+
+        public void setMutableToken(String mutableToken) { this.mutableToken = mutableToken; }
+    }
 }

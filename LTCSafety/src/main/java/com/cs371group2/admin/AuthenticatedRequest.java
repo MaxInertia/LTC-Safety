@@ -22,8 +22,7 @@ abstract class AuthenticatedRequest{
      * throws an exception
      *
      * @return The account of the authenticated user
-     * @throws GeneralSecurityException If the accessToken does not have the required permission, throw this
-     * @throws IOException If the accessToken is not in the correct format or unreadable, throw this
+     * @throws UnauthorizedException If the accessToken does not have the required permission, throw this
      */
     public Account authenticate() throws UnauthorizedException {
         if(accessToken == null) {
