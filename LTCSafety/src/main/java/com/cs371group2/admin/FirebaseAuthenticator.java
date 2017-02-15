@@ -58,8 +58,10 @@ public class FirebaseAuthenticator extends Authenticator{
 
             return new Pair<Account, AccessToken>(account, accessToken);
 
-        } catch (GeneralSecurityException | IOException e) {
-            throw new UnauthorizedException(e);
+        } catch (IOException e) {
+            throw new UnauthorizedException("Token coud not be parsed.");
+        } catch (GeneralSecurityException e) {
+            throw new UnauthorizedException("Token has timed out and is no longer valid.");
         }
     }
 

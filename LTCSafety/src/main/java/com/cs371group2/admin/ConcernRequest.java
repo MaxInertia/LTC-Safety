@@ -23,8 +23,6 @@ public final class ConcernRequest extends AdminRequest {
     /** The maximum number of elements to be loaded from the database */
     private int limit;
 
-    private String accessToken;
-
     public int getOffset() {
         return offset;
     }
@@ -33,6 +31,13 @@ public final class ConcernRequest extends AdminRequest {
         return limit;
     }
 
+    public boolean legalRequest(){
+        if(limit < 1 || offset < 0 || accessToken == null || accessToken == "") {
+            return false;
+        }
+
+        return true;
+    }
     /**
      * TestHook_MutableConcernData is a test hook to make ConcernRequest testable without exposing its
      * members. An instance of TestHook_MutableConcernRequest can be used to construct new concern request

@@ -15,7 +15,7 @@ abstract class AuthenticatedRequest{
     /**
      * The access token of the user to be checked for authenticity
      */
-    private String accessToken;
+    protected String accessToken;
 
     /**
      * Authenticates the requests token and returns the account associated with it if successful. If not,

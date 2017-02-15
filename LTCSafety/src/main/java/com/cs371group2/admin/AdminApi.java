@@ -46,6 +46,10 @@ public class AdminApi {
 
         logger.log(Level.INFO, "API has been accessed! " + request);
 
+        if(!request.legalRequest()){
+            throw new UnauthorizedException("Request was not legal!");
+        }
+
         request.authenticate();
 
         ConcernDao dao = new ConcernDao();
