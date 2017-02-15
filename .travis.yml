@@ -30,6 +30,11 @@ env:
    # install timeout in minutes (2 minutes by default)
     - ADB_INSTALL_TIMEOUT=8
 
+cache:
+  directories:
+    - .gradle/caches/
+    - .gradle/wrapper/
+    
 # Emulator Management: Create, Start and Wait
 before_script:
   - echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a
