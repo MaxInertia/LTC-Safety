@@ -13,38 +13,35 @@ android:
     # Compile SDK
     - android-25
     
-    # System images for emulator - can be used for testing
+    # System images for emulator - can be used for testing (Not required?)
     #- sys-img-armeabi-v7a-android-22
     #- sys-img-x86-android-22
     #- sys-img-armeabi-v7a-android-17
     
     # Other components
     - extra-android-support
-    #- extra-google-google_play_service
     - extra-google-m2repository
     - extra-android-m2repository
+    # Not required?
+    #- extra-google-google_play_service
     #- addon-google_apis-google-19
     
 env:
   global:
    # install timeout in minutes (2 minutes by default)
     - ADB_INSTALL_TIMEOUT=8
-
-#cache:
-#  directories:
-#    - .gradle/caches/
-#    - .gradle/wrapper/
     
 # Emulator Management: Create, Start and Wait
 before_script:
-  - echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a
-  - emulator -avd test -no-skin -no-audio -no-window &
-  - android-wait-for-emulator
-  - adb shell input keyevent 82 &
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then emulator -avd test -no-skin -no-audio -no-window & ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then android-wait-for-emulator ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then adb shell input keyevent 82 & ; fi
     
 script: 
-    - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && android list target &&./gradlew --continue test connectedAndroidTest ; fi
-#   - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build -x test ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build -x test ; fi
+    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && android list target &&./gradlew --continue test connectedAndroidTest ; fi
+
      
 after_success:
     - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then git push origin android-app:android-app-build ; fi
