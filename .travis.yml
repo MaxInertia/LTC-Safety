@@ -20,7 +20,7 @@ android:
     
     # Other components
     - extra-android-support
-    - extra-google-google_play_service
+    #- extra-google-google_play_service
     - extra-google-m2repository
     - extra-android-m2repository
     #- addon-google_apis-google-19
@@ -32,7 +32,7 @@ env:
 
 # Emulator Management: Create, Start and Wait
 before_script:
-  - echo no | android create avd --force -n test -t android-19 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
