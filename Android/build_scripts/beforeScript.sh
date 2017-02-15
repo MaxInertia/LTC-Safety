@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then 
 	echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a

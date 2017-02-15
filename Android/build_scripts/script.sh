@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then 
 	cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build -x test
