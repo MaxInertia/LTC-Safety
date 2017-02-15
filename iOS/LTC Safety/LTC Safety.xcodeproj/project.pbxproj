@@ -216,6 +216,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C7193341E540E8000CF3614 /* Detail View */ = {
+			isa = PBXGroup;
+			children = (
+				0CA7AFCD1E49B47D005B489B /* LTCConcernDetailViewController.h */,
+				0CA7AFCE1E49B47D005B489B /* LTCConcernDetailViewController.m */,
+				0CA7AFCF1E49B47D005B489B /* LTCConcernDetailViewModel.h */,
+				0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */,
+			);
+			name = "Detail View";
+			sourceTree = "<group>";
+		};
 		1107E7641E3B0CE700675786 = {
 			isa = PBXGroup;
 			children = (
@@ -252,12 +263,9 @@
 				1107E8081E3B467800675786 /* LTCConcernViewModel.m */,
 				1107E7791E3B0CE700675786 /* LTCConcernViewController.h */,
 				1107E77A1E3B0CE700675786 /* LTCConcernViewController.m */,
-				0CA7AFCD1E49B47D005B489B /* LTCConcernDetailViewController.h */,
-				0CA7AFCE1E49B47D005B489B /* LTCConcernDetailViewController.m */,
-				0CA7AFCF1E49B47D005B489B /* LTCConcernDetailViewModel.h */,
-				0CA7AFD01E49B47D005B489B /* LTCConcernDetailViewModel.m */,
 				117DBDF61E458242002F2EED /* LTCConcernTableViewCell.h */,
 				117DBDF71E458242002F2EED /* LTCConcernTableViewCell.m */,
+				0C7193341E540E8000CF3614 /* Detail View */,
 				117DBDD21E444852002F2EED /* Value Selection */,
 				1107E8061E3B44CD00675786 /* Submit Concern */,
 				1107E77F1E3B0CE700675786 /* Main.storyboard */,

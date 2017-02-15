@@ -18,6 +18,15 @@
 @interface LTCConcernDetailViewModel ()
 @property (nonatomic, strong) LTCClientApi *clientApi;
 @property (nonatomic, strong) LTCConcern *concern;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorReporterName;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorPhoneNumber;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorEmail;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernNature;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
+
 @end
 
 /**
@@ -29,22 +38,22 @@
 
 @implementation LTCDetailConcernViewModelTests
 /**
- Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 6.
+ Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 5.
  */
 - (void)testInitWithConcern {
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
     LTCConcernDetailViewModel *viewModel = [[LTCConcernDetailViewModel alloc] initWithConcern:testConcern];
     
     //access each row in viewModel to make sure the test concern was added correctly
-    XCTAssertEqual([viewModel formRowWithTag:@"REPORTER_NAME"].value, testConcern.reporter.name);
-    XCTAssertEqual([viewModel formRowWithTag:@"EMAIL"].value, testConcern.reporter.email);
-    XCTAssertEqual([viewModel formRowWithTag:@"PHONE_NUMBER"].value, testConcern.reporter.phoneNumber);
-    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_NATURE"].value, testConcern.concernNature);
-    XCTAssertEqual([viewModel formRowWithTag:@"FACILITY_NAME"].value, testConcern.location.facilityName);
-    XCTAssertEqual([viewModel formRowWithTag:@"ROOM_NUMBER"].value, testConcern.location.roomName);
-    XCTAssertEqual([viewModel formRowWithTag:@"ACTIONS_TAKEN"].value, testConcern.actionsTaken);
-    XCTAssertEqual([viewModel formRowWithTag:@"CONCERN_STATUS"].title , testConcern.statuses.firstObject.concernType);
-    XCTAssertTrue([[viewModel formRowWithTag:@"CONCERN_STATUS"].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorReporterName].value, testConcern.reporter.name);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorEmail].value, testConcern.reporter.email);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorPhoneNumber].value, testConcern.reporter.phoneNumber);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernNature].value, testConcern.concernNature);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorFacilityName].value, testConcern.location.facilityName);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value, testConcern.location.roomName);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value, testConcern.actionsTaken);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , testConcern.statuses.firstObject.concernType);
+    XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);

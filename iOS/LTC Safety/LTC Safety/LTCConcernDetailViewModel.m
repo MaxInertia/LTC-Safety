@@ -37,16 +37,125 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 @interface LTCConcernDetailViewModel ()
 @property (nonatomic, strong) LTCClientApi *clientApi;
 @property (readwrite, nonatomic, strong) LTCConcern *concern;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorReporterName;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorPhoneNumber;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorEmail;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernNature;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
+
 @end
 
 @implementation LTCConcernDetailViewModel
+@dynamic testHook_descriptorReporterName;
+@dynamic testHook_descriptorPhoneNumber;
+@dynamic testHook_descriptorEmail;
+@dynamic testHook_descriptorConcernNature;
+@dynamic testHook_descriptorFacilityName;
+@dynamic testHook_descriptorRoomNumber;
+@dynamic testHook_descriptorActionsTaken;
+@dynamic testHook_descriptorConcernStatus;
 
+#pragma mark - Test Hooks
 
+/**
+ A test took for getting the reporter name descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorReporterName].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorReporterName {
+    return LTCDetailDescriptorReporterName;
+}
 
+/**
+ A test took for getting the phone number descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorPhoneNumber].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorPhoneNumber {
+    return LTCDetailDescriptorPhoneNumber;
+}
 
+/**
+ A test took for getting the email descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorEmail].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorEmail {
+    return LTCDetailDescriptorEmail;
+}
 
+/**
+ A test took for getting the email descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorConcernNature].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorConcernNature {
+    return LTCDetailDescriptorConcernNature;
+}
 
+/**
+ A test took for getting the facility name descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorFacilityName].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorFacilityName {
+    return LTCDetailDescriptorFacilityName;
+}
 
+/**
+ A test took for getting the room number descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorRoomNumber {
+    return LTCDetailDescriptorRoomNumber;
+}
+
+/**
+ A test took for getting the actions taken descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorActionsTaken {
+    return LTCDetailDescriptorActionsTaken;
+}
+/**
+ A test took for getting the actions taken descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorConcernStatus {
+    return LTCDetailDescriptorStatus;
+}
+
+#pragma mark - Implementation
 
 /**
  Get the retract row descriptor's callback action
@@ -54,14 +163,13 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
  @pre The model must have a with the LTCDescriptorRetractConcern tag
  */
 - (SEL)retractCallback {
-
+    
     // Get the retract row discriptor's formSelector
     XLFormRowDescriptor *descriptor =  [self formRowWithTag:LTCDetailDescriptorRetractConcern];
     NSAssert1(descriptor != nil, @"Unable to find descriptor with tag %@", LTCDetailDescriptorRetractConcern);
     
     return descriptor.action.formSelector;
 }
-
 
 /**
  Set the retract row descriptor's callback action

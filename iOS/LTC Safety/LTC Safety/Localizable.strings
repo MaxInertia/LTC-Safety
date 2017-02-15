@@ -24,7 +24,7 @@
 "EMAIL_ADDRESS_PROMPT" = "Email Address";
 "CONCERN_NATURE_PROMPT" = "Nature of Concern";
 "FACILITY_PROMPT" = "Facility";
-"ROOM_NUMBER_PROMPT" = "Room Number";
+"ROOM_NUMBER_PROMPT" = "Room";
 "SUBMIT_CONCERN_PROMPT" = "Submit Concern";
 
 // Detail View Concern Prompts
