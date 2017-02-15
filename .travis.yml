@@ -33,15 +33,14 @@ env:
     
 # Emulator Management: Create, Start and Wait
 before_script:
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then emulator -avd test -no-skin -no-audio -no-window & ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then android-wait-for-emulator ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then adb shell input keyevent 82 & ; fi
+    - chmod +x Android/build_scripts/beforeScript.sh
+    - chmod +x Android/build_scripts/script.sh
+    - chmod +x Android/build_scripts/afterSuccess.sh
+    - ./Android/build_scripts/beforeScript.sh
     
 script: 
-    - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then cd Android/LTC-Safety && chmod +x gradlew && ./gradlew build -x test ; fi
-    - if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then cd Android/LTC-Safety && chmod +x gradlew && android list target &&./gradlew --continue test connectedAndroidTest ; fi
+    - ./Android/build_scripts/script.sh
 
      
 after_success:
-    - if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then git push origin android-app:android-app-build ; fi
+    - ./Android/build_scripts/afterSuccess.sh
