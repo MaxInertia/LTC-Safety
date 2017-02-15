@@ -17,16 +17,12 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
-import java.security.AccessControlContext;
 import java.security.GeneralSecurityException;
 import java.security.PublicKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import java.util.Collection;
 import java.util.Map;
 import java.util.logging.Level;
-
-import java.util.Set;
 
 /**
  * This class represents a firebase authenticator object for ensuring that a user has the correct admission levels
@@ -46,7 +42,9 @@ public class FirebaseAuthenticator extends Authenticator{
     @Override
     protected Pair<Account, AccessToken> authenticateAccount(String token) throws UnauthorizedException {
 
-        assert(token != null);
+        if(token == null || token == ""){
+            throw new UnauthorizedException("Token is invalid and cannot be authenticated");
+        }
 
         try {
             AccessToken accessToken = verifyToken(token);
@@ -66,11 +64,7 @@ public class FirebaseAuthenticator extends Authenticator{
     }
 
     /**
-     *
-     *
      * PRIVATE AUTHENTICATOR HELPERS
-     *
-     *
      */
     private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(FirebaseAuthenticator.class.getName());
 
