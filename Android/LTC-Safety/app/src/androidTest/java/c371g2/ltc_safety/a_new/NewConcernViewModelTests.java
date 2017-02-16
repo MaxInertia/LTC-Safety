@@ -10,11 +10,10 @@ import java.io.IOException;
 import static org.junit.Assert.fail;
 
 /**
- * This class is used to test methods in the NewConcernViewModel class. This test class requires a
- * device (real or emulated) to run.
+ * This class runs tests on the methods in the NewConcernViewModel class.
  */
 @RunWith(AndroidJUnit4.class)
-public class NewConcernTests {
+public class NewConcernViewModelTests {
 
     @Test
     public void test_ConcernSubmission_allFields() {

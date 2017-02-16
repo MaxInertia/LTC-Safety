@@ -15,7 +15,6 @@ import android.widget.ListView;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -35,19 +34,22 @@ public class MainActivityTests {
 
     @ClassRule
     public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class);
-    private static Activity mainActivity;
+    private Activity mainActivity;
 
     @BeforeClass
     public static void setup() {
         mActivity.launchActivity(new Intent());
-        mainActivity = mActivity.getActivity();
+
     }
 
     @Before
     public void beforeEach() {
-
+        mainActivity = mActivity.getActivity();
     }
 
+    /**
+     * Checks if the New Concern button has an on-Click-Listener
+     */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Test
     public void test_onCreate_buttonHasClickListener() {
@@ -56,6 +58,9 @@ public class MainActivityTests {
         assertTrue("The 'New Concern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
     }
 
+    /**
+     * This test checks if openNewConcernActivity() changes the activity
+     */
     @Test
     public void test_newConcernButtonChangesActivity() {
         Instrumentation.ActivityMonitor activityMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(NewConcernActivity.class.getName(),null,false);

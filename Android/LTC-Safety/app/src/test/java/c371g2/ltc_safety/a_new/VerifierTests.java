@@ -27,6 +27,15 @@ public class VerifierTests {
     }
 
     @Test
+    public void test_PhoneNumberVerifier_invalidInputs() {
+        String[] numbers = {"", null};
+
+        for(int i=0; i<numbers.length; i++) {
+            assertFalse(phoneNumberVerifier.verify(numbers[i]));
+        }
+    }
+
+    @Test
     public void test_EmailAddressVerifier_validInputs() {
         String[] emailAddresses = {"valid.email@hotmail.ca", "abc@xyz.ca", "abc@xyz.com"}; // Three strings, the first two separated by '@', the second two separated by '.'
 
@@ -36,11 +45,29 @@ public class VerifierTests {
     }
 
     @Test
+    public void test_EmailAddressVerifier_invalidInputs() {
+        String[] emailAddresses = {"", null};
+
+        for(int i=0; i<emailAddresses.length; i++) {
+            assertFalse(emailAddressVerifier.verify(emailAddresses[i]));
+        }
+    }
+
+    @Test
     public void test_NameVerifier_validInputs() {
         String[] names = {"Barack Obama", "Donald Trump", "Elvis"};
 
         for(int i=0; i<names.length; i++) {
             assertTrue(nameVerifier.verify(names[i]));
+        }
+    }
+
+    @Test
+    public void test_NameVerifier_invalidInputs() {
+        String[] names = {"", null};
+
+        for(int i=0; i<names.length; i++) {
+            assertFalse(nameVerifier.verify(names[i]));
         }
     }
 
