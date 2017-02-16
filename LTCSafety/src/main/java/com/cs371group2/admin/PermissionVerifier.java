@@ -10,7 +10,6 @@ import com.cs371group2.account.Account;
  */
 public abstract class PermissionVerifier {
 
-
     /**
      * Checks if the given account is verified.
      *

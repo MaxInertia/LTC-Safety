@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 /**
+ * This abstract class represents a request that requires authentication and should be extended for more specific
+ * types of requests (see ConcernRequest for example).
  * Created by Brandon on 2017-02-09.
  */
 abstract class AuthenticatedRequest{
@@ -25,7 +27,7 @@ abstract class AuthenticatedRequest{
      * @throws UnauthorizedException If the accessToken does not have the required permission, throw this
      */
     public Account authenticate() throws UnauthorizedException {
-        if(accessToken == null) {
+        if(accessToken == null || accessToken == "") {
             throw new UnauthorizedException("Access token is null!");
         }
 

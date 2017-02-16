@@ -31,6 +31,10 @@ public final class ConcernRequest extends AdminRequest {
         return limit;
     }
 
+    /**
+     * Checks if the request contains legal information for parse-attempting
+     * @return Whether the request contains legal information or not
+     */
     public boolean legalRequest(){
         if(limit < 1 || offset < 0 || accessToken == null || accessToken == "") {
             return false;
@@ -48,6 +52,13 @@ public final class ConcernRequest extends AdminRequest {
         int mutableOffset;
         String mutableToken;
 
+        /**
+         * Creates a new mutable concern request
+         *
+         * @param limit The concern limit of the mutable request
+         * @param offset The concern offset of the mutable request
+         * @param token The token of the mutable request
+         */
         public TestHook_MutableConcernRequest(int limit, int offset, String token) {
             this.mutableLimit = limit;
             this.mutableOffset = offset;
