@@ -4,7 +4,7 @@
  * This functions in this controller are responsible for querying for concerns
  * and switching between concern pages.
  */
-safetyApp.controller('InboxCtrl', function RootCtrl($scope, $location, $routeParams, firebase, adminApi) {
+safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routeParams, firebase, adminApi) {
 
     /**
      * The list of concerns that is displayed in the current inbox page.
