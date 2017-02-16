@@ -30,7 +30,7 @@ import java.util.logging.Level;
  *
  * Created on 2017-02-09.
  */
-public class FirebaseAuthenticator extends Authenticator{
+final class FirebaseAuthenticator extends Authenticator{
 
     /**
      * Authenticates the given firebase token and returns the account associated with it
@@ -42,38 +42,49 @@ public class FirebaseAuthenticator extends Authenticator{
     @Override
     protected Pair<Account, AccessToken> authenticateAccount(String token) throws UnauthorizedException {
 
-        if(token == null || token == ""){
+        if(token == null || token.isEmpty()){
             throw new UnauthorizedException("Token is invalid and cannot be authenticated");
         }
 
+        AccessToken accessToken;
+
         try {
-            AccessToken accessToken = verifyToken(token);
-
-            LOGGER.log(Level.WARNING, "Access token id was: " + accessToken.getId());
-
-            AccountDao dao = new AccountDao();
-            Account account = dao.load(accessToken.getId());
-
-            return new Pair<Account, AccessToken>(account, accessToken);
-
+            accessToken = verifyToken(token);
         } catch (IOException e) {
-            throw new UnauthorizedException("Token could not be parsed.");
+            throw new UnauthorizedException("Failed to verify token.");
         } catch (GeneralSecurityException e) {
             throw new UnauthorizedException("Token has timed out and is no longer valid.");
         }
+
+        AccountDao dao = new AccountDao();
+        Account account = dao.load(accessToken.getId());
+
+        if(account == null){
+            throw new UnauthorizedException("Account does not exist in the datastore");
+        }
+
+        LOGGER.log(Level.INFO, account.getId() + " has submitted a legal request. Checking permissions...");
+
+        return new Pair<Account, AccessToken>(account, accessToken);
     }
 
     /**
      * PRIVATE AUTHENTICATOR HELPERS
      */
+
+    /** Private logger for the class */
     private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger(FirebaseAuthenticator.class.getName());
 
+    /** The URL of secure JWT token methods to check when verifying the JWT */
     private static final String PUBLIC_KEYS_URI = "https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com";
 
+    /** The string identifier for the email claim field of the token */
     private static final String EMAIL_CLAIM = "email";
 
+    /** The string identifier for the name field of the token */
     private static final String NAME_CLAIM = "user_id";
 
+    /** The string identifier for the email verified field of the token */
     private static final String EMAIL_VERIFIED_CLAIM = "email_verified";
 
     /**
@@ -83,7 +94,7 @@ public class FirebaseAuthenticator extends Authenticator{
      * @param token The unverified token
      *
      * @return A FirebaseToken object representing the verified token
-     *
+     * @precond token is non-empty and non-null
      * @throws GeneralSecurityException If the token was null, invalid, or had issues verified throw this
      * @throws IOException If there was an issue loading the key as a JSON object
      */
@@ -106,15 +117,13 @@ public class FirebaseAuthenticator extends Authenticator{
                 // validate claim set
                 Jws<Claims> jws = Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
 
-                for ( String key : jws.getBody().keySet()){
-                    System.out.println("KEY: " + key + " VALUE: " + jws.getBody().get(key));
-                }
-
                 String uuid = jws.getBody().getSubject();
                 String email = (String)jws.getBody().get(EMAIL_CLAIM);
                 String name = (String)jws.getBody().get(NAME_CLAIM);
                 boolean verifiedEmail = (boolean)jws.getBody().get(EMAIL_VERIFIED_CLAIM);
+
                 return new AccessToken(email, uuid, name, verifiedEmail);
+
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
             } catch (MalformedJwtException e){
@@ -130,7 +139,6 @@ public class FirebaseAuthenticator extends Authenticator{
      * Returns a PublicKey based on the given map entry
      *
      * @param entry The map entry to find the public key for
-     *
      * @return The public key of the entry
      * @throws GeneralSecurityException
      */

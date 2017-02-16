@@ -12,7 +12,7 @@ import java.util.Collection;
  *
  * Created on 2017-02-09.
  */
-public abstract class Authenticator{
+abstract class Authenticator{
 
     /** The list of permission verifiers that a user must pass to be considered authenticated */
     private Collection<PermissionVerifier> permissionVerifiers;
@@ -24,13 +24,18 @@ public abstract class Authenticator{
      * @return The account associated with the given token\
      * @precond token is valid and non-null
      */
-    public Account authenticate(String token) throws UnauthorizedException {
+    public final Account authenticate(String token) throws UnauthorizedException {
         Pair<Account, AccessToken> infoPair = authenticateAccount(token);
 
+        boolean isVerified = false;
         for (PermissionVerifier verifier : permissionVerifiers){
-            if(verifier.hasPermission(infoPair.first, infoPair.second) == false){
-                throw new UnauthorizedException("User attempted access without proper permissions.");
+            if(verifier.hasPermission(infoPair.first, infoPair.second)){
+                isVerified = true;
             }
+        }
+
+        if(!isVerified){
+            throw new UnauthorizedException("User attempted access without proper permissions.");
         }
 
         return infoPair.first;
@@ -55,5 +60,6 @@ public abstract class Authenticator{
     public void setPermissionVerifiers(Collection<PermissionVerifier> permissionVerifiers) {
         assert(permissionVerifiers != null);
         this.permissionVerifiers = permissionVerifiers;
+        assert(this.permissionVerifiers != null);
     }
 }

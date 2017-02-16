@@ -16,16 +16,7 @@ import java.util.logging.Logger;
  */
 @Api(name = "admin",
         title = "Admin API",
-        version = "v1",
-        issuers = {
-        @ApiIssuer(
-                name = "firebase",
-                issuer = "https://securetoken.google.com/ltc-safety",
-                jwksUri = "https://www.googleapis.com/service_accounts/v1/metadata/x509/securetoken@system.gserviceaccount.com")
-        },
-        issuerAudiences = {
-                @ApiIssuerAudience(name = "firebase", audiences = "ltc-safety")
-        })
+        version = "v1")
 public class AdminApi {
 
     /** Logger statement for the class */
