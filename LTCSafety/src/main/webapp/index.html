@@ -13,19 +13,6 @@
   <link href="css/ltc-safety.webflow.css" rel="stylesheet" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
 
-
-  <script>
-      function init() {
-          gapi.client.load('admin', 'v1', function () {
-              console.log("Yay");
-
-          }, '//' + window.location.host + '/_ah/api');
-      }
-      ;
-  </script>
-
-  <script src="https://apis.google.com/js/client.js?onload=init"></script>
-
   <script type="text/javascript">
     WebFont.load({
       google: {
@@ -48,8 +35,8 @@
     <h1 class="title">LTC Safety</h1>
     <h3 class="subtitle">Administrator Dashboard</h3>
   </div>
-  <div ng-app="myApp" ng-controller="formCtrl">
-    <form ng-submit="reset()" class="login-container" data-name="login" id="wf-form-login" name="wf-form-login">
+  <div ng-app="loginApp" ng-controller="loginCtrl">
+    <form ng-submit="signIn()" class="login-container" data-name="login" id="wf-form-login" name="wf-form-login">
       <input ng-model="user.email" autofocus="autofocus" class="input-field w-input" data-name="email" id="email" maxlength="256" name="email" placeholder="Email" required="required" type="email">
       <input ng-model="user.password" class="input-field w-input" data-name="password" id="password" maxlength="256" name="password" placeholder="Password" required="required" type="password">
       <input class="login-button w-button" data-wait="Please wait..." type="submit" value="Sign In">
