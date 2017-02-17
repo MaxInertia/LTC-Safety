@@ -8,5 +8,5 @@ before_install:
  - export PATH=$M2_HOME/bin:$PATH
 
 script:    
- xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test 
- mvn clean package -f LTCSafety/pom.xml
+ - xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test 
+ - mvn clean package -f LTCSafety/pom.xml
