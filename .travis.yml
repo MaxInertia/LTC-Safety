@@ -4,5 +4,5 @@ osx_image: xcode7.3
 script:
 # - open -a "simulator" --args -CurrentDeviceUDID A84965FC-070D-4EAF-83E8-84FFE99F5866
 # - xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test
- - xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test -only "iOS/LTC Safety/LTC SafetyTests"
+ - xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build run-tests -only "iOS/LTC\ Safety/LTC\ SafetyTests"
  - mvn clean package -f LTCSafety/pom.xml
