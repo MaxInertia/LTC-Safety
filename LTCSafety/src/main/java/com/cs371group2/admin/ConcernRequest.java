@@ -9,6 +9,8 @@ import java.util.logging.Logger;
  * both of which will be to access the concern database. It will also include all
  * necessary functionality for authenticating the requester.
  *
+ * History property: Instances of this class are immutable from the time they are created.
+ *
  * Created on 2017-02-08.
  */
 public final class ConcernRequest extends AdminRequest {
@@ -48,9 +50,9 @@ public final class ConcernRequest extends AdminRequest {
      * instances and set values for testing purposes.
      */
     public static class TestHook_MutableConcernRequest {
-        int mutableLimit;
-        int mutableOffset;
-        String mutableToken;
+
+        /** An immutable ConcernRequest for use in testing*/
+        private ConcernRequest immutable;
 
         /**
          * Creates a new mutable concern request
@@ -60,23 +62,20 @@ public final class ConcernRequest extends AdminRequest {
          * @param token The token of the mutable request
          */
         public TestHook_MutableConcernRequest(int limit, int offset, String token) {
-            this.mutableLimit = limit;
-            this.mutableOffset = offset;
-            this.mutableToken = token;
+            immutable = new ConcernRequest();
+            immutable.limit = limit;
+            immutable.offset = offset;
+            immutable.accessToken = token;
         }
 
         public ConcernRequest build(){
-            ConcernRequest immutable = new ConcernRequest();
-            immutable.limit = this.mutableLimit;
-            immutable.offset = this.mutableOffset;
-            immutable.accessToken = this.mutableToken;
             return immutable;
         }
 
-        public void setMutableLimit(int mutableLimit) { this.mutableLimit = mutableLimit; }
+        public void setMutableLimit(int mutableLimit) { immutable.limit = mutableLimit; }
 
-        public void setMutableOffset(int mutableOffset) { this.mutableOffset = mutableOffset; }
+        public void setMutableOffset(int mutableOffset) { immutable.offset = mutableOffset; }
 
-        public void setMutableToken(String mutableToken) { this.mutableToken = mutableToken; }
+        public void setMutableToken(String mutableToken) { immutable.accessToken = mutableToken; }
     }
 }

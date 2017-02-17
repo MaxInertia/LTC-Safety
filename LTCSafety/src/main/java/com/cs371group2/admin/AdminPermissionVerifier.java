@@ -9,7 +9,7 @@ import com.cs371group2.account.AccountPermissions;
  *
  * Created on 2017-02-09.
  */
-public class AdminPermissionVerifier extends PermissionVerifier{
+class AdminPermissionVerifier extends PermissionVerifier{
 
     /**
      * Checks if the given account is verified and has administrative permissions.
@@ -24,6 +24,6 @@ public class AdminPermissionVerifier extends PermissionVerifier{
         assert(account != null);
         assert(token != null);
 
-        return( /*token.isEmailVerified() && */account.getPermissions() == AccountPermissions.ADMIN );
+        return( token.isEmailVerified() && account.getPermissions() == AccountPermissions.ADMIN );
     }
 }

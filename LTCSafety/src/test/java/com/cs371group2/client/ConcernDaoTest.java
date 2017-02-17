@@ -95,24 +95,23 @@ public class ConcernDaoTest extends DatastoreTest {
 
         ConcernData concernData = concernTest.generateConcernData().build();
 
-        Concern curConcern = new Concern(concernData);
-        dao.save(curConcern);
+        Concern firstConcern = new Concern(concernData);
+        dao.save(firstConcern);
 
         //Loads the only concern added to the database
         List<Concern> concernList = dao.load(0, 1);
 
-        assertEquals(curConcern, concernList.get(0));
+        assertEquals(firstConcern, concernList.get(0));
 
         concernData = concernTest.generateConcernData().build();
 
-        curConcern = new Concern(concernData);
+        Concern secondConcern = new Concern(concernData);
 
-        dao.save(curConcern);
+        dao.save(secondConcern);
 
-        //Loads the first concern which should now be the second element in the list, hence offset 1
-        concernList = dao.load(1, 1);
+        concernList = dao.load(0, 2);
 
-        assertEquals(curConcern, concernList.get(0));
+        assertEquals(secondConcern, concernList.get(1));
     }
 
     @Test (expected = AssertionError.class)

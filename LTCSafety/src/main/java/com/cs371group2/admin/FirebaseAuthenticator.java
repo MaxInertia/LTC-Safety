@@ -127,7 +127,9 @@ final class FirebaseAuthenticator extends Authenticator{
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
             } catch (MalformedJwtException e){
-                throw new IOException();
+                throw new IOException("Malformed JWT recieved");
+            } catch (IllegalArgumentException e){
+                throw new IOException("Both name and email could not be parsed.");
             }
         }
 

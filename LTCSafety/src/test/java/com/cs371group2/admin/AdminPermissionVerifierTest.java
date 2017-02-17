@@ -8,6 +8,13 @@ import org.junit.Test;
  */
 public class AdminPermissionVerifierTest {
 
+    @Test
+    public void ValidTest(){
+        Account account = new AccountTest().generateAccount();
+        AccessToken token = new AccessToken("test@test.com", "5oz3HPPnZuUzV4hcwXqtgG6tjc03", "5oz3HPPnZuUzV4hcwXqtgG6tjc03", true);
+        assert(new AdminPermissionVerifier().hasPermission(account, token));
+    }
+
     @Test (expected = AssertionError.class)
     public void NullAccountTest(){
         Account account = new AccountTest().generateAccount();

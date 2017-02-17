@@ -5,7 +5,7 @@ package com.cs371group2.admin;
  *
  * Created on 2017-02-09.
  */
-public class AccessToken {
+final class AccessToken {
 
     /**
      * The email of the user requesting access.
@@ -34,12 +34,12 @@ public class AccessToken {
      * @param tokenId The unique user id for the access token
      * @param tokenName The name of the user
      * @param tokenIsVerified Is the user verified or not?
-     * @precond None of the string parameters are null
+     * @precond tokenId != null, tokenEmail or tokenName != null
      */
-    public AccessToken(String tokenEmail, String tokenId, String tokenName, boolean tokenIsVerified){
-        assert(tokenEmail != null);
-        assert(tokenId != null);
-        assert(tokenName != null);
+    public AccessToken(String tokenEmail, String tokenId, String tokenName, boolean tokenIsVerified) throws IllegalArgumentException{
+        if((tokenEmail.isEmpty() && tokenName.isEmpty()) || tokenId.isEmpty()){
+            throw new IllegalArgumentException("Access token was not given enough information to be created");
+        }
 
         email = tokenEmail;
         id = tokenId;
