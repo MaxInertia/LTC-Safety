@@ -8,9 +8,9 @@ import com.cs371group2.DatastoreTest;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernStatus;
 import com.cs371group2.concern.ConcernTest;
 import com.googlecode.objectify.Key;
+import java.util.List;
 import org.junit.Test;
 
 /**
@@ -46,7 +46,6 @@ public class ConcernDaoTest extends DatastoreTest {
                 data.getLocation().getFacilityName());
         assertEquals(loadedData.getLocation().getRoomName(), data.getLocation().getRoomName());
 
-        assertEquals(loadedConcern.getStatus(), ConcernStatus.PENDING);
         assertNotNull(loadedConcern.getSubmissionDate());
     }
 
@@ -60,7 +59,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
 
         // Save the object
-        ConcernData data = new ConcernTest().generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData().build();
         Concern concern = new Concern(data);
         Key<Concern> key = dao.save(concern);
 
@@ -82,5 +81,52 @@ public class ConcernDaoTest extends DatastoreTest {
         // Assert its been deleted
         Concern deletedConcern = dao.load(concern.generateOwnerToken());
         assertNull(deletedConcern);
+    }
+
+    /**
+     * Test for testing the loading a list of concerns using an offset and limits, ensuring that they are indeed
+     * being loaded based on date
+     * @throws Exception
+     */
+    @Test
+    public void LoadListTest() throws Exception {
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern firstConcern = new Concern(concernData);
+        dao.save(firstConcern);
+
+        //Loads the only concern added to the database
+        List<Concern> concernList = dao.load(0, 1);
+
+        assertEquals(firstConcern, concernList.get(0));
+
+        concernData = concernTest.generateConcernData().build();
+
+        Concern secondConcern = new Concern(concernData);
+
+        dao.save(secondConcern);
+
+        concernList = dao.load(0, 2);
+
+        assertEquals(secondConcern, concernList.get(1));
+    }
+
+    @Test (expected = AssertionError.class)
+    public void LoadInvalidOffsetTest(){
+        ConcernDao dao = new ConcernDao();
+        List<Concern> concernList;
+
+        concernList = dao.load(-1, 5);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void LoadInvalidLimitTest(){
+        ConcernDao dao = new ConcernDao();
+        List<Concern> concernList;
+
+        concernList = dao.load(0, -1);
     }
 }

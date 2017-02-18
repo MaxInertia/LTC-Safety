@@ -5,6 +5,8 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 import java.util.Date;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -20,7 +22,7 @@ public final class Concern {
     /**
      * Logger definition for this class.
      */
-    private static final Logger LOGGER = Logger.getLogger( Concern.class.getName() );
+    private static final Logger logger = Logger.getLogger(Concern.class.getName());
 
     /**
      * Used to uniquely identify concerns within the database. This value will be automatically
@@ -30,11 +32,11 @@ public final class Concern {
     private Long id;
 
     /**
-     * The status of the concern within the system detailing action that has been taken. The status
-     * changes as administrators acknowledge, respond to, and resolve concerns.
+     * The statuses that the concern has been through in its life cycle order by date with the
+     * current concern being the last.
      */
     @Index
-    private ConcernStatus status = ConcernStatus.PENDING;
+    private SortedSet<ConcernStatus> statuses = new TreeSet<ConcernStatus>();
 
     /**
      * Used to identify whether a concern is being actively tracked within the system. Once a
@@ -48,23 +50,39 @@ public final class Concern {
      * The exact date and time the concern was submitted.
      */
     @Index
-    private final Date submissionDate = new Date();
+    private Date submissionDate = new Date();
 
     /**
      * The user submitted data relating to the concern such as nature, location, and reporter.
      */
     private ConcernData data;
 
+    public Long getId() {
+        return id;
+    }
+
     public Date getSubmissionDate() {
         return submissionDate;
     }
 
-    public ConcernStatus getStatus() {
-        return status;
+    public SortedSet<ConcernStatus> getStatuses() {
+        return statuses;
     }
 
     public boolean isArchived() {
         return isArchived;
+    }
+
+    /**
+     * Determines whether the concerns most recent status update was to retracted.
+     * @precond The concern has at least one status.
+     * @return True if the concern is currently retracted.
+     */
+    public boolean isRetracted() {
+
+        assert !statuses.isEmpty();
+
+        return statuses.last().getType().equals(ConcernStatusType.RETRACTED);
     }
 
     public ConcernData getData() {
@@ -83,14 +101,14 @@ public final class Concern {
      * @precond data != null data is valid based on its validate method
      */
     public Concern(ConcernData data) {
-        if(data == null){ LOGGER.log(Level.WARNING, "Concern tried to be created with no data."); }
-        assert data != null;
 
-        if(!data.validate().isValid()){ LOGGER.log(Level.WARNING, "Concern tried to be created with invalid data."); }
+        assert data != null;
         assert data.validate().isValid();
 
+        this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
         this.data = data;
-        LOGGER.log(Level.FINER, "Concern created: \n" + this.toString());
+
+        logger.log(Level.FINER, "Concern created: \n" + this.toString());
     }
 
     /**
@@ -102,9 +120,10 @@ public final class Concern {
      * in the datastore using the ConcernDao prior to generating the owner token.
      */
     public OwnerToken generateOwnerToken() {
-        if(id == null){ LOGGER.log(Level.WARNING, "Concern token tried to be created when concern id is null."); }
+
         assert id != null;
-        LOGGER.log(Level.FINER, "Owner Token being created: ID# " + this.id);
+
+        logger.log(Level.FINER, "Owner Token being created: ID# " + this.id);
         return new OwnerToken(id);
     }
 
@@ -112,15 +131,20 @@ public final class Concern {
      * Updates the concern entity to reflect that the concern has been retracted.
      *
      * @postcond The status has been changed to RETRACTED and isArchived is now true.
+     * @return The retracted status that has been set as the concern's current status.
      */
-    public void retract() {
-        status = ConcernStatus.RETRACTED;
+    public ConcernStatus retract() {
+        ConcernStatus status = new ConcernStatus(ConcernStatusType.RETRACTED);
+        statuses.add(status);
         isArchived = true;
-        LOGGER.log(Level.FINER, "Concern Retracted: ID# " + this.id);
+
+        logger.log(Level.FINER, "Concern Retracted: ID# " + this.id);
+
+        return status;
     }
 
     @Override
-    public String toString(){
-        return "Concern:\nID# " + this.id +  "\n" + this.getData().toString();
+    public String toString() {
+        return "Concern:\nID# " + this.id + this.getData().toString();
     }
 }

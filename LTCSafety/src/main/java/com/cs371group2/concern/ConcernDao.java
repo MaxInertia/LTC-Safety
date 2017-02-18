@@ -3,10 +3,15 @@ package com.cs371group2.concern;
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.client.OwnerToken;
+import com.google.appengine.api.datastore.Query;
+import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,12 +22,7 @@ import java.util.logging.Logger;
  */
 public class ConcernDao extends Dao<Concern> {
 
-    /**
-     * Logger definition for this class.
-     */
-    private static final Logger LOGGER = Logger.getLogger( ConcernDao.class.getName() );
-
-
+    private static final Logger logger = Logger.getLogger(ConcernDao.class.getName());
 
     /**
      * Creates a data access object for loading, saving, and deleting concerns.
@@ -41,9 +41,8 @@ public class ConcernDao extends Dao<Concern> {
      * signed JWS for parsing.
      */
     public Concern load(OwnerToken token) {
-        if(token == null){ LOGGER.log(Level.WARNING, "Concern tried to be loaded from datastore with null token."); }
+
         assert token != null;
-        if(!token.validate().isValid()){ LOGGER.log(Level.WARNING, "Concern tried to be loaded from datastore with invalid token."); }
         assert token.validate().isValid();
 
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
@@ -52,7 +51,26 @@ public class ConcernDao extends Dao<Concern> {
 
         Long id = Long.parseLong(claims.getSubject());
 
-        LOGGER.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
+        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
         return load(id);
+    }
+
+    /**
+     * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
+     *
+     * @param offset The offset to begin loading from
+     * @param limit The maximum amount of concerns to load
+     * @return A list of entities in the datastore from the given offset and limit
+     * @precond offset != null && offset >= 0
+     * @precond limit != null && limit > 0
+     */
+    public List<Concern> load(int offset, int limit){
+        assert(offset >= 0);
+        assert(limit > 0);
+
+        List<Concern> filteredList = ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
+                                                                                    .offset(offset).limit(limit).list();
+
+        return filteredList;
     }
 }

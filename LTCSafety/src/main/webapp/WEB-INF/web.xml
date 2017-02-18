@@ -4,7 +4,7 @@
         <servlet-class>com.google.api.server.spi.EndpointsServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>com.cs371group2.client.ClientApi</param-value>
+            <param-value>com.cs371group2.client.ClientApi, com.cs371group2.admin.AdminApi</param-value>
         </init-param>
         <init-param>
             <param-name>restricted</param-name>
