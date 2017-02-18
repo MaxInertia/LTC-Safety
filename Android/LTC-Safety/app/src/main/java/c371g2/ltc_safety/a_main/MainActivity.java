@@ -1,9 +1,13 @@
 package c371g2.ltc_safety.a_main;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_new.NewConcernActivity;
 
 
 /**
@@ -20,6 +24,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button newConcernButton = (Button) findViewById(R.id.new_concern_button);
+        newConcernButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openNewConcernActivity();
+            }
+        });
     }
 
     /**
@@ -36,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
      * @preconditions none
      * @modifies The active activity changes from MainActivity to NewConcernActivity.
      */
-    private void openNewConcernActivity() {}
+    private void openNewConcernActivity() {
+        Intent newConcernIntent = new Intent(MainActivity.this, NewConcernActivity.class);
+        MainActivity.this.startActivity(newConcernIntent);
+    }
 
     /**
      * Switches the activity to ConcernDetailActivity. The activity contains fields which are filled

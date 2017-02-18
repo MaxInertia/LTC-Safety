@@ -12,5 +12,7 @@ abstract class Verifier {
      * @preconditions input is not null
      * @modifies nothing
      */
-    public abstract boolean verify(String input);
+    boolean verify(String input) {
+        return input.length()>0;
+    };
 }

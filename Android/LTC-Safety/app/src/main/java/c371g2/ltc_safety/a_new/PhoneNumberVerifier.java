@@ -5,9 +5,4 @@ package c371g2.ltc_safety.a_new;
  * @Invariants none
  * @HistoryProperties none
  */
-class PhoneNumberVerifier extends Verifier {
-    @Override
-    public boolean verify(String input) {
-        return false;
-    }
-}
+class PhoneNumberVerifier extends Verifier {}

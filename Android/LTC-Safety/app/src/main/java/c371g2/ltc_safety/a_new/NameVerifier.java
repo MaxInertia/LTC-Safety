@@ -5,9 +5,4 @@ package c371g2.ltc_safety.a_new;
  * @Invariants none
  * @HistoryProperties none
  */
-public class NameVerifier extends Verifier {
-    @Override
-    public boolean verify(String input) {
-        return false;
-    }
-}
+class NameVerifier extends Verifier {}

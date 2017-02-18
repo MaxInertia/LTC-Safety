@@ -5,6 +5,8 @@ import android.support.test.filters.SmallTest;
 import android.support.test.filters.Suppress;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.appspot.ltc_safety.client.model.OwnerToken;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -28,7 +30,7 @@ public class Local_InstrumentedTests {
         String room = "g-006";
         String concernType = "Biohazard";
         String actionsTaken = "None";
-        Concern concern = new Concern(rName,rPhone,rEmail,facility,room,concernType,actionsTaken);
+        Concern concern = new Concern(new com.appspot.ltc_safety.client.model.Concern(), new OwnerToken());
         Bundle bundle = concern.toBundle();
 
         assertTrue(rName.equals(bundle.getString("reporterName")));
@@ -38,7 +40,7 @@ public class Local_InstrumentedTests {
         assertTrue(room.equals(bundle.getString("roomName")));
         assertTrue(concernType.equals(bundle.getString("concernType")));
         assertTrue(actionsTaken.equals(bundle.getString("actionsTaken")));
-        assertTrue(concern.getDateSubmitted().toString().equals(bundle.getString("dateSubmitted")));
+        assertTrue(concern.getConcernObject().getSubmissionDate().toString().equals(bundle.getString("dateSubmitted")));
     }
 
 }

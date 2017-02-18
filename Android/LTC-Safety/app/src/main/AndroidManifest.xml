@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".a_new.NewConcernActivity" />
+        <activity
+            android:name=".a_new.NewConcernActivity"
+            android:label="New Concern"
+            android:parentActivityName=".a_main.MainActivity"
+        />
         <activity android:name=".a_view.ConcernDetailActivity" />
     </application>
 

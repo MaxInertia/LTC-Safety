@@ -7,4 +7,38 @@
     <string name="actionsTakenTextField_hint">Actions Taken</string>
     <string name="phoneNumberField_hint">Phone Number</string>
     <string name="emailTextField_hint">Email Address</string>
+    <string name="alertview_buttontext">Ok</string>
+    <string name="roomField_hint">Room</string>
+
+    <string-array name="longtermcare_facilities">
+        <item>Central Haven Special Care Home</item>
+        <item>Circle Drive Special Care Home</item>
+        <item>Extendicare Special Care Home</item>
+        <item>Jubilee Residences</item>
+        <item>Luther Special Care Home</item>
+        <item>Oliver Lodge</item>
+        <item>Parkridge Centre</item>
+        <item>Porteous Lodge</item>
+        <item>Samaritan Place</item>
+        <item>Saskatoon Convalescent Home</item>
+        <item>Sherbrooke Community Centre</item>
+        <item>Stensrud Lodge</item>
+        <item>Sunnyside Adventist Care Centre</item>
+        <item>St. Ann\'s Home</item>
+        <item>St. Joseph\'s Home</item>
+    </string-array>
+
+    <string-array name="concern_types">
+        <item>Infection control</item>
+        <item>Medication issue</item>
+        <item>Improper equipment use</item>
+        <item>Witnessed fall</item>
+        <item>Environment</item>
+        <item>Near miss</item>
+        <item>No response to requests</item>
+        <item>Equipment failure</item>
+        <item>Physical abuse</item>
+        <item>Mental abuse</item>
+        <item>Resident aggression</item>
+    </string-array>
 </resources>

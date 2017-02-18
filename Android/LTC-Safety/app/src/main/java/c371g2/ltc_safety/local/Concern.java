@@ -2,6 +2,8 @@ package c371g2.ltc_safety.local;
 
 import android.os.Bundle;
 
+import com.appspot.ltc_safety.client.model.OwnerToken;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -17,24 +19,20 @@ import java.util.Date;
  */
 public class Concern {
 
-    private final Reporter reporter;
-    private final Location location;
+    private com.appspot.ltc_safety.client.model.Concern data;
+    private OwnerToken ownerToken;
 
-    private final String concernType;
-    private final String actionsTaken;
+    public Concern(com.appspot.ltc_safety.client.model.Concern clientConcern, OwnerToken ownerToken) {
+        data = clientConcern;
+        this.ownerToken = ownerToken;
+    }
 
-    private final Date dateSubmitted;
-    private String token;
+    public com.appspot.ltc_safety.client.model.Concern getConcernObject() {
+        return data;
+    }
 
-    public Concern(String reporterName, String reporterPhone,
-                   String reporterEmail, String facilityName,
-                   String roomName, String concernType,
-                   String actionsTaken) {
-        this.reporter = new Reporter(reporterName, reporterEmail, reporterPhone);
-        this.location = new Location(facilityName,roomName);
-        this.concernType = concernType;
-        this.actionsTaken = actionsTaken;
-        this.dateSubmitted = new Date(); // TODO: Check if this can return incorrect values when the device date is set wrong
+    public OwnerToken getOwnerToken() {
+        return ownerToken;
     }
 
     /**
@@ -49,44 +47,5 @@ public class Concern {
         return new Bundle();
     }
 
-    public String getReporterName() {
-        return reporter.getName();
-    }
-
-    public String getReporterEmailAddress() {
-        return reporter.getEmailAddress();
-    }
-
-    public String getReporterPhoneNumber() {
-        return reporter.getPhoneNumber();
-    }
-
-    public String getActionsTaken() {
-        return actionsTaken;
-    }
-
-    public String getConcernType() {
-        return concernType;
-    }
-
-    public String getFacilityName() {
-        return location.getFacilityName();
-    }
-
-    public String getRoomName() {
-        return location.getRoomName();
-    }
-
-    public Date getDateSubmitted() {
-        return dateSubmitted;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
 }

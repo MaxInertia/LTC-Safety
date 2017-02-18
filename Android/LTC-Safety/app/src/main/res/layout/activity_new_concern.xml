@@ -36,6 +36,30 @@
         android:ems="10"
         android:id="@+id/emailTextField" />
 
+    <!-- Concern information -->
+
+    <Spinner
+        android:id="@+id/concernTypeSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <Spinner
+        android:id="@+id/facilitySpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/roomField_hint"
+        android:ems="10"
+        android:id="@+id/roomNumberField" />
+
+    <!-- Actions taken -->
 
     <EditText
         android:layout_width="wrap_content"
