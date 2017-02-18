@@ -12,10 +12,8 @@ import java.util.logging.Logger;
  * Created on 2017-01-19.
  */
 public final class ValidationResult {
-    /**
-     * Logger definition for this class.
-     */
-    private static final Logger LOGGER = Logger.getLogger( ValidationResult.class.getName() );
+
+    private static final Logger logger = Logger.getLogger(ValidationResult.class.getName());
 
     /**
      * True if the object passed validation; otherwise, false.
@@ -39,7 +37,7 @@ public final class ValidationResult {
      * Creates a new validation result for successful validation.
      */
     public ValidationResult() {
-        LOGGER.log(Level.FINER, "Creating a successful validation result.");
+        logger.log(Level.FINER, "Creating a successful validation result.");
         this.isValid = true;
     }
 
@@ -51,11 +49,12 @@ public final class ValidationResult {
      * @precond errorMessage != null
      */
     public ValidationResult(String errorMessage) {
-        if(errorMessage == null){ LOGGER.log(Level.WARNING, "Tried to create a failed validation result with a null error message."); }
+
         assert errorMessage != null;
 
         this.isValid = false;
         this.errorMessage = errorMessage;
-        LOGGER.log(Level.FINE, "Created failed validation with error message: " + errorMessage + ".");
+
+        logger.log(Level.FINER,"Created failed validation with error message: " + errorMessage + ".");
     }
 }

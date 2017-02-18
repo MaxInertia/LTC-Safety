@@ -6,10 +6,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.cs371group2.ApiKeys;
 import com.cs371group2.DatastoreTest;
-import com.cs371group2.concern.Concern;
-import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernStatus;
-import com.cs371group2.concern.ConcernTest;
+import com.cs371group2.concern.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.googlecode.objectify.Key;
@@ -43,9 +40,9 @@ public class ClientApiTest extends DatastoreTest {
      */
     private void submitConcern() throws Exception {
 
-        ConcernData data = new ConcernTest().generateConcernData();
+        ConcernData data = new ConcernTest().generateConcernData().build();
 
-        OwnerToken token = new ClientApi().submitConcern(data);
+        OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
                 .parseClaimsJws(token.getToken());
         Claims claims = claim.getBody();
@@ -67,20 +64,22 @@ public class ClientApiTest extends DatastoreTest {
                 data.getLocation().getFacilityName());
         assertEquals(loadedData.getLocation().getRoomName(), data.getLocation().getRoomName());
 
-        assertEquals(concern.getStatus(), ConcernStatus.PENDING);
+        assertEquals(concern.getStatuses().first().getType(), ConcernStatusType.PENDING);
         assertNotNull(concern.getSubmissionDate());
     }
 
     /**
      * Tests that a concern can be properly retracted from the database.
      * Specifically tests that the concern has been moved to the archive
-     * and that the concern's status has been changed to "RETRACTED".
+     * and that the concern's status has been changed to "RETRACTED" and
+     * that the retract concern method has returned the now retracted
+     * concern status.
      */
     private void retractConcern() throws Exception {
 
-        ConcernData data = new ConcernTest().generateConcernData();
-        OwnerToken token = new ClientApi().submitConcern(data);
-        new ClientApi().retractConcern(token);
+        ConcernData data = new ConcernTest().generateConcernData().build();
+        OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
+        UpdateConcernStatusResponse response = new ClientApi().retractConcern(token);
 
         Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
                 .parseClaimsJws(token.getToken());
@@ -91,7 +90,8 @@ public class ClientApiTest extends DatastoreTest {
         Concern concern = ObjectifyService.ofy().load().key(key).now();
 
         assertTrue(concern.isArchived());
-        assertEquals(concern.getStatus(), ConcernStatus.RETRACTED);
+        assertEquals(concern.getStatuses().last().getType(), ConcernStatusType.RETRACTED);
+        assertEquals(concern.getStatuses().last(), response.getStatus());
     }
 
     /**

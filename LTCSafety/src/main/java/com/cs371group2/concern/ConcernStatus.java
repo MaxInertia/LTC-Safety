@@ -1,53 +1,50 @@
 package com.cs371group2.concern;
 
+import java.util.Date;
+
 /**
- * The concern status enum is used to determine the state of the concern within the system.
- * When concerns are first received they have a pending status. This status will then be changed to
- * send, responding, and resolved as the concern is acted up.
+ * The status of a concern including the type of the concern and when this status was created.
+ * Throughout its life cycle a concern's status will change multiple times.
  *
- * Created on 2017-01-17.
+ * Created on 2017-02-01.
  */
-public enum ConcernStatus {
+public class ConcernStatus implements Comparable<ConcernStatus> {
+
     /**
-     * When a concern is first received its status is set to pending.
-     * This means that the concern has been submitted but has not been
-     * acknowledged by an administrator yet.
+     * The date the concern was created. This should correspond to the date that the concern's
+     * status changed.
      */
-    PENDING,
+    private Date creationDate = new Date();
+
+    private ConcernStatusType type;
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public ConcernStatusType getType() {
+        return type;
+    }
+
     /**
-     * When a concern has been received and opened by an administrator its
-     * status will be changed to seen.
+     * No-arg constructor required for loading from the datastore.
      */
-    SEEN,
+    private ConcernStatus() {}
+
     /**
-     * When a concern has been seen and will be acted upon within the next 24
-     * hours its status will be changed to this.
+     * Creates a new concern status with the specified time. The creation date for the concern is
+     * set to be the current system time at the time the first instance is created.
+     *
+     * @param type The type of the new concern status.
+     * @precond type != null
      */
-    RESPONDING24,
-    /**
-     * When a concern has been seen and will be acted upon within the next 48
-     * hours its status will be changed to this. 48 hours is based on the
-     * priority of the concern. This does NOT mean that the status will change
-     * again to responding 24. It only means that the concern will be responded
-     * to sometime in the next 48 hours.
-     */
-    RESPONDING48,
-    /**
-     * When a concern has been seen and will be acted upon within the next 72
-     * hours its status will be changed to this. 72 hours is based on the
-     * priority of the concern. This does NOT mean that the status will change
-     * again to responding 24 or 48. It only means that the concern will be responded
-     * to sometime in the next 72 hours.
-     */
-    RESPONDING72,
-    /**
-     * When a concern has been responded to its status will be changed to resolved
-     * meaning the concern has been addressed.
-     */
-    RESOLVED,
-    /**
-     * If a reporter decides to retract their concern then the status will be changed to
-     * retracted. Retracting a concern is only allowed if the status is pending or seen.
-     */
-    RETRACTED
+    ConcernStatus(ConcernStatusType type) {
+        assert type != null;
+        this.type = type;
+    }
+
+    @Override
+    public int compareTo(ConcernStatus o) {
+        return creationDate.compareTo(o.creationDate);
+    }
 }

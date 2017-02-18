@@ -1,5 +1,6 @@
 package com.cs371group2;
 
+import com.cs371group2.account.Account;
 import com.cs371group2.concern.Concern;
 import com.googlecode.objectify.ObjectifyService;
 import javax.servlet.ServletContextEvent;
@@ -16,6 +17,7 @@ public class InitContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         ObjectifyService.register(Concern.class);
+        ObjectifyService.register(Account.class);
     }
 
     @Override

@@ -1,0 +1,27 @@
+<div ng-controller="InboxCtrl">
+    <div>
+        <div class="paging-row w-clearfix"><a class="w-button" ng-click="refresh()">Refresh</a><a class="right-button w-button" href="#" ng-click="nextPage()">Next</a><a class="right-button w-button" href="#" ng-click="previousPage()">Previous</a>
+        </div>
+    </div>
+    <div class="text-row">
+        <div class="concern-nature list-header text-item"><strong>Nature of Concern</strong>
+        </div>
+        <div class="facility list-header text-item"><strong>Facility</strong>
+        </div>
+        <div class="list-header reporter text-item"><strong>Reporter</strong>
+        </div>
+        <div class="actions-taken expandable list-header text-item"><strong>Actions Taken<br></strong>
+        </div>
+        <div class="list-header submission-date text-item"><strong>Submission Date</strong>
+    </div>
+    </div>
+    <ul class="concern-list w-list-unstyled">
+    <li class="text-row" ng-repeat="concern in concerns">
+      <div class="concern-nature text-item">{{concern.data.concernNature}}</div>
+      <div class="facility text-item truncate">{{concern.data.location.facilityName}}</div>
+      <div class="reporter text-item">{{concern.data.reporter.name}}</div>
+      <div class="actions-taken expandable text-item">{{concern.data.actionsTaken}}</div>
+      <div class="submission-date text-item">{{concern.submissionDate | date:'MMM dd  h:mm a  yyyy'}}</div>
+    </li>
+    </ul>
+</div>
