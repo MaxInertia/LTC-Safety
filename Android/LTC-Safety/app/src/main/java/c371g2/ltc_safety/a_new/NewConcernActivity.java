@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
+import android.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -84,7 +85,24 @@ public class NewConcernActivity extends AppCompatActivity {
 
         if(response!=ReturnCode.SUCCESS) {
 
-            // TODO: handle unsuccessful submission attempts
+            switch (response.id) {
+                case 1: // No Concern type
+                    //Toast.makeText(getBaseContext(), "Choose a concern type", Toast.LENGTH_SHORT).show();
+                    displayInfoDialogue(null,"Please choose a concern type");
+                    break;
+                case 2: // No Facility
+                    //Toast.makeText(getBaseContext(), "Choose a facility / location", Toast.LENGTH_SHORT).show();
+                    displayInfoDialogue(null,"Please choose a facility / location");
+                    break;
+                case 3: // No name
+                    //Toast.makeText(getBaseContext(), "Provide name", Toast.LENGTH_SHORT).show();
+                    displayInfoDialogue(null,"Please provide your name");
+                    break;
+                case 4: // No contact info
+                    //Toast.makeText(getBaseContext(), "Provide a contact method", Toast.LENGTH_SHORT).show();
+                    displayInfoDialogue(null,"Please provide a contact method");
+                    break;
+            }
 
             submitConcernButton.setEnabled(true);
         }
@@ -96,7 +114,16 @@ public class NewConcernActivity extends AppCompatActivity {
      * @param message Text in the popup
      */
     void displayInfoDialogue(String title, String message) {
-        //TODO: Create diaglogue popup
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(NewConcernActivity.this);
+        alertBuilder.setCancelable(true);
+
+        if(title != null) {
+            alertBuilder.setTitle(title);
+        }
+        if(message != null) {
+            alertBuilder.setMessage(message);
+        }
+        alertBuilder.create().show();
     }
 
     private void exitActivity() {}
