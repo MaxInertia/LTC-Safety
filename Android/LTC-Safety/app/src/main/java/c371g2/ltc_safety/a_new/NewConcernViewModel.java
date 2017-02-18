@@ -46,14 +46,27 @@ class NewConcernViewModel {
      * @param emailAddress An email address the reporter can be contacted at.
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
-    ReturnCode submitConcern(String concernType, String actionsTaken, String facilityName,
+    ReturnCode[] submitConcern(String concernType, String actionsTaken, String facilityName,
                              String reporterName, String emailAddress, String phoneNumber) {
 
         // TODO: Use verifier-classes to confirm input is sufficient to submit as concern
-        if ( !((new NameVerifier()).verify(reporterName)) ) return ReturnCode.INVALID_NAME;
-        if ( !(concernType.length()>0) ) return ReturnCode.NO_CONCERN_TYPE; // TODO: make concernVerifier class
+        ReturnCode[] returnCodes = new ReturnCode[3];
+        int invalidFields = 0;
+
+        if ( !((new NameVerifier()).verify(reporterName)) ) {
+            returnCodes[invalidFields] = ReturnCode.INVALID_NAME;
+            invalidFields++;
+        }
+        if ( !(concernType.length()>0) ) { // TODO: make concernVerifier class?
+            returnCodes[invalidFields] = ReturnCode.NO_CONCERN_TYPE;
+            invalidFields++;
+        }
         if ( !((new PhoneNumberVerifier()).verify(phoneNumber)) && !((new EmailAddressVerifier()).verify(emailAddress)) ) {
-            return ReturnCode.INVALID_PHONE_AND_EMAIL;
+            returnCodes[invalidFields] = ReturnCode.INVALID_PHONE_AND_EMAIL;
+            invalidFields++;
+        }
+        if(invalidFields>0) {
+            return returnCodes;
         }
 
         // TODO: Use 'client' API here to generate and submit concern
@@ -66,15 +79,19 @@ class NewConcernViewModel {
                 emailAddress,
                 phoneNumber
         );
+        assert(networkTask.data != null);
         Client.Builder builder = new Client.Builder(
                 AndroidHttp.newCompatibleTransport(),
                 new AndroidJsonFactory(),
                 null
         );
+        assert(builder != null);
         networkTask.client = builder.build();
+        assert(networkTask.client != null);
         networkTask.execute();
 
-        return ReturnCode.VALID_INPUT;
+        returnCodes[0] = ReturnCode.VALID_INPUT;
+        return returnCodes;
     }
 
     private ConcernData buildConcernData(String concernType, String actionsTaken, String facilityName,
@@ -124,22 +141,27 @@ class NewConcernViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API && response!=null) {
+            activity.progressDialog.cancel();
+
+            if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
+                assert(response != null);
                 // Store concern and token on device
                 Concern concern = new Concern(response.getConcern(), response.getOwnerToken());
                 ViewModelObserver.instance.newConcernSubmitted(concern);
-
                 // Inform user that the concern was successfully submitted
-                if(!activity.isFinishing()) activity.displayInfoDialogue(null,"Concern Submitted");
-
-            } else if(returnCode==ReturnCode.IOEXCEPTION_THROWN_BY_API && response!=null) {
-                if(!activity.isFinishing()) activity.displayInfoDialogue("IOException Thrown","response was initialized");
-
-            } else if(returnCode==ReturnCode.IOEXCEPTION_THROWN_BY_API){
-                if(!activity.isFinishing()) activity.displayInfoDialogue("IOException Thrown","response is NULL");
-
-            } else if(returnCode==null) {
-                if(!activity.isFinishing()) activity.displayInfoDialogue("Response was NULL","No IOException thrown.");
+                if(!activity.isFinishing() && !activity.isDestroyed()) activity.displayInfoDialogue(
+                        "Submission successful",
+                        "Your concern has been submitted",
+                        null,
+                        true
+                );
+            } else {
+                // Concern submission failed, possible cause: No internet access on device
+                if(!activity.isFinishing()) activity.displayInfoDialogue(
+                        "Error",
+                        "Concern submission failed",
+                        null,
+                        true);
             }
             submissionReturnCode = returnCode;
             signalLatch.countDown();
