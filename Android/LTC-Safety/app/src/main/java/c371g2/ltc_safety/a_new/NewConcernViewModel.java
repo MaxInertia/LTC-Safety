@@ -49,27 +49,32 @@ class NewConcernViewModel {
     ReturnCode[] submitConcern(String concernType, String actionsTaken, String facilityName,
                              String reporterName, String emailAddress, String phoneNumber) {
 
-        // TODO: Use verifier-classes to confirm input is sufficient to submit as concern
-        ReturnCode[] returnCodes = new ReturnCode[3];
+        // Use verifier-classes to confirm input is sufficient to submit as concern
+        ReturnCode[] returnCodes = new ReturnCode[4];
         int invalidFields = 0;
 
         if ( !((new NameVerifier()).verify(reporterName)) ) {
             returnCodes[invalidFields] = ReturnCode.INVALID_NAME;
             invalidFields++;
         }
+        if ( !((new PhoneNumberVerifier()).verify(phoneNumber)) && !((new EmailAddressVerifier()).verify(emailAddress)) ) {
+            returnCodes[invalidFields] = ReturnCode.INVALID_PHONE_AND_EMAIL;
+            System.out.println();
+            invalidFields++;
+        }
         if ( !(concernType.length()>0) ) { // TODO: make concernVerifier class?
             returnCodes[invalidFields] = ReturnCode.NO_CONCERN_TYPE;
             invalidFields++;
         }
-        if ( !((new PhoneNumberVerifier()).verify(phoneNumber)) && !((new EmailAddressVerifier()).verify(emailAddress)) ) {
-            returnCodes[invalidFields] = ReturnCode.INVALID_PHONE_AND_EMAIL;
+        if ( !(facilityName.length()>0) ) { // TODO: make facilityVerifier class?
+            returnCodes[invalidFields] = ReturnCode.NO_FACILITY_NAME;
             invalidFields++;
         }
         if(invalidFields>0) {
             return returnCodes;
         }
 
-        // TODO: Use 'client' API here to generate and submit concern
+        // Use 'client' API here to generate and submit concern
         ConcernSubmitter networkTask = new ConcernSubmitter();
         networkTask.data = buildConcernData(
                 concernType,
@@ -141,7 +146,9 @@ class NewConcernViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            activity.progressDialog.cancel();
+            if(!activity.isFinishing() && activity.progressDialog!=null) {
+                activity.progressDialog.cancel(); //progressDialog is not initialized for tests
+            }
 
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);

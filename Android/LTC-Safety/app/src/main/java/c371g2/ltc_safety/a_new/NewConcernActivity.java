@@ -5,10 +5,8 @@ import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.Utilities;
@@ -29,10 +27,9 @@ public class NewConcernActivity extends AppCompatActivity {
     EditText nameField;
     EditText phoneNumberField;
     EditText emailAddressField;
+    EditText facilityField;
+    EditText concernNatureField;
     EditText actionsTakenField;
-
-    Spinner concernNatureSpinner;
-    Spinner facilitySpinner;
 
     AlertDialog progressDialog;
 
@@ -60,19 +57,21 @@ public class NewConcernActivity extends AppCompatActivity {
             }
         });
 
-        concernNatureSpinner = (Spinner) findViewById(R.id.concernTypeSpinner);
-        assert(concernNatureSpinner != null);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.concern_types, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        concernNatureSpinner.setAdapter(adapter);
-        assert(concernNatureSpinner.getAdapter() != null);
+        concernNatureField = (EditText) findViewById(R.id.concernNatureChooser);
+        ChooserView.setup(
+                getBaseContext(),
+                concernNatureField,
+                "Select Concern Nature",
+                getResources().getStringArray(R.array.concern_types)
+        );
 
-        facilitySpinner = (Spinner) findViewById(R.id.facilitySpinner);
-        assert(facilitySpinner != null);
-        adapter = ArrayAdapter.createFromResource(this, R.array.longtermcare_facilities, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        facilitySpinner.setAdapter(adapter);
-        assert(facilitySpinner.getAdapter() != null);
+        facilityField = (EditText) findViewById(R.id.facilityChooser);
+        ChooserView.setup(
+                getBaseContext(),
+                facilityField,
+                "Select Facility",
+                getResources().getStringArray(R.array.longtermcare_facilities)
+        );
 
         newConcernViewModel = new NewConcernViewModel(NewConcernActivity.this);
     }
@@ -90,6 +89,7 @@ public class NewConcernActivity extends AppCompatActivity {
         }
     }
 
+
     /**
      * The operation performed when the submitConcernButton is pressed. If the input fields are valid,
      * this method outputs nothing. If at least one of the required input fields is not valid, a
@@ -100,16 +100,17 @@ public class NewConcernActivity extends AppCompatActivity {
 
         // Attempt submission of concern containing input fields on the activity
         ReturnCode[] response = newConcernViewModel.submitConcern(
-                concernNatureSpinner.getSelectedItem().toString(),
+                concernNatureField.getText().toString(),
                 actionsTakenField.getText().toString(),
-                facilitySpinner.getSelectedItem().toString(),
+                facilityField.getText().toString(),
                 nameField.getText().toString(),
                 emailAddressField.getText().toString(),
                 phoneNumberField.getText().toString()
         );
         assert(response != null);
 
-        if(response[0]!=ReturnCode.VALID_INPUT) {
+        if(!response[0].equals(ReturnCode.VALID_INPUT)) {
+            // Inform user that they are missing required input
             displayInvalidInputDialogue(response);
             submitConcernButton.setEnabled(true);
         } else {
@@ -131,44 +132,38 @@ public class NewConcernActivity extends AppCompatActivity {
     private void displayInvalidInputDialogue(ReturnCode[] rCodes) {
 
         String message = "";
-        for(int r=0; r<3; r++) {
+        String title = "Missing required field";
+        for(int r=0; r<4; r++) {
             // Check if all codes have been read, then display popup
             if(rCodes[r] == null) {
                 assert(r > 0);
-                if(r==1) {
-                    displayInfoDialogue(
-                            "Missing required field",
-                            message,
-                            null,
-                            true
-                    );
-                } else if(r>1) {
-                    displayInfoDialogue(
-                            "Missing required fields",
-                            message,
-                            null,
-                            true
-                    );
-                }
+                if(r>1) title+="s";
                 break;
             }
 
             if(r>0) message += '\n';
             switch (rCodes[r].id) {
                 case 1: // No Concern type
-                    message+="- Concern Type";
+                    message+= " -  Concern Nature";
                     break;
                 case 2: // No Facility
-                    message += "- Facility";
+                    message += " -  Facility";
                     break;
                 case 3: // No name
-                    message+= "- Name";
+                    message+= " -  Name";
                     break;
                 case 4: // No contact info
-                    message += "- Contact information";
+                    message += " -  Phone or Email";
                     break;
             }
         }
+
+        displayInfoDialogue(
+                title,
+                message,
+                null,
+                true
+        );
     }
 
     /**

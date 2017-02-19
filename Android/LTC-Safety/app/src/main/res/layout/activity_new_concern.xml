@@ -1,79 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_new_concern"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="#f7f7f7"
     tools:context="c371g2.ltc_safety.a_new.NewConcernActivity">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:hint="@string/nameTextField_hint"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/nameTextField" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="phone"
-        android:hint="@string/phoneNumberField_hint"
-        android:ems="10"
-        android:id="@+id/phoneNumberField" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="@string/emailTextField_hint"
-        android:ems="10"
-        android:id="@+id/emailTextField" />
-
-    <!-- Concern information -->
-
-    <Spinner
-        android:id="@+id/concernTypeSpinner"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
+        <!-- Contact information -->
 
-    <Spinner
-        android:id="@+id/facilitySpinner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Information"
+            android:textSize="18sp"
+            android:paddingTop="20dp"
+            android:paddingLeft="16dp"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/roomField_hint"
-        android:ems="10"
-        android:id="@+id/roomNumberField" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:padding="16dp">
 
-    <!-- Actions taken -->
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:hint="@string/nameTextField_hint"
+                android:textSize="20sp"
+                android:ems="10"
+                android:id="@+id/nameTextField"
+                android:maxLines="1"/>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textMultiLine"
-        android:hint="@string/actionsTakenTextField_hint"
-        android:text=""
-        android:ems="10"
-        android:id="@+id/actionsTakenTextField" />
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/> -->
 
-    <Button
-        android:text="@string/submit_concern_button_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/submit_concern_button" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="phone"
+                android:hint="@string/phoneNumberField_hint"
+                android:textSize="20sp"
+                android:ems="10"
+                android:id="@+id/phoneNumberField"
+                android:maxLines="1"/>
 
-</LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/emailTextField_hint"
+                android:textSize="20sp"
+                android:ems="10"
+                android:id="@+id/emailTextField"
+
+                android:maxLines="1"/>
+
+
+        </LinearLayout>
+
+        <!-- Concern information -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tell us about your concern"
+            android:textSize="18sp"
+            android:paddingTop="20dp"
+            android:paddingLeft="16dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:padding="16dp">
+
+            <EditText
+                android:hint="Concern Nature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/concernNatureChooser"
+                android:focusable="true"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:paddingBottom="8dp"
+                android:maxLines="1"/>
+
+            <!--<View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>-->
+
+            <EditText
+                android:hint="Facility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/facilityChooser"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:focusable="true"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:maxLines="1"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/roomField_hint"
+                android:textSize="20sp"
+                android:ems="10"
+                android:id="@+id/roomNumberField"
+                android:maxLines="1"/>
+
+
+        </LinearLayout>
+
+        <!-- Actions taken -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="What actions have been taken?"
+            android:paddingTop="20dp"
+            android:paddingLeft="16dp"
+            android:paddingBottom="8dp"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:padding="16dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:hint="@string/actionsTakenTextField_hint"
+                android:textSize="20sp"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/actionsTakenTextField" />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <Button
+            android:text="@string/submit_concern_button_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/submit_concern_button"
+            android:layout_gravity="center"/>
+
+    </LinearLayout>
+
+</ScrollView>

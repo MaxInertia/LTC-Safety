@@ -48,10 +48,10 @@ public class NewConcernViewModelTests {
         String reporterName = "All Fields";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
-        assertTrue(ReturnCode.VALID_INPUT.equals(rCode));
+        assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
         newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
@@ -70,10 +70,10 @@ public class NewConcernViewModelTests {
         String emailAddress = "";
         String phoneNumber = "3063063066";
 
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
-        assertTrue(ReturnCode.VALID_INPUT.equals(rCode));
+        assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
         newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
@@ -92,10 +92,10 @@ public class NewConcernViewModelTests {
         String emailAddress = "IchiKuro@soulsociety.com";
         String phoneNumber = "";
 
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
-        assertTrue(ReturnCode.VALID_INPUT.equals(rCode));
+        assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
         newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
@@ -114,8 +114,8 @@ public class NewConcernViewModelTests {
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
 
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
-        assertTrue(ReturnCode.NO_CONCERN_TYPE.equals(rCode));
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        assertTrue(ReturnCode.NO_CONCERN_TYPE.equals(rCode[0]));
     }
 
     @Test
@@ -128,8 +128,8 @@ public class NewConcernViewModelTests {
         String emailAddress = "";
         String phoneNumber = "";
 
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
-        assertTrue(ReturnCode.INVALID_PHONE_AND_EMAIL.equals(rCode));
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        assertTrue(ReturnCode.INVALID_PHONE_AND_EMAIL.equals(rCode[0]));
     }
 
     @Test
@@ -142,7 +142,7 @@ public class NewConcernViewModelTests {
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
 
-        ReturnCode rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
-        assertTrue(ReturnCode.INVALID_NAME.equals(rCode));
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
+        assertTrue(ReturnCode.INVALID_NAME.equals(rCode[0]));
     }
 }
