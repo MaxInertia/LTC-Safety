@@ -13,6 +13,7 @@ abstract class Verifier {
      * @modifies nothing
      */
     boolean verify(String input) {
+        if(input==null) return false;
         return input.length()>0;
     };
 }
