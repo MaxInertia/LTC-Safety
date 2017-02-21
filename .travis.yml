@@ -2,6 +2,7 @@ language: objective-c
 osx_image: xcode8.2
 
 script:    
+  - chmod +x iOS/build_scripts/script.sh
   - ./iOS/build_scripts/script.sh
 
 after_success: # push to branch 'ios-app-build' to indicate that it compiled successfully (essentially a fastforward merge)
