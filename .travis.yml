@@ -2,9 +2,7 @@ language: objective-c
 osx_image: xcode8.2
 
 script:    
-  - if [ "${TRAVIS_BRANCH}" == "ios-app" ] ; then xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety build-for-testing ; fi
-  - if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety build-for-testing
-  - xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator test ; fi
+  - ./iOS/build_scripts/script.sh
 
 after_success: # push to branch 'ios-app-build' to indicate that it compiled successfully (essentially a fastforward merge)
   - git config --global user.email "builds@travis-ci.com"
