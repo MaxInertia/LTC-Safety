@@ -14,14 +14,20 @@ else if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then
 	xcodebuild \
 	-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
 	-scheme LTC\ Safety \
-	-sdk iphonesimulator \
-	build-for-testing
-	CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+	-destination 'platform=iOS Simulator,name=iPhone 6,OS=9.3' \
+	test
+
+	#xcodebuild \
+	#-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
+	#-scheme LTC\ Safety \
+	#-sdk iphonesimulator \
+	#build-for-testing
+	#CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 	
-	xctool \
-	-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
-	-scheme LTC\ Safety \
-	-sdk iphonesimulator \
-	run-tests
+	#xctool \
+	#-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
+	#-scheme LTC\ Safety \
+	#-sdk iphonesimulator \
+	#run-tests
 fi
 fi
