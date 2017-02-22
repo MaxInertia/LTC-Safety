@@ -2,13 +2,18 @@
     <string name="app_name">LTC-Safety</string>
     <string name="new_concern_text">New Safety Concern</string>
 
-    <string name="submit_concern_button_text">Submit Safety Concern</string>
+    <string name="submit_concern_button_text">Submit Concern</string>
     <string name="nameTextField_hint">First and Last Name</string>
     <string name="actionsTakenTextField_hint">Actions Taken</string>
     <string name="phoneNumberField_hint">Phone Number</string>
     <string name="emailTextField_hint">Email Address</string>
     <string name="alertview_buttontext">Ok</string>
     <string name="roomField_hint">Room</string>
+    <string name="actions_taken_section_title">WHAT ACTIONS HAVE BEEN TAKEN?</string>
+    <string name="contact_information_section_title">CONTACT INFORMATION</string>
+    <string name="concern_info_section_title">TELL US ABOUT YOUR CONCERN</string>
+    <string name="concern_nature_hint">Concern Nature</string>
+    <string name="facility_hint">Facility</string>
 
     <string-array name="longtermcare_facilities">
         <item>Central Haven Special Care Home</item>

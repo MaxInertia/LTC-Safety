@@ -6,14 +6,12 @@
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    android:background="#f7f7f7"
+    android:background="@color/appBackground"
     tools:context="c371g2.ltc_safety.a_new.NewConcernActivity">
-
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusableInTouchMode="true">
         <!-- Contact information -->
@@ -21,54 +19,78 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Contact Information"
-            android:textSize="18sp"
-            android:paddingTop="20dp"
-            android:paddingLeft="16dp"/>
+            android:text="@string/contact_information_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/section_border"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
 
             <EditText
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="textPersonName"
+                android:textColorHint="@color/lighter_gray"
                 android:hint="@string/nameTextField_hint"
                 android:textSize="20sp"
+                android:maxLines="1"
                 android:ems="10"
-                android:id="@+id/nameTextField"
-                android:maxLines="1"/>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/nameTextField" />
 
-            <!--<View
+            <View
+                android:background="@color/lighter_gray"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/> -->
+                android:layout_height="1dp" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="phone"
+                android:textColorHint="@color/lighter_gray"
                 android:hint="@string/phoneNumberField_hint"
                 android:textSize="20sp"
+                android:maxLines="1"
                 android:ems="10"
-                android:id="@+id/phoneNumberField"
-                android:maxLines="1"/>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/phoneNumberField" />
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
                 android:inputType="textEmailAddress"
+                android:textColorHint="@color/lighter_gray"
                 android:hint="@string/emailTextField_hint"
                 android:textSize="20sp"
+                android:maxLines="1"
                 android:ems="10"
-                android:id="@+id/emailTextField"
-
-                android:maxLines="1"/>
-
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/emailTextField" />
 
         </LinearLayout>
 
@@ -77,55 +99,77 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tell us about your concern"
-            android:textSize="18sp"
-            android:paddingTop="20dp"
-            android:paddingLeft="16dp"/>
+            android:text="@string/concern_info_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
 
         <LinearLayout
+            android:background="@drawable/section_border"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/section_border"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
 
             <EditText
-                android:hint="Concern Nature"
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
-                android:id="@+id/concernNatureChooser"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/concern_nature_hint"
                 android:focusable="true"
                 android:clickable="true"
                 android:textSize="20sp"
-                android:paddingBottom="8dp"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/concernNatureChooser"/>
 
-            <!--<View
+            <View
+                android:background="@color/lighter_gray"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@android:color/darker_gray"/>-->
+                android:layout_height="1dp" />
 
             <EditText
-                android:hint="Facility"
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
-                android:id="@+id/facilityChooser"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/facility_hint"
                 android:focusable="true"
                 android:clickable="true"
                 android:textSize="20sp"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/facilityChooser"/>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
 
             <EditText
-                android:layout_width="match_parent"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
                 android:hint="@string/roomField_hint"
                 android:textSize="20sp"
+                android:maxLines="1"
                 android:ems="10"
-                android:id="@+id/roomNumberField"
-                android:maxLines="1"/>
-
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/roomNumberField" />
 
         </LinearLayout>
 
@@ -134,42 +178,59 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="What actions have been taken?"
-            android:paddingTop="20dp"
-            android:paddingLeft="16dp"
-            android:paddingBottom="8dp"
-            android:textSize="18sp"/>
+            android:text="@string/actions_taken_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp" />
 
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/section_border"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
 
             <EditText
+                android:background="@android:color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
-                android:hint="@string/actionsTakenTextField_hint"
+                android:gravity="top"
                 android:textSize="20sp"
-                android:text=""
+                android:lines="3"
                 android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="0dp"
                 android:id="@+id/actionsTakenTextField" />
+        </LinearLayout>
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:background="@android:color/white"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/submit_concern_button_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/submit_concern_button"/>
         </LinearLayout>
 
         <Space
             android:layout_width="match_parent"
             android:layout_height="20dp" />
 
-        <Button
-            android:text="@string/submit_concern_button_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/submit_concern_button"
-            android:layout_gravity="center"/>
-
     </LinearLayout>
-
 </ScrollView>
