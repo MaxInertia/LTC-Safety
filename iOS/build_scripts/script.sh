@@ -15,7 +15,7 @@ else if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then
 	-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
 	-scheme LTC\ Safety \
 	-sdk iphonesimulator \
-	build-for-tests \
+	build-for-testing
 	CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 	
 	xctool \
