@@ -16,7 +16,7 @@
     </div>
     </div>
     <ul class="concern-list w-list-unstyled">
-    <li class="text-row" ng-repeat="concern in concerns">
+    <li  ng-click = "clickMe(concern)"class="text-row concern-change" ng-repeat="concern in concerns">
       <div class="concern-nature text-item">{{concern.data.concernNature}}</div>
       <div class="facility text-item truncate">{{concern.data.location.facilityName}}</div>
       <div class="reporter text-item">{{concern.data.reporter.name}}</div>

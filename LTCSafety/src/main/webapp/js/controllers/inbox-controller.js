@@ -33,7 +33,6 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
         offset : parseInt($routeParams.page)
     };
 
-
     /**
      * The callback when the user auth state changes causing the list of concerns to be updated.
      */
@@ -104,6 +103,20 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
             return;
         }
         $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit);
+    };
+
+    /**
+     * Direct to specific concern-detail page
+     *
+     * @precond id is not null
+     */
+    $scope.clickMe = function (concern) {
+        if(concern == null) {
+            console.log("There is no id found");
+        }
+        var identifier = concern.id;
+        console.log(identifier);
+        $location.url('/concern-detail/' + identifier);
     };
 
     /**

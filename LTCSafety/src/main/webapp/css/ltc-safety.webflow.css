@@ -351,6 +351,7 @@ body {
 }
 
 .text-row {
+  position: static;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -375,6 +376,31 @@ body {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.text-item.list-header.phone-number {
+  width: 175px;
+}
+
+.text-item.list-header.email {
+  width: 250px;
+}
+
+.text-item.list-header.room-name {
+  width: 150px;
+}
+
+.text-item.reporter {
+  position: static;
+  width: 150px;
+}
+
+.text-item.phone-number {
+  width: 175px;
+}
+
+.text-item.email {
+  width: 250px;
 }
 
 .concern-nature {
@@ -402,6 +428,15 @@ body {
   max-height: 500px;
 }
 
+.paging-row {
+  padding: 15px 25px;
+}
+
+.right-button {
+  margin-left: 24px;
+  float: right;
+}
+
 @font-face {
   font-family: 'Fontawesome webfont';
   src: url('../fonts/fontawesome-webfont.woff2') format('undefined'), url('../fonts/fontawesome-webfont.eot') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff') format('woff'), url('../fonts/fontawesome-webfont.ttf') format('truetype'), url('../fonts/fontawesome-webfont.ttf') format('truetype');
@@ -413,4 +448,8 @@ body {
   src: url('../fonts/FontAwesome.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
+}
+
+.concern-change {
+  cursor: pointer;
 }
