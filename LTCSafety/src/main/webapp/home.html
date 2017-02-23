@@ -40,8 +40,7 @@
      * so that Google JavaScript library ready in the angular modules.
      */
     function init() {
-        var adminApiPath = 'https://ltc-safety.appspot.com/_ah/api/discovery/v1/apis/admin/v1/rest';
-//        var adminApiPath = location.protocol + '//' + window.location.host + '/_ah/api/discovery/v1/apis/admin/v1/rest';
+        var adminApiPath = location.protocol + '//' + window.location.host + '/_ah/api/discovery/v1/apis/admin/v1/rest';
       	gapi.client.load(adminApiPath).then(
         	function () {
                 angular.bootstrap(document, ['safetyApp']);
