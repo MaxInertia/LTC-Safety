@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<!--  This site was created in Webflow. http://www.webflow.com -->
+<!--  Last Published: Fri Feb 24 2017 04:31:24 GMT+0000 (UTC)  -->
+<html data-wf-page="58af7f987672dfec61628f7b" data-wf-site="589a9a44885af3a93b998e73">
+<head>
+  <meta charset="utf-8">
+  <title>LTC Safety Access Portal</title>
+  <meta content="LTC Safety Access Portal" property="og:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="Webflow" name="generator">
+  <link href="css/normalize.css" rel="stylesheet" type="text/css">
+  <link href="css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="css/ltc-safety.webflow.css" rel="stylesheet" type="text/css">
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
+  <script type="text/javascript">
+    WebFont.load({
+      google: {
+        families: ["Droid Sans:400,700"]
+      }
+    });
+  </script>
+  <script src="js/modernizr.js" type="text/javascript"></script>
+  <link href="https://daks2k3a4ib2z.cloudfront.net/img/favicon.ico" rel="shortcut icon" type="image/x-icon">
+  <link href="https://daks2k3a4ib2z.cloudfront.net/img/webclip.png" rel="apple-touch-icon">
+  <style>
+    .text-item {
+    	white-space: nowrap;
+    	overflow: hidden;
+    	text-overflow: ellipsis;
+    }
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.7/firebase.js"></script>
+</head>
+<body class="main" ng-app="accessApp" ng-controller="RootCtrl">
+  <div>
+    <h1 class="access-title">LTC Safety</h1>
+    <h3 class="access-subtitle">Administrator Dashboard</h3>
+  </div>
+  <div class="access-tab-container w-tabs">
+    <div class="w-tab-menu">
+      <a class="access-tab w--current w-inline-block w-tab-link" data-w-tab="Tab 1">
+        <div>Sign In</div>
+      </a>
+      <a class="access-tab w-inline-block w-tab-link" data-w-tab="Tab 2">
+        <div>New Administrator</div>
+      </a>
+      <a class="access-tab w-inline-block w-tab-link" data-w-tab="Tab 3">
+        <div>Forgot Password</div>
+      </a>
+    </div>
+    <div class="w-tab-content">
+      <div class="w--tab-active w-tab-pane" data-w-tab="Tab 1">
+        <div ng-controller="LoginCtrl">
+          <form class="access-form-container" data-name="Login-Form" id="wf-form-Login-Form-2" name="wf-form-Login-Form" ng-submit="signIn()">
+            <input autofocus="autofocus" class="access-field w-input" data-name="Email" id="Email" maxlength="256" name="Email" ng-model="user.email" placeholder="Email" required="required" type="email">
+            <input class="access-field w-input" data-name="Password" id="Password" maxlength="256" name="Password" ng-model="user.password" placeholder="Password" required="required" type="password">
+            <input class="access-button w-button" data-wait="Please wait..." type="submit" value="Sign In">
+            <div class="access-error" id="login-error">{{errorMessage}}</div>
+          </form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form</div>
+          </div>
+        </div>
+      </div>
+      <div class="w-tab-pane" data-w-tab="Tab 2">
+        <div ng-controller="RegistrationCtrl">
+          <form class="access-form-container" data-name="Registration" id="wf-form-Registration" name="wf-form-Registration" ng-submit="register()">
+            <input autofocus="autofocus" class="access-field w-input" data-name="Register Email" id="Register-Email" maxlength="256" name="Register-Email" ng-model="newUser.email" placeholder="Email" required="required" type="email">
+            <input class="access-field w-input" data-name="Register Password" id="Register-Password" maxlength="256" name="Register-Password" ng-model="newUser.password" placeholder="Password" required="required" type="password">
+            <input class="access-field w-input" data-name="Register Confirm Password" id="Register-Confirm-Password" maxlength="256" name="Register-Confirm-Password" ng-model="newUser.confirmPassword" placeholder="Confirm Password" required="required" type="password">
+            <input class="access-button w-button" data-wait="Please wait..." type="submit" value="Register">
+            <div class="access-error" id="register-error">{{errorMessage}}</div>
+          </form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form</div>
+          </div>
+        </div>
+      </div>
+      <div class="w-tab-pane" data-w-tab="Tab 3">
+        <div ng-controller="ForgotPasswordCtrl">
+          <form class="access-form-container" data-name="Forgot-Form" id="wf-form-Forgot-Form" name="wf-form-Forgot-Form" ng-submit="forgotPassword()">
+            <input autofocus="autofocus" class="access-field w-input" data-name="Forgot Email" id="Forgot-Email-2" maxlength="256" name="Forgot-Email" ng-model="email" placeholder="Email" required="required" type="email">
+            <input class="access-button w-button" data-wait="Please wait..." type="submit" value="Reset Password">
+            <div class="access-error" id="forgot-password-error">{{errorMessage}}</div>
+          </form>
+          <div class="w-form-done">
+            <div>Thank you! Your submission has been received!</div>
+          </div>
+          <div class="w-form-fail">
+            <div>Oops! Something went wrong while submitting the form</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js" type="text/javascript"></script>
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- [if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif] -->
+  <script type="text/javascript" src="/js/access/access-app.js"></script>
+  <script type="text/javascript" src="/js/access/controllers/login-controller.js"></script>
+  <script type="text/javascript" src="/js/access/controllers/registration-controller.js"></script>
+  <script type="text/javascript" src="/js/access/controllers/forgot-password-controller.js"></script>
+</body>
+</html>
