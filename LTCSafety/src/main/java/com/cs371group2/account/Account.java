@@ -1,8 +1,11 @@
 package com.cs371group2.account;
 
+import com.cs371group2.facility.Facility;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
+
+import java.util.HashSet;
 
 /**
  * Created on 2017-02-06.
@@ -21,12 +24,21 @@ public final class Account {
     @Index
     private AccountPermissions permissions;
 
+
+
+    /**
+     * The hashset of care home facilities this account is associated with.
+     */
+    @Index
+    private HashSet<Facility> locations;
+
     public Account(String accountId, AccountPermissions accountPermissions){
         assert(accountId != null);
         assert(accountPermissions != null);
 
         id = accountId;
         permissions = accountPermissions;
+        locations = new HashSet<Facility>();
     }
 
     /**
@@ -35,6 +47,10 @@ public final class Account {
     private Account() {}
 
     public String getId() {return id;}
+
+    public HashSet<Facility> getLocations() {
+        return locations;
+    }
 
     public void setId(String id) {
         assert(id != null);

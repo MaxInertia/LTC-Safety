@@ -4,6 +4,9 @@ import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
 import org.junit.Test;
+import sun.reflect.annotation.ExceptionProxy;
+
+import java.rmi.server.ExportException;
 
 import static junit.framework.TestCase.assertNull;
 
@@ -45,5 +48,15 @@ public class AccountTest extends DatastoreTest {
     @Test(expected = AssertionError.class)
     public void NullPermissionTest() throws Exception{
         Account account = new Account(testId, null);
+    }
+
+    /**
+     * Tests that the facilities list is initially empty
+     * @throws Exception
+     */
+    @Test
+    public void EmptyFacilitiesTest() throws Exception{
+        Account account = generateAccount();
+        assert (account)
     }
 }
