@@ -14,6 +14,8 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Facility {
 
+
+
     /** This string identifier represents the unique ID of the facility. */
     @Id
     private String id;
@@ -27,5 +29,9 @@ public class Facility {
         assert( facilityId != null );
         assert( !facilityId.isEmpty() );
         id = facilityId;
+    }
+
+    public String getId() {
+        return id;
     }
 }

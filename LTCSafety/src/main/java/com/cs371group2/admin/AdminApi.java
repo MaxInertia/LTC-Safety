@@ -2,6 +2,8 @@ package com.cs371group2.admin;
 
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.facility.Facility;
+import com.cs371group2.facility.FacilityDao;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.UnauthorizedException;
 
@@ -39,6 +41,7 @@ public class AdminApi {
             throw new UnauthorizedException("Request was not legal!");
         }
 
+        new FacilityDao().save(new Facility("Other"));
         request.authenticate();
 
         ConcernDao dao = new ConcernDao();

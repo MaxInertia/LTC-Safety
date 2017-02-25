@@ -113,4 +113,15 @@ public class ConcernTest extends DatastoreTest {
         data.getMutableLocation().setFacilityName(null);
         new ClientApi().submitConcern(data.build());
     }
+
+    /**
+     * Tests that the facility name in a concern that is unknown to the system is properly assigned the
+     * Other facility reference when submitting a concern.
+     */
+    @Test
+    public void unknownFacility() throws Exception {
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableLocation().setFacilityName("Unknown facility name");
+        new ClientApi().submitConcern(data.build());
+    }
 }

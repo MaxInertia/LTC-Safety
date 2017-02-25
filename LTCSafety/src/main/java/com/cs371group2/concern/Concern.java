@@ -1,6 +1,9 @@
 package com.cs371group2.concern;
 
 import com.cs371group2.client.OwnerToken;
+import com.cs371group2.facility.Facility;
+import com.cs371group2.facility.FacilityDao;
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -45,6 +48,14 @@ public final class Concern {
      */
     @Index
     private boolean isArchived = false;
+
+    /**
+     * A reference to the care home facility this concern is linked to. If the location of the
+     * care home has not yet been added to the database or does not exist, this will refer to a
+     * the placeholder care home facility, Other.
+     */
+    @Index
+    private Ref<Facility> facilityRef;
 
     /**
      * The exact date and time the concern was submitted.
@@ -105,6 +116,8 @@ public final class Concern {
 
         this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
         this.data = data;
+
+        facilityRef = Ref.create(new FacilityDao().load(data.getLocation().getFacilityName()));
 
         logger.log(Level.FINER, "Concern created: \n" + this.toString());
     }
