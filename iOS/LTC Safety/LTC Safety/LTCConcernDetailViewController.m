@@ -15,6 +15,7 @@
 
 NSString *const LTCDetailConcernTitle = @"DETAIL_CONCERN_TITLE";
 NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
+NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
 
 
 @interface LTCConcernDetailViewController ()
@@ -53,27 +54,62 @@ NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
 - (void)_retractConcern {
     // Call the retract concern endpoint on the Client API using the view model's concern's owner token
     
+    UIAlertController *loadingMessage = [UIAlertController alertControllerWithTitle: @"Loading"
+                                                                            message: nil
+                                                                     preferredStyle: UIAlertControllerStyleAlert];
+    
+    [loadingMessage addAction:[UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler:nil]];
+    
+    UIViewController *customVC     = [[UIViewController alloc] init];
+    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner startAnimating];
+    [customVC.view addSubview:spinner];
+    [customVC.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem: spinner
+                                  attribute:NSLayoutAttributeCenterX
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:customVC.view
+                                  attribute:NSLayoutAttributeCenterX
+                                  multiplier:1.0f
+                                  constant:0.0f]];
+    [customVC.view addConstraint:[NSLayoutConstraint
+                                  constraintWithItem: spinner
+                                  attribute:NSLayoutAttributeCenterY
+                                  relatedBy:NSLayoutRelationEqual
+                                  toItem:customVC.view
+                                  attribute:NSLayoutAttributeCenterY
+                                  multiplier:1.0f
+                                  constant:0.0f]];
+    [loadingMessage setValue:customVC forKey:@"contentViewController"];
+    
+    [self presentViewController: loadingMessage
+                       animated: true
+                     completion: nil];
+    
     [self.clientApi retractConcern:self.viewModel.concern.ownerToken completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
+        [loadingMessage dismissViewControllerAnimated:YES completion:^(){
+            UIAlertController *alert;
+            if (error != nil){
+                NSString *errorMessage = [error.userInfo valueForKey:@"error"];
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
+                [alert addAction:cancelAction];
+            }else {
+                
+                [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification object:self userInfo:@{@"status": concernStatus}];
+                
+                NSString *retractMessage = LTCDetailRetractConfirmation;
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(retractMessage, nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
+                    [super.navigationController popViewControllerAnimated:YES];
+                }];
+                [alert addAction:cancelAction];
+                
+            }
+            [self presentViewController:alert animated:YES completion:nil];
+
+        }];
         
-        UIAlertController *alert;
-        if (error != nil){
-            NSString *errorMessage = [error.userInfo valueForKey:@"error"];
-            alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
-            [alert addAction:cancelAction];
-        }else {
-            
-            [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification object:self userInfo:@{@"status": concernStatus}];
-            
-            NSString *retractMessage = @"Safety concern has been successfully retracted.";
-            alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"", nil) message:retractMessage preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
-                [super.navigationController popViewControllerAnimated:YES];
-            }];
-            [alert addAction:cancelAction];
-            
-        }
-        [self presentViewController:alert animated:YES completion:nil];
 
     }];
 }

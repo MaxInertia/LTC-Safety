@@ -37,6 +37,7 @@
 "DETAIL_STATUS_LOG" = "Concern Status Log";
 "DETAIL_CONCERN_STATUS" = "Status";
 "RETRACT_CONCERN_PROMPT" = "Retract";
+"DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
 
 
 // Misc
