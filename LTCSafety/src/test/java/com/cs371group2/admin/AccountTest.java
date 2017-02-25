@@ -3,11 +3,13 @@ package com.cs371group2.admin;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
+import com.cs371group2.facility.Facility;
 import org.junit.Test;
 import sun.reflect.annotation.ExceptionProxy;
 
 import java.rmi.server.ExportException;
 
+import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
 
 /**
@@ -57,6 +59,23 @@ public class AccountTest extends DatastoreTest {
     @Test
     public void EmptyFacilitiesTest() throws Exception{
         Account account = generateAccount();
-        assert (account)
+        assertNotNull(account.getLocations());
     }
+
+    /**
+     * Tests the adding and removing of facilities for an account
+     * @throws Exception
+     */
+    @Test
+    public void AddRemoveFacilityTest() throws Exception{
+        Account account = generateAccount();
+        assertNotNull(account.getLocations());
+        Facility testFac = new Facility("This is a test");
+        account.addLocation(testFac);
+        assert(account.getLocations().contains(testFac));
+        account.removeLocation(testFac);
+        assert(!account.getLocations().contains(testFac));
+    }
+
+
 }

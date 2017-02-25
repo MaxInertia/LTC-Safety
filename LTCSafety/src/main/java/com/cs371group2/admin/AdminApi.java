@@ -46,7 +46,7 @@ public class AdminApi {
 
         ConcernDao dao = new ConcernDao();
 
-        List<Concern> list = dao.load(request.getOffset(), request.getLimit());
+        List<Concern> list = dao.load(request);
 
         logger.log(Level.INFO, "Concern request was successful.");
         return list;

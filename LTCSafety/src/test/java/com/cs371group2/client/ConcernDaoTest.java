@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
+import com.cs371group2.admin.ConcernRequest;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
@@ -98,8 +99,10 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
+        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(1, 0, "");
+
         //Loads the only concern added to the database
-        List<Concern> concernList = dao.load(0, 1);
+        List<Concern> concernList = dao.load(request.build());
 
         assertEquals(firstConcern, concernList.get(0));
 
@@ -109,24 +112,26 @@ public class ConcernDaoTest extends DatastoreTest {
 
         dao.save(secondConcern);
 
-        concernList = dao.load(0, 2);
+        request = new ConcernRequest.TestHook_MutableConcernRequest(1, 1, "");
 
-        assertEquals(secondConcern, concernList.get(1));
+        concernList = dao.load(request.build());
+
+        assertEquals(secondConcern, concernList.get(0));
     }
 
     @Test (expected = AssertionError.class)
     public void LoadInvalidOffsetTest(){
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-
-        concernList = dao.load(-1, 5);
+        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(-1, 5, "");
+        concernList = dao.load(request.build());
     }
 
     @Test (expected = AssertionError.class)
     public void LoadInvalidLimitTest(){
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-
-        concernList = dao.load(0, -1);
+        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(0, -1, "");
+        concernList = dao.load(request.build());
     }
 }

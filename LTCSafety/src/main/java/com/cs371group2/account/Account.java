@@ -52,6 +52,34 @@ public final class Account {
         return locations;
     }
 
+    /**
+     * Associates the account with the given facility by adding
+     * it to the account's hashset of associated facilities
+     *
+     * @param toAdd the facility to associate with this account
+     * @return Whether the association was successful or not
+     */
+    public boolean addLocation(Facility toAdd){
+        if(toAdd == null)
+            return false;
+        else
+            return locations.add(toAdd);
+    }
+
+    /**
+     * Disassociates the account with the given facility by removing
+     * it from the account's hashset of associated facilities
+     *
+     * @param toRemove the facility to associate with this account
+     * @return Whether the association was successful or not
+     */
+    public boolean removeLocation(Facility toRemove){
+        if(toRemove == null)
+            return false;
+        else
+            return locations.remove(toRemove);
+    }
+
     public void setId(String id) {
         assert(id != null);
         this.id = id;
