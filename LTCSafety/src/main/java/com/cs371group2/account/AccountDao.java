@@ -8,7 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Brandon on 2017-02-06.
+ * This class extends the data-access object in our system to load, save, and delete accounts.
+ * These accounts
+ *
+ * Created on 2017-02-06.
  */
 public class AccountDao extends Dao<Account> {
 
@@ -25,7 +28,6 @@ public class AccountDao extends Dao<Account> {
         assert (id != null);
 
         logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
-        //return super.load(id);
         return ObjectifyService.ofy().load().type(Account.class).id(id).now();
     }
 
