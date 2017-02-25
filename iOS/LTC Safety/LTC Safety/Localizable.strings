@@ -12,6 +12,7 @@
 // Submit Concern Title
 "NEW_CONCERN_TITLE" = "New Concern";
 "NEW_CONCERN_ERROR_TITLE" = "Submission Failed";
+"NEW_CONCERN_SUBMIT_TITLE" = "Concern was successfully submitted";
 
 // Submit Concern Section Titles
 "CONTACT_INFO_TITLE" = "Contact Information";
