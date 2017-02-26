@@ -33,8 +33,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Name"
@@ -61,8 +60,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Email"
@@ -89,8 +87,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Phone Number"
@@ -132,8 +129,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Concern Nature"
@@ -160,8 +156,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Facility Name"
@@ -188,8 +183,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Room"
@@ -216,8 +210,7 @@
             <RelativeLayout
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
-                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+                android:padding="@dimen/detailedConcern_fieldPadding">
 
                 <TextView
                     android:text="Actions Taken"
@@ -262,6 +255,7 @@
             android:layout_height="30dp" />
 
         <Button
+            android:id="@+id/detailedConcern_retractButton"
             android:text="Retract"
             android:textColor="@color/colorAccent"
             android:layout_width="match_parent"
