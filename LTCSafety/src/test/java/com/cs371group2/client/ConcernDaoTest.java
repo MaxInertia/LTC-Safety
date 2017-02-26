@@ -148,6 +148,7 @@ public class ConcernDaoTest extends DatastoreTest {
         testSet.add(new FacilityDao().load("Other"));
 
         List<Concern> concerns = dao.load(0, 1, testSet);
+
         assertNotNull(concerns);
         assert(concerns.size() > 0);
     }

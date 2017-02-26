@@ -62,6 +62,7 @@ public class ConcernDao extends Dao<Concern> {
 
     /**
      * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
+     * The facilities is
      *
      * @param offset The offset to begin loading from
      * @param limit The maximum amount of concerns to load

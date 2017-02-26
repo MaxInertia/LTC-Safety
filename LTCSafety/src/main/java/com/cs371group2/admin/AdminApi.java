@@ -52,6 +52,20 @@ public class AdminApi {
         return list;
     }
 
-    //@ApiMethod(name = "requestConcern", path = "admin/requestConcern")
-    //public Concern requestConcern(ConcernRequest request) throws UnauthorizedException {
+    @ApiMethod(name = "requestConcern", path = "admin/requestConcern")
+    public Concern requestConcern( ConcernRequest request, @Named("concernId") String concernId) throws UnauthorizedException {
+        //if(request == null){
+        //    throw new UnauthorizedException("The request given was null");
+        //}
+
+        //Account account = request.authenticate();
+
+        //Concern loadedConcern = new ConcernDao().load(concernId);
+
+        //if(loadedConcern == null){
+        //    throw new UnauthorizedException("The concern identifier was not found in the database");
+        //} else {
+        //    return loadedConcern;
+        //}
+    }
 }

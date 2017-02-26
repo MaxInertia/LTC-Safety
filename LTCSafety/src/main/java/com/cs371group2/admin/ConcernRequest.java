@@ -17,7 +17,7 @@ public final class ConcernRequest extends AdminRequest {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
-    private static final Logger logger = Logger.getLogger( OwnerToken.class.getName() );
+    private static final Logger logger = Logger.getLogger( ConcernRequest.class.getName() );
 
     /** The offset in the database to begin loading the concerns from */
     private int offset;
