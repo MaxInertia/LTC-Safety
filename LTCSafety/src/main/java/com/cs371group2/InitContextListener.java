@@ -21,7 +21,6 @@ public class InitContextListener implements ServletContextListener {
         ObjectifyService.register(Concern.class);
         ObjectifyService.register(Account.class);
         ObjectifyService.register(Facility.class);
-        ObjectifyService.ofy().save().entity(new Facility("Other")).now();
     }
 
     @Override

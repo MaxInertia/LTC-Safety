@@ -2,8 +2,11 @@ package com.cs371group2.concern;
 
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
+import com.cs371group2.account.Account;
 import com.cs371group2.admin.ConcernRequest;
 import com.cs371group2.client.OwnerToken;
+import com.cs371group2.facility.Facility;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
@@ -11,6 +14,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,16 +65,40 @@ public class ConcernDao extends Dao<Concern> {
      *
      * @param offset The offset to begin loading from
      * @param limit The maximum amount of concerns to load
+     * @param facilities The list of facilities to load the concerns from
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
      */
-    public List<Concern> load(ConcernRequest request){
-        assert(request.getOffset() >= 0);
-        assert(request.getLimit() > 0);
+    public List<Concern> load(int offset, int limit, HashSet<Facility> facilities){
+        assert(offset >= 0);
+        assert(limit > 0);
 
-        List<Concern> filteredList = ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
-                                                                                    .offset(request.getOffset()).limit(request.getLimit()).list();
+        List<Concern> filteredList = new LinkedList<Concern>();
+
+        if(facilities == null) {
+            filteredList = ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
+                    .offset(offset)
+                    .limit(limit)
+                    .list();
+        } else {
+            for (Facility curFac : facilities) {
+                filteredList.addAll(
+                        ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
+                                .filter("facilityRef",curFac)
+                                .list()
+                );
+            }
+
+            List<Concern> temp = new LinkedList<Concern>();
+            for(int i = offset; i < offset + limit; i++){
+                if(filteredList.get(i) != null){
+                    temp.add(filteredList.get(i));
+                }
+            }
+
+            filteredList = temp;
+        }
 
         return filteredList;
     }

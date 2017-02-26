@@ -3,6 +3,7 @@ package com.cs371group2.admin;
 import android.util.Pair;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
+import com.cs371group2.account.AccountPermissions;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
@@ -62,7 +63,7 @@ final class FirebaseAuthenticator extends Authenticator {
         }
 
         AccountDao dao = new AccountDao();
-        Account account = dao.load(accessToken.getId());
+        Account account = dao.load(accessToken.getName());
 
         if (account == null) {
             throw new UnauthorizedException("Account does not exist in the datastore");

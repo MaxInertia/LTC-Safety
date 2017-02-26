@@ -20,6 +20,8 @@ public class AdminApiTest {
     @Test
     public void getConcernsTest() throws GeneralSecurityException, IOException {
     /*
+        This is currently commented out until mocking is done to generate a firebase token to test verification
+
         ConcernDao dao = new ConcernDao();
 
         ConcernData.TestHook_MutableConcernData concernData =

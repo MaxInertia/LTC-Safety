@@ -17,7 +17,12 @@ public class FacilityDao extends Dao<Facility> {
     /**
      * Create a new data access object for loading, saving, and deleting facilities.
      */
-    public FacilityDao(){ super(Facility.class); }
+    public FacilityDao(){
+        super(Facility.class);
+        if(super.load("Other") == null){
+            super.save(new Facility("Other"));
+        }
+    }
 
     /**
      * Loads the facility with the given identifier from the datastore. If the

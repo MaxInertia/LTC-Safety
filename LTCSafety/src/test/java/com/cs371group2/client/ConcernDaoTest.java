@@ -5,12 +5,17 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
+import com.cs371group2.account.Account;
 import com.cs371group2.admin.ConcernRequest;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
+import com.cs371group2.facility.Facility;
+import com.cs371group2.facility.FacilityDao;
 import com.googlecode.objectify.Key;
+
+import java.util.HashSet;
 import java.util.List;
 import org.junit.Test;
 
@@ -99,39 +104,51 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(1, 0, "");
-
-        //Loads the only concern added to the database
-        List<Concern> concernList = dao.load(request.build());
+        List<Concern> concernList = dao.load(0, 1, null);
 
         assertEquals(firstConcern, concernList.get(0));
 
         concernData = concernTest.generateConcernData().build();
-
         Concern secondConcern = new Concern(concernData);
-
         dao.save(secondConcern);
 
-        request = new ConcernRequest.TestHook_MutableConcernRequest(1, 1, "");
-
-        concernList = dao.load(request.build());
+        concernList = dao.load(1, 1, null);
 
         assertEquals(secondConcern, concernList.get(0));
     }
 
     @Test (expected = AssertionError.class)
-    public void LoadInvalidOffsetTest(){
+    public void LoadInvalidOffsetTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(-1, 5, "");
-        concernList = dao.load(request.build());
+        concernList = dao.load(-1, 5, null);
     }
 
     @Test (expected = AssertionError.class)
-    public void LoadInvalidLimitTest(){
+    public void LoadInvalidLimitTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-        ConcernRequest.TestHook_MutableConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(0, -1, "");
-        concernList = dao.load(request.build());
+        concernList = dao.load(0, -1, null);
+    }
+
+    /**
+     * This test saves and loads a concern from the "Other" facility in the form of a list
+     */
+    @Test
+    public void LoadConcernsFromOther(){
+
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern firstConcern = new Concern(concernData);
+        dao.save(firstConcern);
+
+        HashSet<Facility> testSet = new HashSet<Facility>();
+        testSet.add(new FacilityDao().load("Other"));
+
+        List<Concern> concerns = dao.load(0, 1, testSet);
+        assertNotNull(concerns);
+        assert(concerns.size() > 0);
     }
 }

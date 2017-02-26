@@ -1,5 +1,6 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.account.Account;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.facility.Facility;
@@ -41,14 +42,16 @@ public class AdminApi {
             throw new UnauthorizedException("Request was not legal!");
         }
 
-        new FacilityDao().save(new Facility("Other"));
-        request.authenticate();
+        Account account = request.authenticate();
 
         ConcernDao dao = new ConcernDao();
 
-        List<Concern> list = dao.load(request);
+        List<Concern> list = dao.load(request.getOffset(), request.getLimit(), account.getLocations() );
 
         logger.log(Level.INFO, "Concern request was successful.");
         return list;
     }
+
+    //@ApiMethod(name = "requestConcern", path = "admin/requestConcern")
+    //public Concern requestConcern(ConcernRequest request) throws UnauthorizedException {
 }
