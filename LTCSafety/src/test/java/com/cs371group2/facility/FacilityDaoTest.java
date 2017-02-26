@@ -18,7 +18,7 @@ public class FacilityDaoTest extends DatastoreTest {
     public void loadOtherTest(){
         FacilityDao dao = new FacilityDao();
         Facility other = dao.load(testId);
-        //assert (other.getId() == testId);
+        assert (other.getId() == testId);
     }
 
     /**
@@ -29,7 +29,7 @@ public class FacilityDaoTest extends DatastoreTest {
     public void loadRandomTest(){
         FacilityDao dao = new FacilityDao();
         Facility other = dao.load("asdfRandom");
-        //assert (other.getId() == "Other");
+        assert (other.getId() == testId);
     }
 
     /**

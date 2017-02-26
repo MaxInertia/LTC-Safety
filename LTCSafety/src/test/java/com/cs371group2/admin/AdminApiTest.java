@@ -29,7 +29,7 @@ public class AdminApiTest {
         dao.save(new Concern(concernData.build()));
 
         AdminApi api = new AdminApi();
-        List<Concern> concerns = api.requestConcernList(new ConcernRequest(0, 1, "x5gvMAYGfNcKv74VyHFgr4Ytcge2"));
+        List<Concern> concerns = api.requestConcernList(new ConcernListRequest(0, 1, "x5gvMAYGfNcKv74VyHFgr4Ytcge2"));
         assertNotNull(concerns);
         */
     }

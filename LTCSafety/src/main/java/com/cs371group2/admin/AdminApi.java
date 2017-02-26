@@ -4,7 +4,6 @@ import com.cs371group2.account.Account;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.facility.Facility;
-import com.cs371group2.facility.FacilityDao;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.UnauthorizedException;
 
@@ -34,7 +33,7 @@ public class AdminApi {
      * @throws UnauthorizedException
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
-    public List<Concern> requestConcernList(ConcernRequest request) throws UnauthorizedException {
+    public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException {
 
         logger.log(Level.INFO, "User is requesting a concern list. " + request);
 
@@ -52,20 +51,39 @@ public class AdminApi {
         return list;
     }
 
+    /**
+     * Requests an individual concern from the database based on the given unique concern id. The user submitting
+     * the request must have administrative permissions which will be verified before the request is completed.
+     *
+     * @param request The concern request containing the user's firebase token, along with the desired concern id
+     * @return The concern requested from the database
+     * @throws UnauthorizedException If the user is unauthorized or there is an error loading the concern, throw this
+     * @precond request != null
+     */
     @ApiMethod(name = "requestConcern", path = "admin/requestConcern")
-    public Concern requestConcern( ConcernRequest request, @Named("concernId") String concernId) throws UnauthorizedException {
-        //if(request == null){
-        //    throw new UnauthorizedException("The request given was null");
-        //}
+    public Concern requestConcern(ConcernRequest request) throws UnauthorizedException {
+        if(request == null){
+           throw new UnauthorizedException("The request given was null");
+        }
 
-        //Account account = request.authenticate();
+        if(!request.legalRequest()){
+            throw new UnauthorizedException("Request was not legal!");
+        }
 
-        //Concern loadedConcern = new ConcernDao().load(concernId);
+        Account account = request.authenticate();
 
-        //if(loadedConcern == null){
-        //    throw new UnauthorizedException("The concern identifier was not found in the database");
-        //} else {
-        //    return loadedConcern;
-        //}
+        Concern loadedConcern = new ConcernDao().load(request.getConcernId());
+
+        if(loadedConcern == null){
+            throw new UnauthorizedException("The concern identifier was not found in the database");
+        }
+
+        for (Facility location : account.getLocations()){
+            if(loadedConcern.getFacility() == location){
+                return loadedConcern;
+            }
+        }
+
+        throw new UnauthorizedException("Account is not linked to the concern's location and cannot be loaded");
     }
 }

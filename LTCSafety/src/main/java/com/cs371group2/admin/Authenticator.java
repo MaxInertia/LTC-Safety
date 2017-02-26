@@ -28,6 +28,7 @@ abstract class Authenticator{
         Pair<Account, AccessToken> infoPair = authenticateAccount(token);
 
         boolean isVerified = false;
+
         for (PermissionVerifier verifier : permissionVerifiers){
             if(verifier.hasPermission(infoPair.first, infoPair.second)){
                 isVerified = true;

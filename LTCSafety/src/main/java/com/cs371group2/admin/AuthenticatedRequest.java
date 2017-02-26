@@ -9,7 +9,7 @@ import java.security.GeneralSecurityException;
 
 /**
  * This abstract class represents a request that requires authentication and should be extended for more specific
- * types of requests (see ConcernRequest for example).
+ * types of requests (see ConcernListRequest for example).
  * Created by Brandon on 2017-02-09.
  */
 abstract class AuthenticatedRequest{

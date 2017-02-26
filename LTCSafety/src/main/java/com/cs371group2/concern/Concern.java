@@ -154,6 +154,10 @@ public final class Concern {
         return status;
     }
 
+    public Facility getFacility(){
+        return facilityRef.get();
+    }
+
     @Override
     public String toString() {
         return "Concern:\nID# " + this.id + this.getData().toString();

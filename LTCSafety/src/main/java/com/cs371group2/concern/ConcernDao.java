@@ -2,18 +2,13 @@ package com.cs371group2.concern;
 
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
-import com.cs371group2.account.Account;
-import com.cs371group2.admin.ConcernRequest;
 import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
-import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,6 +82,7 @@ public class ConcernDao extends Dao<Concern> {
                 filteredList.addAll(
                         ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
                                 .filter("facilityRef",curFac)
+                                .order("submissionDate")
                                 .list()
                 );
             }

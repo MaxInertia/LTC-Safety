@@ -1,7 +1,5 @@
 package com.cs371group2.admin;
 
-import com.cs371group2.client.OwnerToken;
-
 import java.util.logging.Logger;
 
 /**
@@ -13,11 +11,11 @@ import java.util.logging.Logger;
  *
  * Created on 2017-02-08.
  */
-public final class ConcernRequest extends AdminRequest {
+public final class ConcernListRequest extends AdminRequest {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
-    private static final Logger logger = Logger.getLogger( ConcernRequest.class.getName() );
+    private static final Logger logger = Logger.getLogger( ConcernListRequest.class.getName() );
 
     /** The offset in the database to begin loading the concerns from */
     private int offset;
@@ -44,15 +42,16 @@ public final class ConcernRequest extends AdminRequest {
 
         return true;
     }
+
     /**
-     * TestHook_MutableConcernData is a test hook to make ConcernRequest testable without exposing its
-     * members. An instance of TestHook_MutableConcernRequest can be used to construct new concern request
+     * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its
+     * members. An instance of TestHook_MutableConcernListRequest can be used to construct new concern request
      * instances and set values for testing purposes.
      */
-    public static class TestHook_MutableConcernRequest {
+    public static class TestHook_MutableConcernListRequest {
 
-        /** An immutable ConcernRequest for use in testing*/
-        private ConcernRequest immutable;
+        /** An immutable ConcernListRequest for use in testing*/
+        private ConcernListRequest immutable;
 
         /**
          * Creates a new mutable concern request
@@ -61,14 +60,14 @@ public final class ConcernRequest extends AdminRequest {
          * @param offset The concern offset of the mutable request
          * @param token The token of the mutable request
          */
-        public TestHook_MutableConcernRequest(int limit, int offset, String token) {
-            immutable = new ConcernRequest();
+        public TestHook_MutableConcernListRequest(int limit, int offset, String token) {
+            immutable = new ConcernListRequest();
             immutable.limit = limit;
             immutable.offset = offset;
             immutable.accessToken = token;
         }
 
-        public ConcernRequest build(){
+        public ConcernListRequest build(){
             return immutable;
         }
 
