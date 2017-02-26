@@ -17,7 +17,7 @@ public class StatusWrapper {
     }
 
     public String getFormattedDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d, yyyy, HH:MM a");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d, yyyy, h:mm a");
         return simpleDateFormat.format(date);
     }
 

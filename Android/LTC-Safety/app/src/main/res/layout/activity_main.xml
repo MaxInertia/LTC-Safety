@@ -12,16 +12,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp">
-
-        <Button
-            android:background="@android:color/white"
-            android:textColor="@color/colorPrimary"
-            android:text="@string/new_concern_text"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:background="@drawable/section_border"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/new_concern_button" />
-
+            android:layout_height="wrap_content"
+            android:padding="1dp">
+            <Button
+                android:background="@android:color/white"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/new_concern_text"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:id="@+id/new_concern_button" />
+        </LinearLayout>
     </LinearLayout>
 
     <ListView
