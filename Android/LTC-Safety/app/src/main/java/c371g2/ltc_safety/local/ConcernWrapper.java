@@ -13,11 +13,8 @@ import java.util.List;
 public class ConcernWrapper {
     private String concernType;
     private String actionsTaken;
-    private String reporterName;
-    private String reporterEmail;
-    private String reporterPhone;
-    private String facilityName;
-    private String roomName;
+    private Reporter reporter;
+    private Location location;
 
     private List<StatusWrapper> statuses;
     private long dateSubmitted;
@@ -33,17 +30,20 @@ public class ConcernWrapper {
         actionsTaken = concern.getData().getActionsTaken();
         if(actionsTaken==null) actionsTaken = "";
 
-        reporterName = concern.getData().getReporter().getName();
-        if(reporterName==null) reporterName = "";
-        reporterEmail = concern.getData().getReporter().getEmail();
-        if(reporterEmail==null) reporterEmail = "";
-        reporterPhone = concern.getData().getReporter().getPhoneNumber();
-        if(reporterPhone==null) reporterPhone = "";
 
-        facilityName = concern.getData().getLocation().getFacilityName();
+        String reporterName = concern.getData().getReporter().getName();
+        if(reporterName==null) reporterName = "";
+        String reporterEmail = concern.getData().getReporter().getEmail();
+        if(reporterEmail==null) reporterEmail = "";
+        String reporterPhone = concern.getData().getReporter().getPhoneNumber();
+        if(reporterPhone==null) reporterPhone = "";
+        reporter = new Reporter(reporterName, reporterEmail, reporterPhone);
+
+        String facilityName = concern.getData().getLocation().getFacilityName();
         if(facilityName==null) facilityName = "";
-        roomName = concern.getData().getLocation().getRoomName();
+        String roomName = concern.getData().getLocation().getRoomName();
         if(roomName==null) roomName = "";
+        location = new Location(facilityName, roomName);
 
         dateSubmitted = concern.getSubmissionDate().getValue();
         this.token = token;
@@ -56,11 +56,8 @@ public class ConcernWrapper {
     }
 
     ConcernWrapper(String rName, String rPhone, String rEmail, String facilityName, String roomName, String concernType, String actionsTaken) {
-        this.reporterName = rName;
-        this.reporterEmail = rEmail;
-        this.reporterPhone = rPhone;
-        this.facilityName = facilityName;
-        this.roomName = roomName;
+        reporter = new Reporter(rName, rEmail, rPhone);
+        location = new Location(facilityName, roomName);
         this.concernType = concernType;
         this.actionsTaken = actionsTaken;
         dateSubmitted = (new Date()).getTime();
@@ -75,23 +72,23 @@ public class ConcernWrapper {
     }
 
     public String getReporterName() {
-        return reporterName;
+        return reporter.getName();
     }
 
     public String getReporterEmail() {
-        return reporterEmail;
+        return reporter.getEmailAddress();
     }
 
     public String getReporterPhone() {
-        return reporterPhone;
+        return reporter.getPhoneNumber();
     }
 
     public String getFacilityName() {
-        return facilityName;
+        return location.getFacilityName();
     }
 
     public String getRoomName() {
-        return roomName;
+        return location.getRoomName();
     }
 
     public List<StatusWrapper> getStatuses() {
@@ -103,16 +100,6 @@ public class ConcernWrapper {
 
     public OwnerToken getOwnerToken() {
         return token;
-    }
-
-    private static class StatusWrapper {
-        String type;
-        long date;
-
-        StatusWrapper(String t, long d) {
-            type = t;
-            date = d;
-        }
     }
 
 }
