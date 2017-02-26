@@ -6,6 +6,8 @@
   Copyright © 2017 Allan Kerr. All rights reserved.
 */
 
+
+
 // Concern View Title
 "CONCERN_VIEW_TITLE" = "LTC Safety";
 
@@ -43,6 +45,7 @@
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";
+"LOADING_PROMPT" = "Loading";
 
 
 // Value Selection

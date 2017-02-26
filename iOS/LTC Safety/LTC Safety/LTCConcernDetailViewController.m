@@ -12,6 +12,7 @@
 #import "GTLRClient.h"
 #import "LTCConcern_Testing.h"
 #import "LTCConcernViewModel.h"
+#import "LTCLoadingViewController.h"
 
 NSString *const LTCDetailConcernTitle = @"DETAIL_CONCERN_TITLE";
 NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
@@ -54,37 +55,9 @@ NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
 - (void)_retractConcern {
     // Call the retract concern endpoint on the Client API using the view model's concern's owner token
     
-    UIAlertController *loadingMessage = [UIAlertController alertControllerWithTitle: @"Loading"
-                                                                            message: nil
-                                                                     preferredStyle: UIAlertControllerStyleAlert];
+    LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
     
-    [loadingMessage addAction:[UIAlertAction actionWithTitle: @"Cancel" style: UIAlertActionStyleCancel handler:nil]];
-    
-    UIViewController *customVC     = [[UIViewController alloc] init];
-    UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [spinner startAnimating];
-    [customVC.view addSubview:spinner];
-    [customVC.view addConstraint:[NSLayoutConstraint
-                                  constraintWithItem: spinner
-                                  attribute:NSLayoutAttributeCenterX
-                                  relatedBy:NSLayoutRelationEqual
-                                  toItem:customVC.view
-                                  attribute:NSLayoutAttributeCenterX
-                                  multiplier:1.0f
-                                  constant:0.0f]];
-    [customVC.view addConstraint:[NSLayoutConstraint
-                                  constraintWithItem: spinner
-                                  attribute:NSLayoutAttributeCenterY
-                                  relatedBy:NSLayoutRelationEqual
-                                  toItem:customVC.view
-                                  attribute:NSLayoutAttributeCenterY
-                                  multiplier:1.0f
-                                  constant:0.0f]];
-    [loadingMessage setValue:customVC forKey:@"contentViewController"];
-    
-    [self presentViewController: loadingMessage
-                       animated: true
-                     completion: nil];
+    [self presentViewController: loadingMessage animated: true completion: nil];
     
     [self.clientApi retractConcern:self.viewModel.concern.ownerToken completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
         [loadingMessage dismissViewControllerAnimated:YES completion:^(){

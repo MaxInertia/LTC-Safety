@@ -263,6 +263,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorSubmitConcern rowType:XLFormRowDescriptorTypeButton title:NSLocalizedString(LTCSubmitConcernPrompt, nil)];
         [section addFormRow: row];
+        
     }
     
     NSAssert1(self != nil, @"Failed to initialize %@", self.class);
