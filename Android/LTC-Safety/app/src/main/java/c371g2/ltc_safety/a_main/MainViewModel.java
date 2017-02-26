@@ -7,6 +7,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedList;
 
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -40,6 +42,7 @@ class MainViewModel implements ViewModelObserver {
      */
     static ArrayList<ConcernWrapper> getSortedConcernList(){
         // Method used when generating ListView of concerns in MainActivity. Not required for concern submission.
+        Collections.sort(concernList);
         return concernList;
     }
 
@@ -57,7 +60,6 @@ class MainViewModel implements ViewModelObserver {
         ArrayList<ConcernWrapper> concerns = new ArrayList<>();
         for(Object json_concern: all_json_concerns) {
             ConcernWrapper loadedConcern = gson.fromJson((String) json_concern, ConcernWrapper.class);
-
             concerns.add(loadedConcern);
         }
 

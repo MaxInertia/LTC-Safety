@@ -10,7 +10,7 @@ import java.util.List;
  * Class that contains all fields in the Concern class, but in common data types. The OwnerToken
  * did not need to be converted into an atomic data type because it only contains String.
  */
-public class ConcernWrapper {
+public class ConcernWrapper implements Comparable<ConcernWrapper>{
     private String concernType;
     private String actionsTaken;
     private Reporter reporter;
@@ -102,6 +102,14 @@ public class ConcernWrapper {
         return token;
     }
 
+    @Override
+    public int compareTo(ConcernWrapper otherConcern) {
+        if(dateSubmitted>otherConcern.dateSubmitted) {
+            return -1;
+        } else {
+            return 1;
+        }
+    }
 }
 
 

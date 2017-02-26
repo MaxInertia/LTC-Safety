@@ -8,8 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +30,7 @@ public class ConcernListAdapter extends ArrayAdapter<ConcernWrapper> {
      * @param resource The layout for each row of the list
      * @param concerns The list of concerns that will populate the list
      */
-    public ConcernListAdapter(Context context, int resource, ArrayList<ConcernWrapper> concerns) {
+    public ConcernListAdapter(Context context, int resource, List<ConcernWrapper> concerns) {
         super(context, resource, concerns);
     }
 
