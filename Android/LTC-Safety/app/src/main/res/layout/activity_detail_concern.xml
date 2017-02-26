@@ -243,10 +243,16 @@
             android:paddingEnd="16dp"
             android:paddingBottom="8dp"/>
 
-        <ListView
+        <LinearLayout
+            android:id="@+id/detailedConcern_statusLayout"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <!--<ListView
             android:id="@+id/detailedConcern_statusList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"/>-->
 
         <!-- RETRACT BUTTON -->
 

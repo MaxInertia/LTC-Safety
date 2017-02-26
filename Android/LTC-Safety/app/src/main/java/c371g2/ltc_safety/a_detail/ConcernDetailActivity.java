@@ -1,13 +1,22 @@
 package c371g2.ltc_safety.a_detail;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.List;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.local.ConcernWrapper;
+import c371g2.ltc_safety.local.StatusWrapper;
 
 /**
  * This activity displays all data corresponding to a specified concern. LocalConcern data is passed to
@@ -65,6 +74,29 @@ public class ConcernDetailActivity extends AppCompatActivity {
                 .setText(concern.getRoomName());
         ((TextView) findViewById(R.id.detailedConcern_actionsTakenField))
                 .setText(concern.getActionsTaken());
+
+        setupConcernStatusList(concern.getStatuses());
+    }
+
+    /**
+     * Add one row to the layout for each concern Status in the list provided
+     * @param concernStatuses List of concern Statuses
+     */
+    private void setupConcernStatusList(List concernStatuses) {
+        ViewGroup statusLayout = (ViewGroup) findViewById(R.id.detailedConcern_statusLayout);
+
+        for(Object statusObject: concernStatuses) {
+            StatusWrapper status = (StatusWrapper) statusObject;
+            View statusRow = LayoutInflater.from(this).inflate(R.layout.detailed_concern_status, statusLayout, false);
+
+            ((TextView) statusRow.findViewById(R.id.detailedConcern_statusType))
+                    .setText(status.getType());
+
+            ((TextView) statusRow.findViewById(R.id.detailedConcern_statusDate))
+                    .setText(status.getFormattedDate());
+
+            statusLayout.addView(statusRow);
+        }
     }
 
     private void exitActivity() {}
