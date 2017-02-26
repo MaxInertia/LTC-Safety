@@ -13,6 +13,8 @@ import com.appspot.ltc_safety.client.model.OwnerToken;
 import com.appspot.ltc_safety.client.model.Reporter;
 import com.google.api.client.util.DateTime;
 
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -40,8 +42,6 @@ public class MainViewModelTests {
 
     @Test
     public void test_writeAndReadDeviceData() {
-        // The following values do not need to be valid. The data that is used to create concerns
-        // in the NewConcernViewModel is
         String reporterName = "Reporter";
         String phoneNumber = "Phone";
         String emailAddress = "Email";
@@ -50,34 +50,19 @@ public class MainViewModelTests {
         String concernType = "Type";
         String actionsTaken = "Actions";
 
-        ConcernData concernData = new ConcernData();
-        concernData.setConcernNature(concernType);
-        concernData.setActionsTaken(actionsTaken);
-        Location facility = new Location();
-        facility.setFacilityName(facilityName);
-        facility.setRoomName(roomName);
-        concernData.setLocation(facility);
-        Reporter reporter = new Reporter();
-        reporter.setName(reporterName);
-        reporter.setPhoneNumber(phoneNumber);
-        reporter.setEmail(emailAddress);
-        concernData.setReporter(reporter);
-
-        Concern clientConcern = new com.appspot.ltc_safety.client.model.Concern();
-        clientConcern.setSubmissionDate(new DateTime(1));
-
-        ArrayList<ConcernStatus> statuses = new ArrayList<>();
-        ConcernStatus status = new ConcernStatus();
-        status.setType("Witnessed Fall");
-        status.setCreationDate(new DateTime(1));
-        statuses.add(status);
-        clientConcern.setStatuses(statuses);
-
-        clientConcern.setData(concernData);
+        // The following values do not need to be valid. The data that is used to create concerns
+        // in the NewConcernViewModel is
+        ConcernWrapper concern = generateConcernForTest(
+                reporterName,
+                phoneNumber,
+                emailAddress,
+                facilityName,
+                roomName,
+                concernType,
+                actionsTaken
+        );
 
         Activity activity = mActivity.getActivity();
-
-        ConcernWrapper concern = new ConcernWrapper(clientConcern,new OwnerToken());
         MainViewModel.saveNewConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
@@ -107,5 +92,37 @@ public class MainViewModelTests {
             }
         }
         fail();
+    }
+
+    public static ConcernWrapper generateConcernForTest(String reporterName, String phoneNumber, String emailAddress,
+                                                        String facilityName, String roomName, String concernType,
+                                                        String actionsTaken) {
+
+        ConcernData concernData = new ConcernData();
+        concernData.setConcernNature(concernType);
+        concernData.setActionsTaken(actionsTaken);
+        Location facility = new Location();
+        facility.setFacilityName(facilityName);
+        facility.setRoomName(roomName);
+        concernData.setLocation(facility);
+        Reporter reporter = new Reporter();
+        reporter.setName(reporterName);
+        reporter.setPhoneNumber(phoneNumber);
+        reporter.setEmail(emailAddress);
+        concernData.setReporter(reporter);
+
+        Concern clientConcern = new com.appspot.ltc_safety.client.model.Concern();
+        clientConcern.setSubmissionDate(new DateTime(1));
+
+        ArrayList<ConcernStatus> statuses = new ArrayList<>();
+        ConcernStatus status = new ConcernStatus();
+        status.setType("Witnessed Fall");
+        status.setCreationDate(new DateTime(1));
+        statuses.add(status);
+        clientConcern.setStatuses(statuses);
+
+        clientConcern.setData(concernData);
+
+        return new ConcernWrapper(clientConcern,new OwnerToken());
     }
 }

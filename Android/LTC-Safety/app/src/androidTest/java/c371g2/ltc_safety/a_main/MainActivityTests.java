@@ -17,7 +17,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
 
@@ -83,7 +82,5 @@ public class MainActivityTests {
 
         assertTrue("The concern ListView does not have an onClickListener", concernList.getOnItemClickListener()!=null);
     }
-
-
 
 }

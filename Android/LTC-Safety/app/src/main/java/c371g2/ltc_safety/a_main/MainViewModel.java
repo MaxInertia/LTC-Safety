@@ -82,5 +82,15 @@ class MainViewModel implements ViewModelObserver {
         saveNewConcern(context, newConcern);
     }
 
+    @Override
+    public ConcernWrapper getConcernAtIndex(int index) {
+        return null;
+    }
+
+    @Override
+    public void concernRetracted(Context context, ConcernWrapper concern, int index) {
+
+    }
+
 
 }

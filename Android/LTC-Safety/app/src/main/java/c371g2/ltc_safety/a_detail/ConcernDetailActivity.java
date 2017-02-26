@@ -1,9 +1,10 @@
-package c371g2.ltc_safety.a_view;
+package c371g2.ltc_safety.a_detail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  * This activity displays all data corresponding to a specified concern. LocalConcern data is passed to
@@ -18,12 +19,12 @@ import c371g2.ltc_safety.R;
  */
 public class ConcernDetailActivity extends AppCompatActivity {
 
-    private String ownerToken;
+    ConcernDetailViewModel viewModel = new ConcernDetailViewModel(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_concern);
+        setContentView(R.layout.activity_detail_concern);
     }
 
     /**
@@ -31,9 +32,9 @@ public class ConcernDetailActivity extends AppCompatActivity {
      * of interest is passed to this activity in a Bundle, stored in savedInstanceState.
      * @preconditions Bundle contains values for each concern field.
      * @modifies Each field in the view is populated with data from viewableConcern.
-     * @param concernBundle The bundle containing the data for the concern of interest.
+     * @param concern The concern of interest.
      */
-    private void populateFields(Bundle concernBundle) {}
+    private void populateFields(ConcernWrapper concern) {}
 
     private void exitActivity() {}
 }

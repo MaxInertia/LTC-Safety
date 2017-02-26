@@ -24,7 +24,7 @@
             android:label="New Concern"
             android:parentActivityName=".a_main.MainActivity"
         />
-        <activity android:name=".a_view.ConcernDetailActivity" />
+        <activity android:name=".a_detail.ConcernDetailActivity" />
     </application>
 
 </manifest>

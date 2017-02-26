@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_view_concern"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="c371g2.ltc_safety.a_detail.ConcernDetailActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- CONTACT INFORMATION -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONTACT INFORMATION"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Name"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_nameField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Email"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_emailField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Phone Number"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_phoneField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- CONCERN INFORMATION -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONCERN INFORMATION"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Concern Nature"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_concernNatureField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Facility Name"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_facilityNameField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Room"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_roomField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:paddingTop="@dimen/detailedConcern_fieldPaddingTopBottom"
+                android:paddingBottom="@dimen/detailedConcern_fieldPaddingTopBottom">
+
+                <TextView
+                    android:text="Actions Taken"
+                    android:textColor="@android:color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+                <TextView
+                    android:id="@+id/detailedConcern_actionsTakenField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!-- CONCERN STATUS LOG -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONCERN STATUS LOG"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <ListView
+            android:id="@+id/detailedConcern_statusList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- RETRACT BUTTON -->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <Button
+            android:text="Retract"
+            android:textColor="@color/colorAccent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+</ScrollView>
