@@ -22,9 +22,11 @@
         <activity
             android:name=".a_new.NewConcernActivity"
             android:label="New Concern"
-            android:parentActivityName=".a_main.MainActivity"
-        />
-        <activity android:name=".a_detail.ConcernDetailActivity" />
+            android:parentActivityName=".a_main.MainActivity" />
+
+        <activity android:name=".a_detail.ConcernDetailActivity"
+            android:label="View Concern"
+            android:parentActivityName=".a_main.MainActivity"/>
     </application>
 
 </manifest>

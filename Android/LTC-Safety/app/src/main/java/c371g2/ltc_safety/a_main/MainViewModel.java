@@ -84,12 +84,22 @@ class MainViewModel implements ViewModelObserver {
 
     @Override
     public ConcernWrapper getConcernAtIndex(int index) {
-        return null;
+        return concernList.get(index);
     }
 
     @Override
     public void concernRetracted(Context context, ConcernWrapper concern, int index) {
+        ConcernWrapper oldConcern = concernList.get(index);
+        assert(oldConcern.getReporterName().equals(concern.getReporterName()));
+        assert(oldConcern.getReporterEmail().equals(concern.getReporterEmail()));
+        assert(oldConcern.getReporterPhone().equals(concern.getReporterPhone()));
 
+        assert(oldConcern.getConcernType().equals(concern.getConcernType()));
+        assert(oldConcern.getActionsTaken().equals(concern.getActionsTaken()));
+        assert(oldConcern.getReporterName().equals(concern.getReporterName()));
+
+        assert(oldConcern.getOwnerToken().equals(concern.getOwnerToken()));
+        concernList.set(index,concern);
     }
 
 

@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import java.util.concurrent.CountDownLatch;
 
+import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
@@ -17,6 +18,7 @@ class ConcernDetailViewModel {
     final CountDownLatch signalLatch;
 
     private ConcernWrapper concern;
+    private int index;
 
     ConcernDetailViewModel(ConcernDetailActivity activity) {
         signalLatch = new CountDownLatch(1);
@@ -29,7 +31,8 @@ class ConcernDetailViewModel {
      * @return concern at specified index
      */
     ConcernWrapper getConcern(int index) {
-        return null;
+        this.index = index;
+        return ViewModelObserver.instance.getConcernAtIndex(index);
     }
 
     /**

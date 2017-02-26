@@ -2,6 +2,9 @@ package c371g2.ltc_safety.a_detail;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.local.ConcernWrapper;
@@ -25,6 +28,19 @@ public class ConcernDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_concern);
+
+        populateFields(viewModel.getConcern(
+                getIntent().getExtras().getInt("concern-index")
+        ));
+
+        Button retractButton = (Button) findViewById(R.id.detailedConcern_retractButton);
+        retractButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                viewModel.retractConcern();
+                //TODO: Update the listview of concern statuses
+            }
+        });
     }
 
     /**
@@ -34,7 +50,22 @@ public class ConcernDetailActivity extends AppCompatActivity {
      * @modifies Each field in the view is populated with data from viewableConcern.
      * @param concern The concern of interest.
      */
-    private void populateFields(ConcernWrapper concern) {}
+    private void populateFields(ConcernWrapper concern) {
+        ((TextView) findViewById(R.id.detailedConcern_nameField))
+                .setText(concern.getReporterName());
+        ((TextView) findViewById(R.id.detailedConcern_emailField))
+                .setText(concern.getReporterEmail());
+        ((TextView) findViewById(R.id.detailedConcern_phoneField))
+                .setText(concern.getReporterPhone());
+        ((TextView) findViewById(R.id.detailedConcern_concernNatureField))
+                .setText(concern.getConcernType());
+        ((TextView) findViewById(R.id.detailedConcern_facilityNameField))
+                .setText(concern.getFacilityName());
+        ((TextView) findViewById(R.id.detailedConcern_roomField))
+                .setText(concern.getRoomName());
+        ((TextView) findViewById(R.id.detailedConcern_actionsTakenField))
+                .setText(concern.getActionsTaken());
+    }
 
     private void exitActivity() {}
 }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_detail.ConcernDetailActivity;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
 
 /**
@@ -62,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //ConcernWrapper concernClicked = (ConcernWrapper) parent.getItemAtPosition(position);
+                        openConcernDetailActivity(position);
                     }
                 }
         );
@@ -85,7 +86,9 @@ public class MainActivity extends AppCompatActivity {
      * @preconditions none
      * @modifies The active activity changes from MainActivity to ConcernDetailActivity.
      */
-    private void openViewConcernActivity() {
-
+    private void openConcernDetailActivity(int index) {
+        Intent intent = new Intent(MainActivity.this, ConcernDetailActivity.class);
+        intent.putExtra("concern-index",index);
+        MainActivity.this.startActivity(intent);
     }
 }
