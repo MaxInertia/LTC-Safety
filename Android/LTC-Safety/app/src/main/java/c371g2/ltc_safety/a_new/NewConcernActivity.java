@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.Utilities;
@@ -61,7 +62,7 @@ public class NewConcernActivity extends AppCompatActivity {
         ChooserView.setup(
                 getBaseContext(),
                 concernNatureField,
-                "Select Concern Nature",
+                "Select LocalConcern Nature",
                 getResources().getStringArray(R.array.concern_types)
         );
 
@@ -74,7 +75,15 @@ public class NewConcernActivity extends AppCompatActivity {
         );
 
         newConcernViewModel = new NewConcernViewModel(NewConcernActivity.this);
-    }
+
+        /*LinearLayout chooserLayout = (LinearLayout) findViewById(R.id.chooserLinearLayout);
+        chooserLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });*/
+}
 
     @Override
     protected void onResume() {
@@ -143,8 +152,8 @@ public class NewConcernActivity extends AppCompatActivity {
 
             if(r>0) message += '\n';
             switch (rCodes[r].id) {
-                case 1: // No Concern type
-                    message+= " -  Concern Nature";
+                case 1: // No LocalConcern type
+                    message+= " -  LocalConcern Nature";
                     break;
                 case 2: // No Facility
                     message += " -  Facility";

@@ -1,8 +1,14 @@
 package c371g2.ltc_safety.a_main;
 
-import java.util.ArrayList;
+import android.content.Context;
+import android.content.SharedPreferences;
 
-import c371g2.ltc_safety.local.Concern;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Collection;
+
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  * This class acts as an interface between the app view in the main activity and the model. It loads
@@ -12,14 +18,18 @@ import c371g2.ltc_safety.local.Concern;
  */
 class MainViewModel implements ViewModelObserver {
 
-    private static ArrayList<Concern> concernList;
+    private static final String CONCERN_SHARED_PREF_KEY = "concerns";
+    private static ArrayList<ConcernWrapper> concernList;
 
     /**
      * Initialize model; loads the concerns from device memory and stores them in concernList.
      * @preconditions none
      * @modifies concernList; adds all concerns stored in device memory to the list.
      */
-    static void initialize() {}
+    static void initialize(Context context) {
+        concernList = loadConcerns(context);
+        assert(concernList!=null);
+    }
 
     /**
      * Retrieves the list of previously submitted concerns. The list is sorted with the most recent
@@ -28,9 +38,9 @@ class MainViewModel implements ViewModelObserver {
      * @modifies nothing
      * @return The sorted list of previously submitted concerns
      */
-    static ArrayList<Concern> getSortedConcernList(){
+    static ArrayList<ConcernWrapper> getSortedConcernList(){
         // Method used when generating ListView of concerns in MainActivity. Not required for concern submission.
-        return null;
+        return concernList;
     }
 
     /**
@@ -39,9 +49,19 @@ class MainViewModel implements ViewModelObserver {
      * @modifies nothing
      * @return ArrayList of all concerns stored in device memory. Empty ArrayList if no concerns exist.
      */
-    static ArrayList<Concern> loadConcerns() {
-        //TODO: Load concerns from device memory
-        return null;
+    static ArrayList<ConcernWrapper> loadConcerns(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(CONCERN_SHARED_PREF_KEY,Context.MODE_PRIVATE);
+        Collection all_json_concerns = sharedPreferences.getAll().values();
+
+        Gson gson = new Gson();
+        ArrayList<ConcernWrapper> concerns = new ArrayList<>();
+        for(Object json_concern: all_json_concerns) {
+            ConcernWrapper loadedConcern = gson.fromJson((String) json_concern, ConcernWrapper.class);
+
+            concerns.add(loadedConcern);
+        }
+
+        return concerns;
     }
 
     /**
@@ -50,10 +70,17 @@ class MainViewModel implements ViewModelObserver {
      * @modifies concernList; adds newConcern to the list.
      * @param newConcern The newly submitted concern.
      */
-    static void saveNewConcern(Concern newConcern) {
-        //TODO: Store new submitted concern in device memory
+    static void saveNewConcern(Context context, ConcernWrapper newConcern) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(CONCERN_SHARED_PREF_KEY,Context.MODE_PRIVATE);
+        Gson gson = new Gson();
+        String jsonConcern = gson.toJson(newConcern);
+        sharedPreferences.edit().putString(newConcern.getOwnerToken().getToken(),jsonConcern).apply();
     }
 
     @Override
-    public void newConcernSubmitted(Concern newConcern) {}
+    public void newConcernSubmitted(Context context, ConcernWrapper newConcern) {
+        saveNewConcern(context, newConcern);
+    }
+
+
 }

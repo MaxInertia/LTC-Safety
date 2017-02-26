@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
 import c371g2.ltc_safety.a_main.ViewModelObserver;
-import c371g2.ltc_safety.local.Concern;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  * This class acts as an interface between the app view in the new concern activity and the model.
@@ -36,7 +36,7 @@ class NewConcernViewModel {
     /**
      * Generates and submits a concern with the provided details to the Google Endpoints Backend.
      * @preconditions none
-     * @modifies If the input is valid: A new Concern is added to the list of concerns, and  the App
+     * @modifies If the input is valid: A new LocalConcern is added to the list of concerns, and  the App
      *  view changes to the ConcernDetailActivity (or MainActivity?). Validity of input is determined
      *  by the classes that extend Verifier.
      * @param concernType The type of concern being submitted.
@@ -152,9 +152,10 @@ class NewConcernViewModel {
 
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
+
                 // Store concern and token on device
-                Concern concern = new Concern(response.getConcern(), response.getOwnerToken());
-                ViewModelObserver.instance.newConcernSubmitted(concern);
+                ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
+                ViewModelObserver.instance.newConcernSubmitted(activity.getBaseContext(), concern);
                 // Inform user that the concern was successfully submitted
                 if(!activity.isFinishing() && !activity.isDestroyed()) activity.displayInfoDialogue(
                         "Submission successful",
@@ -163,10 +164,10 @@ class NewConcernViewModel {
                         true
                 );
             } else {
-                // Concern submission failed, possible cause: No internet access on device
+                // LocalConcern submission failed, possible cause: No internet access on device
                 if(!activity.isFinishing()) activity.displayInfoDialogue(
                         "Error",
-                        "Concern submission failed",
+                        "LocalConcern submission failed",
                         null,
                         true);
             }

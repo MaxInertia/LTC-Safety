@@ -6,7 +6,7 @@ import android.os.Bundle;
 import c371g2.ltc_safety.R;
 
 /**
- * This activity displays all data corresponding to a specified concern. Concern data is passed to
+ * This activity displays all data corresponding to a specified concern. LocalConcern data is passed to
  * this activity as a bundle, that bundle populates the fields of the activity view.
  * Activity: ~ View-Controller
  * @Invariants

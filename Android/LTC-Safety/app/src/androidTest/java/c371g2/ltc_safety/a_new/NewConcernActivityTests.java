@@ -40,14 +40,14 @@ public class NewConcernActivityTests {
     }
 
     /**
-     * Checks if the Submit Concern button has an on-Click-Listener
+     * Checks if the Submit LocalConcern button has an on-Click-Listener
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Test
     public void test_onCreate_buttonHasClickListener() {
         Button newConcernButton = (Button) newConcernActivity.findViewById(R.id.submit_concern_button);
 
-        assertTrue("The 'Submit Concern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
+        assertTrue("The 'Submit LocalConcern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
     }
 
 }

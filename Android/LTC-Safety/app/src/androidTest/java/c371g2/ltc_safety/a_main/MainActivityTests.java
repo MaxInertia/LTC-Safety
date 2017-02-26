@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.Button;
@@ -39,7 +38,6 @@ public class MainActivityTests {
     @BeforeClass
     public static void setup() {
         mActivity.launchActivity(new Intent());
-
     }
 
     @Before
@@ -48,14 +46,14 @@ public class MainActivityTests {
     }
 
     /**
-     * Checks if the New Concern button has an on-Click-Listener
+     * Checks if the New LocalConcern button has an on-Click-Listener
      */
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Test
     public void test_onCreate_buttonHasClickListener() {
         Button newConcernButton = (Button) mainActivity.findViewById(R.id.new_concern_button);
 
-        assertTrue("The 'New Concern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
+        assertTrue("The 'New LocalConcern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
     }
 
     /**
@@ -78,7 +76,6 @@ public class MainActivityTests {
         newConcernActivity.finish();
     }
 
-    @Suppress
     @Test
     public void test_onCreate_ListView_hasOnClickListener() {
         Activity mainActivity = mActivity.getActivity();

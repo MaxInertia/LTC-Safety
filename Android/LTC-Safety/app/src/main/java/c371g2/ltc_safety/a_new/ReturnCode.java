@@ -35,7 +35,7 @@ enum ReturnCode {
     IOEXCEPTION_THROWN_BY_API(6),
 
     /**
-     * Concern submission was successful
+     * LocalConcern submission was successful
      */
     SUCCESS(7);
 

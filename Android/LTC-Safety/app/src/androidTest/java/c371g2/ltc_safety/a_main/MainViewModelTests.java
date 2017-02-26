@@ -1,22 +1,26 @@
 package c371g2.ltc_safety.a_main;
 
-import android.support.test.filters.Suppress;
+import android.app.Activity;
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.appspot.ltc_safety.client.Client;
+import com.appspot.ltc_safety.client.model.Concern;
 import com.appspot.ltc_safety.client.model.ConcernData;
+import com.appspot.ltc_safety.client.model.ConcernStatus;
 import com.appspot.ltc_safety.client.model.Location;
 import com.appspot.ltc_safety.client.model.OwnerToken;
 import com.appspot.ltc_safety.client.model.Reporter;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
+import com.google.api.client.util.DateTime;
 
+import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 
-import c371g2.ltc_safety.local.Concern;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 import static junit.framework.Assert.fail;
 
@@ -25,6 +29,14 @@ import static junit.framework.Assert.fail;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainViewModelTests {
+
+    @ClassRule
+    public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class);
+
+    @Before
+    public void setup() {
+        mActivity.launchActivity(new Intent());
+    }
 
     @Test
     public void test_writeAndReadDeviceData() {
@@ -43,6 +55,7 @@ public class MainViewModelTests {
         concernData.setActionsTaken(actionsTaken);
         Location facility = new Location();
         facility.setFacilityName(facilityName);
+        facility.setRoomName(roomName);
         concernData.setLocation(facility);
         Reporter reporter = new Reporter();
         reporter.setName(reporterName);
@@ -50,24 +63,46 @@ public class MainViewModelTests {
         reporter.setEmail(emailAddress);
         concernData.setReporter(reporter);
 
-        com.appspot.ltc_safety.client.model.Concern clientConcern = new com.appspot.ltc_safety.client.model.Concern();
+        Concern clientConcern = new com.appspot.ltc_safety.client.model.Concern();
+        clientConcern.setSubmissionDate(new DateTime(1));
+
+        ArrayList<ConcernStatus> statuses = new ArrayList<>();
+        ConcernStatus status = new ConcernStatus();
+        status.setType("Witnessed Fall");
+        status.setCreationDate(new DateTime(1));
+        statuses.add(status);
+        clientConcern.setStatuses(statuses);
+
         clientConcern.setData(concernData);
 
-        Concern concern = new Concern(clientConcern,new OwnerToken());
-        MainViewModel.saveNewConcern(concern);
+        Activity activity = mActivity.getActivity();
+
+        ConcernWrapper concern = new ConcernWrapper(clientConcern,new OwnerToken());
+        MainViewModel.saveNewConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
-        ArrayList<Concern> concerns = MainViewModel.loadConcerns();
+        ArrayList<ConcernWrapper> concerns = MainViewModel.loadConcerns(activity.getBaseContext());
         if(concerns==null || concerns.size()==0){
             fail();
         }
 
+        //assertTrue("Not the same name", reporterName.equals(concerns.get(0).getReporterName()));
+        //assertTrue("Not the same phone", phoneNumber.equals(concerns.get(0).getConcernObject().getData().getReporter().getPhoneNumber()));
+        //assertTrue("Not the same email", emailAddress.equals(concerns.get(0).getConcernObject().getData().getReporter().getEmail()));
+        //assertTrue("Not the same facility", facilityName.equals(concerns.get(0).getConcernObject().getData().getLocation().getFacilityName()));
+        //assertTrue("Not the same room", roomName.equals(concerns.get(0).getConcernObject().getData().getLocation().getRoomName()));
+        //assertTrue("No the same concern nature", concernType.equals(concerns.get(0).getConcernObject().getData().getConcernNature()));
+        // assertTrue("Not the same actions taken", actionsTaken.equals(concerns.get(0).getConcernObject().getData().getActionsTaken()));
+
         // If the list does not contain the concern we attempted to save then the save failed.
-        for(Concern c: concerns) {
-            if(reporterName.equals(c.getConcernObject().getData().getReporter().getName()) && phoneNumber.equals(c.getConcernObject().getData().getReporter().getPhoneNumber())
-                    && emailAddress.equals(c.getConcernObject().getData().getReporter().getEmail()) && facilityName.equals(c.getConcernObject().getData().getLocation().getFacilityName())
-                    && roomName.equals(c.getConcernObject().getData().getLocation().getRoomName()) && concernType.equals(c.getConcernObject().getData().getConcernNature())
-                    && actionsTaken.equals(c.getConcernObject().getData().getActionsTaken())) {
+        for(ConcernWrapper c: concerns) {
+            if(reporterName.equals(c.getReporterName()) &&
+                    phoneNumber.equals(c.getReporterPhone()) &&
+                    emailAddress.equals(c.getReporterEmail()) &&
+                    facilityName.equals(c.getFacilityName()) &&
+                    roomName.equals(c.getRoomName()) &&
+                    concernType.equals(c.getConcernType()) &&
+                    actionsTaken.equals(c.getActionsTaken())) {
                 return;
             }
         }

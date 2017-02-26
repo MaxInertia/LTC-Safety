@@ -1,6 +1,7 @@
 package c371g2.ltc_safety.a_new;
 
 import android.content.Intent;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -51,13 +52,13 @@ public class NewConcernViewModelTests {
         ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
-        assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
+        assertTrue("Expecting VALID_INPUT return code but was "+rCode[0],ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
-        newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
+        newConcernViewModel.signalLatch.await(20, TimeUnit.SECONDS);
 
         // Check submission return code
-        assertTrue(ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
+        assertTrue("Expecting SUCCESS return code but was "+newConcernViewModel.submissionReturnCode, ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
     }
 
     @Test
@@ -76,7 +77,7 @@ public class NewConcernViewModelTests {
         assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
-        newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
+        newConcernViewModel.signalLatch.await(20, TimeUnit.SECONDS);
 
         // Check submission return code
         assertTrue(ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
@@ -98,7 +99,7 @@ public class NewConcernViewModelTests {
         assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
 
         // Wait for network thread to finish
-        newConcernViewModel.signalLatch.await(10, TimeUnit.SECONDS);
+        newConcernViewModel.signalLatch.await(20, TimeUnit.SECONDS);
 
         // Check submission return code
         assertTrue(ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
@@ -110,7 +111,7 @@ public class NewConcernViewModelTests {
         String concernType = "";
         String actionsTaken = "none";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[3];
-        String reporterName = "No Concern Type";
+        String reporterName = "No LocalConcern Type";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
 

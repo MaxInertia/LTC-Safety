@@ -1,8 +1,8 @@
 package c371g2.ltc_safety.a_main;
 
-import java.util.ArrayList;
+import android.content.Context;
 
-import c371g2.ltc_safety.local.Concern;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  *
@@ -17,5 +17,5 @@ public interface ViewModelObserver {
      * @preconditions concern is not null.
      * @modifies concernList in MainViewModel; concern is added to the list.
      */
-    void newConcernSubmitted(Concern concern);
+    void newConcernSubmitted(Context context, ConcernWrapper concern);
 }
