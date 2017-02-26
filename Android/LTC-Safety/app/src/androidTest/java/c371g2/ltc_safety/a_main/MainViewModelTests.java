@@ -25,7 +25,7 @@ import static junit.framework.Assert.fail;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainViewModelTests {
-    @Suppress
+
     @Test
     public void test_writeAndReadDeviceData() {
         // The following values do not need to be valid. The data that is used to create concerns
