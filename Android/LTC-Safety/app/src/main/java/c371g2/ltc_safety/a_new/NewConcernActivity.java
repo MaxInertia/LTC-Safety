@@ -89,7 +89,8 @@ public class NewConcernActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if( !Utilities.hasNetworkAccess(NewConcernActivity.this) ) {
-            displayInfoDialogue(
+            Utilities.displayInfoDialogue(
+                    this,
                     "No internet connection",
                     "Internet required to submit concern",
                     null,
@@ -124,7 +125,8 @@ public class NewConcernActivity extends AppCompatActivity {
             submitConcernButton.setEnabled(true);
         } else {
             // Actions to be performed if input is valid
-            progressDialog = displayInfoDialogue(
+            progressDialog = Utilities.displayInfoDialogue(
+                    this,
                     null,
                     "Please wait",
                     null,
@@ -167,7 +169,8 @@ public class NewConcernActivity extends AppCompatActivity {
             }
         }
 
-        displayInfoDialogue(
+        Utilities.displayInfoDialogue(
+                this,
                 title,
                 message,
                 null,
@@ -175,30 +178,7 @@ public class NewConcernActivity extends AppCompatActivity {
         );
     }
 
-    /**
-     * Display a popup. This can contain a title and/or a message. A listener can be linked to the
-     * popup; the operation in the listener will be performed when the popup is dismissed.
-     * @param title Title of the popup
-     * @param message Text in the popup
-     * @param listener The listener for the dismissal of the popup
-     * @param isCancellable Boolean; can the user dismiss the popup
-     */
-    AlertDialog displayInfoDialogue(String title, String message, DialogInterface.OnDismissListener listener, boolean isCancellable) {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(NewConcernActivity.this);
-        alertBuilder.setCancelable(isCancellable);
-        if(title != null) {
-            alertBuilder.setTitle(title);
-        }
-        if(message != null) {
-            alertBuilder.setMessage(message);
-        }
-        if(listener != null) {
-            alertBuilder.setOnDismissListener(listener);
-        }
-        AlertDialog dialog = alertBuilder.create();
-        dialog.show();
-        return dialog;
-    }
+
 
     private void exitActivity() {}
 }

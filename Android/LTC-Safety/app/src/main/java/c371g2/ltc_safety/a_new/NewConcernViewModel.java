@@ -13,6 +13,7 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 
+import c371g2.ltc_safety.Utilities;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -156,21 +157,30 @@ class NewConcernViewModel {
                 // Store concern and token on device
                 ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
                 ViewModelObserver.instance.newConcernSubmitted(activity.getBaseContext(), concern);
+
                 // Inform user that the concern was successfully submitted
-                if(!activity.isFinishing() && !activity.isDestroyed()) activity.displayInfoDialogue(
-                        "Submission successful",
-                        "Your concern has been submitted",
-                        null,
-                        true
-                );
+                if(!activity.isFinishing() && !activity.isDestroyed()) {
+                    Utilities.displayInfoDialogue(
+                            activity,
+                            "Submission successful",
+                            "Your concern has been submitted",
+                            null,
+                            true
+                    );
+                }
+
             } else {
                 // LocalConcern submission failed, possible cause: No internet access on device
-                if(!activity.isFinishing()) activity.displayInfoDialogue(
-                        "Error",
-                        "LocalConcern submission failed",
-                        null,
-                        true);
+                if(!activity.isFinishing()) {
+                    Utilities.displayInfoDialogue(
+                            activity,
+                            "Error",
+                            "Concern submission failed",
+                            null,
+                            true);
+                }
             }
+
             submissionReturnCode = returnCode;
             signalLatch.countDown();
         }
