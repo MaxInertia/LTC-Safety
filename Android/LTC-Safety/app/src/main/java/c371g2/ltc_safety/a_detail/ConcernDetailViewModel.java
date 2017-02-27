@@ -56,7 +56,7 @@ class ConcernDetailViewModel {
      * Retract the concern currently being viewed on the ConcernDetailActivity
      */
     protected void retractConcern() {
-        //TODO: Use client-API here to retract the concern currently being viewed
+        (new ConcernRetractor()).execute();
     }
 
     /**
@@ -70,12 +70,66 @@ class ConcernDetailViewModel {
 
         @Override
         protected ReturnCode doInBackground(Void... params) {
-           return null;
+            ReturnCode returnCode;
+
+            Client.Builder builder = new Client.Builder(
+                    AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(),
+                    null
+            );
+            Client client = builder.build();
+
+            try {
+                statusResponse = client.retractConcern(concern.getOwnerToken()).execute();
+                returnCode = NOERROR;
+            } catch (IOException ioException) {
+                returnCode = IOEXCEPTION;
+            }
+
+            return returnCode;
         }
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
+            if(!activity.isFinishing() && activity.progressDialog!=null) {
+                activity.progressDialog.cancel(); //progressDialog is not initialized for tests
+            }
 
+            if (returnCode.equals(NOERROR)) {
+                if (!activity.isFinishing() && !activity.isDestroyed()) {
+                    Utilities.displayInfoDialogue(
+                            activity,
+                            "Retract successful",
+                            "Your concern has been retracted",
+                            null,
+                            true
+                    );
+                }
+                concern.getStatuses().add( new StatusWrapper(
+                        statusResponse.getStatus().getType(),
+                        statusResponse.getStatus().getCreationDate().getValue()
+                ));
+
+                ViewModelObserver.instance.concernRetracted(
+                        activity.getBaseContext(),
+                        concern,
+                        index
+                );
+                returnCode = SUCCESS;
+
+            } else {
+                if (!activity.isFinishing()) {
+                    Utilities.displayInfoDialogue(
+                            activity,
+                            "Error",
+                            "Failed retracting concern",
+                            null,
+                            true);
+                }
+            }
+
+            submissionReturnCode = returnCode;
+            signalLatch.countDown();
         }
 
     }
