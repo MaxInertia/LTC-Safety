@@ -27,7 +27,7 @@ import c371g2.ltc_safety.local.ConcernWrapper;
 import static junit.framework.Assert.fail;
 
 /**
- * This class runs tests on the methods in the MainViewModel class.
+ * This class runs tests on the methods in the MainViewModel class. Requires device to run.
  */
 @RunWith(AndroidJUnit4.class)
 public class MainViewModelTests {
@@ -70,14 +70,6 @@ public class MainViewModelTests {
         if(concerns==null || concerns.size()==0){
             fail();
         }
-
-        //assertTrue("Not the same name", reporterName.equals(concerns.get(0).getReporterName()));
-        //assertTrue("Not the same phone", phoneNumber.equals(concerns.get(0).getConcernObject().getData().getReporter().getPhoneNumber()));
-        //assertTrue("Not the same email", emailAddress.equals(concerns.get(0).getConcernObject().getData().getReporter().getEmail()));
-        //assertTrue("Not the same facility", facilityName.equals(concerns.get(0).getConcernObject().getData().getLocation().getFacilityName()));
-        //assertTrue("Not the same room", roomName.equals(concerns.get(0).getConcernObject().getData().getLocation().getRoomName()));
-        //assertTrue("No the same concern nature", concernType.equals(concerns.get(0).getConcernObject().getData().getConcernNature()));
-        // assertTrue("Not the same actions taken", actionsTaken.equals(concerns.get(0).getConcernObject().getData().getActionsTaken()));
 
         // If the list does not contain the concern we attempted to save then the save failed.
         for(ConcernWrapper c: concerns) {

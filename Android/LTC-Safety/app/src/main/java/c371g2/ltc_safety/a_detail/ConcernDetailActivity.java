@@ -1,9 +1,6 @@
 package c371g2.ltc_safety.a_detail;
 
-import android.app.AlertDialog;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.BasicActivity;
 import c371g2.ltc_safety.Utilities;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
@@ -29,10 +27,9 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * For a given instance of this activity, the fields do not change after they are set by the
  * populateFields() method. The method is only called once.
  */
-public class ConcernDetailActivity extends AppCompatActivity {
+public class ConcernDetailActivity extends BasicActivity {
 
     ConcernDetailViewModel viewModel = new ConcernDetailViewModel(ConcernDetailActivity.this);
-    AlertDialog progressDialog;
 
     Button retractButton;
 

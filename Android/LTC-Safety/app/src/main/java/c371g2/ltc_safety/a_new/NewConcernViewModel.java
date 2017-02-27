@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 
 import com.appspot.ltc_safety.client.Client;
@@ -12,7 +13,9 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import c371g2.ltc_safety.BasicActivity;
 import c371g2.ltc_safety.Utilities;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
@@ -24,11 +27,11 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  */
 class NewConcernViewModel {
 
-    private NewConcernActivity activity;
+    private Activity activity;
     final CountDownLatch signalLatch;
     ReturnCode submissionReturnCode;
 
-    NewConcernViewModel(NewConcernActivity activity) {
+    NewConcernViewModel(Activity activity) {
         signalLatch = new CountDownLatch(1);
         submissionReturnCode = null;
         this.activity = activity;
@@ -149,8 +152,8 @@ class NewConcernViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            if(!activity.isFinishing() && activity.progressDialog!=null) {
-                activity.progressDialog.cancel(); //progressDialog is not initialized for tests
+            if(!activity.isFinishing() && ((BasicActivity)activity).progressDialog!=null) {
+                ((BasicActivity)activity).progressDialog.cancel(); //progressDialog is not initialized for tests
             }
 
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
@@ -185,6 +188,38 @@ class NewConcernViewModel {
 
             submissionReturnCode = returnCode;
             signalLatch.countDown();
+        }
+    }
+
+    static class Test_Hook implements NewConcernViewModel_TestHook {
+
+        @Override
+        public boolean submitConcern(Activity testActivity, String concernType, String actionsTaken, String facilityName,
+                                  String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
+
+            NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);
+            ReturnCode[] returnCode = ncvm.submitConcern(
+                    concernType,
+                    actionsTaken,
+                    facilityName,
+                    roomName,
+                    reporterName,
+                    emailAddress,
+                    phoneNumber
+            );
+
+            // Inputs were accepted by the Verifier classes
+            if(returnCode[0]==ReturnCode.VALID_INPUT) {
+                // Wait for network thread to finish
+                ncvm.signalLatch.await(20, TimeUnit.SECONDS);
+                // Submission successful, return true.
+                if(ncvm.submissionReturnCode==ReturnCode.SUCCESS) {
+                    return true;
+                }
+            }
+
+            // Submission failed.
+            return false;
         }
     }
 }

@@ -81,6 +81,7 @@ class MainViewModel implements ViewModelObserver {
     @Override
     public void newConcernSubmitted(Context context, ConcernWrapper newConcern) {
         saveConcern(context, newConcern);
+        concernList.add(newConcern);
     }
 
     @Override
@@ -117,8 +118,12 @@ class MainViewModel implements ViewModelObserver {
      */
     static class Test_Hook implements MainViewModel_TestHook {
         @Override
-        public void setAsOnlyConcern(ConcernWrapper concern) {
+        public void clearConcernList() {
             concernList = new ArrayList<>();
+        }
+
+        @Override
+        public void addConcern(ConcernWrapper concern) {
             concernList.add(concern);
         }
     }

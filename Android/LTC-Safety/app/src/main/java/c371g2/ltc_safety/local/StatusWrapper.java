@@ -11,7 +11,7 @@ public class StatusWrapper {
     private String type;
     private long date;
 
-    StatusWrapper(String t, long d) {
+    public StatusWrapper(String t, long d) {
         type = t;
         date = d;
     }

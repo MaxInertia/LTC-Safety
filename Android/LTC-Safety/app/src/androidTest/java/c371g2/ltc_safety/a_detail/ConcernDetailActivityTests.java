@@ -25,7 +25,8 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 
 /**
- *
+ * This class is used to test the ConcernDetailActivity class. This test class requires a device (real
+ * or emulated) to run.
  */
 @RunWith(AndroidJUnit4.class)
 public class ConcernDetailActivityTests {
@@ -48,7 +49,8 @@ public class ConcernDetailActivityTests {
                 "None."
         );
 
-        MainViewModel_TestHook.instance.setAsOnlyConcern(concern);
+        MainViewModel_TestHook.instance.clearConcernList();
+        MainViewModel_TestHook.instance.addConcern(concern);
 
         Intent i = new Intent();
         i.putExtra("concern-index",0);

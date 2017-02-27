@@ -1,15 +1,12 @@
 package c371g2.ltc_safety.a_new;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.BasicActivity;
 import c371g2.ltc_safety.Utilities;
 
 /**
@@ -19,7 +16,7 @@ import c371g2.ltc_safety.Utilities;
  * @Invariants none
  * @HistoryProperties none
  */
-public class NewConcernActivity extends AppCompatActivity {
+public class NewConcernActivity extends BasicActivity {
 
     NewConcernViewModel newConcernViewModel;
 
@@ -32,8 +29,6 @@ public class NewConcernActivity extends AppCompatActivity {
     EditText roomField;
     EditText concernNatureField;
     EditText actionsTakenField;
-
-    AlertDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -18,7 +18,7 @@ import c371g2.ltc_safety.R;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * This class runs tests on the methods in the NewConcernViewModel class.
+ * This class runs tests on the methods in the NewConcernViewModel class. Requires device to run.
  */
 @RunWith(AndroidJUnit4.class)
 public class NewConcernViewModelTests {
