@@ -4,20 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.widget.ListView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.List;
+
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.a_main.MainViewModelTests;
+import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.local.ConcernWrapper;
+import c371g2.ltc_safety.local.StatusWrapper;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 /**
  *
@@ -25,104 +30,126 @@ import static junit.framework.Assert.assertEquals;
 @RunWith(AndroidJUnit4.class)
 public class ConcernDetailActivityTests {
 
-    @ClassRule
-    public static ActivityTestRule<ConcernDetailActivity> mActivity = new ActivityTestRule<>(ConcernDetailActivity.class);
-    public static ConcernWrapper concern;
+    @Rule
+    public ActivityTestRule<ConcernDetailActivity> mActivity = new ActivityTestRule<>(ConcernDetailActivity.class,true,false);
+
+    private ConcernWrapper concern;
     private Activity concernDetailActivity;
 
-    @BeforeClass
-    public static void setup() {
-        String reporterName = "Jeff";
-        String phoneNumber = "3213884";
-        String emailAddress = "PixieGod@email.com";
-        String facilityName = "UofS";
-        String roomName = "B102";
-        String concernType = "Near Miss";
-        String actionsTaken = "None.";
-
-        MainViewModelTests.generateConcernForTest(
-                reporterName,
-                phoneNumber,
-                emailAddress,
-                facilityName,
-                roomName,
-                concernType,
-                actionsTaken
+    @Before
+    public void setup() {
+         concern = MainViewModelTests.generateConcernForTest(
+                "Jeff",
+                "3213884",
+                "PixieGod@email.com",
+                "UofS",
+                "B102",
+                "Near Miss",
+                "None."
         );
+
+        MainViewModel_TestHook.instance.setAsOnlyConcern(concern);
+
         Intent i = new Intent();
         i.putExtra("concern-index",0);
         mActivity.launchActivity(i);
 
-        int index = mActivity.getActivity().getIntent().getExtras().getInt("concern-index");
-        concern = mActivity.getActivity().viewModel.getConcern(index);
-}
-
-    @Before
-    public void beforeEach() {
         concernDetailActivity = mActivity.getActivity();
     }
 
+    // Contact information tests
+
     @Test
     public void test_field_name() {
-        String nameFieldString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_nameField
-        )).getText().toString();
+         TextView tView = ((TextView) ((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+                R.id.detailedConcern_contactInformation
+        )).getChildAt(0)).getChildAt(1));
+        assertNotNull(tView);
+
+        String nameFieldString = tView.getText().toString();
         assertEquals(nameFieldString,concern.getReporterName());
     }
 
     @Test
     public void test_field_phoneNumber() {
-        String phoneNumberString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_phoneField
-        )).getText().toString();
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+                R.id.detailedConcern_contactInformation
+        )).getChildAt(4)).getChildAt(1));
+        assertNotNull(tView);
+
+        String phoneNumberString = tView.getText().toString();
         assertEquals(phoneNumberString, concern.getReporterPhone());
     }
 
     @Test
     public void test_field_email() {
-        String emailFieldString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_emailField
-        )).getText().toString();
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+                R.id.detailedConcern_contactInformation
+        )).getChildAt(2)).getChildAt(1));
+        assertNotNull(tView);
+
+        String emailFieldString = tView.getText().toString();
         assertEquals(emailFieldString, concern.getReporterEmail());
     }
 
+    // Concern information tests
+
     @Test
     public void test_field_concernNature() {
-        String concernNatureString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_concernNatureField
-        )).getText().toString();
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+                R.id.detailedConcern_concernInformation
+        )).getChildAt(0)).getChildAt(1));
+
+        assertNotNull(tView);
+
+        String concernNatureString = tView.getText().toString();
         assertEquals(concernNatureString, concern.getConcernType());
     }
 
     @Test
     public void test_field_facilityName() {
-        String facilityNameString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_facilityNameField
-        )).getText().toString();
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout)  concernDetailActivity.findViewById(
+                R.id.detailedConcern_concernInformation
+        )).getChildAt(2)).getChildAt(1));
+        assertNotNull(tView);
+
+        String facilityNameString = tView.getText().toString();
         assertEquals(facilityNameString, concern.getFacilityName());
     }
 
     @Test
     public void test_field_roomName() {
-        String roomFieldString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_roomField
-        )).getText().toString();
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout)  concernDetailActivity.findViewById(
+                R.id.detailedConcern_concernInformation
+        )).getChildAt(4)).getChildAt(1));
+        assertNotNull(tView);
+
+        String roomFieldString = tView.getText().toString();
         assertEquals(roomFieldString, concern.getRoomName());
     }
 
     @Test
     public void test_field_actionsTaken() {
-        String actionsTakenString = ((TextView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_actionsTakenField
-        )).getText().toString();
-        assertEquals(actionsTakenString, concern.getReporterPhone());
+         TextView tView = ((TextView) ((RelativeLayout)((LinearLayout)  concernDetailActivity.findViewById(
+                R.id.detailedConcern_concernInformation
+        )).getChildAt(6)).getChildAt(1));
+        assertNotNull(tView);
+
+        String actionsTakenString = tView.getText().toString();
+        assertEquals(actionsTakenString, concern.getActionsTaken());
     }
 
+    // Status test
     @Test
-    public void test_statusListSize() {
-        ListView listView = (ListView) concernDetailActivity.findViewById(
-                R.id.detailedConcern_statusList
-        );
-        assertEquals(listView.getAdapter().getCount(),concern.getStatuses().size());
+    public void test_statusList() {
+        List statuses = concern.getStatuses();
+
+        for(int i=0; i<concern.getStatuses().size(); i=i+2) {
+            String statusType = ((TextView)((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+                    R.id.detailedConcern_statusLayout
+            )).getChildAt(i)).getChildAt(0)).getText().toString();
+
+            assertEquals(statusType, ((StatusWrapper)statuses.get(i)).getType());
+        }
     }
 }
