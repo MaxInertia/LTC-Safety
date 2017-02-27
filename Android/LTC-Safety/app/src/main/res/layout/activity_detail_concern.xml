@@ -29,87 +29,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/detailedConcern_contactInformation"/>
 
-
-
-            <!--
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:padding="@dimen/detailedConcern_fieldPadding">
-
-                <TextView
-                    android:text="Name"
-                    android:textColor="@android:color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-                <TextView
-                    android:id="@+id/detailedConcern_nameField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-            </RelativeLayout>
-
-            <View
-                android:background="@color/lighter_gray"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:padding="@dimen/detailedConcern_fieldPadding">
-
-                <TextView
-                    android:text="Email"
-                    android:textColor="@android:color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-                <TextView
-                    android:id="@+id/detailedConcern_emailField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-            </RelativeLayout>
-
-            <View
-                android:background="@color/lighter_gray"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:padding="@dimen/detailedConcern_fieldPadding">
-
-                <TextView
-                    android:text="Phone Number"
-                    android:textColor="@android:color/black"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-                <TextView
-                    android:id="@+id/detailedConcern_phoneField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:textSize="@dimen/detailedConcern_infoTextSize"/>
-
-            </RelativeLayout>
-
-        </LinearLayout> -->
-
         <!-- CONCERN INFORMATION -->
 
         <TextView
@@ -145,6 +64,7 @@
 
         <LinearLayout
             android:id="@+id/detailedConcern_statusLayout"
+            android:background="@drawable/section_border"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/detailedConcern_fieldPadding"
-    android:background="@drawable/section_border">
+    android:padding="@dimen/detailedConcern_fieldPadding">
 
     <TextView
         android:id="@+id/detailedConcern_statusType"

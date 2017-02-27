@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
 
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -72,7 +71,7 @@ class MainViewModel implements ViewModelObserver {
      * @modifies concernList; adds newConcern to the list.
      * @param newConcern The newly submitted concern.
      */
-    static void saveNewConcern(Context context, ConcernWrapper newConcern) {
+    static void saveConcern(Context context, ConcernWrapper newConcern) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(CONCERN_SHARED_PREF_KEY,Context.MODE_PRIVATE);
         Gson gson = new Gson();
         String jsonConcern = gson.toJson(newConcern);
@@ -81,7 +80,7 @@ class MainViewModel implements ViewModelObserver {
 
     @Override
     public void newConcernSubmitted(Context context, ConcernWrapper newConcern) {
-        saveNewConcern(context, newConcern);
+        saveConcern(context, newConcern);
     }
 
     @Override
@@ -102,7 +101,25 @@ class MainViewModel implements ViewModelObserver {
 
         assert(oldConcern.getOwnerToken().equals(concern.getOwnerToken()));
         concernList.set(index,concern);
+        saveConcern(context, concern);
     }
 
 
+    /**
+     * Any methods or fields can be added to this class to aid testing. To use it:
+     * 1) Add method headers to the interface 'MainViewModel_TestHook'
+     * 2) Implement those methods in this class (Test_Hook)
+     * 3) Call on those methods via the Interface MainViewModel_TestHook.
+     *
+     * Ex: MainViewModel_TestHook.instance.setAsOnlyConcern();
+     *
+     * Ex2: MainViewModel_TestHook.instance.methodName();
+     */
+    static class Test_Hook implements MainViewModel_TestHook {
+        @Override
+        public void setAsOnlyConcern(ConcernWrapper concern) {
+            concernList = new ArrayList<>();
+            concernList.add(concern);
+        }
+    }
 }

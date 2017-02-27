@@ -29,6 +29,7 @@ public class NewConcernActivity extends AppCompatActivity {
     EditText phoneNumberField;
     EditText emailAddressField;
     EditText facilityField;
+    EditText roomField;
     EditText concernNatureField;
     EditText actionsTakenField;
 
@@ -46,6 +47,8 @@ public class NewConcernActivity extends AppCompatActivity {
         assert(phoneNumberField != null);
         emailAddressField = (EditText) findViewById(R.id.emailTextField);
         assert(emailAddressField != null);
+        roomField = (EditText) findViewById(R.id.roomNumberField);
+        assert(roomField != null);
         actionsTakenField = (EditText) findViewById(R.id.actionsTakenTextField);
         assert(actionsTakenField != null);
 
@@ -113,6 +116,7 @@ public class NewConcernActivity extends AppCompatActivity {
                 concernNatureField.getText().toString(),
                 actionsTakenField.getText().toString(),
                 facilityField.getText().toString(),
+                roomField.getText().toString(),
                 nameField.getText().toString(),
                 emailAddressField.getText().toString(),
                 phoneNumberField.getText().toString()

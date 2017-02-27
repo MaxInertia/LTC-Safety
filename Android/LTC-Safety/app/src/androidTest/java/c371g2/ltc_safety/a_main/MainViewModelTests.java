@@ -63,7 +63,7 @@ public class MainViewModelTests {
         );
 
         Activity activity = mActivity.getActivity();
-        MainViewModel.saveNewConcern(activity.getBaseContext(), concern);
+        MainViewModel.saveConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
         ArrayList<ConcernWrapper> concerns = MainViewModel.loadConcerns(activity.getBaseContext());
@@ -97,31 +97,31 @@ public class MainViewModelTests {
     public static ConcernWrapper generateConcernForTest(String reporterName, String phoneNumber, String emailAddress,
                                                         String facilityName, String roomName, String concernType,
                                                         String actionsTaken) {
-
         ConcernData concernData = new ConcernData();
         concernData.setConcernNature(concernType);
         concernData.setActionsTaken(actionsTaken);
+
         Location facility = new Location();
         facility.setFacilityName(facilityName);
         facility.setRoomName(roomName);
         concernData.setLocation(facility);
+
         Reporter reporter = new Reporter();
         reporter.setName(reporterName);
         reporter.setPhoneNumber(phoneNumber);
         reporter.setEmail(emailAddress);
         concernData.setReporter(reporter);
 
-        Concern clientConcern = new com.appspot.ltc_safety.client.model.Concern();
-        clientConcern.setSubmissionDate(new DateTime(1));
-
         ArrayList<ConcernStatus> statuses = new ArrayList<>();
         ConcernStatus status = new ConcernStatus();
-        status.setType("Witnessed Fall");
+        status.setType("PENDING");
         status.setCreationDate(new DateTime(1));
         statuses.add(status);
-        clientConcern.setStatuses(statuses);
 
+        Concern clientConcern = new Concern();
         clientConcern.setData(concernData);
+        clientConcern.setSubmissionDate(new DateTime(1));
+        clientConcern.setStatuses(statuses);
 
         return new ConcernWrapper(clientConcern,new OwnerToken());
     }

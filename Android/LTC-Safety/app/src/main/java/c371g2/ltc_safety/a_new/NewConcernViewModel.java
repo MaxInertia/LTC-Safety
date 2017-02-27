@@ -47,7 +47,7 @@ class NewConcernViewModel {
      * @param emailAddress An email address the reporter can be contacted at.
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
-    ReturnCode[] submitConcern(String concernType, String actionsTaken, String facilityName,
+    ReturnCode[] submitConcern(String concernType, String actionsTaken, String facilityName, String roomName,
                              String reporterName, String emailAddress, String phoneNumber) {
 
         // Use verifier-classes to confirm input is sufficient to submit as concern
@@ -81,6 +81,7 @@ class NewConcernViewModel {
                 concernType,
                 actionsTaken,
                 facilityName,
+                roomName,
                 reporterName,
                 emailAddress,
                 phoneNumber
@@ -100,7 +101,7 @@ class NewConcernViewModel {
         return returnCodes;
     }
 
-    private ConcernData buildConcernData(String concernType, String actionsTaken, String facilityName,
+    private ConcernData buildConcernData(String concernType, String actionsTaken, String facilityName, String roomName,
                                          String reporterName, String emailAddress, String phoneNumber) {
         ConcernData concernData = new ConcernData();
         concernData.setConcernNature(concernType);
@@ -108,6 +109,7 @@ class NewConcernViewModel {
 
         Location facility = new Location();
         facility.setFacilityName(facilityName);
+        facility.setRoomName(roomName);
         concernData.setLocation(facility);
 
         Reporter reporter = new Reporter();
