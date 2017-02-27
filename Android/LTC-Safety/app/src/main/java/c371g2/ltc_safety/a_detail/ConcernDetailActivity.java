@@ -1,20 +1,20 @@
 package c371g2.ltc_safety.a_detail;
 
-import android.os.AsyncTask;
+import android.app.AlertDialog;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.Utilities;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -31,25 +31,39 @@ import c371g2.ltc_safety.local.StatusWrapper;
  */
 public class ConcernDetailActivity extends AppCompatActivity {
 
-    ConcernDetailViewModel viewModel = new ConcernDetailViewModel(this);
+    ConcernDetailViewModel viewModel = new ConcernDetailViewModel(ConcernDetailActivity.this);
+    AlertDialog progressDialog;
+
+    Button retractButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_concern);
 
-        populateFields(viewModel.getConcern(
-                getIntent().getExtras().getInt("concern-index")
-        ));
-
-        Button retractButton = (Button) findViewById(R.id.detailedConcern_retractButton);
+        retractButton = (Button) findViewById(R.id.detailedConcern_retractButton);
         retractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewModel.retractConcern();
-                //TODO: Update the listview of concern statuses
+                retractConcernButtonAction();
             }
         });
+
+        populateFields(viewModel.getConcern(
+                getIntent().getExtras().getInt("concern-index")
+        ));
+    }
+
+    private void retractConcernButtonAction() {
+        progressDialog = Utilities.displayInfoDialogue(
+                this,
+                null,
+                "Please wait",
+                null,
+                false
+        );
+        viewModel.retractConcern();
+        //TODO: Update the listview of concern statuses
     }
 
     /**
@@ -59,7 +73,7 @@ public class ConcernDetailActivity extends AppCompatActivity {
      * @modifies Each field in the view is populated with data from viewableConcern.
      * @param concern The concern of interest.
      */
-    private void populateFields(ConcernWrapper concern) {
+    void populateFields(ConcernWrapper concern) {
 
         // Contact information
 
@@ -138,17 +152,30 @@ public class ConcernDetailActivity extends AppCompatActivity {
         ViewGroup statusLayout = (ViewGroup) findViewById(R.id.detailedConcern_statusLayout);
 
         if(concernStatuses.size()==0) return;
-        for(Object statusObject: concernStatuses) {
-            StatusWrapper status = (StatusWrapper) statusObject;
-            View statusRow = LayoutInflater.from(this).inflate(R.layout.detailed_concern_status, statusLayout, false);
+        for(int i=0; i<concernStatuses.size(); i++) {
+            StatusWrapper status = (StatusWrapper) concernStatuses.get(i);
+            View statusRow = LayoutInflater.from(this).inflate(R.layout.detail_concern_status, statusLayout, false);
 
-            ((TextView) statusRow.findViewById(R.id.detailedConcern_statusType))
-                    .setText(status.getType());
-
-            ((TextView) statusRow.findViewById(R.id.detailedConcern_statusDate))
-                    .setText(status.getFormattedDate());
+            TextView type = ((TextView) statusRow.findViewById(R.id.detailedConcern_statusType));
+            TextView date = ((TextView) statusRow.findViewById(R.id.detailedConcern_statusDate));
+            type.setText(status.getType());
+            date.setText(status.getFormattedDate());
 
             statusLayout.addView(statusRow);
+
+            if( (i+1) == concernStatuses.size() ) {
+                type.setTextColor(Color.BLACK);
+                date.setTextColor(Color.BLACK);
+
+                if(status.getType().equals("RETRACTED")) {
+                    retractButton.setEnabled(false);
+                }
+
+            } else {
+                statusLayout.addView(
+                        LayoutInflater.from(this).inflate(R.layout.divider, statusLayout, false)
+                );
+            }
         }
     }
 
