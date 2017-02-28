@@ -4,6 +4,8 @@ import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
+import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
@@ -58,7 +60,8 @@ public class ConcernDao extends Dao<Concern> {
 
     /**
      * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
-     * The facilities is
+     * The facilities is the list of facilities to load concerns for (ignoring all concerns that are
+     * not associated with any of the given facilities)
      *
      * @param offset The offset to begin loading from
      * @param limit The maximum amount of concerns to load
@@ -85,5 +88,29 @@ public class ConcernDao extends Dao<Concern> {
         return filteredList;
     }
 
+    /**
+     * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
+     * The facilities is the list of facilities to load the concern for, and an exception is thrown
+     * if the concern loaded is not among the given locations.
+     *
+     * @param concernId The unique id of the Concern to load from the datastore
+     * @param facilities The list of facilities to load the concerns from
+     * @return A list of entities in the datastore from the given offset and limit
+     * @precond offset != null && offset >= 0
+     * @precond limit != null && limit > 0
+     */
+    public Concern load(long concernId, HashSet<Facility> facilities) throws UnauthorizedException, BadRequestException {
 
+        Concern loaded = super.load(concernId);
+
+        if(facilities != null){
+            if(facilities.contains(loaded.getFacility())){
+                return loaded;
+            } else {
+                throw new UnauthorizedException("Requested concern is not associated with any of the given facilities");
+            }
+        } else {
+            throw new UnauthorizedException("Set of facilities given for loading the concern was null!");
+        }
+    }
 }

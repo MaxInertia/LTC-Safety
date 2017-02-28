@@ -74,22 +74,22 @@ public class AdminApi {
             throw new BadRequestException(result.getErrorMessage());
         }
 
-        logger.log(Level.INFO, "User is requesting a concern list. " + request);
+        logger.log(Level.INFO, "User is requesting a concern " + request);
 
         Account account = request.authenticate();
 
-        Concern loadedConcern = new ConcernDao().load(request.getConcernId());
+        try {
+            Concern loadedConcern = new ConcernDao().load(request.getConcernId(), account.getLocations());
+            logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
+            return loadedConcern;
+        } catch (BadRequestException e){
+            logger.log(Level.WARNING, "Account attempted to load a concern with a null location list");
+            throw new BadRequestException("The account requesting the concern has a null location list");
+        } catch (UnauthorizedException e){
+            logger.log(Level.WARNING, "Account requested a concern for a location it does not have access to");
+            throw new UnauthorizedException("The requested concern is for a location the account does not have access to.");
+        } finally {
 
-        if(loadedConcern == null){
-            throw new UnauthorizedException("The concern identifier was not found in the database");
         }
-
-        for (Facility location : account.getLocations()){
-            if(loadedConcern.getFacility() == location){
-                return loadedConcern;
-            }
-        }
-
-        throw new UnauthorizedException("Account is not linked to the concern's location and cannot be loaded");
     }
 }
