@@ -8,9 +8,9 @@ import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 
 /**
- * The abstract class extended by each activity that performs network operations.
- * NewConcernActivity: Concern submission.
- * ConcernDetailActivity: Concern retraction.
+ * The abstract class extended by each activity whose ViewModel performs a network operation.
+ * NewConcernActivity's ViewModel: Concern submission.
+ * ConcernDetailActivity's ViewModel: Concern retraction.
  *
  * @Invariants none
  * @HistoryProperties none
