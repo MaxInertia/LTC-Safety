@@ -38,7 +38,7 @@
 
 @implementation LTCDetailConcernViewModelTests
 /**
- Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 5.
+ Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 4.
  */
 - (void)testInitWithConcern {
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
@@ -57,7 +57,7 @@
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 5);
+    XCTAssertEqual(viewModel.formSections.count, 4);
     
 }
 @end
