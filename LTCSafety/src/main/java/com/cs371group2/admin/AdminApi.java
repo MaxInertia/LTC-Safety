@@ -4,7 +4,6 @@ import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
-import com.cs371group2.facility.Facility;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
@@ -32,7 +31,8 @@ public class AdminApi {
      *
      * @param request The concern request containing the user's firebase token, along with the requested offset/limit
      * @return A list of concerns loaded from the datastore at the given offset and limit
-     * @throws UnauthorizedException
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern list
+     * @throws BadRequestException If the request or the admin's account contained invalid information
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
     public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
@@ -44,15 +44,15 @@ public class AdminApi {
             throw new BadRequestException(result.getErrorMessage());
         }
 
-        logger.log(Level.INFO, "User is requesting a concern list. " + request);
-
         Account account = request.authenticate();
+
+        logger.log(Level.INFO,account + " is requesting a concern " + request);
 
         ConcernDao dao = new ConcernDao();
 
-        List<Concern> list = dao.load(request.getOffset(), request.getLimit(), account.getLocations() );
+        List<Concern> list = dao.load(request.getOffset(), request.getLimit(), account.getFacilities() );
 
-        logger.log(Level.INFO, "Concern request was successful.");
+        logger.log(Level.INFO, "Concern list request was successful.");
         return list;
     }
 
@@ -62,11 +62,13 @@ public class AdminApi {
      *
      * @param request The concern request containing the user's firebase token, along with the desired concern id
      * @return The concern requested from the database
-     * @throws UnauthorizedException If the user is unauthorized or there is an error loading the concern, throw this
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern
+     * @throws BadRequestException If the request or the admin's account contained invalid information
      * @precond request != null
      */
     @ApiMethod(name = "requestConcern", path = "admin/requestConcern")
     public Concern requestConcern(ConcernRequest request) throws UnauthorizedException, BadRequestException {
+
         ValidationResult result = request.validate();
 
         if(!result.isValid()){
@@ -74,12 +76,12 @@ public class AdminApi {
             throw new BadRequestException(result.getErrorMessage());
         }
 
-        logger.log(Level.INFO, "User is requesting a concern " + request);
-
         Account account = request.authenticate();
 
+        logger.log(Level.INFO,account + " is requesting a concern " + request);
+
         try {
-            Concern loadedConcern = new ConcernDao().load(request.getConcernId(), account.getLocations());
+            Concern loadedConcern = new ConcernDao().load(request.getConcernId(), account.getFacilities());
             logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
             return loadedConcern;
         } catch (BadRequestException e){
@@ -88,8 +90,6 @@ public class AdminApi {
         } catch (UnauthorizedException e){
             logger.log(Level.WARNING, "Account requested a concern for a location it does not have access to");
             throw new UnauthorizedException("The requested concern is for a location the account does not have access to.");
-        } finally {
-
-        }
+        } finally {}
     }
 }

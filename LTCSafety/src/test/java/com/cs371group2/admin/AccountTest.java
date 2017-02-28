@@ -5,9 +5,6 @@ import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.facility.Facility;
 import org.junit.Test;
-import sun.reflect.annotation.ExceptionProxy;
-
-import java.rmi.server.ExportException;
 
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -59,7 +56,7 @@ public class AccountTest extends DatastoreTest {
     @Test
     public void EmptyFacilitiesTest() throws Exception{
         Account account = generateAccount();
-        assertNotNull(account.getLocations());
+        assertNotNull(account.getFacilities());
     }
 
     /**
@@ -69,12 +66,12 @@ public class AccountTest extends DatastoreTest {
     @Test
     public void AddRemoveFacilityTest() throws Exception{
         Account account = generateAccount();
-        assertNotNull(account.getLocations());
+        assertNotNull(account.getFacilities());
         Facility testFac = new Facility("This is a test");
-        account.addLocation(testFac);
-        assert(account.getLocations().contains(testFac));
-        account.removeLocation(testFac);
-        assert(!account.getLocations().contains(testFac));
+        account.addFacility(testFac);
+        assert(account.getFacilities().contains(testFac));
+        account.removeFacility(testFac);
+        assert(!account.getFacilities().contains(testFac));
     }
 
 

@@ -8,6 +8,9 @@ import com.googlecode.objectify.annotation.Index;
 import java.util.HashSet;
 
 /**
+ * This class represents an account in the system. It contains a permission level, a unique id, and a set of
+ * facilities that the account is assigned to.
+ *
  * Created on 2017-02-06.
  */
 @Entity
@@ -24,13 +27,11 @@ public final class Account {
     @Index
     private AccountPermissions permissions;
 
-
-
     /**
      * The hashset of care home facilities this account is associated with.
      */
     @Index
-    private HashSet<Facility> locations;
+    private HashSet<Facility> facilities;
 
     public Account(String accountId, AccountPermissions accountPermissions){
         assert(accountId != null);
@@ -38,7 +39,7 @@ public final class Account {
 
         id = accountId;
         permissions = accountPermissions;
-        locations = new HashSet<Facility>();
+        facilities = new HashSet<Facility>();
     }
 
     /**
@@ -48,8 +49,8 @@ public final class Account {
 
     public String getId() {return id;}
 
-    public HashSet<Facility> getLocations() {
-        return locations;
+    public HashSet<Facility> getFacilities() {
+        return facilities;
     }
 
     /**
@@ -59,11 +60,11 @@ public final class Account {
      * @param toAdd the facility to associate with this account
      * @return Whether the association was successful or not
      */
-    public boolean addLocation(Facility toAdd){
+    public boolean addFacility(Facility toAdd){
         if(toAdd == null)
             return false;
         else
-            return locations.add(toAdd);
+            return facilities.add(toAdd);
     }
 
     /**
@@ -73,11 +74,11 @@ public final class Account {
      * @param toRemove the facility to associate with this account
      * @return Whether the association was successful or not
      */
-    public boolean removeLocation(Facility toRemove){
+    public boolean removeFacility(Facility toRemove){
         if(toRemove == null)
             return false;
         else
-            return locations.remove(toRemove);
+            return facilities.remove(toRemove);
     }
 
     public void setId(String id) {
