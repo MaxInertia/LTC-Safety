@@ -32,14 +32,19 @@
 
 // Detail View Concern Prompts
 "DETAIL_CONCERN_TITLE" = "View Concern";
-"DETAIL_EDIT_CONCERN" = "Edit";
-"RETRACT_CONCERN" = "Retract";
 "DETAIL_CONCERN_INFO_TITLE" = "Concern Information";
-"DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
 "DETAIL_STATUS_LOG" = "Concern Status Log";
-"DETAIL_CONCERN_STATUS" = "Status";
 "RETRACT_CONCERN_PROMPT" = "Retract";
 "DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
+
+
+"DETAIL_NAME_TITLE" = "Name";
+"DETAIL_EMAIL_TITLE" = "Email";
+"DETAIL_PHONE_NUMBER_TITLE" = "Phone Number";
+"DETAIL_CONCERN_NATURE_TITLE" = "Concern Nature";
+"DETAIL_FACILITY_TITLE" = "Facility Name";
+"DETAIL_ROOM_TITLE" = "Room";
+"DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
 
 
 // Misc

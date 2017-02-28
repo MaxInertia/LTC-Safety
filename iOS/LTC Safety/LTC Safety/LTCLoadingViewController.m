@@ -14,7 +14,7 @@ NSString *const LTCLoadingPrompt = @"LOADING_PROMPT";
 
 + (instancetype)configure {
     
-    LTCLoadingViewController *loadingMessage = [LTCLoadingViewController alertControllerWithTitle: LTCLoadingPrompt message: nil preferredStyle: UIAlertControllerStyleAlert];
+    LTCLoadingViewController *loadingMessage = [LTCLoadingViewController alertControllerWithTitle: NSLocalizedString(LTCLoadingPrompt, nil) message: nil preferredStyle: UIAlertControllerStyleAlert];
     
     UIViewController *customVC     = [[UIViewController alloc] init];
     UIActivityIndicatorView* spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
