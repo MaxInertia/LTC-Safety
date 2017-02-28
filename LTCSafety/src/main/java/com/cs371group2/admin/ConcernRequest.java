@@ -1,5 +1,9 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
+
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -10,11 +14,11 @@ import java.util.logging.Logger;
  *
  * Created on 2017-02-26.
  */
-public final class ConcernRequest extends AdminRequest {
+public final class ConcernRequest extends AdminRequest implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
-    private static final Logger logger = Logger.getLogger( ConcernListRequest.class.getName() );
+    private static final String EMPTY_TOKEN_ERROR = "Unable to access concern due to receiving an empty access token.";
 
     /** The unique id of the concern to load from the database */
     private long concernId;
@@ -27,6 +31,22 @@ public final class ConcernRequest extends AdminRequest {
      */
     public boolean legalRequest(){
         return (accessToken != null && accessToken.isEmpty());
+    }
+
+    /**
+     * Validates the ConcernRequest to ensure that the fields are legal and non-null.
+     *
+     * @return The result of the validation, including a reason in the case of failure
+     */
+    @Override
+    public ValidationResult validate() {
+        if(accessToken == null){
+            return new ValidationResult(NULL_TOKEN_ERROR);
+        } else if(accessToken.isEmpty()){
+            return new ValidationResult(EMPTY_TOKEN_ERROR);
+        }
+
+        return new ValidationResult();
     }
 
     /**
