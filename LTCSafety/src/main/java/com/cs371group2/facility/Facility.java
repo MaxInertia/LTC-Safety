@@ -3,6 +3,8 @@ package com.cs371group2.facility;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import java.util.Objects;
+
 /**
  * This class represents a care home facility in the system. It will be stored in the database and will be used
  * in keeping track of the administrators and concerns assigned to their respective facilities.
@@ -13,8 +15,6 @@ import com.googlecode.objectify.annotation.Id;
  */
 @Entity
 public class Facility {
-
-
 
     /** This string identifier represents the unique ID of the facility. */
     @Id
@@ -33,5 +33,29 @@ public class Facility {
 
     public String getId() {
         return id;
+    }
+
+    @Override
+    public boolean equals (Object obj){
+        if(obj == null) {
+            return false;
+        }
+
+        if(!Facility.class.isAssignableFrom(obj.getClass())){
+            return false;
+        }
+
+        final Facility other = (Facility) obj;
+
+        if(other.getId() == null || this.getId() == null){
+            return false;
+        }
+
+        return (this.getId() == other.getId());
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(id);
     }
 }

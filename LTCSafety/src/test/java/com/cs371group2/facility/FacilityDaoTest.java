@@ -61,4 +61,11 @@ public class FacilityDaoTest extends DatastoreTest {
     public void EmptyIdTest() throws Exception{
         Facility facility = new Facility("");
     }
+
+    @Test
+    public void FacilityEqualTest(){
+        Facility facilityA = new Facility("Facility A");
+        Facility facilityB = facilityA;
+        assert(facilityA == facilityB);
+    }
 }
