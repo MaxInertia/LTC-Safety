@@ -79,10 +79,10 @@ public class ConcernDetailViewModelTests {
         Intent i = new Intent();
         i.putExtra("concern-index",0);
         activity = activityRule.launchActivity(i);
-        activity.viewModel.retractConcern();
-        activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue("The return code for the retraction was null", activity.viewModel.submissionReturnCode!=null);
-        assertTrue("The return code for the retraction was not SUCCESS",ReturnCode.SUCCESS.equals(activity.viewModel.submissionReturnCode));
+        activity.concernDetailViewModel.retractConcern();
+        activity.concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
+        assertTrue("The return code for the retraction was null", activity.concernDetailViewModel.submissionReturnCode!=null);
+        assertTrue("The return code for the retraction was not SUCCESS",ReturnCode.SUCCESS.equals(activity.concernDetailViewModel.submissionReturnCode));
         activity.finish();
     }
 }
