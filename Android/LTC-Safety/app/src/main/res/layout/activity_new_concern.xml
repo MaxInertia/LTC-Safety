@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:focusableInTouchMode="true">
+
         <!-- Contact information -->
 
         <TextView
@@ -47,7 +48,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/nameTextField" />
+                android:id="@+id/newConcern_nameTextField" />
 
             <View
                 android:background="@color/lighter_gray"
@@ -68,7 +69,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/phoneNumberField" />
+                android:id="@+id/newConcern_phoneNumberField" />
 
             <View
                 android:background="@color/lighter_gray"
@@ -89,7 +90,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/emailTextField" />
+                android:id="@+id/newConcern_emailTextField" />
 
         </LinearLayout>
 
@@ -112,7 +113,7 @@
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingEnd="0dp"
-            android:id="@+id/chooserLinearLayout">
+            android:id="@+id/newConcern_chooserLinearLayout">
 
             <EditText
                 android:background="@android:color/transparent"
@@ -128,7 +129,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/concernNatureChooser"/>
+                android:id="@+id/newConcern_concernNatureChooser"/>
 
             <View
                 android:background="@color/lighter_gray"
@@ -149,7 +150,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/facilityChooser"/>
+                android:id="@+id/newConcern_facilityChooser"/>
 
             <View
                 android:background="@color/lighter_gray"
@@ -169,7 +170,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/roomNumberField" />
+                android:id="@+id/newConcern_roomNumberField" />
 
         </LinearLayout>
 
@@ -206,7 +207,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="4dp"
                 android:paddingEnd="0dp"
-                android:id="@+id/actionsTakenTextField" />
+                android:id="@+id/newConcern_actionsTakenField" />
         </LinearLayout>
 
         <Space
@@ -224,7 +225,7 @@
                 android:text="@string/submit_concern_button_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/submit_concern_button"/>
+                android:id="@+id/newConcern_submitConcernButton"/>
         </LinearLayout>
 
         <Space

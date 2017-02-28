@@ -1,9 +1,13 @@
 package c371g2.ltc_safety.a_new;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.NetworkActivity;
@@ -65,18 +69,17 @@ public class NewConcernActivity extends NetworkActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_concern);
 
-        nameField = (EditText) findViewById(R.id.nameTextField);
+        nameField = (EditText) findViewById(R.id.newConcern_nameTextField);
         assert(nameField != null);
-        phoneNumberField = (EditText) findViewById(R.id.phoneNumberField);
+        phoneNumberField = (EditText) findViewById(R.id.newConcern_phoneNumberField);
         assert(phoneNumberField != null);
-        emailAddressField = (EditText) findViewById(R.id.emailTextField);
+        emailAddressField = (EditText) findViewById(R.id.newConcern_emailTextField);
         assert(emailAddressField != null);
-        roomField = (EditText) findViewById(R.id.roomNumberField);
+        roomField = (EditText) findViewById(R.id.newConcern_roomNumberField);
         assert(roomField != null);
-        actionsTakenField = (EditText) findViewById(R.id.actionsTakenTextField);
+        actionsTakenField = (EditText) findViewById(R.id.newConcern_actionsTakenField);
         assert(actionsTakenField != null);
-
-        submitConcernButton = (Button) findViewById(R.id.submit_concern_button);
+        submitConcernButton = (Button) findViewById(R.id.newConcern_submitConcernButton);
         assert(submitConcernButton != null);
         submitConcernButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,14 +88,14 @@ public class NewConcernActivity extends NetworkActivity {
             }
         });
 
-        concernNatureField = (EditText) findViewById(R.id.concernNatureChooser);
+        concernNatureField = (EditText) findViewById(R.id.newConcern_concernNatureChooser);
         ChooserView.setup(
                 concernNatureField,
                 "Select LocalConcern Nature",
                 getResources().getStringArray(R.array.concern_types)
         );
 
-        facilityField = (EditText) findViewById(R.id.facilityChooser);
+        facilityField = (EditText) findViewById(R.id.newConcern_facilityChooser);
         ChooserView.setup(
                 facilityField,
                 "Select Facility",
@@ -112,6 +115,12 @@ public class NewConcernActivity extends NetworkActivity {
                     true
             );
         }
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
     }
 
     /**
