@@ -295,6 +295,9 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
     data.concernNature = [self formRowWithTag:LTCDescriptorConcernNature].value;
     data.actionsTaken = [self formRowWithTag:LTCDescriptorActionsTaken].value;
     
+    
+    
+    
     // Send the concern data to the client API on the backend server
     [self.clientApi submitConcern:data completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){
         

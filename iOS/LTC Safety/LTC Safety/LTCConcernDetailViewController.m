@@ -60,6 +60,9 @@ NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
     [self presentViewController: loadingMessage animated: true completion: nil];
     
     [self.clientApi retractConcern:self.viewModel.concern.ownerToken completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
+        if(error == nil){
+            [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification object:self userInfo:@{@"status": concernStatus}];
+        }
         [loadingMessage dismissViewControllerAnimated:YES completion:^(){
             UIAlertController *alert;
             if (error != nil){
@@ -67,24 +70,24 @@ NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
                 alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
                 [alert addAction:cancelAction];
+                [self presentViewController:alert animated:YES completion:nil];
+                
+                XLFormRowDescriptor *row = [self.viewModel formRowWithTag:@"RETRACT_CONCERN"];
+                [self deselectFormRow:row];
+
             }else {
                 
-                [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification object:self userInfo:@{@"status": concernStatus}];
-                
-                NSString *retractMessage = LTCDetailRetractConfirmation;
-                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(retractMessage, nil) message:nil preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *action){
-                    [super.navigationController popViewControllerAnimated:YES];
-                }];
-                [alert addAction:cancelAction];
+                [super.navigationController popViewControllerAnimated:YES];
                 
             }
-            [self presentViewController:alert animated:YES completion:nil];
 
         }];
         
 
     }];
+    
+    
+    
 }
 
 @end

@@ -57,37 +57,27 @@ NSString *const  LTCSuccessfulSubmit = @"NEW_CONCERN_SUBMIT_TITLE";
  @pre self.delegate is non-null to ensure that the delegate can be notified if a concern is successfully submitted.
  @post The delegate is notified that a concern was submitted to the client API on the backend. If the submission fails an alert controller is presented to display the error message to the user.
  */
-- (void)submit {
-
+- (void)submit{
+    
     NSAssert(self.delegate != nil, @"Attempted to submit a concern with no delegate to receive the message.");
     NSAssert([self.delegate conformsToProtocol:@protocol(LTCNewConcernViewControllerDelegate)], @"The %@ delegate does not conform to the delegate's protocal.", self.class);
     
-    
     LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
+    [self presentViewController: loadingMessage animated:YES completion: nil];
     
-    [self presentViewController: loadingMessage animated: true completion: nil];
-    
-
     // Tell the view model to submit that data that it is modeling to the server-side client API
     [self.viewModel submitConcernData:^(LTCConcern *concern, NSError *error){
         
-        [loadingMessage dismissViewControllerAnimated:YES completion:^(){
+        if (error == nil) {
+            [self.delegate viewController:self didSubmitConcern:concern];
+        }
+        [self dismissViewControllerAnimated:YES completion:^(){
             if (error == nil) {
-                
-                NSString *errorMessage = [error.userInfo valueForKey:@"error"];
-                UIAlertController *successAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCSuccessfulSubmit, nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction *cancelAction){
-                    [self dismissViewControllerAnimated:YES completion:nil];
-                }];
-                [successAlert addAction:cancelAction];
-                [self.delegate viewController:self didSubmitConcern:concern];
-
-                [self presentViewController:successAlert animated:YES completion:nil];
-                
-
-                
+                [self dismissViewControllerAnimated:YES completion:nil];
             } else {
                 
+                XLFormRowDescriptor *row = [self.viewModel formRowWithTag:@"SUBMIT_CONCERN"];
+                [self deselectFormRow:row];
                 // Display the user error message from the client API
                 NSString *errorMessage = [error.userInfo valueForKey:@"error"];
                 UIAlertController *alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCNewConcernError, nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
@@ -96,10 +86,7 @@ NSString *const  LTCSuccessfulSubmit = @"NEW_CONCERN_SUBMIT_TITLE";
                 
                 [self presentViewController:alert animated:YES completion:nil];
             }
-            
-            
         }];
-        
     }];
 }
 

@@ -252,7 +252,7 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
             [section addFormRow:row];
         }
         
-        // Sets up the concer status log
+        // Sets up the concern status log
         
         section = [XLFormSectionDescriptor formSection];
         section.title = NSLocalizedString(LTCDetailConcernStatusLog, nil);
