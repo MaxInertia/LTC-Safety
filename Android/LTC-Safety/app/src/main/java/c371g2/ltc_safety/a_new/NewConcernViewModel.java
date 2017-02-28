@@ -1,7 +1,7 @@
 package c371g2.ltc_safety.a_new;
 
-import android.app.Activity;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.ConcernData;
@@ -15,26 +15,44 @@ import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import c371g2.ltc_safety.BasicActivity;
-import c371g2.ltc_safety.Utilities;
+import c371g2.ltc_safety.NetworkActivity;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  * This class acts as an interface between the app view in the new concern activity and the model.
- * @Invariants none
- * @HistoryProperties none
+ * It handles the submission of concerns to the systems backend.
+ *
+ * @Invariants
+ * - activity is never null after being initialized in the constructor.
+ * @HistoryProperties
+ * - The value of the signalLatch only decreases.
  */
 class NewConcernViewModel {
 
-    private Activity activity;
+    /**
+     * Reference to the Activity class which initialized this class.
+     */
+    final private NetworkActivity activity;
+    /**
+     * A class used to inform a test class that a network operation has been completed.
+     * This variable is null until a concern submission is attempted with valid inputs.
+     */
     final CountDownLatch signalLatch;
+    /**
+     * The return code that results from an attempt to submit a concern.
+     * This variable is null until a concern submission is attempted.
+     */
     ReturnCode submissionReturnCode;
 
-    NewConcernViewModel(Activity activity) {
-        signalLatch = new CountDownLatch(1);
-        submissionReturnCode = null;
+    /**
+     * Package-private NewConcernViewModel constructor.
+     * @param activity The calling activity.
+     */
+    NewConcernViewModel(@NonNull NetworkActivity activity) {
         this.activity = activity;
+        submissionReturnCode = null;
+        signalLatch = new CountDownLatch(1);
     }
 
     /**
@@ -128,11 +146,22 @@ class NewConcernViewModel {
     /**
      * This class is responsible for utilizing the network connection to send the concern to the
      * database via the Client-API. The network operation is performed on a separate thread.
+     * @Invariants none
+     * @HistoryProperties none
      */
     private class ConcernSubmitter extends AsyncTask<Void,Void,ReturnCode> {
-
+        /**
+         * The response received from the backend after submitting a concern.
+         * Contains the concern and an owner token.
+         */
         private SubmitConcernResponse response;
+        /**
+         * The Client instance, used to send a concern to the backend.
+         */
         private Client client;
+        /**
+         * The object containing all concern details input by the user.
+         */
         private ConcernData data;
 
         @Override
@@ -141,6 +170,7 @@ class NewConcernViewModel {
             ReturnCode returnCode = ReturnCode.SUCCESS;
             try{
                 response = client.submitConcern(data).execute();
+                assert(response != null);
             } catch(IOException ioException) {
                 returnCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
             } finally {
@@ -152,21 +182,18 @@ class NewConcernViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            if(!activity.isFinishing() && ((BasicActivity)activity).progressDialog!=null) {
-                ((BasicActivity)activity).progressDialog.cancel(); //progressDialog is not initialized for tests
+            if(!activity.isFinishing() && ((NetworkActivity)activity).progressDialog!=null) {
+                ((NetworkActivity)activity).progressDialog.cancel(); //progressDialog is not initialized for tests
             }
-
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
-
                 // Store concern and token on device
                 ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
                 ViewModelObserver.instance.newConcernSubmitted(activity.getBaseContext(), concern);
 
                 // Inform user that the concern was successfully submitted
                 if(!activity.isFinishing() && !activity.isDestroyed()) {
-                    Utilities.displayInfoDialogue(
-                            activity,
+                    activity.displayInfoDialogue(
                             "Submission successful",
                             "Your concern has been submitted",
                             null,
@@ -177,10 +204,9 @@ class NewConcernViewModel {
             } else {
                 // LocalConcern submission failed, possible cause: No internet access on device
                 if(!activity.isFinishing()) {
-                    Utilities.displayInfoDialogue(
-                            activity,
+                    activity.displayInfoDialogue(
                             "Error",
-                            "Concern submission failed",
+                            "Failed submitting your concern",
                             null,
                             true);
                 }
@@ -188,13 +214,24 @@ class NewConcernViewModel {
 
             submissionReturnCode = returnCode;
             signalLatch.countDown();
+            assert(signalLatch.getCount() == 0);
         }
     }
 
+    /**
+     * Any methods or fields can be added to this static subclass to aid testing. To use it:
+     * 1) Add method headers to the interface 'NewConcernViewModel_TestHook'.
+     * 2) Implement those methods in this class (Test_Hook).
+     * 3) Call on those methods from a text class via the Interface NewConcernViewModel_TestHook.
+     *
+     * Examples:
+     * NewConcernViewModel_TestHook.instance.submitConcern();
+     * NewConcernViewModel_TestHook.instance.otherMethodName();
+     */
     static class Test_Hook implements NewConcernViewModel_TestHook {
 
         @Override
-        public boolean submitConcern(Activity testActivity, String concernType, String actionsTaken, String facilityName,
+        public boolean submitConcern(NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
                                   String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
 
             NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);

@@ -1,7 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
 import android.content.Intent;
-import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 

@@ -1,15 +1,16 @@
 package c371g2.ltc_safety.local;
 
-
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Used to store the details of ConcernStatus objects locally.
+ * @Invariants
+ * - All fields are non-null
+ * - The fields are final, they always contain the same instance of their class.
  */
 public class StatusWrapper {
-    private String type;
-    private long date;
+    final private String type;
+    final private long date;
 
     public StatusWrapper(String t, long d) {
         type = t;

@@ -1,6 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
-import android.app.Activity;
+import c371g2.ltc_safety.NetworkActivity;
 
 /**
  * Interface that grants access to the static subclass TestHook inside the NewConcernViewModel class.
@@ -19,8 +19,8 @@ public interface NewConcernViewModel_TestHook {
     NewConcernViewModel_TestHook instance = new NewConcernViewModel.Test_Hook();
 
     /**
-     * Submit concern
-     * @param testActivity activity that implements BasicActivity
+     * Submit concern with the provided fields.
+     * @param testActivity activity that implements NetworkActivity
      * @param concernType ''
      * @param actionsTaken ''
      * @param facilityName ''
@@ -31,7 +31,7 @@ public interface NewConcernViewModel_TestHook {
      * @return True if the concern was successfully submitted, otherwise false.
      * @throws InterruptedException
      */
-    boolean submitConcern(Activity testActivity, String concernType, String actionsTaken, String facilityName,
-                              String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException;
+    boolean submitConcern(NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
+                          String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException;
 
 }

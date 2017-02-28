@@ -13,8 +13,6 @@ import com.appspot.ltc_safety.client.model.OwnerToken;
 import com.appspot.ltc_safety.client.model.Reporter;
 import com.google.api.client.util.DateTime;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
