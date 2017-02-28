@@ -2,7 +2,7 @@ package c371g2.ltc_safety.a_new;
 
 import android.support.annotation.NonNull;
 
-import c371g2.ltc_safety.NetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkActivity;
 
 /**
  * Interface that grants access to the static class Test_Hook inside the NewConcernViewModel class.
@@ -32,7 +32,7 @@ public interface NewConcernViewModel_TestHook {
      * Submit concern with the provided fields.
      * @preconditions testActivity is non-null and is running.
      * @modifies The submitted concern, if successful, is added to MainViewModel.concernList
-     * @param testActivity activity that implements NetworkActivity
+     * @param testActivity activity that implements AbstractNetworkActivity
      * @param concernType The Concern nature
      * @param actionsTaken The actions taken
      * @param facilityName The name of the long term care facility
@@ -43,7 +43,7 @@ public interface NewConcernViewModel_TestHook {
      * @return True if the concern was successfully submitted, otherwise false.
      * @throws InterruptedException
      */
-    boolean submitConcern(@NonNull NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
+    boolean submitConcern(@NonNull AbstractNetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
                           String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException;
 
 }

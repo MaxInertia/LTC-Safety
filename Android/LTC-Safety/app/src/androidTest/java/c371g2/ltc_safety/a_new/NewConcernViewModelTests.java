@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.ReturnCode;
 
 import static junit.framework.Assert.assertTrue;
 

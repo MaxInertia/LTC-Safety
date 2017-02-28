@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.NetworkActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -30,7 +30,7 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * - For a given instance of this activity, the fields do not change (same instances throughout
  * lifetime) after they are set by the populateFields() method. The method is only called once.
  */
-public class ConcernDetailActivity extends NetworkActivity {
+public class ConcernDetailActivity extends AbstractNetworkActivity {
 
     /**
      * Reference to the View-Model for this Activity. All functionality in this activity that is

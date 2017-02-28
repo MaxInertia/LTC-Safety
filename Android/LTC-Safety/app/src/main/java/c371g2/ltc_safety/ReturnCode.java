@@ -1,9 +1,9 @@
-package c371g2.ltc_safety.a_new;
+package c371g2.ltc_safety;
 
 /**
- * Return codes for concern submission in NewConcernActivity & NewConcernViewModel
+ * Return codes for concern submission and retraction
  */
-enum ReturnCode {
+public enum ReturnCode {
     /**
      * The user attempted submitting a concern without a concern type selected
      */
@@ -39,7 +39,7 @@ enum ReturnCode {
      */
     SUCCESS(7);
 
-    int id;
+    public int id;
     ReturnCode(int id) {
         this.id = id;
     }

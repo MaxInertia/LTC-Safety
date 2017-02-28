@@ -9,16 +9,13 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 
-import c371g2.ltc_safety.NetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkViewModel;
+import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
-
-import static c371g2.ltc_safety.a_detail.ReturnCode.IOEXCEPTION;
-import static c371g2.ltc_safety.a_detail.ReturnCode.NOERROR;
-import static c371g2.ltc_safety.a_detail.ReturnCode.SUCCESS;
 
 /**
  * This class acts as an interface between the app view in the concern detail activity and the model.
@@ -32,22 +29,7 @@ import static c371g2.ltc_safety.a_detail.ReturnCode.SUCCESS;
  * @HistoryProperties
  * - The value of the signalLatch only decreases.
  */
-class ConcernDetailViewModel {
-
-    /**
-     * Reference to the Activity class which initialized this class.
-     */
-    final private NetworkActivity activity;
-    /**
-     * A class used to inform a test class that a network operation has been completed.
-     * This variable is null until a concern submission is attempted with valid inputs.
-     */
-    final CountDownLatch signalLatch;
-    /**
-     * The return code that results from an attempt to submit a concern.
-     * This variable is null until a concern submission is attempted.
-     */
-    ReturnCode submissionReturnCode;
+class ConcernDetailViewModel extends AbstractNetworkViewModel{
     /**
      * The concern whose data is loaded into the layout.
      */
@@ -61,9 +43,8 @@ class ConcernDetailViewModel {
      * Package-private ConcernDetailViewModel constructor.
      * @param activity The calling activity.
      */
-    ConcernDetailViewModel(@NonNull NetworkActivity activity) {
+    ConcernDetailViewModel(@NonNull AbstractNetworkActivity activity) {
         this.activity = activity;
-        signalLatch = new CountDownLatch(1);
         instance = this;
     }
 
@@ -123,9 +104,9 @@ class ConcernDetailViewModel {
             try {
                 statusResponse = client.retractConcern(concern.getOwnerToken()).execute();
                 assert(statusResponse != null);
-                returnCode = NOERROR;
+                returnCode = ReturnCode.SUCCESS;
             } catch (IOException ioException) {
-                returnCode = IOEXCEPTION;
+                returnCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
             }
 
             return returnCode;
@@ -137,7 +118,7 @@ class ConcernDetailViewModel {
                 activity.progressDialog.cancel(); //progressDialog is not initialized for tests
             }
 
-            if (returnCode.equals(NOERROR)) {
+            if (returnCode.equals(ReturnCode.SUCCESS)) {
                 if (!activity.isFinishing() && !activity.isDestroyed()) {
                     activity.displayInfoDialogue(
                             "Retraction successful",
@@ -156,7 +137,6 @@ class ConcernDetailViewModel {
                         concern,
                         index
                 );
-                returnCode = SUCCESS;
 
             } else {
                 if (!activity.isFinishing()) {

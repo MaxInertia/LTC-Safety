@@ -15,7 +15,7 @@ import android.support.v7.app.AppCompatActivity;
  * @Invariants none
  * @HistoryProperties none
  */
-public abstract class NetworkActivity extends AppCompatActivity {
+public abstract class AbstractNetworkActivity extends AppCompatActivity {
     /**
      * A popup that is used to inform the user that the network operation requested is in progress.
      * This variable is null until a concern is retracted or a concern submission is attempted with

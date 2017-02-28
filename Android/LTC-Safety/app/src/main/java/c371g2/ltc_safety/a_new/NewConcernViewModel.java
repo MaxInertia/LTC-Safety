@@ -12,10 +12,11 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import c371g2.ltc_safety.NetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkViewModel;
+import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -30,31 +31,15 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * @HistoryProperties
  * - The value of the signalLatch only decreases.
  */
-class NewConcernViewModel {
-
-    /**
-     * Reference to the Activity class which initialized this class.
-     */
-    final private NetworkActivity activity;
-    /**
-     * A class used to inform a test class that a network operation has been completed.
-     * This variable is null until a concern submission is attempted with valid inputs.
-     */
-    final CountDownLatch signalLatch;
-    /**
-     * The return code that results from an attempt to submit a concern.
-     * This variable is null until a concern submission is attempted.
-     */
-    ReturnCode submissionReturnCode;
+class NewConcernViewModel extends AbstractNetworkViewModel {
 
     /**
      * Package-private NewConcernViewModel constructor.
      * @param activity The calling activity.
      */
-    NewConcernViewModel(@NonNull NetworkActivity activity) {
+    NewConcernViewModel(@NonNull AbstractNetworkActivity activity) {
         this.activity = activity;
         submissionReturnCode = null;
-        signalLatch = new CountDownLatch(1);
         instance = this;
     }
 
@@ -253,8 +238,8 @@ class NewConcernViewModel {
     static class Test_Hook implements NewConcernViewModel_TestHook {
 
         @Override
-        public boolean submitConcern(@NonNull NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
-                                  String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
+        public boolean submitConcern(@NonNull AbstractNetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
+                                     String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
 
             NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);
             ReturnCode[] returnCode = ncvm.submitConcern(

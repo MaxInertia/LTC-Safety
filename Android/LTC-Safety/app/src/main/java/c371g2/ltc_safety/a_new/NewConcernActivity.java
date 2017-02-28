@@ -5,8 +5,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.NetworkActivity;
+import c371g2.ltc_safety.ReturnCode;
 
 /**
  * This activity displays a form with various fields for specifying a safety concern. A concern with
@@ -18,7 +19,7 @@ import c371g2.ltc_safety.NetworkActivity;
  * @HistoryProperties For a given instance of this class, the newConcernViewModel field always
  * contains the same instance.
  */
-public class NewConcernActivity extends NetworkActivity {
+public class NewConcernActivity extends AbstractNetworkActivity {
 
     /**
      * Reference to the View-Model for this Activity. All functionality in this activity that is

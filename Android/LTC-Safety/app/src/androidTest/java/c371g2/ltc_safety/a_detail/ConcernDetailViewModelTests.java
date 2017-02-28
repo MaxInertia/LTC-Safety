@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
+import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.MainViewModelTests;
 import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
@@ -54,7 +55,7 @@ public class ConcernDetailViewModelTests {
         concernDetailViewModel.getConcern(0);
         concernDetailViewModel.retractConcern();
         concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue(concernDetailViewModel.submissionReturnCode.equals(ReturnCode.IOEXCEPTION));
+        assertTrue(concernDetailViewModel.submissionReturnCode.equals(ReturnCode.IOEXCEPTION_THROWN_BY_API));
 
         activity.finish();
     }
