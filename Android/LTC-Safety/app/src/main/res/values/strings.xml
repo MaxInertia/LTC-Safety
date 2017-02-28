@@ -7,7 +7,7 @@
     <string name="actionsTakenTextField_hint">Actions Taken</string>
     <string name="phoneNumberField_hint">Phone Number</string>
     <string name="emailTextField_hint">Email Address</string>
-    <string name="alertview_buttontext">Ok</string>
+    <string name="alertview_buttontext">OK</string>
     <string name="roomField_hint">Room</string>
     <string name="actions_taken_section_title">WHAT ACTIONS HAVE BEEN TAKEN?</string>
     <string name="contact_information_section_title">CONTACT INFORMATION</string>

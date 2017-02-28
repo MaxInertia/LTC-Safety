@@ -23,7 +23,7 @@ import static junit.framework.Assert.assertTrue;
 public class NewConcernViewModelTests {
 
     @Rule
-    public ActivityTestRule<NewConcernActivity> activityRule = new ActivityTestRule<NewConcernActivity>(NewConcernActivity.class);
+    public ActivityTestRule<NewConcernActivity> activityRule = new ActivityTestRule<>(NewConcernActivity.class);
 
     private NewConcernActivity activity;
     private NewConcernViewModel newConcernViewModel;

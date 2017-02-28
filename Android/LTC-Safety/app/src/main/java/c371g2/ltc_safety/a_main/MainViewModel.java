@@ -135,7 +135,7 @@ class MainViewModel implements ViewModelObserver {
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * Any methods or fields can be added to this static subclass to aid testing. To use it:
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use it:
      * 1) Add method headers to the interface 'MainViewModel_TestHook'.
      * 2) Implement those methods in this class (Test_Hook).
      * 3) Call on those methods from a text class via the Interface MainViewModel_TestHook.

@@ -13,7 +13,7 @@ import android.widget.TextView;
  * @HistoryProperties none
  */
 class ChooserView{
-    private ChooserView(){};
+    private ChooserView(){}
 
     /**
      * Turns 'view' into a popup-selection trigger. When the view is clicked a popup selection window

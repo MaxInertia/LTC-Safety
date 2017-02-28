@@ -1,6 +1,5 @@
 package c371g2.ltc_safety.a_new;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;

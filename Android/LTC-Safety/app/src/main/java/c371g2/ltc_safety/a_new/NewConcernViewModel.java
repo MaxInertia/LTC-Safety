@@ -23,7 +23,7 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * This class acts as an interface between the app view in the new concern activity and the model.
  * It handles the submission of concerns to the systems backend.
  *
- * Contains a static inner-class 'Test_Hook' to aid testing.
+ * Contains a static inner-Class 'Test_Hook' to aid testing.
  *
  * @Invariants
  * - activity is never null after being initialized in the constructor.
@@ -185,8 +185,8 @@ class NewConcernViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            if(!activity.isFinishing() && ((NetworkActivity)activity).progressDialog!=null) {
-                ((NetworkActivity)activity).progressDialog.cancel(); //progressDialog is not initialized for tests
+            if(!activity.isFinishing() && activity.progressDialog!=null) {
+                activity.progressDialog.cancel(); //progressDialog is not initialized for tests
             }
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
@@ -240,7 +240,7 @@ class NewConcernViewModel {
     }
 
     /**
-     * Any methods or fields can be added to this static subclass to aid testing. Feel free to use
+     * Any methods or fields can be added to this static inner-Class to aid testing. Feel free to use
      * the field 'instance' here. To use this class do the following:
      * 1) Add method headers to the interface 'NewConcernViewModel_TestHook'.
      * 2) Implement those methods in this class (Test_Hook).
@@ -253,7 +253,7 @@ class NewConcernViewModel {
     static class Test_Hook implements NewConcernViewModel_TestHook {
 
         @Override
-        public boolean submitConcern(NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
+        public boolean submitConcern(@NonNull NetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
                                   String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
 
             NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);

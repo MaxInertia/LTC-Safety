@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 import c371g2.ltc_safety.NetworkActivity;
 
 /**
- * Interface that grants access to the static subclass TestHook inside the NewConcernViewModel class.
+ * Interface that grants access to the static class Test_Hook inside the NewConcernViewModel class.
  *
- * If necessary: Place headers for test methods here, implement those methods in TestHook.
+ * If necessary: Place headers for test methods here, implement those methods in Test_Hook.
  *
  * Note: This is intended to grant access to non-public fields and methods from outside the a_main
  * package. If this is not required, write tests in either the Test or AndroidTest directory in the
@@ -21,10 +21,10 @@ import c371g2.ltc_safety.NetworkActivity;
  */
 public interface NewConcernViewModel_TestHook {
     /**
-     * The instance used to access Test_Hook, the subclass of NewConcernViewModel.
+     * The instance used to access Test_Hook, an inner-Class of NewConcernViewModel.
      *
      * NewConcernViewModel_TestHook: This interface.
-     * NewConcernViewModel.Test_Hook: Static subclass of NewConcernViewModel
+     * NewConcernViewModel.Test_Hook: Static inner-Class of NewConcernViewModel
      */
     NewConcernViewModel_TestHook instance = new NewConcernViewModel.Test_Hook();
 

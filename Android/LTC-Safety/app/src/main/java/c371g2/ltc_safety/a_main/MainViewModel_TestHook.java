@@ -3,9 +3,9 @@ package c371g2.ltc_safety.a_main;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
- * Interface that grants access to the static subclass TestHook inside the MainViewModel class.
+ * Interface that grants access to the static class Test_Hook inside the MainViewModel class.
  *
- * If necessary: Place headers for test methods here, implement those methods in TestHook.
+ * If necessary: Place headers for test methods here, implement those methods in Test_Hook.
  *
  * Note: This is intended to grant access to non-public fields and methods from outside the a_main
  * package. If this is not required, write tests in either the Test or AndroidTest directory in the
@@ -19,10 +19,10 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  */
 public interface MainViewModel_TestHook {
     /**
-     * The instance used to access Test_Hook, the subclass of MainViewModel.
+     * The instance used to access Test_Hook, an inner-Class of MainViewModel.
      *
      * MainViewModel_TestHook: This interface.
-     * MainViewModel.Test_Hook: Static subclass of MainViewModel.
+     * MainViewModel.Test_Hook: Static inner-Class of MainViewModel.
      */
     MainViewModel_TestHook instance = new MainViewModel.Test_Hook();
 

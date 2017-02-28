@@ -193,7 +193,7 @@ class ConcernDetailViewModel {
     }
 
     /**
-     * Any methods or fields can be added to this static subclass to aid testing. Feel free to use
+     * Any methods or fields can be added to this static inner-Class to aid testing. Feel free to use
      * the field 'instance' here. To use this class do the following:
      * 1) Add method headers to the interface 'ConcernDetailViewModel_TestHook'.
      * 2) Implement those methods in this class (Test_Hook).
