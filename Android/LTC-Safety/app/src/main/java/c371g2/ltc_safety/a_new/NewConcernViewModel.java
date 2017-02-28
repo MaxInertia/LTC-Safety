@@ -23,6 +23,8 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * This class acts as an interface between the app view in the new concern activity and the model.
  * It handles the submission of concerns to the systems backend.
  *
+ * Contains a static inner-class 'Test_Hook' to aid testing.
+ *
  * @Invariants
  * - activity is never null after being initialized in the constructor.
  * @HistoryProperties
@@ -53,6 +55,7 @@ class NewConcernViewModel {
         this.activity = activity;
         submissionReturnCode = null;
         signalLatch = new CountDownLatch(1);
+        instance = this;
     }
 
     /**
@@ -218,8 +221,27 @@ class NewConcernViewModel {
         }
     }
 
+    // ---------------------------------------------------------------------------------------------
+
     /**
-     * Any methods or fields can be added to this static subclass to aid testing. To use it:
+     * A reference to the current instance of NewConcernViewModel for use with the Test_Hook class.
+     * This will be null unless NewConcernViewActivity was launched.
+     */
+    private static NewConcernViewModel instance;
+
+    /**
+     * Used to set the instance to null when the activity is being destroyed.
+     * This is not to be called anywhere except NewConcernActivity.onDestroy()
+     * @preconditions none
+     * @modifies NewConcernViewModel is set to null.
+     */
+    void nullifyInstance() {
+        instance = null;
+    }
+
+    /**
+     * Any methods or fields can be added to this static subclass to aid testing. Feel free to use
+     * the field 'instance' here. To use this class do the following:
      * 1) Add method headers to the interface 'NewConcernViewModel_TestHook'.
      * 2) Implement those methods in this class (Test_Hook).
      * 3) Call on those methods from a text class via the Interface NewConcernViewModel_TestHook.

@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.NetworkActivity;
@@ -118,9 +115,9 @@ public class NewConcernActivity extends NetworkActivity {
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
+    public void onDestroy() {
+        newConcernViewModel.nullifyInstance();
+        super.onDestroy();
     }
 
     /**

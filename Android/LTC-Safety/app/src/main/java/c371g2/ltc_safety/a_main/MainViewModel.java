@@ -22,6 +22,8 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * - The ViewModelObserver is used by the other two View-Model classes to update the concernList with
  * changes resulting from the network operations performed in each.
  *
+ * Contains a static inner-class 'Test_Hook' to aid testing.
+ *
  * @Invariants none
  * @HistoryProperties
  * - The concernList is the same ArrayList instance for the duration of the time the application is
@@ -130,6 +132,7 @@ class MainViewModel implements ViewModelObserver {
         saveConcern(context, concern);
     }
 
+    // ---------------------------------------------------------------------------------------------
 
     /**
      * Any methods or fields can be added to this static subclass to aid testing. To use it:
@@ -148,7 +151,7 @@ class MainViewModel implements ViewModelObserver {
         }
 
         @Override
-        public void addConcern(ConcernWrapper concern) {
+        public void addConcern(ConcernWrapper concern) throws NullPointerException {
             concernList.add(concern);
         }
     }

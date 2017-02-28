@@ -36,7 +36,7 @@ public class ConcernDetailActivity extends NetworkActivity {
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.
      */
-    final ConcernDetailViewModel viewModel = new ConcernDetailViewModel(this);
+    final ConcernDetailViewModel concernDetailViewModel = new ConcernDetailViewModel(this);
 
     /**
      * Reference to the button used to retract a concern.
@@ -51,9 +51,15 @@ public class ConcernDetailActivity extends NetworkActivity {
         retractConcernButton = (Button) findViewById(R.id.detailedConcern_retractButton);
         setRetractConcernButtonListener();
 
-        populateFields(viewModel.getConcern(
+        populateFields(concernDetailViewModel.getConcern(
                 getIntent().getExtras().getInt("concern-index")
         ));
+    }
+
+    @Override
+    public void onDestroy() {
+        concernDetailViewModel.nullifyInstance();
+        super.onDestroy();
     }
 
     /**
@@ -74,7 +80,7 @@ public class ConcernDetailActivity extends NetworkActivity {
                         false
                 );
                 assert(progressDialog != null && progressDialog.isShowing());
-                viewModel.retractConcern();
+                concernDetailViewModel.retractConcern();
             }
         });
     }

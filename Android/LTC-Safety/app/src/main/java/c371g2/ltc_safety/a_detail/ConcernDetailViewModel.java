@@ -24,6 +24,8 @@ import static c371g2.ltc_safety.a_detail.ReturnCode.SUCCESS;
  * This class acts as an interface between the app view in the concern detail activity and the model.
  * It handles the concern retraction network task.
  *
+ * Contains a static inner-class 'Test_Hook' to aid testing.
+ *
  * @Invariants
  * - index is in the range [0, MainViewModel.concernList.size()-1]
  * - activity is never null after being initialized in the constructor.
@@ -62,6 +64,7 @@ class ConcernDetailViewModel {
     ConcernDetailViewModel(@NonNull NetworkActivity activity) {
         this.activity = activity;
         signalLatch = new CountDownLatch(1);
+        instance = this;
     }
 
     /**
@@ -170,4 +173,35 @@ class ConcernDetailViewModel {
             assert(signalLatch.getCount() == 0);
         }
     }
+
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * A reference to the current instance of ConcernDetailViewModel for use with the Test_Hook class.
+     * This will be null unless ConcernDetailViewActivity was launched.
+     */
+    private static ConcernDetailViewModel instance;
+
+    /**
+     * Used to set the instance to null when the activity is being destroyed.
+     * This is not to be called anywhere except ConcernDetailActivity.onDestroy()
+     * @preconditions none
+     * @modifies ConcernDetailViewModel is set to null.
+     */
+    void nullifyInstance() {
+        instance = null;
+    }
+
+    /**
+     * Any methods or fields can be added to this static subclass to aid testing. Feel free to use
+     * the field 'instance' here. To use this class do the following:
+     * 1) Add method headers to the interface 'ConcernDetailViewModel_TestHook'.
+     * 2) Implement those methods in this class (Test_Hook).
+     * 3) Call on those methods from a text class via the Interface ConcernDetailViewModel_TestHook.
+     *
+     * Examples:
+     * ConcernDetailViewModel_TestHook.instance.someMethod();
+     * ConcernDetailViewModel_TestHook.instance.otherMethod();
+     */
+    static class Test_Hook implements ConcernDetailViewModel_TestHook {}
 }
