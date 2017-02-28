@@ -102,7 +102,10 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        List<Concern> concernList = dao.load(0, 1, null);
+        HashSet<Facility> locations = new HashSet<Facility>();
+        locations.add(new Facility("Other"));
+
+        List<Concern> concernList = dao.load(0, 1, locations);
 
         assertEquals(firstConcern, concernList.get(0));
 
@@ -110,7 +113,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern secondConcern = new Concern(concernData);
         dao.save(secondConcern);
 
-        concernList = dao.load(1, 1, null);
+        concernList = dao.load(1, 1, locations);
 
         assertEquals(secondConcern, concernList.get(0));
     }
@@ -119,14 +122,22 @@ public class ConcernDaoTest extends DatastoreTest {
     public void LoadInvalidOffsetTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-        concernList = dao.load(-1, 5, null);
+
+        HashSet<Facility> locations = new HashSet<Facility>();
+        locations.add(new Facility("Other"));
+
+        concernList = dao.load(-1, 5, locations);
     }
 
     @Test (expected = AssertionError.class)
     public void LoadInvalidLimitTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
-        concernList = dao.load(0, -1, null);
+
+        HashSet<Facility> locations = new HashSet<Facility>();
+        locations.add(new Facility("Other"));
+
+        concernList = dao.load(0, -1, locations);
     }
 
     /**
@@ -142,10 +153,10 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        HashSet<Facility> testSet = new HashSet<Facility>();
-        testSet.add(new FacilityDao().load("Other"));
+        HashSet<Facility> locations = new HashSet<Facility>();
+        locations.add(new Facility("Other"));
 
-        List<Concern> concerns = dao.load(0, 1, testSet);
+        List<Concern> concerns = dao.load(0, 1, locations);
 
         assertNotNull(concerns);
         assert(concerns.size() > 0);

@@ -4,6 +4,7 @@ import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
+import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -72,31 +73,17 @@ public class ConcernDao extends Dao<Concern> {
 
         List<Concern> filteredList = new LinkedList<Concern>();
 
-        if(facilities == null) {
-            filteredList = ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
+        if(facilities != null) {
+            filteredList = ObjectifyService.ofy().load().type(Concern.class)
+                    .filter("facilityRef in ", facilities)
+                    .order("submissionDate")
                     .offset(offset)
                     .limit(limit)
                     .list();
-        } else {
-            for (Facility curFac : facilities) {
-                filteredList.addAll(
-                        ObjectifyService.ofy().load().type(Concern.class).order("submissionDate")
-                                .filter("facilityRef",curFac)
-                                .order("submissionDate")
-                                .list()
-                );
-            }
-
-            List<Concern> temp = new LinkedList<Concern>();
-            for(int i = offset; i < offset + limit; i++){
-                if(filteredList.get(i) != null){
-                    temp.add(filteredList.get(i));
-                }
-            }
-
-            filteredList = temp;
         }
 
         return filteredList;
     }
+
+
 }

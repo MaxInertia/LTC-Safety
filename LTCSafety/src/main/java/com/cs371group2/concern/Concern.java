@@ -3,6 +3,8 @@ package com.cs371group2.concern;
 import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
 import com.cs371group2.facility.FacilityDao;
+import com.google.api.server.spi.config.AnnotationBoolean;
+import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
@@ -154,6 +156,7 @@ public final class Concern {
         return status;
     }
 
+    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
     public Facility getFacility(){
         return facilityRef.get();
     }
