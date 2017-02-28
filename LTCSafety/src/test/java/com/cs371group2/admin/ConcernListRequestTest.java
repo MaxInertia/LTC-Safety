@@ -1,5 +1,6 @@
 package com.cs371group2.admin;
 
+import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import org.junit.Test;
 
@@ -18,32 +19,32 @@ public class ConcernListRequestTest {
         //new AdminApi().requestConcernList(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void NullTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void NullTokenTest() throws UnauthorizedException, BadRequestException {
         ConcernListRequest.TestHook_MutableConcernListRequest testRequest =
                 new ConcernListRequest.TestHook_MutableConcernListRequest(1,0, null);
         ConcernListRequest request = testRequest.build();
         new AdminApi().requestConcernList(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void EmptyTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void EmptyTokenTest() throws UnauthorizedException, BadRequestException {
         ConcernListRequest.TestHook_MutableConcernListRequest testRequest =
                 new ConcernListRequest.TestHook_MutableConcernListRequest(1,0, "");
         ConcernListRequest request = testRequest.build();
         new AdminApi().requestConcernList(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void InvalidOffsetTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void InvalidOffsetTest() throws UnauthorizedException, BadRequestException {
         ConcernListRequest.TestHook_MutableConcernListRequest testRequest =
                 new ConcernListRequest.TestHook_MutableConcernListRequest(-1,0, TEST_TOKEN);
         ConcernListRequest request = testRequest.build();
         new AdminApi().requestConcernList(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void InvalidLimitTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void InvalidLimitTest() throws UnauthorizedException, BadRequestException {
 
         ConcernListRequest.TestHook_MutableConcernListRequest testRequest =
                 new ConcernListRequest.TestHook_MutableConcernListRequest(1,-1, TEST_TOKEN);
@@ -51,8 +52,8 @@ public class ConcernListRequestTest {
         new AdminApi().requestConcernList(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void ZeroLimitTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void ZeroLimitTest() throws UnauthorizedException, BadRequestException {
         ConcernListRequest.TestHook_MutableConcernListRequest testRequest =
                 new ConcernListRequest.TestHook_MutableConcernListRequest(0,0, TEST_TOKEN);
         ConcernListRequest request = testRequest.build();

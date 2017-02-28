@@ -26,14 +26,6 @@ public final class ConcernRequest extends AdminRequest implements Validatable {
     public long getConcernId(){ return concernId; }
 
     /**
-     * Checks if the request contains legal information for parse-attempting
-     * @return Whether the request contains legal information or not
-     */
-    public boolean legalRequest(){
-        return (accessToken != null && accessToken.isEmpty());
-    }
-
-    /**
      * Validates the ConcernRequest to ensure that the fields are legal and non-null.
      *
      * @return The result of the validation, including a reason in the case of failure

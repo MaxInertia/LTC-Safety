@@ -1,10 +1,12 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.facility.Facility;
 import com.google.api.server.spi.config.*;
+import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
 
 import java.util.List;
@@ -33,13 +35,16 @@ public class AdminApi {
      * @throws UnauthorizedException
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
-    public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException {
+    public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
+
+        ValidationResult result = request.validate();
+
+        if(!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried requesting a concern list with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
 
         logger.log(Level.INFO, "User is requesting a concern list. " + request);
-
-        if(!request.legalRequest()){
-            throw new UnauthorizedException("Request was not legal!");
-        }
 
         Account account = request.authenticate();
 
@@ -61,14 +66,15 @@ public class AdminApi {
      * @precond request != null
      */
     @ApiMethod(name = "requestConcern", path = "admin/requestConcern")
-    public Concern requestConcern(ConcernRequest request) throws UnauthorizedException {
-        if(request == null){
-           throw new UnauthorizedException("The request given was null");
+    public Concern requestConcern(ConcernRequest request) throws UnauthorizedException, BadRequestException {
+        ValidationResult result = request.validate();
+
+        if(!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried requesting a concern with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
         }
 
-        if(!request.legalRequest()){
-            throw new UnauthorizedException("Request was not legal!");
-        }
+        logger.log(Level.INFO, "User is requesting a concern list. " + request);
 
         Account account = request.authenticate();
 

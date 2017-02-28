@@ -3,6 +3,7 @@ package com.cs371group2.admin;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernTest;
+import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import org.junit.Test;
 
@@ -23,24 +24,24 @@ public class ConcernRequestTest {
         //assert(toLoad == new AdminApi().requestConcern(request));
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void NullTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void NullTokenTest() throws UnauthorizedException, BadRequestException {
         ConcernRequest.TestHook_MutableConcernRequest testRequest =
                 new ConcernRequest.TestHook_MutableConcernRequest(1, null);
         ConcernRequest request = testRequest.build();
         new AdminApi().requestConcern(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void EmptyTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void EmptyTokenTest() throws UnauthorizedException, BadRequestException {
         ConcernRequest.TestHook_MutableConcernRequest testRequest =
                 new ConcernRequest.TestHook_MutableConcernRequest(1, "");
         ConcernRequest request = testRequest.build();
         new AdminApi().requestConcern(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void InvalidIdTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void InvalidIdTest() throws UnauthorizedException, BadRequestException {
         ConcernRequest.TestHook_MutableConcernRequest testRequest =
                 new ConcernRequest.TestHook_MutableConcernRequest(0, null);
         ConcernRequest request = testRequest.build();

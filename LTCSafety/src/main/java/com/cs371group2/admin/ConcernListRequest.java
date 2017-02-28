@@ -39,18 +39,6 @@ public final class ConcernListRequest extends AdminRequest implements Validatabl
     }
 
     /**
-     * Checks if the request contains legal information for parse-attempting
-     * @return Whether the request contains legal information or not
-     */
-    public boolean legalRequest(){
-        if(limit < 1 || offset < 0 || accessToken == null || accessToken == "") {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Validates the ConcernListRequest to ensure that the fields are legal and non-null.
      *
      * @return The result of the validation, including a reason in the case of failure
