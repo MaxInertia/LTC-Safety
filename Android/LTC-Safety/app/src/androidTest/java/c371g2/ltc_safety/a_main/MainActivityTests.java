@@ -50,7 +50,7 @@ public class MainActivityTests {
     @RequiresApi(api = Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     @Test
     public void test_onCreate_buttonHasClickListener() {
-        Button newConcernButton = (Button) mainActivity.findViewById(R.id.new_concern_button);
+        Button newConcernButton = (Button) mainActivity.findViewById(R.id.main_newConcernButton);
 
         assertTrue("The 'New LocalConcern'-button does not have an onClickListener", newConcernButton.hasOnClickListeners());
     }
@@ -62,7 +62,7 @@ public class MainActivityTests {
     public void test_newConcernButtonChangesActivity() {
         Instrumentation.ActivityMonitor activityMonitor = InstrumentationRegistry.getInstrumentation().addMonitor(NewConcernActivity.class.getName(),null,false);
 
-        final Button newConcernButton = (Button) mainActivity.findViewById(R.id.new_concern_button);
+        final Button newConcernButton = (Button) mainActivity.findViewById(R.id.main_newConcernButton);
         mainActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +78,7 @@ public class MainActivityTests {
     @Test
     public void test_onCreate_ListView_hasOnClickListener() {
         Activity mainActivity = mActivity.getActivity();
-        ListView concernList = (ListView) mainActivity.findViewById(R.id.concern_listView);
+        ListView concernList = (ListView) mainActivity.findViewById(R.id.main_concernListView);
 
         assertTrue("The concern ListView does not have an onClickListener", concernList.getOnItemClickListener()!=null);
     }

@@ -24,14 +24,14 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:id="@+id/new_concern_button" />
+                android:id="@+id/main_newConcernButton" />
         </LinearLayout>
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/concern_listView"
+        android:id="@+id/main_concernListView"
         android:background="@android:color/white"/>
 
 </LinearLayout>

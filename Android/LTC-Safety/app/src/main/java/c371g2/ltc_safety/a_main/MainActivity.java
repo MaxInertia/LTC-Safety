@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         assert(MainViewModel.getSortedConcernList() != null);
         populateConcernsList();
 
-        Button newConcernButton = (Button) findViewById(R.id.new_concern_button);
+        Button newConcernButton = (Button) findViewById(R.id.main_newConcernButton);
         setNewConcernButtonListener(newConcernButton);
         assert(newConcernButton.hasOnClickListeners());
     }
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.concern_list_item,
                 MainViewModel.getSortedConcernList()
         );
-        ListView concernList = (ListView) findViewById(R.id.concern_listView);
+        ListView concernList = (ListView) findViewById(R.id.main_concernListView);
         assert(concernList != null);
         concernList.setAdapter(adapter);
         concernList.setOnItemClickListener(
