@@ -116,10 +116,11 @@
     
     NSAssert(descriptor != nil, @"Selected other descriptor with nil value.");
     NSAssert(NSLocalizedString(descriptor.tag, nil) != nil, @"Missing title for other descriptor.");
-
+    
+    [self deselectFormRow:descriptor];
+    
     LTCInputAlertController *inputAlert = [LTCInputAlertController alertControllerWithTitle:NSLocalizedString(descriptor.tag, nil) message:self.viewModel.otherPrompt preferredStyle:UIAlertControllerStyleAlert];
     inputAlert.delegate = self;
-    
     [self presentViewController:inputAlert animated:YES completion:nil];
 }
 
