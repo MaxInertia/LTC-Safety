@@ -19,4 +19,13 @@
     return @"Facilities";
 }
 
+/**
+ The boolean value for if the user can select other to type in their own value.
+ @return NO, since the user should not be able to type in their own facility.
+ 
+ */
+- (BOOL *)hasOther {
+    return NO;
+}
+
 @end

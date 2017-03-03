@@ -24,6 +24,11 @@
 @property (readonly, nonatomic, copy) NSString *fileName;
 
 /**
+ The boolean value for if this view controller should display an "other" prompt to the user.
+ */
+@property (readonly, nonatomic) BOOL *hasOther;
+
+/**
  The row descriptor required by XLForms for passing the selected value back to the parent XLFormViewController.
  */
 @property (nonatomic) XLFormRowDescriptor *rowDescriptor;

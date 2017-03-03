@@ -19,4 +19,12 @@
     return @"Categories";
 }
 
+/**
+ The boolean value for if the user can select other to type in their own value.
+ @return YES, since the user should be able to type in their own concern nature.
+ 
+ */
+- (BOOL)hasOther {
+    return YES;
+}
 @end
