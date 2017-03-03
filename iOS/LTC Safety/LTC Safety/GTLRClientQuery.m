@@ -29,6 +29,7 @@
                                HTTPMethod:@"POST"
                        pathParameterNames:nil];
   query.bodyObject = object;
+  query.expectedObjectClass = [GTLRClient_UpdateConcernStatusResponse class];
   query.loggingName = @"client.retractConcern";
   return query;
 }

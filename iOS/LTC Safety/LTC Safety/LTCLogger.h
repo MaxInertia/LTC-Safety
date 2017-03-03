@@ -10,7 +10,7 @@
  The Logger class records logs for use with tracing
  */
 #import "LTCLogLevel.h"
-@interface Logger : NSObject
+@interface LTCLogger : NSObject
 
 /**
  log records a message with the specified level

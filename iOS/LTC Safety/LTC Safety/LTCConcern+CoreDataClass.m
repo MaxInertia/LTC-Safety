@@ -11,33 +11,34 @@
 #import "LTCLocation+CoreDataClass.h"
 #import "LTCReporter+CoreDataClass.h"
 #import "UICKeyChainStore.h"
-#import "Logger.h"
+#import "LTCLogger.h"
+
 @implementation LTCConcern
 
 /**
  Called when the concern is about to be saved. Allows for setup of the concern.
  */
 - (void)didSave {
-    [Logger log:@"Saving concern" level:kLTCLogLevelInfo];
+    [LTCLogger log:@"Saving concern" level:kLTCLogLevelInfo];
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
     [keychain setString:self.ownerToken forKey:self.identifier];
     
     [super didSave];
-    [Logger log :@"Concern saved"  level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern saved"  level:kLTCLogLevelInfo];
 }
 
 /**
  Called when the concern is about to be read from disk. Allows for setup of the concern.
  */
 - (void)awakeFromFetch {
-    [Logger log :@"Reading concern" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Reading concern" level:kLTCLogLevelInfo];
     [super awakeFromFetch];
     
     NSString *bundleIdentifier = [NSBundle mainBundle].bundleIdentifier;
     UICKeyChainStore *keychain = [UICKeyChainStore keyChainStoreWithService:bundleIdentifier];
     self.ownerToken = [keychain stringForKey:self.identifier];
-    [Logger log :@"Concern read" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern read" level:kLTCLogLevelInfo];
 }
 
 + (instancetype)concernWithData:(nonnull GTLRClient_Concern *)data ownerToken:(NSString *)ownerToken inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
@@ -60,7 +61,7 @@
  @return The constructed LTCConcern
  */
 - (instancetype)initWithData:(nonnull GTLRClient_Concern *)concernData ownerToken:(NSString *)ownerToken entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
-    [Logger log :@"Constructing concern" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Constructing concern" level:kLTCLogLevelInfo];
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         
         NSLog(@"%@", self.class);
@@ -80,7 +81,7 @@
         }
         self.statuses = [statuses copy];
     }
-    [Logger log :@"Concern constructed"  level:kLTCLogLevelInfo ];
+    [LTCLogger log :@"Concern constructed"  level:kLTCLogLevelInfo ];
     return self;
 }
 

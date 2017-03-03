@@ -26,7 +26,7 @@
 @implementation LTCValueSelectionControllerTests
 
 /**
- Testing the initialization of the value selection controller by creating a Category view controller and a facility view controller. The tests check that each controller is not nil, has 2 sections with 1 row in the second section, and that each descriptor in the rows has a title, tag, and a value.
+ Testing the initialization of the value selection controller by creating a Category view controller and a facility view controller. The tests check that each controller is not nil, has 2 sections with 1 row in the second section if it is the category view controller, and that each descriptor in the rows has a title, tag, and a value.
  */
 - (void)testInit {
     
@@ -41,7 +41,13 @@
         XCTAssertEqual(controller.form.formSections.count, 2);
         
         XLFormSectionDescriptor *otherSection = controller.form.formSections.lastObject;
-        XCTAssertEqual(otherSection.formRows.count, 1);
+        
+        if(valueSelectionClass == [LTCCategoryViewController class]){
+            XCTAssertEqual(otherSection.formRows.count, 1);
+        }else{
+            XCTAssertEqual(otherSection.formRows.count, 0);
+
+        }
         
         XLFormSectionDescriptor *valueSection = controller.form.formSections.firstObject;
         

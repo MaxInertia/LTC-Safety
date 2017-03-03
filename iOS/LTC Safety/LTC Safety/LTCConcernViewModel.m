@@ -7,7 +7,10 @@
 //
 
 #import "LTCConcernViewModel.h"
-#import "Logger.h"
+#import "LTCLogger.h"
+
+NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatusNotification";
+
 @interface LTCConcernViewModel () <NSFetchedResultsControllerDelegate>
 @property (readwrite, strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
 @property (readwrite, strong, nonatomic) NSManagedObjectContext *objectContext;
@@ -35,7 +38,14 @@
 
         self.fetchedResultsController.delegate = self;
         self.objectContext = context;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updatedConcernStatus:) name:LTCUpdatedConcernStatusNotification object:nil];
+        
+        
     }
+    
+    
+    
     return self;
 }
 
@@ -91,15 +101,15 @@
  Adds a concern to the core data local datastore.
 
  @param concern The concern to be stored
- @param error   <#error description#>
+ @param error The error that is thrown if saving the concern fails.
  */
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error {
-    [Logger log :@"Adding a concern" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Adding a concern" level:kLTCLogLevelInfo];
     NSAssert(concern != nil, @"Attempted to add a nil concern.");
     NSAssert(error != nil, @"Attempted to call add concern without an error handler.");
     
     [self.objectContext save:error];
-    [Logger log:@"Concern added" level:kLTCLogLevelInfo];
+    [LTCLogger log:@"Concern added" level:kLTCLogLevelInfo];
 }
 
 - (LTCConcern *)concernAtIndexPath:(NSIndexPath *)indexPath {
@@ -110,7 +120,7 @@
 }
 
 - (void)removeConcern:(LTCConcern *)concern error:(NSError **)error {
-    [Logger log:@"Removing a concern" level:kLTCLogLevelInfo];
+    [LTCLogger log:@"Removing a concern" level:kLTCLogLevelInfo];
     NSAssert(concern != nil, @"Attempted to remove a nil concern.");
     NSAssert(error != nil, @"Attempted to call remove concern without an error handler.");
     NSAssert([concern.managedObjectContext isEqual:self.objectContext], @"Attempted to remove a concern that was not a part of the managed object context.");
@@ -119,7 +129,7 @@
     [context deleteObject:concern];
     
     [self.objectContext save:error];
-    [Logger log :@"Concern removed" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern removed" level:kLTCLogLevelInfo];
 }
 
 #pragma mark - NSFetchedResultsController delegate
@@ -165,6 +175,32 @@
             [self.delegate viewModel:self didMoveConcernFromIndexPath:indexPath toIndexPath:newIndexPath];
             break;
     }
+}
+/**
+    Is called whenever a updateConcernStatus notification is sent out in the app. This method will use teh notifications user info to append a specified concern status to the specified concern's list of status.
+ */
+- (void)_updatedConcernStatus:(NSNotification *)notification{
+    GTLRClient_UpdateConcernStatusResponse *newConcernStatusResponse = notification.userInfo[@"status"];
+    
+    NSString *identifier = [newConcernStatusResponse.concernId stringValue];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %@", identifier];
+    
+    NSFetchRequest *request = [LTCConcern fetchRequest];
+    [request setPredicate:predicate];
+    
+    
+    NSError *error = nil;
+    NSArray *result = [self.objectContext executeFetchRequest:request error:&error];
+    LTCConcern *concern = [result firstObject];
+    
+    NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
+    
+    if (error == nil && concern != nil) {
+        LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
+        [concern addStatusesObject:status];
+    }
+    [self.objectContext save:nil];
+
 }
 
 @end

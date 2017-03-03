@@ -19,7 +19,7 @@ typedef void(^LTCSubmitConcernCompletion)(GTLRClient_SubmitConcernResponse *conc
 /**
     The completion block that will be used to bring back a possible error message.
 */
-typedef void(^LTCRetractConcernCompletion)(NSError *error);
+typedef void(^LTCRetractConcernCompletion)(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error);
 
 /**
  The LTCClientApi will provide the application with the nececcary queries to interact with the 

@@ -1,8 +1,9 @@
 language: objective-c
-osx_image: xcode7.3
+osx_image: xcode8.2
 
 script:
 # - open -a "simulator" --args -CurrentDeviceUDID A84965FC-070D-4EAF-83E8-84FFE99F5866
 # - xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test
- - xctool -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test -only "LTC SafetyTests"
+ - chmod +x iOS/build_scripts/script.sh
+ - ./iOS/build_scripts/script.sh
  - mvn clean package -f LTCSafety/pom.xml

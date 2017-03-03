@@ -26,7 +26,7 @@ NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
 //
 
 @implementation GTLRClient_Concern
-@dynamic archived, data, identifier, statuses, submissionDate;
+@dynamic archived, data, identifier, retracted, statuses, submissionDate;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -99,4 +99,14 @@ NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
 
 @implementation GTLRClient_SubmitConcernResponse
 @dynamic concern, ownerToken;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRClient_UpdateConcernStatusResponse
+//
+
+@implementation GTLRClient_UpdateConcernStatusResponse
+@dynamic concernId, status;
 @end
