@@ -60,6 +60,7 @@ public class ClientApiTest extends DatastoreTest {
         ConcernData loadedData = concern.getData();
         assertEquals(loadedData.getActionsTaken(), data.getActionsTaken());
         assertEquals(loadedData.getConcernNature(), data.getConcernNature());
+        assertEquals(loadedData.getDescription(), data.getDescription());
 
         assertEquals(loadedData.getReporter().getName(), data.getReporter().getName());
         assertEquals(loadedData.getReporter().getPhoneNumber(),
