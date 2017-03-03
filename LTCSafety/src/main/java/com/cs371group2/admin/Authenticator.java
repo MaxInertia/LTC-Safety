@@ -24,7 +24,7 @@ abstract class Authenticator{
      * @return The account associated with the given token\
      * @precond token is valid and non-null
      */
-    public final Account authenticate(String token) throws UnauthorizedException {
+    public Account authenticate(String token) throws UnauthorizedException {
         Pair<Account, AccessToken> infoPair = authenticateAccount(token);
 
         boolean isVerified = false;

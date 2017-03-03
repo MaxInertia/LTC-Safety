@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  *
  * Created on 2017-02-08.
  */
-public final class ConcernListRequest extends AdminRequest implements Validatable {
+public class ConcernListRequest extends AdminRequest implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern list due to non-existent credentials.";
 
@@ -50,9 +50,9 @@ public final class ConcernListRequest extends AdminRequest implements Validatabl
         } else if (accessToken.isEmpty()){
             return new ValidationResult(EMPTY_TOKEN_ERROR);
         } else if (1 > limit){
-            return new ValidationResult(INVALID_OFFSET_ERROR);
-        } else if (0 > offset){
             return new ValidationResult(INVALID_LIMIT_ERROR);
+        } else if (0 > offset){
+            return new ValidationResult(INVALID_OFFSET_ERROR);
         }
 
         return new ValidationResult();

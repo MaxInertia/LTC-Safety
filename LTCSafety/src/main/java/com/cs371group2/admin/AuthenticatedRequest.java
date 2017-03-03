@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
 import com.cs371group2.account.Account;
+import com.google.api.server.spi.request.Auth;
 import com.google.api.server.spi.response.UnauthorizedException;
 
 import java.io.IOException;
@@ -31,8 +32,7 @@ abstract class AuthenticatedRequest{
             throw new UnauthorizedException("Access token is null!");
         }
 
-        Account account = getAuthenticator().authenticate(accessToken);
-        return account;
+        return getAuthenticator().authenticate(accessToken);
     }
 
     /**
