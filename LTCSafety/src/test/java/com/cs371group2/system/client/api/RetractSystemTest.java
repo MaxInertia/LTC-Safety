@@ -1,51 +1,51 @@
-package com.cs371group2.system;
+package com.cs371group2.system.client.api;
+
+import static org.junit.Assert.assertEquals;
 
 import com.appspot.ltc_safety.client.Client;
-import com.appspot.ltc_safety.client.model.*;
+import com.appspot.ltc_safety.client.model.ConcernData;
+import com.appspot.ltc_safety.client.model.Location;
+import com.appspot.ltc_safety.client.model.OwnerToken;
+import com.appspot.ltc_safety.client.model.Reporter;
+import com.appspot.ltc_safety.client.model.SubmitConcernResponse;
+import com.appspot.ltc_safety.client.model.UpdateConcernStatusResponse;
+import com.cs371group2.system.SystemTests;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-
-/**
- * These tests are related to the concern class to ensure that concern data is properly validated
- * when submitted. This involves checking that the correct responses are returned when unexpected or
- * invalid data is provided during concern submission.
- * <p>
- * NOTE - These tests were originally part of the client API tests. They were moved to take
- * advantage of the package private variables for testing.
- * <p>
- * Created on 2017-01-22.
- */
-public class ClientApiRetractSystemTest {
+public class RetractSystemTest {
 
     private static Client client;
-    private static OwnerToken token1;
 
     @BeforeClass
     public static void setUp() throws Exception {
         client = new Client.Builder(new NetHttpTransport(), new GsonFactory(), null).build();
+    }
+
+    private OwnerToken getValidOwnerToken() throws IOException {
+
         ConcernData data = new ConcernData();
         data.setConcernNature("Water main break");
         data.setActionsTaken("None");
+
         Reporter fake = new Reporter();
         fake.setName("Fake");
         fake.setEmail("Fake@fake.com");
         fake.setPhoneNumber("123456789");
         data.setReporter(fake);
+
         Location test = new Location();
         test.setFacilityName("Test Facility");
         test.setRoomName("Fake");
         data.setLocation(test);
+
         SubmitConcernResponse response = client.submitConcern(data).execute();
-        SubmitConcernResponse response2 = client.submitConcern(data).execute();
-        token1 = response.getOwnerToken();
+        return response.getOwnerToken();
     }
 
 
@@ -137,8 +137,8 @@ public class ClientApiRetractSystemTest {
     @Test
     @Category(SystemTests.class)
     public void testRetractRetractedConcern() throws IOException {
-        OwnerToken legalToken = new OwnerToken();
-        legalToken.setToken(token1.getToken());
+
+        OwnerToken legalToken = getValidOwnerToken();
         try {
             UpdateConcernStatusResponse result = client.retractConcern(legalToken).execute();
             result = client.retractConcern(legalToken).execute();
@@ -154,11 +154,9 @@ public class ClientApiRetractSystemTest {
     @Test
     @Category(SystemTests.class)
     public void testRetractSuccess() throws IOException {
-        OwnerToken legalToken = new OwnerToken();
-        legalToken.setToken(token1.getToken());
 
+        OwnerToken legalToken = getValidOwnerToken();
         UpdateConcernStatusResponse result = client.retractConcern(legalToken).execute();
-
         assertEquals(result.getStatus().getType(), "RETRACTED");
     }
 }

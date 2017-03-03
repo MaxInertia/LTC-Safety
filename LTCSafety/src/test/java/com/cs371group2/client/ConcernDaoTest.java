@@ -40,6 +40,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernData loadedData = loadedConcern.getData();
         assertEquals(loadedData.getActionsTaken(), data.getActionsTaken());
         assertEquals(loadedData.getConcernNature(), data.getConcernNature());
+        assertEquals(loadedData.getDescription(), data.getDescription());
 
         assertEquals(loadedData.getReporter().getName(), data.getReporter().getName());
         assertEquals(loadedData.getReporter().getPhoneNumber(),
