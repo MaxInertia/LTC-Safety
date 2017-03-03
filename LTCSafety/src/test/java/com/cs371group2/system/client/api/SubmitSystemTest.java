@@ -1,4 +1,7 @@
-package com.cs371group2.system;
+package com.cs371group2.system.client.api;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.ConcernData;
@@ -8,26 +11,12 @@ import com.appspot.ltc_safety.client.model.SubmitConcernResponse;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
+import java.io.IOException;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
-/**
- * These tests are related to the concern class to ensure that concern data is properly validated
- * when submitted. This involves checking that the correct responses are returned when unexpected or
- * invalid data is provided during concern submission.
- * <p>
- * NOTE - These tests were originally part of the client API tests. They were moved to take
- * advantage of the package private variables for testing.
- * <p>
- * Created on 2017-01-22.
- */
-public class ClientApiSubmitSystemTest {
+public class SubmitSystemTest {
 
     private static Client client;
 
