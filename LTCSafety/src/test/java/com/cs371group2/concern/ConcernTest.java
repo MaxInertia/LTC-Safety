@@ -40,6 +40,7 @@ public class ConcernTest extends DatastoreTest {
         ConcernData.TestHook_MutableConcernData data = new ConcernData.TestHook_MutableConcernData(
                 "A type of concern",
                 "These are some actions taken",
+                "This is a concern description",
                 reporter,
                 location);
 
