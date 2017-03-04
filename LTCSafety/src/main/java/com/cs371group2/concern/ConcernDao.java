@@ -78,7 +78,7 @@ public class ConcernDao extends Dao<Concern> {
         return ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
                 .filter("facilityRef in ", facilities)
-                .order("submissionDate")
+                .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)
                 .list();

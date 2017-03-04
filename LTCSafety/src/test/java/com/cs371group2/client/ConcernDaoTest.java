@@ -114,7 +114,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern secondConcern = new Concern(concernData);
         dao.save(secondConcern);
 
-        concernList = dao.load(account, 1, 1);
+        concernList = dao.load(account, 0, 1);
 
         assertEquals(secondConcern, concernList.get(0));
     }

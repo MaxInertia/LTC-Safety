@@ -28,6 +28,9 @@ public final class ClientApi {
     @ApiMethod(name = "submitTestConcern", path = "/test/concern/submit")
     public SubmitConcernResponse submitTestConcern(ConcernData data, @Named("isTest") Boolean isTest) throws BadRequestException {
 
+        if (isTest == null) {
+            isTest = false;
+        }
         ValidationResult result = data.validate();
         if (!result.isValid()) {
             logger.log(Level.WARNING, "Client tried submitting a concern with invalid data.");

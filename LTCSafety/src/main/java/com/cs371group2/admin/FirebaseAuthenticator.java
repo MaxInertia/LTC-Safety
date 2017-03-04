@@ -148,8 +148,10 @@ final class FirebaseAuthenticator extends Authenticator {
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
             } catch (MalformedJwtException | UnsupportedJwtException e) {
+                LOGGER.warning("Received malformed JWT " + token + " Cause: " + e.getMessage());
                 throw new IOException("Malformed JWT recieved");
             } catch (IllegalArgumentException e) {
+                LOGGER.warning("Illegal argument during token verification " + e.getMessage());
                 throw new IOException("Both name and email could not be parsed.");
             }
         }

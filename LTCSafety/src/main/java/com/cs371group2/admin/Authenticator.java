@@ -48,8 +48,11 @@ abstract class Authenticator {
             infoPair = authenticateTestAccount(token);
 
         } catch (UnauthorizedException ex) {
+            logger.info("Attempting to authenticate access token.");
             infoPair = authenticateAccount(token);
         }
+
+        logger.info("Authentication succeeded: " + infoPair.first);
 
         boolean isVerified = false;
         Iterator<PermissionVerifier> iter = permissionVerifiers.iterator();
@@ -59,6 +62,7 @@ abstract class Authenticator {
         }
 
         if (!isVerified){
+            logger.warning("Account attempted access without proper permissionssions: " + infoPair.first);
             throw new UnauthorizedException("User attempted access without proper permissions.");
         }
         return infoPair.first;
@@ -124,7 +128,7 @@ abstract class Authenticator {
             logger.info("Token does not belong to a test account.");
             throw new UnauthorizedException("Token does not belong to a test account.", e);
 
-        } catch (ClassCastException e) {
+        } catch (ClassCastException | IllegalArgumentException e) {
 
             logger.info("Malformed test account token.");
             throw new UnauthorizedException("Malformed test account token.", e);
