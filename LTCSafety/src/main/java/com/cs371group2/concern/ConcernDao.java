@@ -11,6 +11,8 @@ import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
+
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
@@ -73,6 +75,10 @@ public class ConcernDao extends Dao<Concern> {
         assert account != null;
         assert(offset >= 0);
         assert(limit > 0);
+
+        if(account.getFacilities().size() == 0){
+            return new LinkedList<Concern>();
+        }
 
         Set<Facility> facilities = account.getFacilities();
         return ObjectifyService.ofy().load().type(Concern.class)
