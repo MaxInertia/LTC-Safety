@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.client.model;
 
 /**
- * Model definition for ConcernStatus.
+ * Model definition for ConcernCollection.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the User API. For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.appspot.ltc_safety.client.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernStatus extends com.google.api.client.json.GenericJson {
+public final class ConcernCollection extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private com.google.api.client.util.DateTime creationDate;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String type;
+  private java.util.List<Concern> items;
 
   /**
    * @return value or {@code null} for none
    */
-  public com.google.api.client.util.DateTime getCreationDate() {
-    return creationDate;
+  public java.util.List<Concern> getItems() {
+    return items;
   }
 
   /**
-   * @param creationDate creationDate or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public ConcernStatus setCreationDate(com.google.api.client.util.DateTime creationDate) {
-    this.creationDate = creationDate;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getType() {
-    return type;
-  }
-
-  /**
-   * @param type type or {@code null} for none
-   */
-  public ConcernStatus setType(java.lang.String type) {
-    this.type = type;
+  public ConcernCollection setItems(java.util.List<Concern> items) {
+    this.items = items;
     return this;
   }
 
   @Override
-  public ConcernStatus set(String fieldName, Object value) {
-    return (ConcernStatus) super.set(fieldName, value);
+  public ConcernCollection set(String fieldName, Object value) {
+    return (ConcernCollection) super.set(fieldName, value);
   }
 
   @Override
-  public ConcernStatus clone() {
-    return (ConcernStatus) super.clone();
+  public ConcernCollection clone() {
+    return (ConcernCollection) super.clone();
   }
 
 }

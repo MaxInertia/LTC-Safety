@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.client.model;
 
 /**
- * Model definition for ConcernStatus.
+ * Model definition for OwnerTokenListWrapper.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the User API. For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.appspot.ltc_safety.client.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernStatus extends com.google.api.client.json.GenericJson {
+public final class OwnerTokenListWrapper extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private com.google.api.client.util.DateTime creationDate;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private java.lang.String type;
+  private java.util.List<OwnerToken> tokens;
 
   /**
    * @return value or {@code null} for none
    */
-  public com.google.api.client.util.DateTime getCreationDate() {
-    return creationDate;
+  public java.util.List<OwnerToken> getTokens() {
+    return tokens;
   }
 
   /**
-   * @param creationDate creationDate or {@code null} for none
+   * @param tokens tokens or {@code null} for none
    */
-  public ConcernStatus setCreationDate(com.google.api.client.util.DateTime creationDate) {
-    this.creationDate = creationDate;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public java.lang.String getType() {
-    return type;
-  }
-
-  /**
-   * @param type type or {@code null} for none
-   */
-  public ConcernStatus setType(java.lang.String type) {
-    this.type = type;
+  public OwnerTokenListWrapper setTokens(java.util.List<OwnerToken> tokens) {
+    this.tokens = tokens;
     return this;
   }
 
   @Override
-  public ConcernStatus set(String fieldName, Object value) {
-    return (ConcernStatus) super.set(fieldName, value);
+  public OwnerTokenListWrapper set(String fieldName, Object value) {
+    return (OwnerTokenListWrapper) super.set(fieldName, value);
   }
 
   @Override
-  public ConcernStatus clone() {
-    return (ConcernStatus) super.clone();
+  public OwnerTokenListWrapper clone() {
+    return (OwnerTokenListWrapper) super.clone();
   }
 
 }

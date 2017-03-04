@@ -2,7 +2,7 @@ package com.cs371group2.system.client.api;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.*;
-import com.cs371group2.system.SystemTests;
+import com.cs371group2.system.ClientAPISystemTests;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
@@ -49,7 +49,7 @@ public class RetractSystemTest {
      * Test submitting an null token, expect to receive http 400 in response
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testNoToken() throws IOException {
 
         try {
@@ -64,7 +64,7 @@ public class RetractSystemTest {
      * Test submitting a token with a null string, expect to receive http 400 in response
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testNoStringToken() throws IOException {
 
         OwnerToken nullToken = new OwnerToken();
@@ -81,7 +81,7 @@ public class RetractSystemTest {
      * Test submitting a malformed token, expect to receive http 400 in response
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testMalformedToken() throws IOException {
 
         OwnerToken malformedToken = new OwnerToken();
@@ -98,7 +98,7 @@ public class RetractSystemTest {
      * Test submitting an illegal token, expect to receive http 400 in response
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testIllegalToken() throws IOException {
         OwnerToken illegalToken = new OwnerToken();
         illegalToken.setToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MDk0NTg1MjQ4MkUxOTA0In0.WK_n-6kTpFabvjG_SQTruBImIiqrEqXb3YR4sG0zwH");
@@ -114,7 +114,7 @@ public class RetractSystemTest {
      * Test submitting a valid token that has no concern associated with it, expect to receive http 404 in response
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testNoConcernFound() throws IOException {
         OwnerToken formerlyLegalToken = new OwnerToken();
         formerlyLegalToken.setToken("eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1NzQ2NjY0ODk5ODcwNzIwIn0.a-xMYgzdF7EER3cyoVlkyc7ycsCETPcfpRhuP8-XKFw");
@@ -132,7 +132,7 @@ public class RetractSystemTest {
      * @throws IOException
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testRetractRetractedConcern() throws IOException {
 
         OwnerToken legalToken = getValidOwnerToken();
@@ -149,7 +149,7 @@ public class RetractSystemTest {
      * Test a successful retraction
      */
     @Test
-    @Category(SystemTests.class)
+    @Category(ClientAPISystemTests.class)
     public void testRetractSuccess() throws IOException {
 
         OwnerToken legalToken = getValidOwnerToken();
