@@ -6,6 +6,7 @@ import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 
 import java.util.List;
@@ -32,25 +33,23 @@ public class AdminApi {
      * @param request The concern request containing the user's firebase token, along with the requested offset/limit
      * @return A list of concerns loaded from the datastore at the given offset and limit
      * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern list
-     * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws BadRequestException If the request contained invalid paging information.
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
     public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
 
         ValidationResult result = request.validate();
-
-        if(!result.isValid()){
+        if (!result.isValid()){
             logger.log(Level.WARNING, "Admin tried requesting a concern list with invalid data.");
             throw new BadRequestException(result.getErrorMessage());
         }
 
         Account account = request.authenticate();
-
+        assert account != null;
         logger.log(Level.INFO,account + " is requesting a concern " + request);
 
         ConcernDao dao = new ConcernDao();
-
-        List<Concern> list = dao.load(request.getOffset(), request.getLimit(), account.getFacilities() );
+        List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
 
         logger.log(Level.INFO, "Concern list request was successful.");
         return list;
@@ -64,32 +63,25 @@ public class AdminApi {
      * @return The concern requested from the database
      * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern
      * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws NotFoundException Thrown if the requested concern does not exist.
      * @precond request != null
      */
     @ApiMethod(name = "requestConcern", path = "admin/requestConcern")
-    public Concern requestConcern(ConcernRequest request) throws UnauthorizedException, BadRequestException {
+    public Concern requestConcern(ConcernRequest request)
+            throws UnauthorizedException, BadRequestException, NotFoundException {
 
         ValidationResult result = request.validate();
-
-        if(!result.isValid()){
+        if (!result.isValid()){
             logger.log(Level.WARNING, "Admin tried requesting a concern with invalid data.");
             throw new BadRequestException(result.getErrorMessage());
         }
 
         Account account = request.authenticate();
-
+        assert account != null;
         logger.log(Level.INFO,account + " is requesting a concern " + request);
 
-        try {
-            Concern loadedConcern = new ConcernDao().load(request.getConcernId(), account.getFacilities());
-            logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
-            return loadedConcern;
-        } catch (BadRequestException e){
-            logger.log(Level.WARNING, "Account attempted to load a concern with a null location list");
-            throw new BadRequestException("The account requesting the concern has a null location list");
-        } catch (UnauthorizedException e){
-            logger.log(Level.WARNING, "Account requested a concern for a location it does not have access to");
-            throw new UnauthorizedException("The requested concern is for a location the account does not have access to.");
-        } finally {}
+        Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
+        logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
+        return loadedConcern;
     }
 }

@@ -12,6 +12,8 @@ import java.util.logging.Logger;
  */
 public class FacilityDao extends Dao<Facility> {
 
+    private static final String OTHER_FACILITY = "OTHER_FACILITY";
+
     private static final Logger logger = Logger.getLogger(ConcernDao.class.getName());
 
     /**
@@ -19,8 +21,9 @@ public class FacilityDao extends Dao<Facility> {
      */
     public FacilityDao(){
         super(Facility.class);
-        if(super.load("Other") == null){
-            super.save(new Facility("Other"));
+
+        if(super.load(OTHER_FACILITY) == null){
+            super.save(new Facility(OTHER_FACILITY));
         }
     }
 
@@ -34,12 +37,10 @@ public class FacilityDao extends Dao<Facility> {
     public Facility load(String identifier){
         assert(identifier != null);
 
-        Facility toLoad = super.load(identifier);
-
-        if( toLoad == null ){
-            toLoad = super.load("Other");
+        Facility facility = super.load(identifier);
+        if (facility == null) {
+            facility = super.load(OTHER_FACILITY);
         }
-
-        return toLoad;
+        return facility;
     }
 }

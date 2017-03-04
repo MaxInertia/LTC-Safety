@@ -25,26 +25,27 @@ final class AccessToken {
     /**
      * Is the user verified or not?
      */
-    private boolean isVerified;
+    private boolean isEmailVerified;
 
     /**
      * Creates an access token representing the given information.
      *
-     * @param tokenEmail The email for the access token
-     * @param tokenId The unique user id for the access token
-     * @param tokenName The name of the user
-     * @param tokenIsVerified Is the user verified or not?
+     * @param email The email for the access token
+     * @param id The unique user id for the access token
+     * @param name The name of the user
+     * @param isEmailVerified Is the user verified or not?
      * @precond tokenId != null, tokenEmail or tokenName != null
      */
-    public AccessToken(String tokenEmail, String tokenId, String tokenName, boolean tokenIsVerified) throws IllegalArgumentException{
-        if((tokenEmail.isEmpty() && tokenName.isEmpty()) || tokenId.isEmpty()){
+    public AccessToken(String email, String id, String name, boolean isEmailVerified) throws IllegalArgumentException {
+
+        if((email.isEmpty() && name.isEmpty()) || id.isEmpty()){
             throw new IllegalArgumentException("Access token was not given enough information to be created");
         }
 
-        email = tokenEmail;
-        id = tokenId;
-        name = tokenName;
-        isVerified = tokenIsVerified;
+        this.email = email;
+        this.id = id;
+        this.name = name;
+        this.isEmailVerified = isEmailVerified;
     }
 
     public String getEmail() {
@@ -60,6 +61,6 @@ final class AccessToken {
     }
 
     public boolean isEmailVerified() {
-        return isVerified;
+        return isEmailVerified;
     }
 }

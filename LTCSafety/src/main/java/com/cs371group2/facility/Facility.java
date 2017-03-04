@@ -30,14 +30,11 @@ public class Facility {
         assert( !facilityId.isEmpty() );
         id = facilityId;
     }
+
     /**
-     * Creates a new facility to be stored in the database with an empty id.
-     * NOTE :: THIS IS BAD the client api was complaining about wanting a no
-     * param constructor for a facility.
+     * No-arg constructor for loading from the datastore.
      */
-    public Facility(){
-        id = "";
-    }
+    private Facility() {}
 
     public String getId() {
         return id;

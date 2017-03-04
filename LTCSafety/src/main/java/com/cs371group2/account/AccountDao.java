@@ -24,6 +24,7 @@ public class AccountDao extends Dao<Account> {
         super(Account.class);
     }
 
+    @Override
     public Account load(String id) {
         assert (id != null);
 

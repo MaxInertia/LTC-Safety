@@ -3,9 +3,6 @@ package com.cs371group2.admin;
 import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * This object represents a specific concern request to access the concern database. It will also include all
  * necessary functionality for authenticating the requester.
@@ -32,12 +29,11 @@ public final class ConcernRequest extends AdminRequest implements Validatable {
      */
     @Override
     public ValidationResult validate() {
-        if(accessToken == null){
+        if(accessToken == null) {
             return new ValidationResult(NULL_TOKEN_ERROR);
-        } else if(accessToken.isEmpty()){
+        } else if(accessToken.isEmpty()) {
             return new ValidationResult(EMPTY_TOKEN_ERROR);
         }
-
         return new ValidationResult();
     }
 

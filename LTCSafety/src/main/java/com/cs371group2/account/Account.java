@@ -15,11 +15,15 @@ import java.util.HashSet;
  */
 @Entity
 public final class Account {
+
     /**
      * The id associated with this account.
      */
     @Id
     private String id;
+
+    @Index
+    private boolean isTestingAccount;
 
     /**
      * The permissions level of this account.
@@ -31,15 +35,27 @@ public final class Account {
      * The hashset of care home facilities this account is associated with.
      */
     @Index
-    private HashSet<Facility> facilities;
+    private HashSet<Facility> facilities = new HashSet<Facility>();
 
-    public Account(String accountId, AccountPermissions accountPermissions){
-        assert(accountId != null);
-        assert(accountPermissions != null);
+    public Account(String id, AccountPermissions permissions){
+        this(id, permissions, false);
+    }
 
-        id = accountId;
-        permissions = accountPermissions;
-        facilities = new HashSet<Facility>();
+    /**
+     * Construct a new account.
+     * @param id The accounts unique identifier.
+     * @param permissions The permission level the account has.
+     * @param isTestingAccount Whether or not the account is restricted to concerns flagged as test concerns.
+     */
+    public Account(String id, AccountPermissions permissions, boolean isTestingAccount){
+
+        assert(id != null);
+        assert(permissions != null);
+
+        this.id = id;
+        this.permissions = permissions;
+        this.facilities = new HashSet<Facility>();
+        this.isTestingAccount = isTestingAccount;
     }
 
     /**
@@ -48,6 +64,10 @@ public final class Account {
     private Account() {}
 
     public String getId() {return id;}
+
+    public boolean isTestingAccount() {
+        return isTestingAccount;
+    }
 
     public HashSet<Facility> getFacilities() {
         return facilities;
@@ -61,10 +81,11 @@ public final class Account {
      * @return Whether the association was successful or not
      */
     public boolean addFacility(Facility toAdd){
-        if(toAdd == null)
+        if (toAdd == null) {
             return false;
-        else
+        } else {
             return facilities.add(toAdd);
+        }
     }
 
     /**
@@ -75,10 +96,11 @@ public final class Account {
      * @return Whether the association was successful or not
      */
     public boolean removeFacility(Facility toRemove){
-        if(toRemove == null)
+        if (toRemove == null) {
             return false;
-        else
+        } else {
             return facilities.remove(toRemove);
+        }
     }
 
     public void setId(String id) {

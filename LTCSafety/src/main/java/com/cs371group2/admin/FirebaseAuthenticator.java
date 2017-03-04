@@ -3,7 +3,6 @@ package com.cs371group2.admin;
 import android.util.Pair;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
-import com.cs371group2.account.AccountPermissions;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpResponse;
 import com.google.api.client.http.HttpTransport;
@@ -12,8 +11,12 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.jsonwebtoken.*;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -144,7 +147,7 @@ final class FirebaseAuthenticator extends Authenticator {
 
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
-            } catch (MalformedJwtException e) {
+            } catch (MalformedJwtException | UnsupportedJwtException e) {
                 throw new IOException("Malformed JWT recieved");
             } catch (IllegalArgumentException e) {
                 throw new IOException("Both name and email could not be parsed.");

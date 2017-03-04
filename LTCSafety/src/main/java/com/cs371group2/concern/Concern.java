@@ -37,6 +37,13 @@ public final class Concern {
     private Long id;
 
     /**
+     * Used to identifiy whether a concern is accessible by test accounts.
+     * This is an investment in testability to allow testing of authenticated parts of the system.
+     */
+    @Index
+    private boolean isTest = false;
+
+    /**
      * The statuses that the concern has been through in its life cycle order by date with the
      * current concern being the last.
      */
@@ -102,6 +109,10 @@ public final class Concern {
         return data;
     }
 
+    public boolean isTest() {
+        return isTest;
+    }
+
     private Concern() {
     }
 
@@ -112,16 +123,32 @@ public final class Concern {
      * @precond data != null data is valid based on its validate method
      */
     public Concern(ConcernData data) {
+        this(data, false);
+    }
+
+    /**
+     * Create a new concern
+     *
+     * @param isTest Whether or not concern is accessible by test accounts.
+     * @param data The data for the concern that was submitted from the Android or iOS client.
+     * @precond data != null data is valid based on its validate method
+     */
+    public Concern(ConcernData data, boolean isTest) {
 
         assert data != null;
         assert data.validate().isValid();
 
         this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
+        this.isTest = isTest;
         this.data = data;
 
         facilityRef = Ref.create(new FacilityDao().load(data.getLocation().getFacilityName()));
-
-        logger.log(Level.FINER, "Concern created: \n" + this.toString());
+        
+        if (isTest) {
+            logger.log(Level.FINER, "Test concern created: \n" + this.toString());
+        } else {
+            logger.log(Level.FINER, "Concern created: \n" + this.toString());
+        }
     }
 
     /**

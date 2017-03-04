@@ -9,7 +9,7 @@ import org.junit.Test;
 public class FacilityDaoTest extends DatastoreTest {
 
     //Test ID for
-    private String testId = "Other";
+    private String OTHER_FACILITY = "OTHER_FACILITY";
 
     /**
      * Tests loading the Other entry from the database, which should always be present
@@ -17,8 +17,8 @@ public class FacilityDaoTest extends DatastoreTest {
     @Test
     public void loadOtherTest(){
         FacilityDao dao = new FacilityDao();
-        Facility other = dao.load(testId);
-        assert (other.getId() == testId);
+        Facility other = dao.load(OTHER_FACILITY);
+        assert (other.getId() == OTHER_FACILITY);
     }
 
     /**
@@ -29,7 +29,7 @@ public class FacilityDaoTest extends DatastoreTest {
     public void loadRandomTest(){
         FacilityDao dao = new FacilityDao();
         Facility other = dao.load("asdfRandom");
-        assert (other.getId() == testId);
+        assert (other.getId() == OTHER_FACILITY);
     }
 
     /**
@@ -37,9 +37,12 @@ public class FacilityDaoTest extends DatastoreTest {
      */
     @Test
     public void saveLoadTest(){
+
         FacilityDao dao = new FacilityDao();
+
         Facility testFacility = new Facility("Test Facility");
         dao.save( testFacility );
+
         Facility loadedFacility = dao.load("Test Facility");
         assert (testFacility == loadedFacility);
     }

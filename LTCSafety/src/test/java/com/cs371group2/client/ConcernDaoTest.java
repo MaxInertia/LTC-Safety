@@ -3,17 +3,17 @@ package com.cs371group2.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.cs371group2.DatastoreTest;
+import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
 import com.cs371group2.facility.Facility;
-import com.cs371group2.facility.FacilityDao;
 import com.googlecode.objectify.Key;
-
-import java.util.HashSet;
 import java.util.List;
 import org.junit.Test;
 
@@ -103,10 +103,10 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        HashSet<Facility> locations = new HashSet<Facility>();
-        locations.add(new Facility("Other"));
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("OTHER_FACILITY"));
 
-        List<Concern> concernList = dao.load(0, 1, locations);
+        List<Concern> concernList = dao.load(account, 0, 1);
 
         assertEquals(firstConcern, concernList.get(0));
 
@@ -114,7 +114,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern secondConcern = new Concern(concernData);
         dao.save(secondConcern);
 
-        concernList = dao.load(1, 1, locations);
+        concernList = dao.load(account, 1, 1);
 
         assertEquals(secondConcern, concernList.get(0));
     }
@@ -124,10 +124,9 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        HashSet<Facility> locations = new HashSet<Facility>();
-        locations.add(new Facility("Other"));
-
-        concernList = dao.load(-1, 5, locations);
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("Other"));
+        concernList = dao.load(account, -1, 5);
     }
 
     @Test (expected = AssertionError.class)
@@ -135,10 +134,9 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        HashSet<Facility> locations = new HashSet<Facility>();
-        locations.add(new Facility("Other"));
-
-        concernList = dao.load(0, -1, locations);
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("Other"));
+        concernList = dao.load(account, 0, -1);
     }
 
     /**
@@ -154,12 +152,14 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        HashSet<Facility> locations = new HashSet<Facility>();
-        locations.add(new Facility("Other"));
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("OTHER_FACILITY"));
 
-        List<Concern> concerns = dao.load(0, 1, locations);
+        List<Concern> concerns = dao.load(account, 0, 1);
 
         assertNotNull(concerns);
-        assert(concerns.size() > 0);
+        assertTrue(concerns.size() > 0);
     }
+
+
 }

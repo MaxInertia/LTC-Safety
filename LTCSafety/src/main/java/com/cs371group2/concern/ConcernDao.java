@@ -2,19 +2,17 @@ package com.cs371group2.concern;
 
 import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
+import com.cs371group2.account.Account;
 import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
-import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.appengine.api.datastore.Query;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,39 +51,37 @@ public class ConcernDao extends Dao<Concern> {
         Claims claims = claim.getBody();
 
         Long id = Long.parseLong(claims.getSubject());
-
-        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
-        return load(id);
+        logger.log(Level.FINER, "Loading concern # " + id + "  from the datastore...");
+        return super.load(id);
     }
 
     /**
      * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
-     * The facilities is the list of facilities to load concerns for (ignoring all concerns that are
-     * not associated with any of the given facilities)
+     * The account is used to determine which concerns should be loaded based on the list of facilities
+     * they have access to and whether or not it is a testing account.
      *
+     * @param account The account that is requesting the list of concerns.
      * @param offset The offset to begin loading from
      * @param limit The maximum amount of concerns to load
-     * @param facilities The list of facilities to load the concerns from
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
+     * @precond account != null
      */
-    public List<Concern> load(int offset, int limit, HashSet<Facility> facilities){
+    public List<Concern> load(Account account, int offset, int limit){
+
+        assert account != null;
         assert(offset >= 0);
         assert(limit > 0);
 
-        List<Concern> filteredList = new LinkedList<Concern>();
-
-        if(facilities != null) {
-            filteredList = ObjectifyService.ofy().load().type(Concern.class)
-                    .filter("facilityRef in ", facilities)
-                    .order("submissionDate")
-                    .offset(offset)
-                    .limit(limit)
-                    .list();
-        }
-
-        return filteredList;
+        Set<Facility> facilities = account.getFacilities();
+        return ObjectifyService.ofy().load().type(Concern.class)
+                .filter("isTest = ", account.isTestingAccount())
+                .filter("facilityRef in ", facilities)
+                .order("submissionDate")
+                .offset(offset)
+                .limit(limit)
+                .list();
     }
 
     /**
@@ -94,23 +90,26 @@ public class ConcernDao extends Dao<Concern> {
      * if the concern loaded is not among the given locations.
      *
      * @param concernId The unique id of the Concern to load from the datastore
-     * @param facilities The list of facilities to load the concerns from
+     * @param account The list of facilities to load the concerns from
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
+     * @precond account != null
      */
-    public Concern load(long concernId, HashSet<Facility> facilities) throws UnauthorizedException, BadRequestException {
+    public Concern load(Account account, long concernId) throws UnauthorizedException, NotFoundException {
 
-        Concern loaded = super.load(concernId);
+        assert account != null;
 
-        if(facilities != null){
-            if(facilities.contains(loaded.getFacility())){
-                return loaded;
-            } else {
-                throw new UnauthorizedException("Requested concern is not associated with any of the given facilities");
-            }
+        Concern concern = super.load(concernId);
+        System.out.println("Concern: " + concern);
+        if (concern == null) {
+            throw new NotFoundException("Failed to find a concern with ID: " + concernId);
+        }
+        Set<Facility> facilities = account.getFacilities();
+        if (facilities.contains(concern.getFacility()) && (account.isTestingAccount() == concern.isTest())){
+            return concern;
         } else {
-            throw new UnauthorizedException("Set of facilities given for loading the concern was null!");
+            throw new UnauthorizedException("The account " + account.getId() + "does not have permission to access concern with ID: " + concernId);
         }
     }
 }
