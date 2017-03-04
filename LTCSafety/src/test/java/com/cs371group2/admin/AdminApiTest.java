@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNull;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -70,6 +71,7 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
+
         List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
@@ -181,4 +183,77 @@ public class AdminApiTest extends DatastoreTest {
         assert(concerns.size() == 0);
     }
 
+
+
+    /**
+     * RequestConcern Tests
+     */
+
+    /** Tries to load a concern with an invalid token */
+    @Test (expected = UnauthorizedException.class)
+    public void getConcernUnauthTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+    }
+
+    /** Tries to load concern from an empty database and verifies that a not found exception is thrown */
+    @Test (expected = NotFoundException.class)
+    public void getConcernFromEmptyDatabaseTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        AdminApi api = new AdminApi();
+
+        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+        builder.addFacility("OTHER_FACILITY");
+        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
+    }
+
+    /*** Tests that loading a single concern from the database is functioning properly */
+    @Test
+    public void getConcernTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        /*
+
+        Currently commented out due to a bug that will be fixed later today
+
+
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern firstConcern = new Concern(concernData, true);
+        dao.save(firstConcern);
+
+        AdminApi api = new AdminApi();
+
+        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        builder.addFacility(firstConcern.getFacility().getId());
+
+        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(firstConcern.getId(), builder.build() ).build());
+
+        assertNotNull(concern);
+        */
+    }
+
+    /*** Tests that loading a concern when the account has no facilities throws an unauthorized exception */
+    @Test (expected = UnauthorizedException.class)
+    public void getConcernWithNoFacilityTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern firstConcern = new Concern(concernData, true);
+        dao.save(firstConcern);
+
+        AdminApi api = new AdminApi();
+
+        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(firstConcern.getId(), builder.build() ).build());
+
+        assertNull(concern);
+
+    }
 }
