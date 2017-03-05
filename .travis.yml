@@ -1,9 +1,15 @@
-language: objective-c
-osx_image: xcode8.2
-
-script:
-# - open -a "simulator" --args -CurrentDeviceUDID A84965FC-070D-4EAF-83E8-84FFE99F5866
-# - xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test
- - chmod +x iOS/build_scripts/script.sh
- - ./iOS/build_scripts/script.sh
- - mvn clean package -f LTCSafety/pom.xml
+language: java
+jdk:
+  - oraclejdk7
+script: 
+  - if [ "${TRAVIS_BRANCH}" == "web-backend" ] ; then mvn clean compile -f LTCSafety/pom.xml ; fi
+  - if [ "${TRAVIS_BRANCH}" == "web-backend-build" ] ; then mvn clean package -f LTCSafety/pom.xml ; fi
+after_success:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - if [ "${TRAVIS_BRANCH}" == "web-backend" ] ; then git push origin web-backend:web-backend-build ; fi
+notifications:
+  slack: 
+    on_success: change
+    on_failure: always
+  email: false
