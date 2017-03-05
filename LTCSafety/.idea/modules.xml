@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LTC-Safety.iml" filepath="$PROJECT_DIR$/LTC-Safety.iml" />
-      <module fileurl="file://$PROJECT_DIR$/LTCSafety.iml" filepath="$PROJECT_DIR$/LTCSafety.iml" />
     </modules>
   </component>
 </project>

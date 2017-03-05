@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>title</key>
+	<string>CATEGORY_OTHER_TITLE</string>
+	<key>other_prompt</key>
+	<string>CATEGORY_OTHER_PROMPT</string>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>title</key>
+			<string>Environmental Hazard</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Equipment Failure</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Improper Equipment Use</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Infection Control</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Mental Abuse</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Near Miss</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>No Response to Requests</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Physical Abuse</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Resident Aggression</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Witnessed Fall</string>
+		</dict>
+		<dict>
+			<key>title</key>
+			<string>Wrong / Lack of Medication</string>
+		</dict>
+	</array>
+</dict>
+</plist>
