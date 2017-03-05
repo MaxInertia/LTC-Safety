@@ -13,11 +13,10 @@
 #import "LTCPersistentContainer.h"
 #import "LTCLogger.h"
 
-#import <UserNotifications/UserNotifications.h>
 @import Firebase;
 @import FirebaseMessaging;
 
-@interface AppDelegate () <UISplitViewControllerDelegate, UNUserNotificationCenterDelegate>
+@interface AppDelegate () <UISplitViewControllerDelegate>
 
 /**
  The persistent container that manages the application-wide managed object context used for loading and saving concerns.
@@ -66,11 +65,11 @@
     
     controller.viewModel = [[LTCConcernViewModel alloc] initWithContext:self.persistentContainer.viewContext];
     
-    [self _registerForPushNotifications];
+    //[self _registerForPushNotifications];
     
     return YES;
 }
-
+/*
 - (void)_registerForPushNotifications {
     
     // iOS 9 or earlier
@@ -95,7 +94,7 @@
     }
     [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
-
+*/
 - (void)_tokenDidRefresh:(NSNotificationCenter *)notification {
     
     NSString *token = [[FIRInstanceID instanceID] token];

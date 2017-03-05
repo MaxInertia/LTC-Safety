@@ -64,12 +64,12 @@
 		117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */; };
 		117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */; };
 		117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
-		118D2CF31E5C11850020A43A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 118D2CF21E5C11850020A43A /* UserNotifications.framework */; };
 		118D2CF51E5C15750020A43A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 118D2CF41E5C15750020A43A /* GoogleService-Info.plist */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		11BDAE831E69FF2A00B3F4D1 /* LTCLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BDAE821E69FF2A00B3F4D1 /* LTCLogger.m */; };
 		11BDAE861E69FF3500B3F4D1 /* LTCLogLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = 11BDAE851E69FF3500B3F4D1 /* LTCLogLevel.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
+		A55535881E6B9BBA00D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */ = {isa = PBXBuildFile; fileRef = A55535871E6B9BBA00D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +199,8 @@
 		5BA86E1F930EFEC0549C534D /* libPods-LTC SafetyTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LTC SafetyTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6485DAB2DCFECD32288053DC /* Pods-LTC SafetyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC SafetyTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-LTC SafetyTests/Pods-LTC SafetyTests.release.xcconfig"; sourceTree = "<group>"; };
 		71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LTC Safety.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A55535861E6B9B6600D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+KCOrderedAccessorFix.h"; sourceTree = "<group>"; };
+		A55535871E6B9BBA00D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+KCOrderedAccessorFix.m"; sourceTree = "<group>"; };
 		AA62F4312605DAD40A46B339 /* Pods-LTC Safety.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC Safety.release.xcconfig"; path = "Pods/Target Support Files/Pods-LTC Safety/Pods-LTC Safety.release.xcconfig"; sourceTree = "<group>"; };
 		E3971ED1FE2AA790BAF64378 /* Pods-LTC SafetyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LTC SafetyTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LTC SafetyTests/Pods-LTC SafetyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,7 +210,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				118D2CF31E5C11850020A43A /* UserNotifications.framework in Frameworks */,
 				9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,6 +393,8 @@
 				1133DF7A1E3C583E0033BEA7 /* LTCReporter+CoreDataClass.m */,
 				1133DF7B1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.h */,
 				1133DF7C1E3C583E0033BEA7 /* LTCReporter+CoreDataProperties.m */,
+				A55535861E6B9B6600D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.h */,
+				A55535871E6B9BBA00D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.m */,
 			);
 			name = Persistence;
 			sourceTree = "<group>";
@@ -715,6 +718,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A55535881E6B9BBA00D36B96 /* NSManagedObjectModel+KCOrderedAccessorFix.m in Sources */,
 				1133DF7F1E3C583E0033BEA7 /* LTCLocation+CoreDataClass.m in Sources */,
 				1107E77B1E3B0CE700675786 /* LTCConcernViewController.m in Sources */,
 				0C7193321E5286E400CF3614 /* GTLRClientQuery.m in Sources */,

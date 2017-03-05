@@ -10,6 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "LTCLogger.h"
 #import "LTCLogLevel.h"
+#import "NSManagedObjectModel+KCOrderedAccessorFix.h"
 
 @interface LTCPersistentContainer ()
 @property (strong, readwrite) NSManagedObjectContext *viewContext;
@@ -83,7 +84,9 @@
     
     NSAssert(url != nil, @"Unabled to locate object model named: %@", name);
     
-    return [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
+    NSManagedObjectModel *model = [[NSManagedObjectModel alloc] initWithContentsOfURL:url];
+    [model kc_generateOrderedSetAccessors];
+    return model;
 }
 /**
  Loads a persistent store coordinate using the existing object model
