@@ -11,8 +11,12 @@ import com.google.api.server.spi.response.UnauthorizedException;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import io.jsonwebtoken.*;
-
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -143,9 +147,11 @@ final class FirebaseAuthenticator extends Authenticator {
 
             } catch (SignatureException e) {
                 // If the key doesn't match the next key should be tried
-            } catch (MalformedJwtException e) {
+            } catch (MalformedJwtException | UnsupportedJwtException e) {
+                LOGGER.warning("Received malformed JWT " + token + " Cause: " + e.getMessage());
                 throw new IOException("Malformed JWT recieved");
             } catch (IllegalArgumentException e) {
+                LOGGER.warning("Illegal argument during token verification " + e.getMessage());
                 throw new IOException("Both name and email could not be parsed.");
             }
         }

@@ -16,18 +16,18 @@ body {
   background-color: #e8e8e8;
 }
 
-.login-container {
+.access-form-container {
   display: block;
-  width: 380px;
   height: auto;
-  margin: 64px auto;
-  padding: 48px 32px 32px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 48px 32px 32px 44px;
   background-color: #fff;
   box-shadow: 0 0 6px 0 #b6b6b6;
   text-align: center;
 }
 
-.input-field {
+.access-field {
   height: 42px;
   margin-bottom: 45px;
   border-style: none none solid;
@@ -37,7 +37,7 @@ body {
   font-size: 18px;
 }
 
-.login-button {
+.access-button {
   display: block;
   width: 100%;
   height: 44px;
@@ -47,7 +47,7 @@ body {
   font-weight: 400;
 }
 
-.title {
+.access-title {
   padding-top: 48px;
   padding-bottom: 0px;
   font-family: 'Droid Sans', sans-serif;
@@ -56,14 +56,15 @@ body {
   text-align: center;
 }
 
-.subtitle {
+.access-subtitle {
+  margin-bottom: 45px;
   font-family: 'Droid Sans', sans-serif;
   color: #4787df;
   font-weight: 400;
   text-align: center;
 }
 
-.login-error {
+.access-error {
   display: none;
   margin-top: 16px;
   padding: 8px 12px;
@@ -351,6 +352,7 @@ body {
 }
 
 .text-row {
+  position: static;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -359,6 +361,7 @@ body {
   padding-right: 25px;
   padding-left: 25px;
   border-bottom: 2px solid #e5e5e5;
+  cursor: pointer;
 }
 
 .text-item {
@@ -375,6 +378,31 @@ body {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
+}
+
+.text-item.list-header.phone-number {
+  width: 175px;
+}
+
+.text-item.list-header.email {
+  width: 250px;
+}
+
+.text-item.list-header.room-name {
+  width: 150px;
+}
+
+.text-item.reporter {
+  position: static;
+  width: 150px;
+}
+
+.text-item.phone-number {
+  width: 175px;
+}
+
+.text-item.email {
+  width: 250px;
 }
 
 .concern-nature {
@@ -400,6 +428,50 @@ body {
 .concern-list {
   overflow: scroll;
   max-height: 500px;
+}
+
+.paging-row {
+  padding: 15px 25px;
+}
+
+.right-button {
+  margin-left: 24px;
+  float: right;
+}
+
+.access-tab-container {
+  display: block;
+  width: 500px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 18px;
+}
+
+.access-tab {
+  padding-right: 20px;
+  padding-left: 20px;
+  background-color: #f5f5f5;
+  color: #797979;
+  text-align: center;
+}
+
+.access-tab.w--current {
+  border-radius: 0px;
+  background-color: #fff;
+  box-shadow: none;
+  color: #4787df;
+  text-align: center;
+}
+
+.carehome-selector {
+  margin-bottom: 45px;
+  font-size: 18px;
+}
+
+.access-success {
+  margin-top: 16px;
+  padding: 8px 12px;
+  color: #61ac2b;
 }
 
 @font-face {
