@@ -19,11 +19,11 @@ public abstract class WebAccessSystemTest extends WebTest {
 
         webDriver.get(getPath());
 
-        WebElement emailElement = webDriver.findElementById("email");
-        emailElement.sendKeys("email@test.com");
+        //WebElement emailElement = webDriver.findElementById("email");
+        //emailElement.sendKeys("email@test.com");
 
-        WebElement passwordElement = webDriver.findElementById("password");
-        passwordElement.sendKeys("password");
+        //WebElement passwordElement = webDriver.findElementById("password");
+        //passwordElement.sendKeys("password");
     }
 
     @After
