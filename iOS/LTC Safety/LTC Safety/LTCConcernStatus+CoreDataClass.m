@@ -7,7 +7,8 @@
 //
 
 #import "LTCConcernStatus+CoreDataClass.h"
-#import "Logger.h"
+#import "LTCLogger.h"
+
 @implementation LTCConcernStatus
 
 + (instancetype)statusWithData:(nonnull GTLRClient_ConcernStatus *)data inManagedObjectContext:(nonnull NSManagedObjectContext *)context {
@@ -29,12 +30,12 @@
  @return The constructed LTCConcernStatus
  */
 - (instancetype)initWithData:(nonnull GTLRClient_ConcernStatus *)data entity:(NSEntityDescription *)entity insertIntoManagedObjectContext:(NSManagedObjectContext *)context {
-    [Logger log :@"Initializing concern status"  level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Initializing concern status"  level:kLTCLogLevelInfo];
     if (self = [super initWithEntity:entity insertIntoManagedObjectContext:context]) {
         self.creationDate = data.creationDate.date;
         self.concernType = data.type;
     }
-    [Logger log :@"Concern status initialized"  level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern status initialized"  level:kLTCLogLevelInfo];
     return self;
 }
 

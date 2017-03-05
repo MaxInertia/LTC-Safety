@@ -1,61 +1,51 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.DatastoreTest;
+import com.cs371group2.TestAccountBuilder;
+import com.cs371group2.account.AccountPermissions;
+import com.cs371group2.concern.Concern;
+import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernTest;
+import com.google.api.server.spi.response.BadRequestException;
+import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import org.junit.Test;
 
 /**
- * Created by Brandon on 2017-02-11.
+ * Created by Brandon on 2017-02-26.
  */
-public class ConcernRequestTest {
+public class ConcernRequestTest extends DatastoreTest {
 
-    final String TEST_TOKEN = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjU2NmNkN2U3MDJhOGExYmU2ZGVjMjRmZGJmYjIwOTU4ODBlNmFkNWYifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vbHRjLXNhZmV0eSIsImF1ZCI6Imx0Yy1zYWZldHkiLCJhdXRoX3RpbWUiOjE0ODY4NDc0ODEsInVzZXJfaWQiOiI1b3ozSFBQblp1VXpWNGhjd1hxdGdHNnRqYzAzIiwic3ViIjoiNW96M0hQUG5adVV6VjRoY3dYcXRnRzZ0amMwMyIsImlhdCI6MTQ4Njg0NzQ4MSwiZXhwIjoxNDg2ODUxMDgxLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsidGVzdEB0ZXN0LmNvbSJdfSwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIn19.jb03QYVYXwfHD6_v4YoS8ZhHe7gI29Zj4pvq5BoHEWKCJGCgjI_3WAxdOhE5L_y7BLyTUTB3j4SCTZAJYU08T8ykRFiWqtUZKynhNmw5S2Ec4QJ_FXZlT44oIj0-ITdphOfw1_uUeIOImWg70Et-hjKMNmZj5yEptHgrJ9THwZMiyzJ7lZvXOKd4oqP5V2AnBO5iAj4rGgp-eqVqsK7fTKOwhr18MPxTR9RbJwFt-bVzEn6L-Oln1Dccx2l9gfrGrYuRaDxaG3ob8o0gYBi3E9Q_zThE-potbhN-TNr8m7LLGz0aEkVmG6HKMTNQ3H-5mI8OI3dDyjYfH5hS7sLscg";
+    @Test(expected = UnauthorizedException.class)
+    public void ConcernRequestTest()
+            throws UnauthorizedException, BadRequestException, NotFoundException {
 
-    @Test
-    public void ConcernRequestTest() throws UnauthorizedException {
-        //ConcernRequest.TestHook_MutableConcernRequest testRequest =
-        //        new ConcernRequest.TestHook_MutableConcernRequest(1,0, TEST_TOKEN);
-        //ConcernRequest request = testRequest.build();
-        //new AdminApi().requestConcernList(request);
+        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+        String token = builder.build();
+
+        Concern toLoad = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toLoad);
+
+        ConcernRequest.TestHook_MutableConcernRequest testRequest = new ConcernRequest.TestHook_MutableConcernRequest(toLoad.getId(), token);
+        ConcernRequest request = testRequest.build();
+
+        new AdminApi().requestConcern(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void NullTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void NullTokenTest() throws UnauthorizedException, NotFoundException, BadRequestException {
         ConcernRequest.TestHook_MutableConcernRequest testRequest =
-                new ConcernRequest.TestHook_MutableConcernRequest(1,0, null);
+                new ConcernRequest.TestHook_MutableConcernRequest(1, null);
         ConcernRequest request = testRequest.build();
-        new AdminApi().requestConcernList(request);
+        new AdminApi().requestConcern(request);
     }
 
-    @Test (expected = UnauthorizedException.class)
-    public void EmptyTokenTest() throws UnauthorizedException {
+    @Test (expected = BadRequestException.class)
+    public void EmptyTokenTest()
+            throws UnauthorizedException, BadRequestException, NotFoundException {
         ConcernRequest.TestHook_MutableConcernRequest testRequest =
-                new ConcernRequest.TestHook_MutableConcernRequest(1,0, "");
+                new ConcernRequest.TestHook_MutableConcernRequest(1, "");
         ConcernRequest request = testRequest.build();
-        new AdminApi().requestConcernList(request);
-    }
-
-    @Test (expected = UnauthorizedException.class)
-    public void InvalidOffsetTest() throws UnauthorizedException {
-        ConcernRequest.TestHook_MutableConcernRequest testRequest =
-                new ConcernRequest.TestHook_MutableConcernRequest(-1,0, TEST_TOKEN);
-        ConcernRequest request = testRequest.build();
-        new AdminApi().requestConcernList(request);
-    }
-
-    @Test (expected = UnauthorizedException.class)
-    public void InvalidLimitTest() throws UnauthorizedException {
-
-        ConcernRequest.TestHook_MutableConcernRequest testRequest =
-                new ConcernRequest.TestHook_MutableConcernRequest(1,-1, TEST_TOKEN);
-        ConcernRequest request = testRequest.build();
-        new AdminApi().requestConcernList(request);
-    }
-
-    @Test (expected = UnauthorizedException.class)
-    public void ZeroLimitTest() throws UnauthorizedException {
-        ConcernRequest.TestHook_MutableConcernRequest testRequest =
-                new ConcernRequest.TestHook_MutableConcernRequest(0,0, TEST_TOKEN);
-        ConcernRequest request = testRequest.build();
-        new AdminApi().requestConcernList(request);
+        new AdminApi().requestConcern(request);
     }
 }

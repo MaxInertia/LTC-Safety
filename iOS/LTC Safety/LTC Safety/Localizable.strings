@@ -6,12 +6,15 @@
   Copyright © 2017 Allan Kerr. All rights reserved.
 */
 
+
+
 // Concern View Title
 "CONCERN_VIEW_TITLE" = "LTC Safety";
 
 // Submit Concern Title
 "NEW_CONCERN_TITLE" = "New Concern";
 "NEW_CONCERN_ERROR_TITLE" = "Submission Failed";
+"NEW_CONCERN_SUBMIT_TITLE" = "Concern was successfully submitted";
 
 // Submit Concern Section Titles
 "CONTACT_INFO_TITLE" = "Contact Information";
@@ -24,12 +27,31 @@
 "EMAIL_ADDRESS_PROMPT" = "Email Address";
 "CONCERN_NATURE_PROMPT" = "Nature of Concern";
 "FACILITY_PROMPT" = "Facility";
-"ROOM_NUMBER_PROMPT" = "Room Number";
+"ROOM_NUMBER_PROMPT" = "Room";
 "SUBMIT_CONCERN_PROMPT" = "Submit Concern";
+
+// Detail View Concern Prompts
+"DETAIL_CONCERN_TITLE" = "View Concern";
+"DETAIL_CONCERN_INFO_TITLE" = "Concern Information";
+"DETAIL_STATUS_LOG" = "Concern Status Log";
+"RETRACT_CONCERN_PROMPT" = "Retract";
+"DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
+
+
+"DETAIL_NAME_TITLE" = "Name";
+"DETAIL_EMAIL_TITLE" = "Email";
+"DETAIL_PHONE_NUMBER_TITLE" = "Phone Number";
+"DETAIL_CONCERN_NATURE_TITLE" = "Concern Nature";
+"DETAIL_FACILITY_TITLE" = "Facility Name";
+"DETAIL_ROOM_TITLE" = "Room";
+"DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
+
 
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";
+"LOADING_PROMPT" = "Loading";
+
 
 // Value Selection
 "VALUE_OTHER" = "Other...";

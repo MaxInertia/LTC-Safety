@@ -12,6 +12,8 @@
 #import "LTCNewConcernViewController.h"
 #import "LTCNewConcernViewModel.h"
 #import "LTCConcernTableViewCell.h"
+#import "LTCConcernDetailViewModel.h"
+#import "LTCConcernDetailViewController.h"
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -103,6 +105,13 @@
 #pragma mark - LTCConcernViewModel delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    LTCConcern *selectedConcrn = [self.viewModel concernAtIndexPath:indexPath];
+    LTCConcernDetailViewModel *viewModel = [[LTCConcernDetailViewModel alloc] initWithConcern:selectedConcrn];
+    LTCConcernDetailViewController *viewController = [[LTCConcernDetailViewController alloc] initWithViewModel:viewModel];
+    
+    [self.navigationController pushViewController:viewController animated:YES];
+    
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 

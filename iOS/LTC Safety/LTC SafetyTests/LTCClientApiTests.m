@@ -78,7 +78,7 @@
     LTCClientApi *clientApi = [[LTCClientApi alloc] init];
     clientApi.service = serviceMock;
     
-    [clientApi retractConcern:@"an arbitrary jwt" completion:^(NSError *error){
+    [clientApi retractConcern:@"an arbitrary jwt" completion:^(GTLRClient_UpdateConcernStatusResponse *response, NSError *error){
         XCTAssertNil(error);
     }];
     
@@ -100,7 +100,7 @@
     LTCClientApi *clientApi = [[LTCClientApi alloc] init];
     clientApi.service = serviceMock;
     
-    [clientApi retractConcern:@"an arbitrary jwt" completion:^(NSError *error){
+    [clientApi retractConcern:@"an arbitrary jwt" completion:^(GTLRClient_UpdateConcernStatusResponse *response, NSError *error){
         XCTAssertEqual(passedError, error);
     }];
     

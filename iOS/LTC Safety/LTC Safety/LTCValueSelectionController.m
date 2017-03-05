@@ -9,7 +9,6 @@
 #import "LTCValueSelectionController.h"
 #import "LTCInputAlertController.h"
 #import "LTCValueSelectionViewModel.h"
-#
 #import "LTCRowValue.h"
 
 @interface LTCValueSelectionController () <LTCInputAlertControllerDelegate>
@@ -18,11 +17,8 @@
 
 @implementation LTCValueSelectionController
 @dynamic fileName;
+@dynamic hasOther;
 
-- (NSString *)fileName {
-    NSAssert(NO, @"Subclasses of %@ must override - fileName", [LTCValueSelectionController class]);
-    return nil;
-}
 
 /**
  The initializer called by XLForms used to load the value selection configuration file from disk and populate rows with the values found in that file.
@@ -30,10 +26,9 @@
  @return An LTCValueSelectionController object that has a row for each value in the loaded configuration file.
  @post The LTCValueSelectionController object has a non-nil form populated with a row for each value in the view model.
  */
-- (instancetype)init {
+- (instancetype)init{
     
     LTCValueSelectionViewModel *viewModel = [LTCValueSelectionViewModel selectionViewModelForFileName:self.fileName];
-
     XLFormDescriptor *form;
     XLFormSectionDescriptor *section;
     XLFormRowDescriptor *row;
@@ -58,7 +53,9 @@
     // Create a row for accepting custom user input if none of the predefined values fit.
     LTCRowValue *otherRowValue = [[LTCRowValue alloc] initWithTag:@"VALUE_OTHER"];
     row = [self _createRow:otherRowValue action:@selector(_selectOther:)];
-    [section addFormRow: row];
+    if(self.hasOther){
+        [section addFormRow: row];
+    }
     
     if (self = [super initWithForm:form]) {
         self.viewModel = viewModel;
@@ -119,10 +116,11 @@
     
     NSAssert(descriptor != nil, @"Selected other descriptor with nil value.");
     NSAssert(NSLocalizedString(descriptor.tag, nil) != nil, @"Missing title for other descriptor.");
-
+    
+    [self deselectFormRow:descriptor];
+    
     LTCInputAlertController *inputAlert = [LTCInputAlertController alertControllerWithTitle:NSLocalizedString(descriptor.tag, nil) message:self.viewModel.otherPrompt preferredStyle:UIAlertControllerStyleAlert];
     inputAlert.delegate = self;
-    
     [self presentViewController:inputAlert animated:YES completion:nil];
 }
 

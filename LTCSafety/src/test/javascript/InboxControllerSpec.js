@@ -69,15 +69,22 @@ describe("Inbox Controller", function() {
         /**
          * Test to ensure that the list of concerns is not updated when no access token is provided
          */
+        /**
+         * Test to ensure that the list of concerns is not updated when no access token is provided
+         */
         it('Request concerns without token test', function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
+            spyOn($scope, 'updateConcernList');
+
+            $scope.concernRequest.limit = 25;
+            $scope.concernRequest.offset = 0;
             $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
+            expect($scope.updateConcernList).toHaveBeenCalled();
             expect($scope.concerns).toEqual([]);
-
         });
 
         /**
@@ -87,11 +94,15 @@ describe("Inbox Controller", function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
+            spyOn($scope, 'updateConcernList');
+
             $scope.concernRequest.accessToken = "fakeAccessToken";
+            $scope.concernRequest.limit = 25;
             $scope.concernRequest.offset = -1;
             $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
+            expect($scope.updateConcernList).toHaveBeenCalled();
             expect($scope.concerns).toEqual([]);
 
         });
@@ -103,11 +114,15 @@ describe("Inbox Controller", function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
+            spyOn($scope, 'updateConcernList');
+
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.limit = 0;
+            $scope.concernRequest.offset = 0;
             $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
+            expect($scope.updateConcernList).toHaveBeenCalled();
             expect($scope.concerns).toEqual([]);
 
         });
@@ -127,6 +142,8 @@ describe("Inbox Controller", function() {
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
             $scope.concernRequest.accessToken = "fakeAccessToken";
+            $scope.concernRequest.limit = 25;
+            $scope.concernRequest.offset = 0;
             $scope.concerns = [];
             $scope.refresh();
 

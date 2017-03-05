@@ -1,13 +1,14 @@
 package com.cs371group2.admin;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountDao;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  *  * This class is used to test the Dao class and the AccountDao class. This class tests the base data
@@ -47,43 +48,29 @@ public class AccountDaoTest extends DatastoreTest {
         Key<Account> key = dao.save(account);
 
         // Load it using its key
-        Account keyLoadedConcern = dao.load(key);
-        assertAccounts(account, keyLoadedConcern);
+        Account keyLoadedAccount = dao.load(key);
+        assertAccounts(account, keyLoadedAccount);
 
         // Load it using its id
-        Account idLoadedConcern = dao.load(account.getId());
-        assertAccounts(account, idLoadedConcern);
+        Account idLoadedAccount = dao.load(account.getId());
+        assertAccounts(account, idLoadedAccount);
 
         // Delete it synchronously
         dao.delete(account).now();
 
         // Assert its been deleted
-        Account deletedConcern = dao.load(account.getId());
+        Account deletedConcern = ObjectifyService.ofy().load().key(key).now();
         assertNull(deletedConcern);
     }
 
-
     /**
-     * Ensures that submission fails when the account's id is null
-     */
-    @Test(expected = AssertionError.class)
-    public void nullId() throws Exception {
-        Account testAccount = new AccountTest().generateAccount();
-        testAccount.setId(null);
-        AccountDao dao = new AccountDao();
-        dao.save(testAccount);
-    }
-
-    /**
-     * Ensures that submission fails when the account permissions are null
+     * Ensures that saving fails when the account permissions are null
      */
     @Test(expected = AssertionError.class)
     public void nullPermissions() throws Exception {
+
         Account testAccount = new AccountTest().generateAccount();
         testAccount.setPermissions(null);
-        AccountDao dao = new AccountDao();
-        dao.save(testAccount);
+        new AccountDao().save(testAccount);
     }
-
-
 }

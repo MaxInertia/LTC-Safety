@@ -10,6 +10,8 @@
 #import "LTCConcern+CoreDataClass.h"
 #import "LTCConcernViewModelDelegate.h"
 
+extern NSString * const LTCUpdatedConcernStatusNotification;
+
 /**
  The LTCConcernViewModel class is used for modelling the data required for the LTCConcernViewController to display the client's submitted concerns.
  */

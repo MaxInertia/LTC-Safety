@@ -33,7 +33,6 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
         offset : parseInt($routeParams.page)
     };
 
-
     /**
      * The callback when the user auth state changes causing the list of concerns to be updated.
      */
@@ -58,13 +57,12 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      *
      * @precond $scope.concernRequest.accessToken is a valid Firebase token
      * @precond $scope.concernRequest.accessToken != null
+     * @postcond The concern list view has been updated to reload items with the same offset and limit.
      */
     $scope.refresh = function () {
 
-        if ($scope.concernRequest.accessToken == null) {
-            console.log("Attempted to refresh the concerns list with a null access token.");
-            return;
-        }
+        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+
         $scope.updateConcernList();
     };
 
@@ -73,13 +71,12 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      *
      * @precond $scope.concernRequest.accessToken is a valid Firebase token
      * @precond $scope.concernRequest.accessToken != null
+     * @postcond The concern list view has been updated to show the next page of older concerns.
      */
     $scope.nextPage = function () {
 
-        if ($scope.concernRequest.accessToken == null) {
-            console.log("Attempted to fetch the next page of the concerns list with a null access token.");
-            return;
-        }
+        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+
         var nextOffset = +$scope.concernRequest.offset + +$scope.concernRequest.limit;
         $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit);
     };
@@ -90,13 +87,11 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      * @precond $scope.concernRequest.accessToken is a valid Firebase token
      * @precond $scope.concernRequest.accessToken != null
      * @precond $scope.concernRequest.offset >= $scope.concernRequest.limit
+     * @postcond The concern list view has been updated to show the previous page of newer concerns.
      */
     $scope.previousPage = function () {
 
-        if ($scope.concernRequest.accessToken == null) {
-            console.log("Attempted to fetch the next page of the concerns list with a null access token.");
-            return;
-        }
+        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
 
         var nextOffset = $scope.concernRequest.offset - $scope.concernRequest.limit;
         if (nextOffset < 0) {
@@ -107,27 +102,35 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
     };
 
     /**
+     * Select a concern to display all of its details.
+     *
+     * @precond concern.id != null
+     * @postcond The user has been redirected to the concern detail page.
+     */
+    $scope.concernSelected = function (concern) {
+
+        console.assert(concern != null, "Attempted to select a null concern.");
+
+        var identifier = concern.id;
+        console.log("Selected " + identifier);
+        $location.url('/concern-detail/' + identifier);
+    };
+
+    /**
      * Updates the list of concerns using the existing concern request.
      *
      * @precond $scope.concernRequest.accessToken is a valid Firebase token
      * @precond $scope.concernRequest.accessToken != null
      * @precond $scope.concernRequest.offset >= 0
      * @precond $scope.concernRequest.limit > 0
+     * @postcond The concern list view has been updated with the loaded list of concerns.
      */
     $scope.updateConcernList = function () {
 
-        if ($scope.concernRequest.accessToken == null) {
-            console.log("Attempted to fetch the concerns list with a null access token.");
-            return;
-        }
-        if ($scope.concernRequest.offset < 0) {
-            console.log("Attempted to fetch a page with a negative start index.");
-            return;
-        }
-        if ($scope.concernRequest.limit <= 0) {
-            console.log("Attempted to fetch an empty page.");
-            return;
-        }
+        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        console.assert($scope.concernRequest.offset >= 0, "Attempted to fetch a page with a negative start index.");
+        console.assert($scope.concernRequest.limit > 0, "Attempted to fetch an empty page.");
+
         adminApi.requestConcernList($scope.concernRequest).execute(
             function (resp) {
                 $scope.concerns = resp.items;

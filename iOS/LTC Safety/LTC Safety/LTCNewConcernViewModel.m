@@ -263,6 +263,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorSubmitConcern rowType:XLFormRowDescriptorTypeButton title:NSLocalizedString(LTCSubmitConcernPrompt, nil)];
         [section addFormRow: row];
+        
     }
     
     NSAssert1(self != nil, @"Failed to initialize %@", self.class);
@@ -293,6 +294,9 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
     data.location = location;
     data.concernNature = [self formRowWithTag:LTCDescriptorConcernNature].value;
     data.actionsTaken = [self formRowWithTag:LTCDescriptorActionsTaken].value;
+    
+    
+    
     
     // Send the concern data to the client API on the backend server
     [self.clientApi submitConcern:data completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){

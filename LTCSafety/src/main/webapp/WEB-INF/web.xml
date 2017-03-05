@@ -19,7 +19,7 @@
         <url-pattern>/_ah/api/*</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>access.html</welcome-file>
     </welcome-file-list>
     <filter>
         <filter-name>ObjectifyFilter</filter-name>

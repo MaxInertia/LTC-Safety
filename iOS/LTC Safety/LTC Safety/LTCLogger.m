@@ -8,13 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "LTCLogLevel.h"
-#import "Logger.h"
+#import "LTCLogger.h"
 @import Firebase;
 
-@implementation Logger
+@implementation LTCLogger
 
 + (void)configure {
-    [FIRApp configure];
+    
+    if ([FIRApp allApps].count == 0) {
+        [FIRApp configure];
+    }
 }
 
 + (void)log:(NSString *)message level:(LTCLogLevel)level{

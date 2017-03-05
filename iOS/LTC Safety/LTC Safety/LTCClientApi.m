@@ -7,7 +7,8 @@
 //
 
 #import "LTCClientApi.h"
-#import "Logger.h"
+#import "LTCLogger.h"
+
 @import Firebase;
 @interface LTCClientApi ()
 @property (nonatomic, strong) GTLRClientService *service;
@@ -28,7 +29,7 @@
 }
 
 - (void)submitConcern:(GTLRClient_ConcernData *)concern completion:(LTCSubmitConcernCompletion)completion {
-    [Logger log :@"Submitting a concern" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Submitting a concern" level:kLTCLogLevelInfo];
     NSAssert(concern != nil, @"Attempted to submit a nil concern");
     NSAssert(completion != nil, @"Attempted to submit a concern with a nil completion block");
     GTLRClientQuery_SubmitConcern *query = [GTLRClientQuery_SubmitConcern queryWithObject:concern];
@@ -36,10 +37,10 @@
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
         completion(object, error);
     }];
-    [Logger log :@"Concern has been submitted" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern has been submitted" level:kLTCLogLevelInfo];
 }
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
-    [Logger log :@"Retracting a concern" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Retracting a concern" level:kLTCLogLevelInfo];
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");
     NSAssert(completion != nil, @"Attempted to retract a concern with a nil completion block");
     
@@ -48,9 +49,9 @@
 
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
-        completion(error);
+        completion(object, error);
     }];
-    [Logger log :@"Concern has been retracted" level:kLTCLogLevelInfo];
+    [LTCLogger log :@"Concern has been retracted" level:kLTCLogLevelInfo];
 }
 
 @end

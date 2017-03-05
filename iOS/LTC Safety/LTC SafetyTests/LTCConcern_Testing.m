@@ -42,9 +42,12 @@
         status.concernType = @"PENDING";
         [statuses addObject:status];
     }
+    
+    
     concern.statuses = [statuses copy];
     
     return concern;
 }
+
 
 @end

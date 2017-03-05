@@ -44,8 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 //   +[GTLQueryClient queryForRetractConcernWithObject:]
 
 /**
- *  Upon successful completion, the callback's object and error parameters will
- *  be nil. This query does not fetch an object.
+ *  Fetches a @c GTLRClient_UpdateConcernStatusResponse.
  *
  *  @param object The @c GTLRClient_OwnerToken to include in the query.
  *

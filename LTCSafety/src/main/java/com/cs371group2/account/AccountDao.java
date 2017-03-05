@@ -2,13 +2,14 @@ package com.cs371group2.account;
 
 import com.cs371group2.Dao;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Brandon on 2017-02-06.
+ * This class extends the data-access object in our system to load, save, and delete accounts.
+ * These accounts
+ *
+ * Created on 2017-02-06.
  */
 public class AccountDao extends Dao<Account> {
 
@@ -21,12 +22,21 @@ public class AccountDao extends Dao<Account> {
         super(Account.class);
     }
 
+    @Override
     public Account load(String id) {
+
         assert (id != null);
 
-        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
-        //return super.load(id);
-        return ObjectifyService.ofy().load().type(Account.class).id(id).now();
+        Account account = super.load(id);
+        if (account == null) {
+            account = new Account(id, AccountPermissions.UNVERIFIED);
+            this.save(account);
+
+            logger.log(Level.FINER, "Created unverified account with ID " + id + ".");
+        } else {
+            logger.log(Level.FINER, "Account " + id + " loaded from the datastore.");
+        }
+        return account;
     }
 
     /**
@@ -41,6 +51,7 @@ public class AccountDao extends Dao<Account> {
      * unique identifier.
      */
     public Key<Account> save(Account account) {
+
         assert (account != null);
         assert (account.getId() != null);
         assert (account.getPermissions() != null);

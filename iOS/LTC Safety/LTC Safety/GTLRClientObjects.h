@@ -69,6 +69,13 @@ GTLR_EXTERN NSString * const kGTLRClient_ConcernStatusType_Seen;
  */
 @property(nonatomic, strong, nullable) NSNumber *identifier;
 
+/**
+ *  retracted
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *retracted;
+
 @property(nonatomic, strong, nullable) NSArray<GTLRClient_ConcernStatus *> *statuses;
 @property(nonatomic, strong, nullable) GTLRDateTime *submissionDate;
 
@@ -139,6 +146,23 @@ GTLR_EXTERN NSString * const kGTLRClient_ConcernStatusType_Seen;
 
 @property(nonatomic, strong, nullable) GTLRClient_Concern *concern;
 @property(nonatomic, strong, nullable) GTLRClient_OwnerToken *ownerToken;
+
+@end
+
+
+/**
+ *  GTLRClient_UpdateConcernStatusResponse
+ */
+@interface GTLRClient_UpdateConcernStatusResponse : GTLRObject
+
+/**
+ *  concernId
+ *
+ *  Uses NSNumber of longLongValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *concernId;
+
+@property(nonatomic, strong, nullable) GTLRClient_ConcernStatus *status;
 
 @end
 
