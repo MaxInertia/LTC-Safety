@@ -1,9 +1,5 @@
 package com.cs371group2.system.web;
 
-import org.junit.After;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
@@ -13,7 +9,7 @@ public abstract class WebAccessSystemTest extends WebTest {
 
     protected RemoteWebDriver webDriver;
 
-    @Test
+    /*@Test
     @Category(WebSystemTests.class)
     public void unknownFacility() throws Exception {
 
@@ -31,5 +27,5 @@ public abstract class WebAccessSystemTest extends WebTest {
         if (webDriver != null) {
             webDriver.close();
         }
-    }
+    }*/
 }
