@@ -696,19 +696,9 @@
     [tablesQuery.staticTexts[@"Retract"] tap];
     //Navigates back to the new concerns page
     [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString1].staticTexts[@"Preston Extendicare"] tap];
-    NSString *dateString2;
-    NSDate *today2 = [NSDate date];
-    dateString2 = [NSDateFormatter localizedStringFromDate: today2
-                                                 dateStyle:NSDateFormatterMediumStyle
-                                                 timeStyle:NSDateFormatterShortStyle];
 
     //Checks that the concern is correctly retracted
     XCTAssert(tablesQuery.staticTexts[@"RETRACTED"].exists);
-    XCTAssert(tablesQuery.staticTexts[dateString2].exists);
-
-    
-
-    
 }
 
 @end
