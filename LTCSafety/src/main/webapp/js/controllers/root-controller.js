@@ -14,21 +14,23 @@ safetyApp.controller('RootCtrl', function RootCtrl($scope, $window, firebase) {
     /**
      * The sign out function that is triggered with an ng-click from the Sign Out button.
      * @precond firebase.auth().currentUser != null
+     * @postcond The user has been redirected to the login page.
      */
     $scope.signOut = function () {
-        if (firebase.auth().currentUser == null) {
-            console.log("Attempted to sign out when not signed in.");
-            return;
-        }
+
+        console.assert(firebase.auth().currentUser != null, "Attempted to sign out when not signed in.");
+
         $scope.auth.signOut();
     };
 
     /**
      * The callback when the Firebase auth state changes used for the client side redirect to the login page.
+     * @postcond The user has been redirected to the login page if they aren't signed in.
+     *           If they are signed in, nothing is done.
      */
     $scope.auth.onAuthStateChanged(function (firebaseUser) {
         if (!firebaseUser) {
-            $window.location.replace("index.html");
+            $window.location.replace("/");
         }
     });
 });

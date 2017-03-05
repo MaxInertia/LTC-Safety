@@ -17,6 +17,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Test;
 
+import java.util.LinkedList;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 /**
  * Tests for testing the endpoints used by the Android and iOS mobile clients.
  */
@@ -30,6 +35,7 @@ public class ClientApiTest extends DatastoreTest {
     @Test
     public void concernTest() throws Exception {
         submitConcern();
+        fetchConcerns();
         retractConcern();
     }
 
@@ -54,6 +60,7 @@ public class ClientApiTest extends DatastoreTest {
         ConcernData loadedData = concern.getData();
         assertEquals(loadedData.getActionsTaken(), data.getActionsTaken());
         assertEquals(loadedData.getConcernNature(), data.getConcernNature());
+        assertEquals(loadedData.getDescription(), data.getDescription());
 
         assertEquals(loadedData.getReporter().getName(), data.getReporter().getName());
         assertEquals(loadedData.getReporter().getPhoneNumber(),
@@ -68,6 +75,108 @@ public class ClientApiTest extends DatastoreTest {
         assertNotNull(concern.getSubmissionDate());
     }
 
+
+    /**
+     * Tests that a list of concerns can be properly accessed from the database.
+     * Specifically tests this by creating concern data, submitting it to the database,
+     * accessing that data, and making sure it is the same as what was inserted.
+     */
+    private void fetchConcerns() throws Exception {
+        ConcernData data1 = new ConcernTest().generateConcernData().build();
+        ConcernData data2 = new ConcernTest().generateConcernData().build();
+        OwnerToken token1 = new ClientApi().submitConcern(data1).getOwnerToken();
+        OwnerToken token2 = new ClientApi().submitConcern(data2).getOwnerToken();
+
+        LinkedList<OwnerToken> tokenSet = new LinkedList<OwnerToken>();
+        tokenSet.add(token1);
+        tokenSet.add(token2);
+        LinkedList<Concern> returnedConcerns = new ClientApi().fetchConcerns(new OwnerTokenListWrapper(tokenSet));
+
+        assertEquals(returnedConcerns.getFirst().getData(), data1);
+        assertEquals(returnedConcerns.getLast().getData(), data2);
+        assertTrue(returnedConcerns.getFirst().getData() != returnedConcerns.getLast().getData());
+    }
+
+
+
+    /**
+     * Tries to access data in the database with a random key and subject testing that accessing
+     * that data will fail. fetchConcern should throw BadRequestException if this is the case.
+     */
+    @Test(expected = BadRequestException.class)
+    public void fetchUnauthorized() throws Exception {
+
+        OwnerToken token = new OwnerToken();
+        token.token = Jwts.builder()
+                .setSubject("9329032492384590435")
+                .signWith(SignatureAlgorithm.HS256, "A random key that will fail.")
+                .compact();
+
+        LinkedList<OwnerToken> tokenList = new LinkedList<>();
+        tokenList.add(token);
+        OwnerTokenListWrapper tokenWrapperList = new OwnerTokenListWrapper(tokenList);
+        new ClientApi().fetchConcerns(tokenWrapperList);
+    }
+
+    /**
+     * Attempts to fetch a concern with an entity for an entity ID that doesn't exist. The test
+     * passes if the NotFoundException is thrown because the entity shouldn't exist.
+     */
+    @Test(expected = NotFoundException.class)
+    public void fetchNotFound() throws Exception {
+        OwnerToken token = new OwnerToken(93290324923845L);
+        LinkedList<OwnerToken> tokenList = new LinkedList<>();
+        tokenList.add(token);
+        OwnerTokenListWrapper tokenWrapperList = new OwnerTokenListWrapper(tokenList);
+        new ClientApi().fetchConcerns(tokenWrapperList);
+    }
+
+    /**
+     * Tests that when a concern is fetched with a token that contains a non-numerical concern
+     * identifier a BadRequestException is thrown. Concerns can only be accessed with identifiers of
+     * type long.
+     */
+    @Test(expected = BadRequestException.class)
+    public void fetchInvalidIdentifier() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = Jwts.builder()
+                .setSubject("Not a string")
+                .signWith(SignatureAlgorithm.HS256, ApiKeys.JWS_SIGNING_KEY)
+                .compact();
+        LinkedList<OwnerToken> tokenList = new LinkedList<>();
+        tokenList.add(token);
+        OwnerTokenListWrapper tokenWrapperList = new OwnerTokenListWrapper(tokenList);
+        new ClientApi().fetchConcerns(tokenWrapperList);
+    }
+
+    /**
+     * Tests that when an owner token with a malformed JWS is used to fetch a concern that it
+     * fails gracefully by throwing a bad request exception.
+     */
+    @Test(expected = BadRequestException.class)
+    public void fetchMalformed() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = "Invalid JWS";
+        LinkedList<OwnerToken> tokenList = new LinkedList<>();
+        tokenList.add(token);
+        OwnerTokenListWrapper tokenWrapperList = new OwnerTokenListWrapper(tokenList);
+        new ClientApi().fetchConcerns(tokenWrapperList);
+    }
+
+    /**
+     * Tests that when an owner token with no raw token is provided that the request to fetch the
+     * concern fails gracefully by throwing a bad request exception.
+     */
+    @Test(expected = BadRequestException.class)
+    public void fetchNull() throws Exception {
+        OwnerToken token = new OwnerToken();
+        token.token = null;
+        LinkedList<OwnerToken> tokenList = new LinkedList<>();
+        tokenList.add(token);
+        OwnerTokenListWrapper tokenWrapperList = new OwnerTokenListWrapper(tokenList);
+        new ClientApi().fetchConcerns(tokenWrapperList);
+    }
+
     /**
      * Tests that a concern can be properly retracted from the database.
      * Specifically tests that the concern has been moved to the archive
@@ -76,7 +185,6 @@ public class ClientApiTest extends DatastoreTest {
      * concern status.
      */
     private void retractConcern() throws Exception {
-
         ConcernData data = new ConcernTest().generateConcernData().build();
         OwnerToken token = new ClientApi().submitConcern(data).getOwnerToken();
         UpdateConcernStatusResponse response = new ClientApi().retractConcern(token);
@@ -94,6 +202,8 @@ public class ClientApiTest extends DatastoreTest {
         assertEquals(concern.getStatuses().last(), response.getStatus());
     }
 
+
+
     /**
      * Tries to access data in the database with a random key and subject testing that accessing
      * that data will fail. retractConcern should throw BadRequestException if this is the case.
@@ -108,6 +218,7 @@ public class ClientApiTest extends DatastoreTest {
                 .compact();
 
         new ClientApi().retractConcern(token);
+
     }
 
     /**
@@ -157,4 +268,6 @@ public class ClientApiTest extends DatastoreTest {
         token.token = null;
         new ClientApi().retractConcern(token);
     }
+
+
 }

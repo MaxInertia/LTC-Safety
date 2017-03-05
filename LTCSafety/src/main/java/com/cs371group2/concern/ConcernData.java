@@ -38,6 +38,12 @@ public final class ConcernData implements Validatable {
     private String actionsTaken;
 
     /**
+     * A description of the concern. This may be null if the user does not wish to provide a description.
+     */
+    private String description;
+
+
+    /**
      * The name and contact information of the reporter. A reporter must be present for all
      * submitted concerns.
      */
@@ -83,14 +89,16 @@ public final class ConcernData implements Validatable {
          *
          * @param concernNature The category the concern falls under.
          * @param actionsTaken Descriptions of any actions taken by the reporter.
+         * @param description The description of the concern.
          * @param reporter The reporter of the concern.
          * @param location The location the concern occurred at.
          */
-        public TestHook_MutableConcernData(String concernNature, String actionsTaken,
+        public TestHook_MutableConcernData(String concernNature, String actionsTaken, String description,
                 Reporter.TestHook_MutableReporter reporter,
                 Location.TestHook_MutableLocation location) {
             setConcernNature(concernNature);
             setActionsTaken(actionsTaken);
+            setDescription(description);
             this.mutableReporter = reporter;
             this.mutableLocation = location;
         }
@@ -103,6 +111,11 @@ public final class ConcernData implements Validatable {
             this.data.actionsTaken = actionsTaken;
         }
 
+        public void setDescription(String description) {
+            this.data.description = description;
+        }
+
+
         /**
          * Converts the mutable concern data to a concern data instance to be used for testing. Once
          * built the concern data is immutable regardless of whether the mutable reporter it was
@@ -114,6 +127,7 @@ public final class ConcernData implements Validatable {
             ConcernData immutable = new ConcernData();
             immutable.concernNature = this.data.concernNature;
             immutable.actionsTaken = this.data.actionsTaken;
+            immutable.description = this.data.description;
             immutable.location = this.mutableLocation.build();
             immutable.reporter = this.mutableReporter.build();
             return immutable;
@@ -126,6 +140,10 @@ public final class ConcernData implements Validatable {
 
     public String getActionsTaken() {
         return actionsTaken;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Reporter getReporter() {
@@ -171,18 +189,22 @@ public final class ConcernData implements Validatable {
         String returnString;
         if (this.getReporter() == null && this.getLocation() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nDescription: " + this.getDescription()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + "NO REPORTER\nNO LOCATION\n";
         } else if (this.getReporter() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nDescription: " + this.getDescription()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + "NO REPORTER" + this.getLocation().toString() + "\n";
         } else if (this.getLocation() == null) {
             returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nDescription: " + this.getDescription()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + this.getReporter().toString() + "NO LOCATION" + "\n";
         } else {
             returnString = "Concern Nature: " + this.getConcernNature()
+                    + "\nDescription: " + this.getDescription()
                     + "\nActions Taken: " + this.getActionsTaken()
                     + "\n" + this.getReporter().toString() + this.getLocation().toString() + "\n";
         }

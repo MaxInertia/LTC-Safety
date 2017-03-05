@@ -3,12 +3,16 @@ package com.cs371group2.client;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.cs371group2.DatastoreTest;
+import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
+import com.cs371group2.facility.Facility;
 import com.googlecode.objectify.Key;
 import java.util.List;
 import org.junit.Test;
@@ -36,6 +40,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernData loadedData = loadedConcern.getData();
         assertEquals(loadedData.getActionsTaken(), data.getActionsTaken());
         assertEquals(loadedData.getConcernNature(), data.getConcernNature());
+        assertEquals(loadedData.getDescription(), data.getDescription());
 
         assertEquals(loadedData.getReporter().getName(), data.getReporter().getName());
         assertEquals(loadedData.getReporter().getPhoneNumber(),
@@ -98,35 +103,63 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        //Loads the only concern added to the database
-        List<Concern> concernList = dao.load(0, 1);
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("OTHER_FACILITY"));
+
+        List<Concern> concernList = dao.load(account, 0, 1);
 
         assertEquals(firstConcern, concernList.get(0));
 
         concernData = concernTest.generateConcernData().build();
-
         Concern secondConcern = new Concern(concernData);
-
         dao.save(secondConcern);
 
-        concernList = dao.load(0, 2);
+        concernList = dao.load(account, 0, 1);
 
-        assertEquals(secondConcern, concernList.get(1));
+        assertEquals(secondConcern, concernList.get(0));
     }
 
     @Test (expected = AssertionError.class)
-    public void LoadInvalidOffsetTest(){
+    public void LoadInvalidOffsetTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        concernList = dao.load(-1, 5);
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("Other"));
+        concernList = dao.load(account, -1, 5);
     }
 
     @Test (expected = AssertionError.class)
-    public void LoadInvalidLimitTest(){
+    public void LoadInvalidLimitTest() throws Exception{
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        concernList = dao.load(0, -1);
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("Other"));
+        concernList = dao.load(account, 0, -1);
     }
+
+    /**
+     * This test saves and loads a concern from the "Other" facility in the form of a list
+     */
+    @Test
+    public void LoadConcernsFromOther(){
+
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern firstConcern = new Concern(concernData);
+        dao.save(firstConcern);
+
+        Account account = new Account("testing", AccountPermissions.ADMIN);
+        account.addFacility(new Facility("OTHER_FACILITY"));
+
+        List<Concern> concerns = dao.load(account, 0, 1);
+
+        assertNotNull(concerns);
+        assertTrue(concerns.size() > 0);
+    }
+
+
 }
