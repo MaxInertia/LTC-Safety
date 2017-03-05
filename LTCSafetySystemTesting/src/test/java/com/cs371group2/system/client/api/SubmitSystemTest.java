@@ -68,7 +68,7 @@ public class SubmitSystemTest {
      * Test submitting an empty concern, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoInput() throws IOException {
 
         ConcernData data = new ConcernData();
@@ -80,7 +80,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a concern nature, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoConcern() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -94,7 +94,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a reporter, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoReporter() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -108,7 +108,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a location, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoLocation() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -122,7 +122,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a reporter name, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoReporterName() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -135,7 +135,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where the reporter has no email or phone number, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoReporterContact() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -149,7 +149,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where the reporter has no email, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoReporterEmail() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -167,7 +167,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where the reporter has no phone, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoReporterPhone() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -183,7 +183,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a facility, expect to receive http 400 in response
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoFacility() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -196,7 +196,7 @@ public class SubmitSystemTest {
      * Test submitting a concern without a room name, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoRoom() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -212,7 +212,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where no actions have been taken, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testNoActions() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -228,7 +228,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where there is a larger than standard actions taken entry, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testLargeAction() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -260,7 +260,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where the actions taken includes irregular characters. Expect to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testIrregularCharacters() throws IOException {
 
         ConcernData data = generateConcernData();
@@ -276,7 +276,7 @@ public class SubmitSystemTest {
      * Test submitting a concern where everything is entered, expect to submission to succeed
      */
     @Test
-    @Category(com.cs371group2.system.SystemTests.class)
+    @Category(com.cs371group2.system.ClientAPISystemTests.class)
     public void testSuccess() throws IOException {
 
         ConcernData data = generateConcernData();

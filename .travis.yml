@@ -7,3 +7,4 @@ script:
  - chmod +x iOS/build_scripts/script.sh
  - ./iOS/build_scripts/script.sh
  - mvn clean package -f LTCSafety/pom.xml
+ - mvn test -f LTCSafetySystemTesting/pom.xml

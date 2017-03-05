@@ -47,6 +47,18 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
             }).otherwise({
                 redirectTo: '/inbox/0/25'
             });
+
+            $routeProvider.when('/concern-detail/:id', {
+                templateUrl: '/concern-detail.html',
+                resolve: {
+                    id: function ($q, $route) {
+                        return parseUnsignedInt($q.defer(),
+                            $route.current.params.id);
+                    }
+                }
+            }).otherwise({
+                redirectTo: '/inbox/0/25'
+            });
         }]);
 
 /**

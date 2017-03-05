@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
 import com.cs371group2.account.Account;
+import com.google.api.server.spi.request.Auth;
 import com.google.api.server.spi.response.UnauthorizedException;
 
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.security.GeneralSecurityException;
 
 /**
  * This abstract class represents a request that requires authentication and should be extended for more specific
- * types of requests (see ConcernRequest for example).
+ * types of requests (see ConcernListRequest for example).
  * Created by Brandon on 2017-02-09.
  */
 abstract class AuthenticatedRequest{
@@ -31,8 +32,7 @@ abstract class AuthenticatedRequest{
             throw new UnauthorizedException("Access token is null!");
         }
 
-        Account account = getAuthenticator().authenticate(accessToken);
-        return account;
+        return getAuthenticator().authenticate(accessToken);
     }
 
     /**

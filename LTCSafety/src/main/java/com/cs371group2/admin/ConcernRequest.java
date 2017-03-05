@@ -1,70 +1,61 @@
 package com.cs371group2.admin;
 
-import com.cs371group2.client.OwnerToken;
-
-import java.util.logging.Logger;
+import com.cs371group2.Validatable;
+import com.cs371group2.ValidationResult;
 
 /**
- * This object represents a concern request containing an offset and a limit,
- * both of which will be to access the concern database. It will also include all
+ * This object represents a specific concern request to access the concern database. It will also include all
  * necessary functionality for authenticating the requester.
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
- * Created on 2017-02-08.
+ * Created on 2017-02-26.
  */
-public final class ConcernRequest extends AdminRequest {
+public final class ConcernRequest extends AdminRequest implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
-    private static final Logger logger = Logger.getLogger( OwnerToken.class.getName() );
+    private static final String EMPTY_TOKEN_ERROR = "Unable to access concern due to receiving an empty access token.";
 
-    /** The offset in the database to begin loading the concerns from */
-    private int offset;
+    /** The unique id of the concern to load from the database */
+    private long concernId;
 
-    /** The maximum number of elements to be loaded from the database */
-    private int limit;
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
+    public long getConcernId(){ return concernId; }
 
     /**
-     * Checks if the request contains legal information for parse-attempting
-     * @return Whether the request contains legal information or not
+     * Validates the ConcernRequest to ensure that the fields are legal and non-null.
+     *
+     * @return The result of the validation, including a reason in the case of failure
      */
-    public boolean legalRequest(){
-        if(limit < 1 || offset < 0 || accessToken == null || accessToken == "") {
-            return false;
+    @Override
+    public ValidationResult validate() {
+        if(accessToken == null) {
+            return new ValidationResult(NULL_TOKEN_ERROR);
+        } else if(accessToken.isEmpty()) {
+            return new ValidationResult(EMPTY_TOKEN_ERROR);
         }
-
-        return true;
+        return new ValidationResult();
     }
+
     /**
-     * TestHook_MutableConcernData is a test hook to make ConcernRequest testable without exposing its
+     * TestHook_MutableConcernRequest is a test hook to make ConcernRequest testable without exposing its
      * members. An instance of TestHook_MutableConcernRequest can be used to construct new concern request
      * instances and set values for testing purposes.
      */
     public static class TestHook_MutableConcernRequest {
 
-        /** An immutable ConcernRequest for use in testing*/
+        /** An immutable ConcernListRequest for use in testing*/
         private ConcernRequest immutable;
 
         /**
          * Creates a new mutable concern request
          *
-         * @param limit The concern limit of the mutable request
-         * @param offset The concern offset of the mutable request
+         * @param id The unique id of the concern to load
          * @param token The token of the mutable request
          */
-        public TestHook_MutableConcernRequest(int limit, int offset, String token) {
+        public TestHook_MutableConcernRequest(long id, String token) {
             immutable = new ConcernRequest();
-            immutable.limit = limit;
-            immutable.offset = offset;
+            immutable.concernId = id;
             immutable.accessToken = token;
         }
 
@@ -72,9 +63,7 @@ public final class ConcernRequest extends AdminRequest {
             return immutable;
         }
 
-        public void setMutableLimit(int mutableLimit) { immutable.limit = mutableLimit; }
-
-        public void setMutableOffset(int mutableOffset) { immutable.offset = mutableOffset; }
+        public void setMutableLimit(long mutableId) { immutable.concernId = mutableId; }
 
         public void setMutableToken(String mutableToken) { immutable.accessToken = mutableToken; }
     }
