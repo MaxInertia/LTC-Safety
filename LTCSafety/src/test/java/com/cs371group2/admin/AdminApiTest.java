@@ -1,31 +1,19 @@
 package com.cs371group2.admin;
 
+import static org.junit.Assert.assertNotNull;
+
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
-import com.cs371group2.account.Account;
-import com.cs371group2.account.AccountDao;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
-import com.cs371group2.facility.Facility;
-import com.cs371group2.facility.FacilityDao;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.omg.CosNaming.NamingContextPackage.NotFound;
-
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.util.List;
-
-import static junit.framework.TestCase.assertNull;
-import static org.junit.Assert.assertNotNull;
-import static org.mockito.Mockito.when;
+import org.junit.Test;
 
 /**
  * Created on 2017-02-09.
@@ -163,28 +151,6 @@ public class AdminApiTest extends DatastoreTest {
         assert(concerns.size() == 3);
     }
 
-    /*** Tests that loading concerns when the account has no facilities returns nothing */
-    @Test
-    public void getConcernListWithNoFacilityTest() throws UnauthorizedException, BadRequestException {
-
-        ConcernDao dao = new ConcernDao();
-        ConcernTest concernTest = new ConcernTest();
-
-        ConcernData concernData;
-        Concern firstConcern;
-
-        AdminApi api = new AdminApi();
-
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
-
-        assertNotNull(concerns);
-        assert(concerns.size() == 0);
-    }
-
-
-
     /**
      * RequestConcern Tests
      */
@@ -210,50 +176,19 @@ public class AdminApiTest extends DatastoreTest {
     /*** Tests that loading a single concern from the database is functioning properly */
     @Test
     public void getConcernTest() throws UnauthorizedException, BadRequestException, NotFoundException {
-        /*
 
-        Currently commented out due to a bug that will be fixed later today
-
-
-        ConcernDao dao = new ConcernDao();
         ConcernTest concernTest = new ConcernTest();
-
         ConcernData concernData = concernTest.generateConcernData().build();
 
         Concern firstConcern = new Concern(concernData, true);
-        dao.save(firstConcern);
+        new ConcernDao().save(firstConcern);
 
-        AdminApi api = new AdminApi();
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+        String accountToken = accountBuilder.build();
 
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-
-        builder.addFacility(firstConcern.getFacility().getId());
-
-        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(firstConcern.getId(), builder.build() ).build());
+        ConcernRequest request = new ConcernRequest.TestHook_MutableConcernRequest(firstConcern.getId(), accountToken).build();
+        Concern concern = new AdminApi().requestConcern(request);
 
         assertNotNull(concern);
-        */
-    }
-
-    /*** Tests that loading a concern when the account has no facilities throws an unauthorized exception */
-    @Test (expected = UnauthorizedException.class)
-    public void getConcernWithNoFacilityTest() throws UnauthorizedException, BadRequestException, NotFoundException {
-
-        ConcernDao dao = new ConcernDao();
-        ConcernTest concernTest = new ConcernTest();
-
-        ConcernData concernData = concernTest.generateConcernData().build();
-
-        Concern firstConcern = new Concern(concernData, true);
-        dao.save(firstConcern);
-
-        AdminApi api = new AdminApi();
-
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-
-        Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(firstConcern.getId(), builder.build() ).build());
-
-        assertNull(concern);
-
     }
 }

@@ -4,17 +4,13 @@ import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.account.Account;
 import com.cs371group2.client.OwnerToken;
-import com.cs371group2.facility.Facility;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
-
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,14 +72,8 @@ public class ConcernDao extends Dao<Concern> {
         assert(offset >= 0);
         assert(limit > 0);
 
-        if(account.getFacilities().size() == 0){
-            return new LinkedList<Concern>();
-        }
-
-        Set<Facility> facilities = account.getFacilities();
         return ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
-                .filter("facilityRef in ", facilities)
                 .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)
@@ -111,8 +101,7 @@ public class ConcernDao extends Dao<Concern> {
         if (concern == null) {
             throw new NotFoundException("Failed to find a concern with ID: " + concernId);
         }
-        Set<Facility> facilities = account.getFacilities();
-        if (facilities.contains(concern.getFacility()) && (account.isTestingAccount() == concern.isTest())){
+        if (account.isTestingAccount() == concern.isTest()) {
             return concern;
         } else {
             throw new UnauthorizedException("The account " + account.getId() + "does not have permission to access concern with ID: " + concernId);

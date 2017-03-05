@@ -103,11 +103,6 @@ public final class Account {
         }
     }
 
-    public void setId(String id) {
-        assert(id != null);
-        this.id = id;
-    }
-
     public AccountPermissions getPermissions() {return permissions;}
 
     public void setPermissions(AccountPermissions permissions) {

@@ -14,10 +14,13 @@ app.controller('LoginCtrl', function ($scope, firebase) {
 
     /**
      * Attempts to sign in the user using the current credentials in $scope.user
+     * @precond $scope.user != null
      * @postcond The user is redirected to home.html if the provided credentials are valid.
      *           If the credentials are invalid then an error message is displayed.
      */
     $scope.signIn = function () {
+
+        console.assert($scope.user != null, "Attempted to sign in an account with no user credentials.");
 
         document.getElementById('login-error').style.display = "none";
 

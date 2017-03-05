@@ -2,8 +2,6 @@ package com.cs371group2.account;
 
 import com.cs371group2.Dao;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.ObjectifyService;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,10 +24,19 @@ public class AccountDao extends Dao<Account> {
 
     @Override
     public Account load(String id) {
+
         assert (id != null);
 
-        logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
-        return ObjectifyService.ofy().load().type(Account.class).id(id).now();
+        Account account = super.load(id);
+        if (account == null) {
+            account = new Account(id, AccountPermissions.UNVERIFIED);
+            this.save(account);
+
+            logger.log(Level.FINER, "Created unverified account with ID " + id + ".");
+        } else {
+            logger.log(Level.FINER, "Account " + id + " loaded from the datastore.");
+        }
+        return account;
     }
 
     /**
@@ -44,6 +51,7 @@ public class AccountDao extends Dao<Account> {
      * unique identifier.
      */
     public Key<Account> save(Account account) {
+
         assert (account != null);
         assert (account.getId() != null);
         assert (account.getPermissions() != null);

@@ -1,38 +1,3 @@
 <div ng-controller="ConcernDetailCtrl">
-  <div class="text-row">
-    <div class="concern-nature list-header text-item"><strong>Nature of Concern</strong>
-    </div>
-    <div class="facility list-header text-item"><strong>Facility</strong>
-    </div>
-    <div class="list-header reporter text-item"><strong>Reporter</strong>
-    </div>
-    <div class="actions-taken expandable list-header text-item"><strong>Actions Taken<br></strong>
-    </div>
-    <div class="list-header submission-date text-item"><strong>Submission Date</strong>
-    </div>
-  </div>
-  <ul class="concern-list w-list-unstyled">
-    <li class="text-row" ng-repeat="concern in concerns | filter:identifier" value ="{{identifier}}">
-      <div class="concern-nature text-item">{{concern.data.concernNature}}</div>
-      <div class="facility text-item truncate">{{concern.data.location.facilityName}}</div>
-      <div class="reporter text-item">{{concern.data.reporter.name}}</div>
-      <div class="actions-taken expandable text-item">{{concern.data.actionsTaken}}</div>
-      <div class="submission-date text-item">{{concern.submissionDate}}</div>
-    </li>
-  </ul>
-  <div class="text-row">
-    <div class="list-header phone-number text-item"><strong>Phone Number</strong>
-    </div>
-    <div class="email list-header text-item"><strong>Email</strong>
-    </div>
-    <div class="list-header room-name text-item"><strong>Room Name</strong>
-    </div>
-  </div>
-  <ul class="concern-list w-list-unstyled">
-    <li class="text-row" ng-repeat="concern in concerns | filter:identifier" value ="{{identifier}}">
-      <div class="phone-number text-item">{{concern.data.reporter.phoneNumber}}</div>
-      <div class="email text-item">{{concern.data.reporter.email}}</div>
-      <div class="reporter text-item">{{concern.data.location.roomName}}</div>
-    </li>
-  </ul>
+
 </div>

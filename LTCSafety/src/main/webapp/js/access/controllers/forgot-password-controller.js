@@ -16,7 +16,8 @@ app.controller('ForgotPasswordCtrl', function ($scope, firebase) {
 
     /**
      * Attempts to sign in the user using the current credentials in $scope.user
-     * @postcond The user is redirected to home.html if the provided credentials are valid.
+     * @postcond The user is redirected to home.html if the provided credentials are valid
+     *           and a password reset email is sent to the specified email address.
      *           If the credentials are invalid then an error message is displayed.
      */
     $scope.forgotPassword = function () {
