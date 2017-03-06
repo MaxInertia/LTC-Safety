@@ -21,10 +21,6 @@
  The button that the user clicks to present the form for submitting a new concern.
  */
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
-
-/**
- <#Description#>
- */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 @end
 
@@ -51,6 +47,7 @@
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
+    self.tableView.accessibilityIdentifier = @"LTCConcernTableView";
     
     NSAssert(self.addConcernButton != nil, @"Concern view controller did load with nil add concern button.");
     NSAssert(self.tableView != nil, @"Concern view controller did load with nil table view.");
