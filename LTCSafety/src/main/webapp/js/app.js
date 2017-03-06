@@ -49,13 +49,7 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
             });
 
             $routeProvider.when('/concern-detail/:id', {
-                templateUrl: '/concern-detail.html',
-                resolve: {
-                    id: function ($q, $route) {
-                        return parseUnsignedInt($q.defer(),
-                            $route.current.params.id);
-                    }
-                }
+                templateUrl: '/concern-detail.html'
             }).otherwise({
                 redirectTo: '/inbox/0/25'
             });
