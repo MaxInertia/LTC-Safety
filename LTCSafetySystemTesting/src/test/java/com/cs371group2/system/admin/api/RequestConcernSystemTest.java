@@ -31,6 +31,13 @@ public class RequestConcernSystemTest {
         admin = new Admin.Builder(new NetHttpTransport(), new GsonFactory(), null).build();
     }
 
+    /**
+     * A helper method to create a generic concern to be requested
+     * @param facility The facility the concern was submitted for
+     * @param test If the concern was a test concern or not
+     * @return The response, that will be used to get the concern ID
+     * @throws IOException
+     */
     public static SubmitConcernResponse submitConcern(String facility, boolean test) throws IOException {
         Client client = new Client.Builder(new NetHttpTransport(), new GsonFactory(), null).setApplicationName(RequestConcernSystemTest.class.getName()).build();
         ConcernData data = new ConcernData();
@@ -166,26 +173,6 @@ public class RequestConcernSystemTest {
     }
 
     /**
-     * Test submitting a request for a concern with a different facility, expect error 404 in response
-     * TODO: Does not work because Accounts only have one facility
-     */
-    @Test
-    @Category(AdminAPISystemTests.class)
-    public void testDifferentFacility() throws IOException {
-        ConcernRequest test1 = new ConcernRequest();
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("Preston Extendicare");
-        String token = builder.build();
-        SubmitConcernResponse newConcern = submitConcern("OTHER_FACILITY", true);
-        test1.setAccessToken(token);
-        try {
-            admin.requestConcern(test1).execute();
-        } catch (GoogleJsonResponseException e) {
-            assertEquals(e.getDetails().getMessage(), "java.lang.IllegalArgumentException: id cannot be zero");
-        }
-    }
-
-    /**
      * Test submitting a request with a id for a regular concern using a test account, expect to succeed
      */
     @Test
@@ -200,48 +187,6 @@ public class RequestConcernSystemTest {
         test1.setConcernId(newConcern.getConcern().getId());
         try{
         Concern response = admin.requestConcern(test1).execute();
-        } catch (GoogleJsonResponseException e) {
-            assertEquals(e.getStatusCode(), 401);
-        }
-    }
-
-    /**
-     * Test submitting a request for a concern that has the same (non other) facility as the account, expect to succeed
-     * TODO
-     */
-    @Test
-    @Category(AdminAPISystemTests.class)
-    public void testNonOtherTester() throws IOException {
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("Preston Extendicare");
-        String token = builder.build();
-        ConcernRequest test1 = new ConcernRequest();
-        SubmitConcernResponse newConcern = submitConcern("Preston Extendicare", false);
-        test1.setAccessToken(token);
-        test1.setConcernId(newConcern.getConcern().getId());
-        try{
-            Concern response = admin.requestConcern(test1).execute();
-        } catch (GoogleJsonResponseException e) {
-            assertEquals(e.getStatusCode(), 401);
-        }
-    }
-
-    /**
-     * Test submitting a request for a concern that has a different (non other) facility as the account, expect to succeed
-     * TODO
-     */
-    @Test
-    @Category(AdminAPISystemTests.class)
-    public void testNonOtherTesterConcern() throws IOException {
-        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("Preston Extendicare");
-        String token = builder.build();
-        ConcernRequest test1 = new ConcernRequest();
-        SubmitConcernResponse newConcern = submitConcern("shksv", false);
-        test1.setAccessToken(token);
-        test1.setConcernId(newConcern.getConcern().getId());
-        try{
-            Concern response = admin.requestConcern(test1).execute();
         } catch (GoogleJsonResponseException e) {
             assertEquals(e.getStatusCode(), 401);
         }
