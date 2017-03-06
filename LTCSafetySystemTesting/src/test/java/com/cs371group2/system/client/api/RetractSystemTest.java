@@ -23,6 +23,11 @@ public class RetractSystemTest {
         client = new Client.Builder(new NetHttpTransport(), new GsonFactory(), null).build();
     }
 
+    /**
+     * Creates a valid owner token for use in testing
+     * @return The valid owner token
+     * @throws IOException
+     */
     private OwnerToken getValidOwnerToken() throws IOException {
 
         ConcernData data = new ConcernData();
