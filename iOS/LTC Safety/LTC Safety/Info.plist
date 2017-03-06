@@ -17,9 +17,11 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>30</string>
+	<string>31</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This application requires access to your photo library to send photographs taken pertaining to any concerns.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
