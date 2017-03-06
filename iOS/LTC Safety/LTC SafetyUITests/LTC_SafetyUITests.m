@@ -496,7 +496,6 @@
  Tests the navigation between two created concerns
  , checks that all values are correct
  */
-//THIS TEST CAN ONLY BE RUN ONCE PER MINUTE
 - (void)testOldConcernNavigation {
     
     //Initiates the app
@@ -546,15 +545,10 @@
     //Submits concern
     [tablesQuery.staticTexts[@"Submit Concern"] tap];
     
-    //Finds the current local date and formats it to the time stamp of concerns
-    NSString *dateString1;
-    NSDate *today = [NSDate date];
-    dateString1 = [NSDateFormatter localizedStringFromDate: today
-                                                dateStyle:NSDateFormatterMediumStyle
-                                                timeStyle:NSDateFormatterShortStyle];
-    
+    XCUIElementQuery *query = [app.tables containingType:XCUIElementTypeTable identifier:@"LTCConcernTableView"];
+
     //Navigates to the new concerns page
-    [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString1].staticTexts[@"Preston Extendicare"] tap];
+    [[query.cells elementBoundByIndex:0] tap];
     //Gos back to the main menu
     [app.navigationBars[@"View Concern"].buttons[@"LTC Safety"] tap];
     
@@ -600,20 +594,15 @@
     //Submits the concern
     [tablesQuery2.staticTexts[@"Submit Concern"] tap];
     
-    //Finds the current local date and formats it to the time stamp of concerns
-    NSString *dateString2;
-    NSDate *today2 = [NSDate date];
-    dateString2 = [NSDateFormatter localizedStringFromDate: today2
-                                                 dateStyle:NSDateFormatterMediumStyle
-                                                 timeStyle:NSDateFormatterShortStyle];
-    
     //Navigates to the new concerns page
-    [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString2].staticTexts[@"Oliver Place"] tap];
+    
+    [[query.cells elementBoundByIndex:0] tap];
+    
     //Gos back to the main menu
     [app.navigationBars[@"View Concern"].buttons[@"LTC Safety"] tap];
 
     //Navigates to the first concern created
-    [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString1].staticTexts[@"Preston Extendicare"] tap];
+    [[query.cells elementBoundByIndex:1] tap];
     
     //Asserts that all the information in the concern is correct
     XCTAssert(tablesQuery2.staticTexts[@"Nav test1"].exists);
@@ -623,18 +612,11 @@
     XCTAssert(tablesQuery2.staticTexts[@"Preston Extendicare"].exists);
     XCTAssert(tablesQuery2.staticTexts[@"45"].exists);
     XCTAssert(tablesQuery2.staticTexts[@"PENDING"].exists);
-    XCTAssert(tablesQuery2.staticTexts[dateString1].exists);
-    
-    
-    
-
-
 }
 
 /**
  Submits a concern then retracts it and checks its status
  */
-//THIS TEST CAN ONLY BE RUN ONCE PER MINUTE
 - (void)testRetract {
     
     //Initiates the app
@@ -684,18 +666,17 @@
     //Submits concern
     [tablesQuery.staticTexts[@"Submit Concern"] tap];
     
-    //Finds the current local date and formats it to the time stamp of concerns
-    NSString *dateString1;
-    NSDate *today = [NSDate date];
-    dateString1 = [NSDateFormatter localizedStringFromDate: today
-                                                 dateStyle:NSDateFormatterMediumStyle
-                                                 timeStyle:NSDateFormatterShortStyle];
+    
+    XCUIElementQuery *query = [app.tables containingType:XCUIElementTypeTable identifier:@"LTCConcernTableView"];
+    
     //Navigates to the new concerns page
-    [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString1].staticTexts[@"Preston Extendicare"] tap];
+    [[query.cells elementBoundByIndex:0] tap];
+    
     //Retract the concern
     [tablesQuery.staticTexts[@"Retract"] tap];
+    
     //Navigates back to the new concerns page
-    [[app.tables.cells containingType:XCUIElementTypeStaticText identifier:dateString1].staticTexts[@"Preston Extendicare"] tap];
+    [[query.cells elementBoundByIndex:0] tap];
 
     //Checks that the concern is correctly retracted
     XCTAssert(tablesQuery.staticTexts[@"RETRACTED"].exists);
