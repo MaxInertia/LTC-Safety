@@ -95,5 +95,5 @@ dependencies {
     androidTestCompile 'com.android.support.test:rules:0.5'
 
     // For automated UI testing
-    //androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', { exclude group: 'com.android.support', module: 'support-annotations' })
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', { exclude group: 'com.android.support', module: 'support-annotations' })
 }
