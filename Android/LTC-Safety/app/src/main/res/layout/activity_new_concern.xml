@@ -201,7 +201,6 @@
                 android:inputType="textMultiLine"
                 android:gravity="top"
                 android:textSize="20sp"
-                android:lines="3"
                 android:ems="10"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
