@@ -40,6 +40,7 @@ before_script:
     
     
 script:
+    - cd Android/LTC-Safety && chmod +x gradlew
     - android list target && ./gradlew --continue test connectedAndroidTest
     #- ./Android/build_scripts/script.sh
 
