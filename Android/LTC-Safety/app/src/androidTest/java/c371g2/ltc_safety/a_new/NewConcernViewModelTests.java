@@ -1,7 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
 import android.content.Intent;
-import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -41,7 +40,6 @@ public class NewConcernViewModelTests {
         activity.finish();
     }
 
-    @Suppress
     @Test
     public void test_ConcernSubmission_allFields() throws InterruptedException{
 
@@ -64,7 +62,6 @@ public class NewConcernViewModelTests {
         assertTrue("Expecting SUCCESS return code but was "+newConcernViewModel.submissionReturnCode, ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
     }
 
-    @Suppress
     @Test
     public void test_ConcernSubmission_NoEmail() throws InterruptedException {
         NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
@@ -88,7 +85,6 @@ public class NewConcernViewModelTests {
         assertTrue(ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
     }
 
-    @Suppress
     @Test
     public void test_ConcernSubmission_NoPhone() throws InterruptedException {
         NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);

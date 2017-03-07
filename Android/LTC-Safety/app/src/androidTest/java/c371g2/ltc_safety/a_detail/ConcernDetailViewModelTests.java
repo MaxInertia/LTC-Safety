@@ -1,7 +1,6 @@
 package c371g2.ltc_safety.a_detail;
 
 import android.content.Intent;
-import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -34,7 +33,6 @@ public class ConcernDetailViewModelTests {
     private ConcernDetailActivity activity;
     private ConcernDetailViewModel concernDetailViewModel;
 
-    @Suppress
     @Test
     public void test_retractUnsubmittedConcern() throws InterruptedException {
         MainViewModel_TestHook.instance.clearConcernList();
@@ -62,7 +60,6 @@ public class ConcernDetailViewModelTests {
         activity.finish();
     }
 
-    @Suppress
     @Test
     public void test_retractSubmittedConcern() throws InterruptedException {
         MainViewModel_TestHook.instance.clearConcernList();
