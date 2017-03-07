@@ -3,7 +3,6 @@ package c371g2.ltc_safety.a_new;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,14 +25,10 @@ class ChooserView{
      */
     static void setup(@NonNull final TextView view, final String title, @NonNull final String[] choices) {
         assert(view != null);
-        view.setOnTouchListener(new View.OnTouchListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction()==(MotionEvent.ACTION_DOWN)){
-                    chooserAction(view, title, choices);
-                    return true;
-                }
-                return false;
+            public void onClick(View v) {
+                chooserAction(view, title, choices);
             }
         });
     }

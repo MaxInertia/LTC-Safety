@@ -115,7 +115,7 @@
             android:paddingEnd="0dp"
             android:id="@+id/newConcern_chooserLinearLayout">
 
-            <EditText
+            <TextView
                 android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -129,6 +129,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
+                android:freezesText="true"
                 android:id="@+id/newConcern_concernNatureChooser"/>
 
             <View
@@ -136,7 +137,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
 
-            <EditText
+            <TextView
                 android:background="@android:color/transparent"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
@@ -150,6 +151,7 @@
                 android:paddingBottom="10dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="0dp"
+                android:freezesText="true"
                 android:id="@+id/newConcern_facilityChooser"/>
 
             <View

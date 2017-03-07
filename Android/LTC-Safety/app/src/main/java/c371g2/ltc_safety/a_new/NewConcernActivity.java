@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
@@ -46,7 +47,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * The input field for the name of the long term care facility.
      * Possible values located at 'R.array.longtermcare_facilities'
      */
-    EditText facilityField;
+    TextView facilityField;
     /**
      * The input field for a room within the aforementioned LTC facility.
      */
@@ -55,7 +56,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * The input field for the nature of the concern.
      * Possible values located at 'R.array.concern_types'
      */
-    EditText concernNatureField;
+    TextView concernNatureField;
     /**
      * The input field for the actions taken in response to the concern.
      */
@@ -85,14 +86,14 @@ public class NewConcernActivity extends AbstractNetworkActivity {
             }
         });
 
-        concernNatureField = (EditText) findViewById(R.id.newConcern_concernNatureChooser);
+        concernNatureField = (TextView) findViewById(R.id.newConcern_concernNatureChooser);
         ChooserView.setup(
                 concernNatureField,
                 "Select LocalConcern Nature",
                 getResources().getStringArray(R.array.concern_types)
         );
 
-        facilityField = (EditText) findViewById(R.id.newConcern_facilityChooser);
+        facilityField = (TextView) findViewById(R.id.newConcern_facilityChooser);
         ChooserView.setup(
                 facilityField,
                 "Select Facility",
