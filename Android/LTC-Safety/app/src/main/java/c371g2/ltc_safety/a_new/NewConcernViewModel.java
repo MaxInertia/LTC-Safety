@@ -238,8 +238,14 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
     static class Test_Hook implements NewConcernViewModel_TestHook {
 
         @Override
-        public boolean submitConcern(@NonNull AbstractNetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
-                                     String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException {
+        public boolean submitConcern(@NonNull AbstractNetworkActivity testActivity,
+                                     String concernType,
+                                     String actionsTaken,
+                                     String facilityName,
+                                     String roomName,
+                                     String reporterName,
+                                     String emailAddress,
+                                     String phoneNumber) throws InterruptedException {
 
             NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);
             ReturnCode[] returnCode = ncvm.submitConcern(

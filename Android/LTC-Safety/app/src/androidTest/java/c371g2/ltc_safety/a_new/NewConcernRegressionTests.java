@@ -33,11 +33,9 @@ public class NewConcernRegressionTests {
     public void scrollBug1() {
         mActivityRule.launchActivity(new Intent());
         // Increase view height and enable scrolling
-        onView(withId(R.id.newConcern_actionsTakenField)).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
-        // Scroll back to concernNatureChooser
-        onView(withId(R.id.newConcern_concernNatureChooser)).perform(scrollTo());
-        // Scroll down with initial screen touch being on the concernNatureChooser
-        onView(withId(R.id.newConcern_concernNatureChooser)).perform(swipeDown());
+        onView(withId(R.id.newConcern_actionsTakenField)).perform(scrollTo()).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
+        // Scroll up to the concernNatureChooser, then scroll down with initial screen touch being on the concernNatureChooser
+        onView(withId(R.id.newConcern_concernNatureChooser)).perform(scrollTo()).perform(swipeDown());
 
         try {
             onView(withId(R.id.activity_new_concern)).check(matches(isDisplayed()));
@@ -50,11 +48,9 @@ public class NewConcernRegressionTests {
     public void scrollBug2() {
         mActivityRule.launchActivity(new Intent());
         // Increase view height and enable scrolling
-        onView(withId(R.id.newConcern_actionsTakenField)).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
-        // Scroll back to facilityChooser
-        onView(withId(R.id.newConcern_facilityChooser)).perform(scrollTo());
-        // Scroll down with initial screen touch being on the facilityChooser
-        onView(withId(R.id.newConcern_facilityChooser)).perform(swipeDown());
+        onView(withId(R.id.newConcern_actionsTakenField)).perform(scrollTo()).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
+        // Scroll up to the facilityChooser, then scroll down with initial screen touch being on the facilityChooser
+        onView(withId(R.id.newConcern_facilityChooser)).perform(scrollTo()).perform(swipeDown());
 
         try {
             onView(withId(R.id.activity_new_concern)).check(matches(isDisplayed()));

@@ -5,10 +5,14 @@ cd Android/LTC-Safety && chmod +x gradlew
 
 if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then 
 	# Build, run no Tests
-	./gradlew build -x test 
+	#./gradlew build -x test
+
+	#Temp
+	android list target && ./gradlew --continue test connectedAndroidTest
+	
 else 
 	if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then 
 		# Run all JVM and Instrumented Unit Tests
-		android list target && ./gradlew --continue test connectedAndroidTest
+		#android list target && ./gradlew --continue test connectedAndroidTest
 	fi
 fi
