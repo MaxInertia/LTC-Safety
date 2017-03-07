@@ -34,12 +34,14 @@ env:
 # Emulator Management: Create, Start and Wait
 before_script:
     - chmod +x Android/build_scripts/beforeScript.sh
-    - chmod +x Android/build_scripts/script.sh
-    #- chmod +x Android/build_scripts/afterSuccess.sh
     - ./Android/build_scripts/beforeScript.sh
+    #- chmod +x Android/build_scripts/script.sh
+    #- chmod +x Android/build_scripts/afterSuccess.sh
     
-script: 
-    - ./Android/build_scripts/script.sh
+    
+script:
+    - android list target && ./gradlew --continue test connectedAndroidTest
+    #- ./Android/build_scripts/script.sh
 
      
 after_success:

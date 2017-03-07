@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ "${TRAVIS_BRANCH}" == "android-app-build" ] ; then 
+if [ "${TRAVIS_BRANCH}" == "android-app" ] ; then 
 	# Boot up the emulator for the Instrumented Tests
 	echo no | android create avd --force -n test -t android-18 --abi armeabi-v7a
 	emulator -avd test -no-skin -no-audio -no-window &
