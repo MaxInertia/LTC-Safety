@@ -66,13 +66,13 @@ public class ConcernDetailViewModelTests {
         NewConcernActivity nca = newConcernRule.getActivity();
         boolean submitSuccessful = NewConcernViewModel_TestHook.instance.submitConcern(
                 nca,
-                "Jeff",
-                "3213884",
-                "PixieGod@email.com",
+                "Near Miss",
+                "None.",
                 "UofS",
                 "B102",
-                "Near Miss",
-                "None."
+                "Retracting",
+                "valid@email.com",
+                "3213884"
         );
         assertTrue("The submission via the NewConcernViewModel_TestHook failed! Unable to test retractSubmittedConcern()",submitSuccessful);
         nca.finish();
