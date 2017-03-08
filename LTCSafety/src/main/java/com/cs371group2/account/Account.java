@@ -1,6 +1,5 @@
 package com.cs371group2.account;
 
-import com.cs371group2.facility.Facility;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -31,12 +30,6 @@ public final class Account {
     @Index
     private AccountPermissions permissions;
 
-    /**
-     * The hashset of care home facilities this account is associated with.
-     */
-    @Index
-    private HashSet<Facility> facilities = new HashSet<Facility>();
-
     public Account(String id, AccountPermissions permissions){
         this(id, permissions, false);
     }
@@ -54,7 +47,6 @@ public final class Account {
 
         this.id = id;
         this.permissions = permissions;
-        this.facilities = new HashSet<Facility>();
         this.isTestingAccount = isTestingAccount;
     }
 
@@ -67,40 +59,6 @@ public final class Account {
 
     public boolean isTestingAccount() {
         return isTestingAccount;
-    }
-
-    public HashSet<Facility> getFacilities() {
-        return facilities;
-    }
-
-    /**
-     * Associates the account with the given facility by adding
-     * it to the account's hashset of associated facilities
-     *
-     * @param toAdd the facility to associate with this account
-     * @return Whether the association was successful or not
-     */
-    public boolean addFacility(Facility toAdd){
-        if (toAdd == null) {
-            return false;
-        } else {
-            return facilities.add(toAdd);
-        }
-    }
-
-    /**
-     * Disassociates the account with the given facility by removing
-     * it from the account's hashset of associated facilities
-     *
-     * @param toRemove the facility to associate with this account
-     * @return Whether the association was successful or not
-     */
-    public boolean removeFacility(Facility toRemove){
-        if (toRemove == null) {
-            return false;
-        } else {
-            return facilities.remove(toRemove);
-        }
     }
 
     public AccountPermissions getPermissions() {return permissions;}

@@ -3,7 +3,6 @@ package com.cs371group2.admin;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.DatastoreTest;
-import com.cs371group2.facility.Facility;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -48,31 +47,4 @@ public class AccountTest extends DatastoreTest {
     public void NullPermissionTest() throws Exception{
         Account account = new Account(testId, null);
     }
-
-    /**
-     * Tests that the facilities list is initially empty
-     * @throws Exception
-     */
-    @Test
-    public void EmptyFacilitiesTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-    }
-
-    /**
-     * Tests the adding and removing of facilities for an account
-     * @throws Exception
-     */
-    @Test
-    public void AddRemoveFacilityTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-        Facility testFac = new Facility("This is a test");
-        account.addFacility(testFac);
-        assert(account.getFacilities().contains(testFac));
-        account.removeFacility(testFac);
-        assert(!account.getFacilities().contains(testFac));
-    }
-
-
 }
