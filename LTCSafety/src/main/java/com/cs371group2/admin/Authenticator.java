@@ -107,15 +107,15 @@ abstract class Authenticator {
             Claims claims = claim.getBody();
 
             String id = claims.getSubject();
+            String email = (String)claims.get("email");
             AccountPermissions permissions = AccountPermissions.valueOf((String)claims.get("permissions"));
-            Account account = new Account(id, permissions, true);
+            Account account = new Account(id, email, permissions, true);
 
             Collection<String> facilities = (Collection<String>)claims.get("facilities");
             for (String name : facilities) {
                 account.addFacility(new Facility(name));
             }
 
-            String email = (String)claims.get("email");
             Boolean isEmailVerified = (Boolean)claims.get("emailVerified");
             AccessToken accessToken = new AccessToken(email, id, id, isEmailVerified);
 

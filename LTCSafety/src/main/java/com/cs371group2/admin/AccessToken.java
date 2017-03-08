@@ -5,7 +5,7 @@ package com.cs371group2.admin;
  *
  * Created on 2017-02-09.
  */
-final class AccessToken {
+public final class AccessToken {
 
     /**
      * The email of the user requesting access.

@@ -103,7 +103,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
+        Account account = new Account("testing", "test@email.com",AccountPermissions.ADMIN);
         account.addFacility(new Facility("OTHER_FACILITY"));
 
         List<Concern> concernList = dao.load(account, 0, 1);
@@ -124,7 +124,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
         account.addFacility(new Facility("Other"));
         concernList = dao.load(account, -1, 5);
     }
@@ -134,7 +134,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
         account.addFacility(new Facility("Other"));
         concernList = dao.load(account, 0, -1);
     }
@@ -152,7 +152,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern firstConcern = new Concern(concernData);
         dao.save(firstConcern);
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
         account.addFacility(new Facility("OTHER_FACILITY"));
 
         List<Concern> concerns = dao.load(account, 0, 1);

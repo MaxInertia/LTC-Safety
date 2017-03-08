@@ -84,4 +84,9 @@ public class AdminApi {
         logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
         return loadedConcern;
     }
+
+    @ApiMethod(name = "requestAccount", path = "admin/requestAccount")
+    public Account requestAccount(AccountRequest request) throws UnauthorizedException {
+        return request.authenticate();
+    }
 }
