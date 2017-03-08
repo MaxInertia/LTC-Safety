@@ -19,9 +19,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import c371g2.ltc_safety.ReturnCode;
+import c371g2.ltc_safety.a_new.NewConcernViewModel_TestHook;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
+import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
 /**
@@ -61,10 +65,10 @@ public class MainViewModelTests {
         );
 
         Activity activity = mActivity.getActivity();
-        MainViewModel.saveConcern(activity.getBaseContext(), concern);
+        DeviceStorage.saveConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
-        ArrayList<ConcernWrapper> concerns = MainViewModel.loadConcerns(activity.getBaseContext());
+        ArrayList<ConcernWrapper> concerns = DeviceStorage.loadConcerns(activity.getBaseContext());
         if(concerns==null || concerns.size()==0){
             fail();
         }
@@ -114,5 +118,36 @@ public class MainViewModelTests {
         clientConcern.setStatuses(statuses);
 
         return new ConcernWrapper(clientConcern,new OwnerToken());
+    }
+
+    @Test
+    public void test_updateConcerns_withNoStoredConcerns() throws InterruptedException {
+        mActivity.launchActivity(new Intent());
+        MainActivity activity = mActivity.getActivity();
+        activity.viewModel.updateConcerns(activity.getBaseContext());
+
+        activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
+        assertTrue(activity.viewModel.submissionReturnCode.equals(ReturnCode.IOEXCEPTION_THROWN_BY_API));
+        activity.finish();
+    }
+
+    @Test
+    public void test_updateConcerns_withStoredConcerns() throws InterruptedException {
+        MainActivity activity = mActivity.getActivity();
+        NewConcernViewModel_TestHook.instance.submitConcern(
+                activity,
+                "Near Miss",
+                "None.",
+                "",
+                "B101",
+                "Drake Benet",
+                "Test@valid.ca",
+                "1231231234"
+        );
+        activity.viewModel.updateConcerns(activity.getBaseContext());
+
+        activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
+        assertTrue(activity.viewModel.submissionReturnCode.equals(ReturnCode.SUCCESS));
+        activity.finish();
     }
 }

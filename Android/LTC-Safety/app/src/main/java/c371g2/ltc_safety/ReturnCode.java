@@ -37,7 +37,12 @@ public enum ReturnCode {
     /**
      * Concern submission/retraction was successful
      */
-    SUCCESS(7);
+    SUCCESS(7),
+
+    /**
+     * Null object returned from fetch-API.
+     */
+    NULL_POINTER(8);
 
     public int id;
     ReturnCode(int id) {

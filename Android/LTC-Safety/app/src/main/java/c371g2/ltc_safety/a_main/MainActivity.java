@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.a_detail.ConcernDetailActivity;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
@@ -24,13 +25,16 @@ import c371g2.ltc_safety.a_new.NewConcernActivity;
  * - The number of rows in the ListView is equal to MainViewModel.concernList.size()
  * @HistoryProperties none
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AbstractNetworkActivity {
+
+    MainViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        viewModel = new MainViewModel(this);
         MainViewModel.initialize(getBaseContext());
         assert(MainViewModel.getSortedConcernList() != null);
         populateConcernsList();
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         Button newConcernButton = (Button) findViewById(R.id.main_newConcernButton);
         setNewConcernButtonListener(newConcernButton);
         assert(newConcernButton.hasOnClickListeners());
+
+        viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
     }
 
     /**

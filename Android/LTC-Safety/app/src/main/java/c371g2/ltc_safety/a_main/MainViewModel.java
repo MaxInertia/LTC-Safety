@@ -2,25 +2,26 @@ package c371g2.ltc_safety.a_main;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-import com.google.gson.Gson;
+import com.appspot.ltc_safety.client.model.ConcernCollection;
+import com.appspot.ltc_safety.client.model.OwnerToken;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkViewModel;
+import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
- * This class acts as an interface between the app view in the main activity and the model. It loads
- * the previously submitted concerns from memory and stores them in concernList.
- *
- * This class is different from the two other View-Model classes:
- * - It does not contain a network operation
- * - All Fields and Methods not inherited by the ViewModelObserver are static
- * - The ViewModelObserver is used by the other two View-Model classes to update the concernList with
- * changes resulting from the network operations performed in each.
+ * This class acts as an interface between the app view in the main activity and the model. It
+ * contains the list of Concerns submitted from this device in concernList. The ViewModelObserver
+ * interface is used by the other two View-Model classes to update the concernList with changes
+ * resulting from the network operations performed in each.
  *
  * Contains a static inner-class 'Test_Hook' to aid testing.
  *
@@ -30,18 +31,19 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * running. However, this is not the case when performing tests. The Test_Hook contains a method
  * which can reinitialize it.
  */
-class MainViewModel implements ViewModelObserver {
-
-    /**
-     * The key used to access the list of concerns in device memory.
-     */
-    private static final String CONCERN_SHARED_PREF_KEY = "concerns";
+class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserver {
+    static MainViewModel observerInstance;
 
     /**
      * The list of all concerns stored on the device.
      * Retracted concerns persist.
      */
     private static ArrayList<ConcernWrapper> concernList;
+
+    MainViewModel(@NonNull AbstractNetworkActivity activity) {
+        this.activity = activity;
+        observerInstance = this;
+    }
 
     /**
      * Initialize model; loads the concerns from device memory and stores them in concernList.
@@ -50,7 +52,7 @@ class MainViewModel implements ViewModelObserver {
      * @param context The base context of the activity that called this method (typically MainActivity)
      */
     static void initialize(@NonNull Context context) {
-        concernList = loadConcerns(context);
+        concernList = DeviceStorage.loadConcerns(context);
         assert(concernList!=null);
     }
 
@@ -68,46 +70,24 @@ class MainViewModel implements ViewModelObserver {
     }
 
     /**
-     * Loads all concerns stored in the device memory, returns them in an ArrayList.
-     * @preconditions context is not null.
-     * @modifies nothing
-     * @param context The base context of the activity calling this method.
-     * @return ArrayList of all concerns stored in device memory. Empty ArrayList if no concerns exist.
+     * Uses the inner-class ConcernUpdater to update the list of concern statuses for each concern
+     * stored on this device.
+     * @preconditions Must be called after loadConcerns()
+     * @modifies
+     * If any concerns have changed and an internet connection is available:
+     * - The updated version replaces the old concern in the concernList
+     * - The updated version overwrites the old version in device memory
+     * If no concerns have changed: Nothing happens.
+     * @param context The context of the activity the method is being called from. MainActivity in
+     *                normal use, but may be others for tests.
      */
-    static ArrayList<ConcernWrapper> loadConcerns(@NonNull Context context) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(CONCERN_SHARED_PREF_KEY,Context.MODE_PRIVATE);
-        Collection all_json_concerns = sharedPreferences.getAll().values();
-
-        Gson gson = new Gson();
-        ArrayList<ConcernWrapper> concerns = new ArrayList<>();
-        for(Object json_concern: all_json_concerns) {
-            ConcernWrapper loadedConcern = gson.fromJson((String) json_concern, ConcernWrapper.class);
-            concerns.add(loadedConcern);
-        }
-
-        return concerns;
-    }
-
-    /**
-     * Saves a concern in device memory. If a concern with the same submission date already exists,
-     * this concern overrides it. This occurs when a concern is retracted; the concern instance with
-     * the "RETRACTED" status overwrites the previous instance.
-     * @preconditions context and newConcern are not null.
-     * @modifies concernList; adds newConcern to the list.
-     * @param context The context of the activity calling this method (Typically NewConcernActivity
-     *                or ConcernDetailActivity via the ViewModelObserver interface).
-     * @param newConcern The concern to be saved.
-     */
-    static void saveConcern(@NonNull Context context, @NonNull ConcernWrapper newConcern) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences(CONCERN_SHARED_PREF_KEY,Context.MODE_PRIVATE);
-        Gson gson = new Gson();
-        String jsonConcern = gson.toJson(newConcern);
-        sharedPreferences.edit().putString(newConcern.getOwnerToken().getToken(),jsonConcern).apply();
+    void updateConcerns(@NonNull Context context) {
+        // TODO: Initialize instance of ConcernUpdater, execute task
     }
 
     @Override
     public void newConcernSubmitted(@NonNull Context context,@NonNull ConcernWrapper newConcern) {
-        saveConcern(context, newConcern);
+        DeviceStorage.saveConcern(context, newConcern);
         concernList.add(newConcern);
     }
 
@@ -129,7 +109,74 @@ class MainViewModel implements ViewModelObserver {
 
         assert(oldConcern.getOwnerToken().equals(concern.getOwnerToken()));
         concernList.set(index,concern);
-        saveConcern(context, concern);
+        DeviceStorage.saveConcern(context, concern);
+    }
+
+    /**
+     * This class is responsible for utilizing the network connection to fetch the all concerns that
+     * correspond to the owner tokens stored on the device. This is for updating the concern status
+     * list. Each new concern status will be added to it's parent concern.
+     * @Invariants none
+     * @HistoryProperties none
+     */
+    private class ConcernUpdater extends AsyncTask<Void,Void,ReturnCode> {
+        /**
+         * Stores the backends response to the fetchConcerns request.
+         */
+        ConcernCollection concernCollection;
+
+        @Override
+        protected ReturnCode doInBackground(Void... params) {
+            // TODO: Prepare fetch concerns request
+            ArrayList<OwnerToken> tokens = getStoredOwnerTokens();
+
+            //try {
+                // TODO: Add fetch-API call here
+                //return ReturnCode.SUCCESS;
+            //} catch(IOException ioException) {
+                // TODO: Display error message
+                //return ReturnCode.IOEXCEPTION_THROWN_BY_API;
+            //}
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ReturnCode returnCode) {
+            if(ReturnCode.SUCCESS.equals(returnCode)) {
+                returnCode = addNewConcernStatuses(concernCollection);
+            } else {
+                //TODO: Display error message
+            }
+            submissionReturnCode = returnCode;
+            signalLatch.countDown();
+            assert(signalLatch.getCount() == 0);
+        }
+
+        /**
+         * Retrieve the OwnerToken from each Concern in concernList.
+         * @return List of OwnerTokens from each concern stored on the Device.
+         */
+        private @NonNull ArrayList<OwnerToken> getStoredOwnerTokens() {
+            ArrayList<OwnerToken> tokens = new ArrayList<>();
+            for(ConcernWrapper concern: concernList) {
+                tokens.add(concern.getOwnerToken());
+            }
+            return tokens;
+        }
+
+        /**
+         * Updates the ConcernStatus list of each concern in concernList that has changed.
+         * This involves converting each new ConcernStatus into the local StatusWrapper class,
+         * inserting that StatusWrapper into the relevant concern, and overwriting the previous
+         * version of the concern in device memory.
+         */
+        private ReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
+            // TODO: Convert new ConcernStatus' into StatusWrapper instances
+            // TODO: Add those wrappers to the end of the status list of the proper Concern
+            // TODO: Overwrite previous version of concern in Device memory
+            return null;
+        }
+
     }
 
     // ---------------------------------------------------------------------------------------------
@@ -154,5 +201,6 @@ class MainViewModel implements ViewModelObserver {
         public void addConcern(ConcernWrapper concern) throws NullPointerException {
             concernList.add(concern);
         }
+
     }
 }

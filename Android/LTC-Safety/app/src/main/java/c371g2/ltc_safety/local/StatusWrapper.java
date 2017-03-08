@@ -12,9 +12,9 @@ public class StatusWrapper {
     final private String type;
     final private long date;
 
-    public StatusWrapper(String t, long d) {
-        type = t;
-        date = d;
+    public StatusWrapper(String type, long date) {
+        this.type = type;
+        this.date = date;
     }
 
     public String getFormattedDate() {
