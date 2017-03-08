@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.client.model;
 
 /**
- * Model definition for SubmitConcernResponse.
+ * Model definition for ConcernCollection.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the User API. For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.appspot.ltc_safety.client.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class SubmitConcernResponse extends com.google.api.client.json.GenericJson {
+public final class ConcernCollection extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Concern concern;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private OwnerToken ownerToken;
+  private java.util.List<Concern> items;
 
   /**
    * @return value or {@code null} for none
    */
-  public Concern getConcern() {
-    return concern;
+  public java.util.List<Concern> getItems() {
+    return items;
   }
 
   /**
-   * @param concern concern or {@code null} for none
+   * @param items items or {@code null} for none
    */
-  public SubmitConcernResponse setConcern(Concern concern) {
-    this.concern = concern;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public OwnerToken getOwnerToken() {
-    return ownerToken;
-  }
-
-  /**
-   * @param ownerToken ownerToken or {@code null} for none
-   */
-  public SubmitConcernResponse setOwnerToken(OwnerToken ownerToken) {
-    this.ownerToken = ownerToken;
+  public ConcernCollection setItems(java.util.List<Concern> items) {
+    this.items = items;
     return this;
   }
 
   @Override
-  public SubmitConcernResponse set(String fieldName, Object value) {
-    return (SubmitConcernResponse) super.set(fieldName, value);
+  public ConcernCollection set(String fieldName, Object value) {
+    return (ConcernCollection) super.set(fieldName, value);
   }
 
   @Override
-  public SubmitConcernResponse clone() {
-    return (SubmitConcernResponse) super.clone();
+  public ConcernCollection clone() {
+    return (ConcernCollection) super.clone();
   }
 
 }

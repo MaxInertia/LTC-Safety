@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.client.model;
 
 /**
- * Model definition for SubmitConcernResponse.
+ * Model definition for OwnerTokenListWrapper.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the User API. For a detailed explanation see:
@@ -29,58 +29,37 @@ package com.appspot.ltc_safety.client.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class SubmitConcernResponse extends com.google.api.client.json.GenericJson {
+public final class OwnerTokenListWrapper extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Concern concern;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private OwnerToken ownerToken;
+  private java.util.List<OwnerToken> tokens;
 
   /**
    * @return value or {@code null} for none
    */
-  public Concern getConcern() {
-    return concern;
+  public java.util.List<OwnerToken> getTokens() {
+    return tokens;
   }
 
   /**
-   * @param concern concern or {@code null} for none
+   * @param tokens tokens or {@code null} for none
    */
-  public SubmitConcernResponse setConcern(Concern concern) {
-    this.concern = concern;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public OwnerToken getOwnerToken() {
-    return ownerToken;
-  }
-
-  /**
-   * @param ownerToken ownerToken or {@code null} for none
-   */
-  public SubmitConcernResponse setOwnerToken(OwnerToken ownerToken) {
-    this.ownerToken = ownerToken;
+  public OwnerTokenListWrapper setTokens(java.util.List<OwnerToken> tokens) {
+    this.tokens = tokens;
     return this;
   }
 
   @Override
-  public SubmitConcernResponse set(String fieldName, Object value) {
-    return (SubmitConcernResponse) super.set(fieldName, value);
+  public OwnerTokenListWrapper set(String fieldName, Object value) {
+    return (OwnerTokenListWrapper) super.set(fieldName, value);
   }
 
   @Override
-  public SubmitConcernResponse clone() {
-    return (SubmitConcernResponse) super.clone();
+  public OwnerTokenListWrapper clone() {
+    return (OwnerTokenListWrapper) super.clone();
   }
 
 }
