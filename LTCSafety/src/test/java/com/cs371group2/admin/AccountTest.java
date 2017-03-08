@@ -1,11 +1,8 @@
 package com.cs371group2.admin;
 
-import static junit.framework.TestCase.assertNotNull;
-
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
-import com.cs371group2.facility.Facility;
 import org.junit.Test;
 
 /**
@@ -48,40 +45,4 @@ public class AccountTest extends DatastoreTest {
     public void nullPermissionTest() throws Exception{
         new Account(testId, testEmail, null);
     }
-
-    /**
-     * Tests with a null email for the account constructor
-     * @throws AssertionError
-     */
-    @Test(expected = AssertionError.class)
-    public void nullEmailTest() throws Exception{
-        new Account(testId, null, AccountPermissions.ADMIN);
-    }
-    
-    /**
-     * Tests that the facilities list is initially empty
-     * @throws Exception
-     */
-    @Test
-    public void EmptyFacilitiesTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-    }
-
-    /**
-     * Tests the adding and removing of facilities for an account
-     * @throws Exception
-     */
-    @Test
-    public void AddRemoveFacilityTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-        Facility testFac = new Facility("This is a test");
-        account.addFacility(testFac);
-        assert(account.getFacilities().contains(testFac));
-        account.removeFacility(testFac);
-        assert(!account.getFacilities().contains(testFac));
-    }
-
-
 }

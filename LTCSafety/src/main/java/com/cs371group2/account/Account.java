@@ -1,11 +1,9 @@
 package com.cs371group2.account;
 
-import com.cs371group2.facility.Facility;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
-import java.util.HashSet;
 
 /**
  * This class represents an account in the system. It contains a permission level, a unique id, and a set of
@@ -43,12 +41,6 @@ public final class Account {
     @Index
     private AccountPermissions permissions;
 
-    /**
-     * The hashset of care home facilities this account is associated with.
-     */
-    @Index
-    private HashSet<Facility> facilities = new HashSet<Facility>();
-
     public String getId() {
         return id;
     }
@@ -83,9 +75,6 @@ public final class Account {
         this.permissions = permissions;
     }
 
-    public HashSet<Facility> getFacilities() {
-        return facilities;
-    }
 
     /**
      * Construct a new account.
@@ -119,7 +108,6 @@ public final class Account {
         this.id = id;
         this.email = email;
         this.permissions = permissions;
-        this.facilities = new HashSet<Facility>();
         this.isTestingAccount = isTestingAccount;
     }
 
@@ -127,36 +115,6 @@ public final class Account {
      * No-arg constructor required for being loaded from the datastore.
      */
     private Account() {}
-
-    /**
-     * Associates the account with the given facility by adding
-     * it to the account's hashset of associated facilities
-     *
-     * @param toAdd the facility to associate with this account
-     * @return Whether the association was successful or not
-     */
-    public boolean addFacility(Facility toAdd){
-        if (toAdd == null) {
-            return false;
-        } else {
-            return facilities.add(toAdd);
-        }
-    }
-
-    /**
-     * Disassociates the account with the given facility by removing
-     * it from the account's hashset of associated facilities
-     *
-     * @param toRemove the facility to associate with this account
-     * @return Whether the association was successful or not
-     */
-    public boolean removeFacility(Facility toRemove){
-        if (toRemove == null) {
-            return false;
-        } else {
-            return facilities.remove(toRemove);
-        }
-    }
 
     @Override
     public String toString() {
