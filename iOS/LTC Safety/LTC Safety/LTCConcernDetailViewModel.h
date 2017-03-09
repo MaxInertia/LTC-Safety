@@ -3,6 +3,7 @@
 //  LTC Safety
 //
 //  Created by Allan Kerr on 2017-02-04.
+//  Modified by Daniel Morris
 //  Copyright © 2017 CS371 Group 2. All rights reserved.
 //
 

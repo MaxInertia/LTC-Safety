@@ -3,6 +3,7 @@
 //  LTC Safety
 //
 //  Created by Allan Kerr on 2017-01-26.
+//  Modified by Daniel Morris
 //  Copyright © 2017 CS371 Group 2. All rights reserved.
 //
 
@@ -17,7 +18,6 @@
 NSString *const LTCDetailConcernTitle = @"DETAIL_CONCERN_TITLE";
 NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
 NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
-
 
 @interface LTCConcernDetailViewController ()
 @property (readwrite, nonatomic, strong) LTCConcernDetailViewModel *viewModel;
@@ -48,46 +48,45 @@ NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
     return self;
 }
 
-
 /**
  The callback for when the retract concern button is clicked causing a request to be sent to the backend requesting that the concern status be changed to retracted.
  */
 - (void)_retractConcern {
-    // Call the retract concern endpoint on the Client API using the view model's concern's owner token
     
+    // Display the loading spinner to the user until the retract call has finished
     LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
-    
     [self presentViewController: loadingMessage animated: true completion: nil];
     
-    [self.clientApi retractConcern:self.viewModel.concern.ownerToken completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
+    // Call the retract concern endpoint on the Client API using the view model's concern's owner token
+    [self.clientApi retractConcern:self.viewModel.concern.ownerToken
+                        completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
         if(error == nil){
-            [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification object:self userInfo:@{@"status": concernStatus}];
+            [self.notificationCenter postNotificationName:LTCUpdatedConcernStatusNotification
+                                                   object:self
+                                                 userInfo:@{@"status": concernStatus}];
         }
         [loadingMessage dismissViewControllerAnimated:YES completion:^(){
             UIAlertController *alert;
             if (error != nil){
                 NSString *errorMessage = [error.userInfo valueForKey:@"error"];
-                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil) style:UIAlertActionStyleCancel handler:nil];
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                            message:errorMessage
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:nil];
                 [alert addAction:cancelAction];
-                [self presentViewController:alert animated:YES completion:nil];
+                [self presentViewController:alert
+                                   animated:YES
+                                 completion:nil];
                 
                 XLFormRowDescriptor *row = [self.viewModel formRowWithTag:@"RETRACT_CONCERN"];
                 [self deselectFormRow:row];
-
             }else {
-                
                 [super.navigationController popViewControllerAnimated:YES];
-                
             }
-
         }];
-        
-
     }];
-    
-    
-    
 }
 
 @end

@@ -6,8 +6,6 @@
   Copyright © 2017 Allan Kerr. All rights reserved.
 */
 
-
-
 // Concern View Title
 "CONCERN_VIEW_TITLE" = "LTC Safety";
 
@@ -37,7 +35,6 @@
 "RETRACT_CONCERN_PROMPT" = "Retract";
 "DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
 
-
 "DETAIL_NAME_TITLE" = "Name";
 "DETAIL_EMAIL_TITLE" = "Email";
 "DETAIL_PHONE_NUMBER_TITLE" = "Phone Number";
@@ -46,12 +43,10 @@
 "DETAIL_ROOM_TITLE" = "Room";
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
 
-
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "LOADING_PROMPT" = "Loading";
-
 
 // Value Selection
 "VALUE_OTHER" = "Other...";
@@ -59,15 +54,19 @@
 // Concern Nature Values
 "CATEGORY_OTHER_TITLE" = "Nature of Concern";
 "CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
-"CATEGORY_1" = "Category One";
-"CATEGORY_2" = "Category Two";
-"CATEGORY_3" = "Category Three";
-"CATEGORY_4" = "Category Four";
-"CATEGORY_5" = "Category Five";
-"CATEGORY_6" = "Category Six";
+"CATEGORY_1" = "Environmental Hazard";
+"CATEGORY_2" = "Equipment Failure";
+"CATEGORY_3" = "Improper Equipment Use";
+"CATEGORY_4" = "Infection Control";
+"CATEGORY_5" = "Mental Abuse";
+"CATEGORY_6" = "Near Miss";
+"CATEGORY_7" = "No Response to Requests";
+"CATEGORY_8" = "Physical Abuse";
+"CATEGORY_9" = "Resident Aggression";
+"CATEGORY_10" = "Witnessed Fall";
+"CATEGORY_11" = "Wrong / Lack of Medication";
 
 // Facility Values
-
 "FACILITY_OTHER_TITLE" = "Facility";
 "FACILITY_OTHER_PROMPT" = "Please specify the facility the concern occurred at.";
 "FACILITY_1" = "The Franklin";

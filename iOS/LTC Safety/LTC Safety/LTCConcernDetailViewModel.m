@@ -3,6 +3,7 @@
 //  LTC Safety
 //
 //  Created by Allan Kerr on 2017-02-04.
+//  Modified by Daniel Morris
 //  Copyright © 2017 CS371 Group 2. All rights reserved.
 //
 
@@ -23,7 +24,6 @@ NSString *const LTCDetailFacilityTitle                  = @"DETAIL_FACILITY_TITL
 NSString *const LTCDetailRoomTitle                      = @"DETAIL_ROOM_TITLE";             //Room
 NSString *const LTCDetailActionsTakenTitle              = @"DETAIL_ACTIONS_TAKEN_TITLE";    //Actions Taken
 
-
 // The row desriptors for unique identification
 NSString *const LTCDetailDescriptorRetractConcern       = @"RETRACT_CONCERN";
 NSString *const LTCDetailDescriptorReporterName         = @"REPORTER_NAME";
@@ -34,10 +34,6 @@ NSString *const LTCDetailDescriptorFacilityName         = @"FACILITY_NAME";
 NSString *const LTCDetailDescriptorRoomNumber           = @"ROOM_NUMBER";
 NSString *const LTCDetailDescriptorActionsTaken         = @"ACTIONS_TAKEN";
 NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
-
-
-
-
 
 @interface LTCConcernDetailViewModel ()
 @property (nonatomic, strong) LTCClientApi *clientApi;
@@ -50,7 +46,6 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
-
 @end
 
 @implementation LTCConcernDetailViewModel
@@ -162,6 +157,158 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 
 #pragma mark - Implementation
 
+- (instancetype)initWithConcern:(LTCConcern *)concern {
+    
+    NSAssert(concern != nil, @"Attempted to initialize the detail concern view model with a nil concern.");
+    if (self = [super init]) {
+        
+        self.clientApi = [[LTCClientApi alloc] init];
+        self.concern = concern;
+        
+        // Sets up the form contact information section
+        [self addFormSection:[self createContactInfoSection:concern]];
+        
+        // Sets up the concern information section
+        [self addFormSection:[self createConcernInfoSection:concern]];
+
+        // Sets up the actions taken section
+        if(concern.actionsTaken != nil){
+            [self addFormSection:[self createActionsTakenSection:concern]];
+        }
+        
+        // Sets up the concern status log
+        [self addFormSection:[self createStatusLogSection:concern]];
+
+        // Sets up the actions retract button section
+        if(![concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
+            [self addFormSection:[self createRetractButtonSection:concern]];
+        }
+    }
+    NSAssert1(self != nil, @"Failed to initialize %@", self.class);
+    NSAssert(self.clientApi != nil, @"Client API was nil after the detail concern view model initializer finished.");
+    
+    return self;
+}
+
+- (XLFormSectionDescriptor *)createContactInfoSection:(LTCConcern *)concern{
+
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+
+    section.title = NSLocalizedString(LTCDetailContactInfoTitle, nil);
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorReporterName
+                                                rowType:XLFormRowDescriptorTypeInfo
+                                                  title:NSLocalizedString(LTCDetailNameTitle, nil)];
+    row.value = concern.reporter.name;
+    [section addFormRow:row];
+    
+    if(concern.reporter.email != nil){
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorEmail
+                                                    rowType:XLFormRowDescriptorTypeInfo
+                                                      title:NSLocalizedString(LTCDetailEmailTitle, nil)];
+        row.value = concern.reporter.email;
+        [section addFormRow:row];
+    }
+    
+    if(concern.reporter.phoneNumber != nil){
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorPhoneNumber
+                                                    rowType:XLFormRowDescriptorTypeInfo
+                                                      title:NSLocalizedString(LTCDetailPhoneNumberTitle, nil)];
+        row.value = concern.reporter.phoneNumber;
+        [section addFormRow:row];
+    }
+    
+    return section;
+}
+
+- (XLFormSectionDescriptor *)createConcernInfoSection:(LTCConcern *)concern{
+    
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+    
+    section.title = NSLocalizedString(LTCDetailConcernInfoTitle, nil);
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorConcernNature
+                                                rowType:XLFormRowDescriptorTypeInfo
+                                                  title:NSLocalizedString(LTCDetailConcernNatureTitle, nil)];
+    row.value = concern.concernNature;
+    [section addFormRow:row];
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorFacilityName
+                                                rowType:XLFormRowDescriptorTypeInfo
+                                                  title:NSLocalizedString(LTCDetailFacilityTitle, nil)];
+    row.value = concern.location.facilityName;
+    [section addFormRow:row];
+    
+    if(concern.location.roomName != nil){
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRoomNumber
+                                                    rowType:XLFormRowDescriptorTypeInfo
+                                                      title:NSLocalizedString(LTCDetailRoomTitle, nil)];
+        row.value = concern.location.roomName;
+        [section addFormRow:row];
+    }
+    
+    return section;
+}
+
+- (XLFormSectionDescriptor *)createActionsTakenSection:(LTCConcern *)concern{
+    
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+    
+    section.title = NSLocalizedString(LTCDetailActionsTakenTitle, nil);
+
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorActionsTaken
+                                                rowType:XLFormRowDescriptorTypeTextView];
+    row.disabled = @YES;
+    row.value = concern.actionsTaken;
+    
+    [section addFormRow:row];
+    
+    return section;
+}
+
+- (XLFormSectionDescriptor *)createStatusLogSection:(LTCConcern *)concern{
+    
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+    
+    section.title = NSLocalizedString(LTCDetailConcernStatusLog, nil);
+    
+    NSString *dateString;
+    for (LTCConcernStatus* status in concern.statuses){
+        dateString = [NSDateFormatter localizedStringFromDate: status.creationDate
+                                                    dateStyle:NSDateFormatterMediumStyle
+                                                    timeStyle:NSDateFormatterShortStyle];
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus
+                                                    rowType:XLFormRowDescriptorTypeInfo
+                                                      title:status.concernType];
+        row.value = dateString;
+        [section addFormRow:row];
+    }
+    
+    return section;
+}
+
+- (XLFormSectionDescriptor *)createRetractButtonSection:(LTCConcern *)concern{
+    
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRetractConcern
+                                                rowType:XLFormRowDescriptorTypeButton
+                                                  title:NSLocalizedString(LTCRetractConcernPrompt, nil)];
+    [section addFormRow:row];
+    
+    return section;
+}
+
 /**
  Get the retract row descriptor's callback action
  
@@ -192,99 +339,6 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
     if(![self.concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
        descriptor.action.formSelector = retractCallback;
     }
-}
-
-- (instancetype)initWithConcern:(LTCConcern *)concern {
-    
-    NSAssert(concern != nil, @"Attempted to initialize the detail concern view model with a nil concern.");
-    if (self = [super init]) {
-        
-        self.clientApi = [[LTCClientApi alloc] init];
-        self.concern = concern;
-        XLFormSectionDescriptor *section;
-        XLFormRowDescriptor *row;
-        
-        // Sets up the form contact information section
-        
-        section = [XLFormSectionDescriptor formSection];
-        section.title = NSLocalizedString(LTCDetailContactInfoTitle, nil);
-        [self addFormSection:section];
-        
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorReporterName rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailNameTitle, nil)];
-        row.value = concern.reporter.name;
-        [section addFormRow:row];
-        
-        if(concern.reporter.email != nil){
-            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorEmail rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailEmailTitle, nil)];
-            row.value = concern.reporter.email;
-            [section addFormRow:row];
-        }
-        
-        if(concern.reporter.phoneNumber != nil){
-            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorPhoneNumber rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailPhoneNumberTitle, nil)];
-            row.value = concern.reporter.phoneNumber;
-            [section addFormRow:row];
-        }
-        
-        // Sets up the concern information section
-        
-        section = [XLFormSectionDescriptor formSection];
-        section.title = NSLocalizedString(LTCDetailConcernInfoTitle, nil);
-        [self addFormSection:section];
-        
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorConcernNature rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailConcernNatureTitle, nil)];
-        row.value = concern.concernNature;
-        [section addFormRow:row];
-        
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorFacilityName rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailFacilityTitle, nil)];
-        row.value = concern.location.facilityName;
-        [section addFormRow:row];
-        
-        if(concern.location.roomName != nil){
-            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRoomNumber rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailRoomTitle, nil)];
-            row.value = concern.location.roomName;
-            [section addFormRow:row];
-        }
-        
-        if(concern.actionsTaken != nil){
-            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorActionsTaken rowType:XLFormRowDescriptorTypeInfo title:NSLocalizedString(LTCDetailActionsTakenTitle, nil)];
-            row.value = concern.actionsTaken;
-            [section addFormRow:row];
-        }
-        
-        // Sets up the concern status log
-        
-        section = [XLFormSectionDescriptor formSection];
-        section.title = NSLocalizedString(LTCDetailConcernStatusLog, nil);
-        [self addFormSection:section];
-        
-        NSString *dateString;
-        for (LTCConcernStatus* status in concern.statuses){
-            dateString = [NSDateFormatter localizedStringFromDate: status.creationDate
-                                                        dateStyle:NSDateFormatterMediumStyle
-                                                        timeStyle:NSDateFormatterShortStyle];
-            row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus rowType:XLFormRowDescriptorTypeInfo title:status.concernType];
-            row.value = dateString;
-            [section addFormRow:row];
-        }
-        
-        section = [XLFormSectionDescriptor formSection];
-        [self addFormSection:section];
-        
-        // Sets up the actions retract button section
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorRetractConcern rowType:XLFormRowDescriptorTypeButton title:NSLocalizedString(LTCRetractConcernPrompt, nil)];
-
-        if(![concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
-            [section addFormRow: row];
-
-        }
-        
-
-    }
-    NSAssert1(self != nil, @"Failed to initialize %@", self.class);
-    NSAssert(self.clientApi != nil, @"Client API was nil after the detail concern view model initializer finished.");
-    
-    return self;
 }
 
 @end

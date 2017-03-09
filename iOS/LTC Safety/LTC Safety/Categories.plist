@@ -10,47 +10,47 @@
 	<array>
 		<dict>
 			<key>title</key>
-			<string>Environmental Hazard</string>
+			<string>CATEGORY_1</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Equipment Failure</string>
+			<string>CATEGORY_2</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Improper Equipment Use</string>
+			<string>CATEGORY_3</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Infection Control</string>
+			<string>CATEGORY_4</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Mental Abuse</string>
+			<string>CATEGORY_5</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Near Miss</string>
+			<string>CATEGORY_6</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>No Response to Requests</string>
+			<string>CATEGORY_7</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Physical Abuse</string>
+			<string>CATEGORY_8</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Resident Aggression</string>
+			<string>CATEGORY_9</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Witnessed Fall</string>
+			<string>CATEGORY_10</string>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>Wrong / Lack of Medication</string>
+			<string>CATEGORY_11</string>
 		</dict>
 	</array>
 </dict>
