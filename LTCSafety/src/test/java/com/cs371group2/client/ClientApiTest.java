@@ -89,9 +89,12 @@ public class ClientApiTest extends DatastoreTest {
         tokenSet.add(token2);
         Collection<Concern> returnedConcerns = new ClientApi().fetchConcerns(new OwnerTokenListWrapper(tokenSet));
 
-        //assertEquals(returnedConcerns.toArray()[0], data1);
-        //assertEquals(returnedConcerns.toArray()[1], data2);
-        //assertTrue(returnedConcerns.toArray()[0] != returnedConcerns.toArray()[1]);
+        Concern concern0 = (Concern) returnedConcerns.toArray()[0];
+        Concern concern1 = (Concern) returnedConcerns.toArray()[1];
+
+        assertEquals(concern0.getData(), data1);
+        assertEquals(concern1.getData(), data2);
+        assertTrue(concern0.getData() != concern1.getData());
     }
 
 

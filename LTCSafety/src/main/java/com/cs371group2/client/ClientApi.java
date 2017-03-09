@@ -12,6 +12,8 @@ import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
+
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -68,12 +70,11 @@ public final class ClientApi {
         ConcernDao dao = new ConcernDao();
         Collection<Concern> concerns = dao.load(tokens.getTokens());
 
-        for(Concern curConcern : concerns){
-            if (curConcern == null) {
-                logger.log(Level.WARNING, "Client tried retrieving a concern but concern was not found.");
-                throw new NotFoundException(CONCERN_FETCH_NOT_FOUND_ERROR);
-            }
+        if (concerns.size() != tokens.getTokens().size()) {
+            logger.log(Level.WARNING, "Client tried retrieving a concern but concern was not found.");
+            throw new NotFoundException(CONCERN_FETCH_NOT_FOUND_ERROR);
         }
+
         logger.log(Level.INFO, "Client successfully fetched a list of concerns:\n" + concerns.toString());
         return concerns;
     }

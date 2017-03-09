@@ -1,20 +1,16 @@
 package com.cs371group2.concern;
 
-import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.account.Account;
 import com.cs371group2.client.OwnerToken;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.googlecode.objectify.Key;
-import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.ObjectifyService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 
-import java.util.*;
 import java.util.List;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,11 +44,7 @@ public class ConcernDao extends Dao<Concern> {
         assert token != null;
         assert token.validate().isValid();
 
-        Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
-                .parseClaimsJws(token.getToken());
-        Claims claims = claim.getBody();
-
-        Long id = Long.parseLong(claims.getSubject());
+        Long id = token.parseToken();
         logger.log(Level.FINER, "Loading concern # " + id + "  from the datastore...");
         return super.load(id);
     }
@@ -69,17 +61,15 @@ public class ConcernDao extends Dao<Concern> {
 
         assert tokens != null;
 
-        List<Key<Concern>> keysList = new ArrayList<>();
+        List<Key<Concern>> keysList = new LinkedList<>();
 
         for(OwnerToken curToken : tokens){
             assert curToken.validate().isValid();
-            keysList.add(Key.create(Concern.class, curToken.getToken()));
+            keysList.add(Key.create(Concern.class, curToken.parseToken()));
+            System.out.println("\n\n\n\n" + curToken.parseToken());
         }
-        System.out.println("\n\n\n\nKeysList item count: " + keysList.size());
 
         Collection<Concern> concerns = load(keysList);
-
-        System.out.println("ReturnList item count: " + concerns.size() + "\n\n\n\n\n");
 
         return concerns;
     }
