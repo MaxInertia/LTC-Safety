@@ -6,15 +6,14 @@ import com.cs371group2.client.OwnerToken;
 import com.cs371group2.facility.Facility;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import com.google.appengine.api.datastore.Query;
+import com.googlecode.objectify.Key;
+import com.googlecode.objectify.LoadResult;
 import com.googlecode.objectify.ObjectifyService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +56,34 @@ public class ConcernDao extends Dao<Concern> {
         logger.log(Level.FINER, "Concern # " + id + " successfully loaded from the datastore.");
         return load(id);
     }
+
+    /**
+     * Loads a collection of concerns from the datastore using a list of owner tokens that were previously created by it.
+     *
+     * @param tokens The owner tokens containing the concern ID in the payload.
+     * @return The entitys in the datastore that the tokens reference or an empty collection if there were no tokens passed.
+     * @precond tokens != null
+     * @precond all the tokens in the tokens list contain a properly formatted and signed JWS for parsing.
+     */
+    public Collection<Concern> load(LinkedList<OwnerToken> tokens) {
+
+        assert tokens != null;
+
+        List<Key<Concern>> keysList = new ArrayList<>();
+
+        for(OwnerToken curToken : tokens){
+            assert curToken.validate().isValid();
+            keysList.add(Key.create(Concern.class, curToken.getToken()));
+        }
+        System.out.println("\n\n\n\nKeysList item count: " + keysList.size());
+
+        Collection<Concern> concerns = load(keysList);
+
+        System.out.println("ReturnList item count: " + concerns.size() + "\n\n\n\n\n");
+
+        return concerns;
+    }
+
 
     /**
      * Loads a list of concerns from the datastore starting at the given offset and ending by limit.

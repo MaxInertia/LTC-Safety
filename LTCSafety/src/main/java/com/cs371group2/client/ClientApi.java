@@ -19,7 +19,8 @@ public final class ClientApi {
 
     private static final Logger logger = Logger.getLogger( ClientApi.class.getName() );
 
-    private static final String CONCERN_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
+    private static final String CONCERN_RETRACT_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
+    private static final String CONCERN_FETCH_NOT_FOUND_ERROR = "Attempted to fetch a concern that could not be found.";
 
     @ApiMethod(name = "submitConcern", path = "/concern/submit")
     public SubmitConcernResponse submitConcern(ConcernData data) throws BadRequestException {
@@ -37,9 +38,8 @@ public final class ClientApi {
     }
 
     @ApiMethod(name = "fetchConcerns", path = "/concern/fetchConcerns")
-    public LinkedList<Concern> fetchConcerns(OwnerTokenListWrapper tokens) throws  BadRequestException, NotFoundException, ConflictException {
+    public Collection<Concern> fetchConcerns(OwnerTokenListWrapper tokens) throws  BadRequestException, NotFoundException, ConflictException {
 
-        LinkedList<Concern> returnList = new LinkedList<Concern>();
 
         for(OwnerToken curToken : tokens.getTokens()){
 
@@ -49,16 +49,19 @@ public final class ClientApi {
                 logger.log(Level.WARNING, "Client tried retrieving a concern with invalid token.");
                 throw new BadRequestException(result.getErrorMessage());
             }
-            ConcernDao dao = new ConcernDao();
-            Concern concern = dao.load(curToken);
-            if (concern == null) {
-                logger.log(Level.WARNING, "Client tried retrieving a concern but concern was not found.");
-                throw new NotFoundException(CONCERN_NOT_FOUND_ERROR);
-            }
-            returnList.add(concern);
         }
-        logger.log(Level.INFO, "Client successfully fetched a list of concerns:\n" + returnList.toString());
-        return returnList;
+
+        ConcernDao dao = new ConcernDao();
+        Collection<Concern> concerns = dao.load(tokens.getTokens());
+
+        for(Concern curConcern : concerns){
+            if (curConcern == null) {
+                logger.log(Level.WARNING, "Client tried retrieving a concern but concern was not found.");
+                throw new NotFoundException(CONCERN_FETCH_NOT_FOUND_ERROR);
+            }
+        }
+        logger.log(Level.INFO, "Client successfully fetched a list of concerns:\n" + concerns.toString());
+        return concerns;
     }
 
     @ApiMethod(name = "retractConcern", path = "/concern/retract")
@@ -74,7 +77,7 @@ public final class ClientApi {
         Concern concern = dao.load(token);
         if (concern == null) {
             logger.log(Level.WARNING, "Client tried retracting a concern but concern was not found.");
-            throw new NotFoundException(CONCERN_NOT_FOUND_ERROR);
+            throw new NotFoundException(CONCERN_RETRACT_NOT_FOUND_ERROR);
         }
 
         if (!concern.isRetracted()) {
