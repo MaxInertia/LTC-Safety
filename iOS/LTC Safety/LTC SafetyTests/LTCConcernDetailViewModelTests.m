@@ -57,7 +57,7 @@
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 4);
+    XCTAssertEqual(viewModel.formSections.count, 5);
     
 }
 @end
