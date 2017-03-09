@@ -1,14 +1,18 @@
 /**
- * The inbox controller is responsible for managing the concerns in the admin inbox.
- * This functions in this controller are responsible for querying for concerns.
+ * The concern detail controller is responsible for the displaying the details of a single concern. This
+ * includes additional information not shown in the inbox list view. Clicking on a concern in the inbox list
+ * will cause the detail view to be displayed.
  */
 safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $location, $routeParams, firebase, adminApi) {
 
     /**
-     * The list of concerns that is displayed in the current inbox page.
-     * @type {Array}
+     * The concern data that is received from the concern request
+     * and displayed to the administrator.
+     *
+     * @type {null}
      */
-    $scope.concerns = [];
+    $scope.concern = null;
+
 
     /**
      *  The auth value used for accessing the current user.
@@ -17,55 +21,68 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
     $scope.auth = firebase.auth();
 
     /**
-     * The concern request used to populate the current concerns list.
+     * The request used to load the concern from the admin API.
+     * accessToken: The token used to authenticate the request.
+     * concernId: The unique identifier of the concern that should be requested.
      *
-     * accessToken: The users Firebase access token to verify that the request is authenticated
-     * limit: The number of concerns that should be returned in the request
-     * page: The index of the concern that the request should start at.
-     *
-     * @type {{accessToken: null, limit: Number, offset: Number}}
+     * @type {{accessToken: null, concernId}}
      */
     $scope.concernRequest = {
-        accessToken : null
+        accessToken : null,
+        concernId : $routeParams.id
     };
 
+    /**
+     * The status names function maps the enum status values to human readable strings.
+     * @param key The enum value of a status.
+     * @precond key != null && !key.isEmpty
+     * @returns The string representation of the enum value.
+     */
+    $scope.statusNames = function(key) {
+
+        console.assert(key != null && !key.isEmpty, "Attempted to get the name of an invalid status enum value.");
+
+        // TODO Provide the string values.
+
+        return key;
+    };
 
     /**
-     * The callback when the user auth state changes causing the list of concerns to be updated.
+     * The callback when the user auth state changes causing the data for the concern to be fetched.
      */
     $scope.auth.onAuthStateChanged(function (firebaseUser) {
 
         if (firebaseUser) {
 
             // Update the concern request to have the most recent token
-            const promise = firebaseUser.getToken();
-            promise.then(function (rawToken) {
+            firebaseUser.getToken().then(function (rawToken) {
                 $scope.concernRequest.accessToken = rawToken;
 
                 // Update the list of concerns
-                $scope.updateConcernList();
+                $scope.fetchConcern();
             });
         }
     });
 
-
     /**
-     * Updates the list of concerns using the existing concern request.
-     *
-     * @precond $scope.concernRequest.accessToken is a valid Firebase token
-     * @precond $scope.concernRequest.accessToken != null
+     * Fetches the concern data from the admin API referenced in the concern request.
+     * @precond !$scope.concernRequest.token.isEmpty
+     * @precond $scope.concernRequest.concernId != null
+     * @postcond The concern detail view has been updated to display the received concern data.
      */
-    $scope.updateConcernList = function () {
+    $scope.fetchConcern = function() {
 
-        if ($scope.concernRequest.accessToken == null) {
-            console.log("Attempted to fetch the concerns list with a null access token.");
-            return;
+        if ($scope.concernRequest.accessToken == null || $scope.concernRequest.accessToken.isEmpty) {
+            throw new Error("Attempted to fetch a concern without providing an access token.");
         }
-        adminApi.requestConcernList($scope.concernRequest).execute(
+        if ($scope.concernRequest.concernId == null) {
+            throw new Error("Attempted to fetch a concern with no id.");
+        }
+
+        adminApi.requestConcern($scope.concernRequest).execute(
             function (resp) {
-                $scope.concerns = resp.items;
-                $scope.identifier = $routeParams.id;
-                console.log($scope.identifier);
+
+                $scope.concern = resp;
                 $scope.$apply();
             }
         );

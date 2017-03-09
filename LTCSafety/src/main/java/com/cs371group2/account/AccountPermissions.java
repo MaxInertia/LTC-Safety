@@ -12,5 +12,15 @@ public enum AccountPermissions {
      * Accounts may hold admin priviledges which allows them to view and respond to concerns, as well as assign
      * other accounts admin rights
      */
-    ADMIN
+    ADMIN,
+
+    /**
+     * An account that has signed up but hasn't been given access to the system yet.
+     */
+    UNVERIFIED,
+
+    /**
+     * An account who's access request has been rejected by an existing administrator.
+     */
+    DENIED
 }

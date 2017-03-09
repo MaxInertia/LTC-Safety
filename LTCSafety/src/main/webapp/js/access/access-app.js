@@ -5,6 +5,8 @@ var app = angular.module('accessApp', []).controller('RootCtrl', function ($scop
 
     /**
      * The callback when the Firebase auth changes to authenticated to redirect the administrator to the dashboard.
+     * @postcond The user has been redirected to the dashboard if the user is signed in.
+     *           If the user isn't signed in, nothing happens.
      */
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
@@ -20,6 +22,10 @@ var app = angular.module('accessApp', []).controller('RootCtrl', function ($scop
         }
     });
 
+    /**
+     * Redirects the user to the Administrator Dashboard.
+     * @postcond The user has been redirected to the dashboard.
+     */
     $scope.redirectToDashboard = function() {
         window.location.replace("home.html");
     }
@@ -27,7 +33,7 @@ var app = angular.module('accessApp', []).controller('RootCtrl', function ($scop
 
 
 /**
- * The Firebase factory allowing for the Firebase Service to be injected into the safetyApp's controllers.
+ * The Firebase factory allowing for the Firebase Service to be injected into the accessApp's controllers.
  */
 app.factory('firebase', function () {
     var config = {
@@ -41,6 +47,11 @@ app.factory('firebase', function () {
     return firebase;
 });
 
+/**
+ * The account status factory allowing for onAuthStateChanged(...) to differentiate between user
+ * sign up and user login. If a new account is created then a verification needs to be sent.
+ * The account status always defaults to not being a new account.
+ */
 app.factory('accountStatus', function(){
     var status = {
         newAccount: false

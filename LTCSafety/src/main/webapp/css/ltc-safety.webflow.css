@@ -40,7 +40,7 @@ body {
 .access-button {
   display: block;
   width: 100%;
-  height: 44px;
+  height: 40px;
   background-color: #4787df;
   font-family: 'Droid Sans', sans-serif;
   font-size: 18px;
@@ -56,12 +56,20 @@ body {
   text-align: center;
 }
 
+.access-title.splash-text {
+  color: #fff;
+}
+
 .access-subtitle {
   margin-bottom: 45px;
   font-family: 'Droid Sans', sans-serif;
   color: #4787df;
   font-weight: 400;
   text-align: center;
+}
+
+.access-subtitle.splash-text {
+  color: #fff;
 }
 
 .access-error {
@@ -295,9 +303,18 @@ body {
 }
 
 .main-content {
-  overflow: hidden;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: scroll;
   padding-right: 25px;
   padding-left: 25px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
@@ -427,16 +444,22 @@ body {
 
 .concern-list {
   overflow: scroll;
-  max-height: 500px;
+  height: 100%;
 }
 
 .paging-row {
+  overflow: visible;
   padding: 15px 25px;
 }
 
 .right-button {
   margin-left: 24px;
   float: right;
+}
+
+.right-button.paging-button {
+  background-color: #4787df;
+  font-size: 16px;
 }
 
 .access-tab-container {
@@ -472,6 +495,119 @@ body {
   margin-top: 16px;
   padding: 8px 12px;
   color: #61ac2b;
+}
+
+.page-info {
+  float: right;
+}
+
+.paging-button {
+  background-color: #4787df;
+  font-size: 16px;
+}
+
+.detail-header {
+  display: inline-block;
+  min-width: 175px;
+  font-size: 16px;
+}
+
+.detail-item {
+  display: inline-block;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.detail-text {
+  position: static;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.detail-paragraph {
+  margin-top: 10px;
+  font-size: 16px;
+}
+
+.status-dropdown {
+  margin-left: 40px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #4787df;
+  color: #fff;
+  font-size: 16px;
+}
+
+.status-dropdown-list.w--open {
+  margin-bottom: 30px;
+  background-color: #fff;
+  box-shadow: 0 1px 3px 0 #b6b6b6;
+}
+
+.concern-detail-row {
+  margin-bottom: 250px;
+}
+
+.modal-wrapper {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 9999;
+  display: none;
+  height: 100%;
+  padding-top: 90px;
+  background-color: rgba(0, 0, 0, .5);
+  text-align: center;
+}
+
+.email-verification-wrapper {
+  display: block;
+  width: 400px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 15px 25px 25px;
+  background-color: #fff;
+}
+
+.modal-button {
+  display: block;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+.modal-text {
+  padding: 15px;
+}
+
+.modal-spacer {
+  height: 30px;
+}
+
+.splash-wrapper {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 10000000;
+  display: block;
+  background-color: #4787df;
+  color: #fff;
+  text-align: center;
+}
+
+.splash-content {
+  display: block;
+  width: 450px;
+  margin-top: 175px;
+  margin-right: auto;
+  margin-left: auto;
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 19px;
+  font-weight: 400;
+  text-align: center;
 }
 
 @font-face {

@@ -1,14 +1,18 @@
 package com.cs371group2.client;
 
 import com.cs371group2.ValidationResult;
-import com.cs371group2.concern.*;
+import com.cs371group2.concern.Concern;
+import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernData;
+import com.cs371group2.concern.ConcernStatus;
+import com.cs371group2.concern.OwnerTokenListWrapper;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
-
-import java.util.*;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,19 +26,29 @@ public final class ClientApi {
     private static final String CONCERN_RETRACT_NOT_FOUND_ERROR = "Attempted to retract a concern that could not be found.";
     private static final String CONCERN_FETCH_NOT_FOUND_ERROR = "Attempted to fetch a concern that could not be found.";
 
-    @ApiMethod(name = "submitConcern", path = "/concern/submit")
-    public SubmitConcernResponse submitConcern(ConcernData data) throws BadRequestException {
+    @ApiMethod(name = "submitTestConcern", path = "/test/concern/submit")
+    public SubmitConcernResponse submitTestConcern(ConcernData data, @Named("isTest") Boolean isTest) throws BadRequestException {
+
+        if (isTest == null) {
+            isTest = false;
+        }
         ValidationResult result = data.validate();
         if (!result.isValid()) {
             logger.log(Level.WARNING, "Client tried submitting a concern with invalid data.");
             throw new BadRequestException(result.getErrorMessage());
         }
 
-        Concern concern = new Concern(data);
+        Concern concern = new Concern(data, isTest);
         new ConcernDao().save(concern);
 
         logger.log(Level.INFO, "Client successfully submitted concern:\n" + concern.toString());
         return new SubmitConcernResponse(concern);
+    }
+
+
+    @ApiMethod(name = "submitConcern", path = "/concern/submit")
+    public SubmitConcernResponse submitConcern(ConcernData data) throws BadRequestException {
+        return this.submitTestConcern(data, false);
     }
 
     @ApiMethod(name = "fetchConcerns", path = "/concern/fetchConcerns")

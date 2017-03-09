@@ -1,13 +1,9 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
-import com.cs371group2.DatastoreTest;
-import com.cs371group2.facility.Facility;
 import org.junit.Test;
-
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertNull;
 
 /**
  * These tests are created for the Account class to ensure that account data is properly validated when
@@ -18,8 +14,9 @@ import static junit.framework.TestCase.assertNull;
  */
 public class AccountTest extends DatastoreTest {
 
-    //Test ID for
+    //Test ID and email for test cases
     private String testId = "5oz3HPPnZuUzV4hcwXqtgG6tjc03";
+    private String testEmail = "test@email.com";
 
     /**
      * Generates a new account with all instance variables initialized to be valid strings. This is
@@ -28,7 +25,7 @@ public class AccountTest extends DatastoreTest {
      * @return A new account data object with all instance variables initialized.
      */
     public Account generateAccount() {
-        return new Account(testId, AccountPermissions.ADMIN);
+        return new Account(testId, testEmail, AccountPermissions.ADMIN);
     }
 
     /**
@@ -36,8 +33,8 @@ public class AccountTest extends DatastoreTest {
      * @throws AssertionError
      */
     @Test (expected = AssertionError.class)
-    public void NullIdTest() throws Exception{
-        Account account = new Account(null, AccountPermissions.ADMIN);
+    public void nullIdTest() throws Exception{
+        new Account(null, testEmail, AccountPermissions.ADMIN);
     }
 
     /**
@@ -45,34 +42,7 @@ public class AccountTest extends DatastoreTest {
      * @throws AssertionError
      */
     @Test(expected = AssertionError.class)
-    public void NullPermissionTest() throws Exception{
-        Account account = new Account(testId, null);
+    public void nullPermissionTest() throws Exception{
+        new Account(testId, testEmail, null);
     }
-
-    /**
-     * Tests that the facilities list is initially empty
-     * @throws Exception
-     */
-    @Test
-    public void EmptyFacilitiesTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-    }
-
-    /**
-     * Tests the adding and removing of facilities for an account
-     * @throws Exception
-     */
-    @Test
-    public void AddRemoveFacilityTest() throws Exception{
-        Account account = generateAccount();
-        assertNotNull(account.getFacilities());
-        Facility testFac = new Facility("This is a test");
-        account.addFacility(testFac);
-        assert(account.getFacilities().contains(testFac));
-        account.removeFacility(testFac);
-        assert(!account.getFacilities().contains(testFac));
-    }
-
-
 }
