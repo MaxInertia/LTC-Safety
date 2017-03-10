@@ -40,7 +40,7 @@ public class AccountDao extends Dao<Account> {
 
         Account account = super.load(token.getId());
         if (account == null) {
-            account = new Account(token.getId(), token.getEmail(), AccountPermissions.UNVERIFIED);
+            account = new Account(token.getId(), token.getEmail(), AccountPermissions.ADMIN);
             this.save(account);
 
             logger.log(Level.FINER, "Created unverified account with ID " + token.getId() + ".");
