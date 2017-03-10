@@ -61,7 +61,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.refresh = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw  new Error("Attempted to refresh the concerns list with a null access token.");
+        }
 
         $scope.updateConcernList();
     };
@@ -75,9 +77,11 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.nextPage = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to fetch the next page with a null access token.");
+        }
 
-        var nextOffset = +$scope.concernRequest.offset + +$scope.concernRequest.limit;
+        nextOffset = +$scope.concernRequest.offset + +$scope.concernRequest.limit;
         $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit);
     };
 
@@ -91,7 +95,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.previousPage = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to fetch the previous page with a null access token.");
+        }
 
         var nextOffset = $scope.concernRequest.offset - $scope.concernRequest.limit;
         if (nextOffset < 0) {
@@ -109,7 +115,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.concernSelected = function (concern) {
 
-        console.assert(concern != null, "Attempted to select a null concern.");
+        if (concern == null) {
+            throw new Error("Attempted to select a null concern.");
+        }
 
         var identifier = concern.id;
         console.log("Selected " + identifier);
@@ -127,9 +135,15 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.updateConcernList = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
-        console.assert($scope.concernRequest.offset >= 0, "Attempted to fetch a page with a negative start index.");
-        console.assert($scope.concernRequest.limit > 0, "Attempted to fetch an empty page.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to refresh the concerns list with a null access token.");
+        }
+        if ($scope.concernRequest.offset < 0) {
+            throw new Error("Attempted to fetch a page with a negative start index.");
+        }
+        if ($scope.concernRequest.limit <= 0) {
+            throw new Error("Attempted to fetch an empty page.");
+        }
 
         adminApi.requestConcernList($scope.concernRequest).execute(
             function (resp) {
