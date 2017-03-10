@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
+import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.google.api.server.spi.config.*;
@@ -83,6 +84,23 @@ public class AdminApi {
         Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
         logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
         return loadedConcern;
+    }
+
+    /**
+     * Updates the concern status of the concern specified in the request, as long as the user submitting the
+     * request has administrative permissions.
+     *
+     * @param request The updateConcernStatus request containing the concern update, concern type, and firebase token
+     * @return The response containing the updated concern
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern
+     * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws NotFoundException Thrown if the requested concern does not exist.
+     * @precond request != null
+     * @postcond The concern status has been updated
+     */
+    @ApiMethod(name = "updateConcernStatus", path = "admin/updateConcernStatus")
+    public UpdateConcernStatusResponse updateConcernStatus(UpdateConcernStatusRequest request) throws UnauthorizedException, BadRequestException, NotFoundException {
+        return null;
     }
 
     @ApiMethod(name = "requestAccount", path = "admin/requestAccount")
