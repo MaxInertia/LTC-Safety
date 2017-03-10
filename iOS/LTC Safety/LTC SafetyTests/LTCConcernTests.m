@@ -47,6 +47,7 @@
     
     XCTAssertTrue([concern.identifier.stringValue isEqualToString:localConcern.identifier]);
     XCTAssertEqual(concern.data.actionsTaken, localConcern.actionsTaken);
+    XCTAssertEqual(concern.data.descriptionProperty, localConcern.descriptionProperty);
     XCTAssertEqual(concern.data.concernNature, localConcern.concernNature);
     
     XCTAssertEqual(concern.data.reporter.phoneNumber, localConcern.reporter.phoneNumber);

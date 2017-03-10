@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSFetchRequest *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *actionsTaken;
+@property (nullable, nonatomic, copy) NSString *descriptionProperty;
 @property (nullable, nonatomic, copy) NSString *concernNature;
 @property (nullable, nonatomic, copy) NSString *identifier;
 @property (nullable, nonatomic, copy) NSDate *submissionDate;

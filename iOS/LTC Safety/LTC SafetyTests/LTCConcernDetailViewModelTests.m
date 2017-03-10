@@ -25,6 +25,7 @@
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorDescription;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
 
 @end
@@ -52,12 +53,13 @@
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorFacilityName].value, testConcern.location.facilityName);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value, testConcern.location.roomName);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value, testConcern.actionsTaken);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value, testConcern.descriptionProperty);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , testConcern.statuses.firstObject.concernType);
     XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 5);
+    XCTAssertEqual(viewModel.formSections.count, 6);
     
 }
 @end

@@ -15,6 +15,7 @@
 }
 
 @dynamic actionsTaken;
+@dynamic descriptionProperty;
 @dynamic concernNature;
 @dynamic identifier;
 @dynamic submissionDate;

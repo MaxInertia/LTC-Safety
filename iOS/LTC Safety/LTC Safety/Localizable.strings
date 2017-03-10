@@ -18,7 +18,7 @@
 "CONTACT_INFO_TITLE" = "Contact Information";
 "CONCERN_INFO_TITLE" = "Tell us about your concern";
 "ACTIONS_TAKEN_TITLE" = "What actions have been taken?";
-
+"DESCRIPTION_TITLE" = "Concern Description";
 // Submit Concern Prompts
 "REPORTER_NAME_PROMPT" = "First and Last Name";
 "PHONE_NUMBER_PROMPT" = "Phone Number";
@@ -42,6 +42,7 @@
 "DETAIL_FACILITY_TITLE" = "Facility Name";
 "DETAIL_ROOM_TITLE" = "Room";
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
+"DETAIL_DESCRIPTION_TITLE" = "Concern Description";
 
 // Misc
 "OK" = "OK";

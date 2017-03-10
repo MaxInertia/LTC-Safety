@@ -16,6 +16,26 @@
 
 @end
 
+@implementation GTLRClientQuery_FetchConcerns
+
++ (instancetype)queryWithObject:(GTLRClient_OwnerTokenListWrapper *)object {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"concern/fetchConcerns";
+  GTLRClientQuery_FetchConcerns *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.expectedObjectClass = [GTLRClient_ConcernCollection class];
+  query.loggingName = @"client.fetchConcerns";
+  return query;
+}
+
+@end
+
 @implementation GTLRClientQuery_RetractConcern
 
 + (instancetype)queryWithObject:(GTLRClient_OwnerToken *)object {
@@ -23,7 +43,7 @@
     GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
     return nil;
   }
-  NSString *pathURITemplate = @"retract";
+  NSString *pathURITemplate = @"concern/retract";
   GTLRClientQuery_RetractConcern *query =
     [[self alloc] initWithPathURITemplate:pathURITemplate
                                HTTPMethod:@"POST"
@@ -43,7 +63,7 @@
     GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
     return nil;
   }
-  NSString *pathURITemplate = @"submit";
+  NSString *pathURITemplate = @"concern/submit";
   GTLRClientQuery_SubmitConcern *query =
     [[self alloc] initWithPathURITemplate:pathURITemplate
                                HTTPMethod:@"POST"
@@ -51,6 +71,30 @@
   query.bodyObject = object;
   query.expectedObjectClass = [GTLRClient_SubmitConcernResponse class];
   query.loggingName = @"client.submitConcern";
+  return query;
+}
+
+@end
+
+@implementation GTLRClientQuery_SubmitTestConcern
+
+@dynamic isTest;
+
++ (instancetype)queryWithObject:(GTLRClient_ConcernData *)object
+                         isTest:(BOOL)isTest {
+  if (object == nil) {
+    GTLR_DEBUG_ASSERT(object != nil, @"Got a nil object");
+    return nil;
+  }
+  NSString *pathURITemplate = @"test/concern/submit";
+  GTLRClientQuery_SubmitTestConcern *query =
+    [[self alloc] initWithPathURITemplate:pathURITemplate
+                               HTTPMethod:@"POST"
+                       pathParameterNames:nil];
+  query.bodyObject = object;
+  query.isTest = isTest;
+  query.expectedObjectClass = [GTLRClient_SubmitConcernResponse class];
+  query.loggingName = @"client.submitTestConcern";
   return query;
 }
 

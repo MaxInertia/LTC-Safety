@@ -24,6 +24,7 @@
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorDescription;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorSubmitConcern;
 @end
 
@@ -44,7 +45,7 @@
     
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.context);
-    XCTAssertEqual(viewModel.formSections.count, 4);
+    XCTAssertEqual(viewModel.formSections.count, 5);
     
     for (NSString *tag in viewModel.testHook_descriptors) {
         XCTAssertNotNil([viewModel formRowWithTag:tag]);
@@ -111,6 +112,7 @@
     NSString *facilityNameValue = [NSUUID UUID].UUIDString;
     NSString *roomNumberValue = [NSUUID UUID].UUIDString;
     NSString *actionsTakenValue = [NSUUID UUID].UUIDString;
+    NSString *descriptionValue = [NSUUID UUID].UUIDString;
 
     // Populate the row values with random strings as if they were input from the user
     [viewModel formRowWithTag:viewModel.testHook_descriptorReporterName].value = reporterNameValue;
@@ -120,6 +122,7 @@
     [viewModel formRowWithTag:viewModel.testHook_descriptorFacilityName].value = facilityNameValue;
     [viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value = roomNumberValue;
     [viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value = actionsTakenValue;
+    [viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value = descriptionValue;
     
     [viewModel submitConcernData:^(LTCConcern *concern, NSError *error){
         
@@ -130,6 +133,7 @@
         XCTAssertEqual(facilityNameValue, concern.location.facilityName);
         XCTAssertEqual(roomNumberValue, concern.location.roomName);
         XCTAssertEqual(actionsTakenValue, concern.actionsTaken);
+        XCTAssertEqual(descriptionValue, concern.descriptionProperty);
         
         XCTAssertTrue([concern.identifier isEqualToString:identifierValue.stringValue]);
         XCTAssertEqual(concern.ownerToken, tokenValue);

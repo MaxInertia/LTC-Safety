@@ -66,6 +66,8 @@
         self.submissionDate = concernData.submissionDate.date;
         self.actionsTaken = concernData.data.actionsTaken;
         self.concernNature = concernData.data.concernNature;
+        NSLog(@"\n\n\n\n\n%@", concernData.data.descriptionProperty);
+        self.descriptionProperty = concernData.data.descriptionProperty;
         
         self.reporter = [LTCReporter reporterWithData:concernData.data.reporter inManagedObjectContext:context];
         self.location = [LTCLocation locationWithData:concernData.data.location inManagedObjectContext:context];

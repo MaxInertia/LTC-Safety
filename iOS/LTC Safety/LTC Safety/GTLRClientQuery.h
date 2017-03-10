@@ -18,6 +18,7 @@
 
 @class GTLRClient_ConcernData;
 @class GTLRClient_OwnerToken;
+@class GTLRClient_OwnerTokenListWrapper;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -28,6 +29,30 @@ NS_ASSUME_NONNULL_BEGIN
 
 /** Selector specifying which fields to include in a partial response. */
 @property(nonatomic, copy, nullable) NSString *fields;
+
+@end
+
+/**
+ *  GTLRClientQuery_FetchConcerns
+ *
+ *  Method: client.fetchConcerns
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeClientUserinfoEmail
+ */
+@interface GTLRClientQuery_FetchConcerns : GTLRClientQuery
+// Previous library name was
+//   +[GTLQueryClient queryForFetchConcernsWithObject:]
+
+/**
+ *  Fetches a @c GTLRClient_ConcernCollection.
+ *
+ *  @param object The @c GTLRClient_OwnerTokenListWrapper to include in the
+ *    query.
+ *
+ *  @returns GTLRClientQuery_FetchConcerns
+ */
++ (instancetype)queryWithObject:(GTLRClient_OwnerTokenListWrapper *)object;
 
 @end
 
@@ -74,6 +99,33 @@ NS_ASSUME_NONNULL_BEGIN
  *  @returns GTLRClientQuery_SubmitConcern
  */
 + (instancetype)queryWithObject:(GTLRClient_ConcernData *)object;
+
+@end
+
+/**
+ *  GTLRClientQuery_SubmitTestConcern
+ *
+ *  Method: client.submitTestConcern
+ *
+ *  Authorization scope(s):
+ *    @c kGTLRAuthScopeClientUserinfoEmail
+ */
+@interface GTLRClientQuery_SubmitTestConcern : GTLRClientQuery
+// Previous library name was
+//   +[GTLQueryClient queryForSubmitTestConcernWithObject:isTest:]
+
+@property(nonatomic, assign) BOOL isTest;
+
+/**
+ *  Fetches a @c GTLRClient_SubmitConcernResponse.
+ *
+ *  @param object The @c GTLRClient_ConcernData to include in the query.
+ *  @param isTest BOOL
+ *
+ *  @returns GTLRClientQuery_SubmitTestConcern
+ */
++ (instancetype)queryWithObject:(GTLRClient_ConcernData *)object
+                         isTest:(BOOL)isTest;
 
 @end
 

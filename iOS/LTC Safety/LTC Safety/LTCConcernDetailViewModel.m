@@ -23,6 +23,7 @@ NSString *const LTCDetailConcernNatureTitle             = @"DETAIL_CONCERN_NATUR
 NSString *const LTCDetailFacilityTitle                  = @"DETAIL_FACILITY_TITLE";         //Facility Name
 NSString *const LTCDetailRoomTitle                      = @"DETAIL_ROOM_TITLE";             //Room
 NSString *const LTCDetailActionsTakenTitle              = @"DETAIL_ACTIONS_TAKEN_TITLE";    //Actions Taken
+NSString *const LTCDetailDescriptionTitle               = @"DETAIL_DESCRIPTION_TITLE";      //Concern Description
 
 // The row desriptors for unique identification
 NSString *const LTCDetailDescriptorRetractConcern       = @"RETRACT_CONCERN";
@@ -33,6 +34,7 @@ NSString *const LTCDetailDescriptorConcernNature        = @"CONCERN_NATURE";
 NSString *const LTCDetailDescriptorFacilityName         = @"FACILITY_NAME";
 NSString *const LTCDetailDescriptorRoomNumber           = @"ROOM_NUMBER";
 NSString *const LTCDetailDescriptorActionsTaken         = @"ACTIONS_TAKEN";
+NSString *const LTCDetailDescriptorDescription          = @"DESCRIPTION";
 NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 
 @interface LTCConcernDetailViewModel ()
@@ -45,6 +47,7 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorDescription;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
 @end
 
@@ -56,6 +59,7 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 @dynamic testHook_descriptorFacilityName;
 @dynamic testHook_descriptorRoomNumber;
 @dynamic testHook_descriptorActionsTaken;
+@dynamic testHook_descriptorDescription;
 @dynamic testHook_descriptorConcernStatus;
 
 #pragma mark - Test Hooks
@@ -143,6 +147,18 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
 - (NSString *)testHook_descriptorActionsTaken {
     return LTCDetailDescriptorActionsTaken;
 }
+
+/**
+ A test took for getting the actions taken descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorDescription {
+    return LTCDetailDescriptorDescription;
+}
 /**
  A test took for getting the actions taken descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
  @code
@@ -175,6 +191,9 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         if(concern.actionsTaken != nil){
             [self addFormSection:[self createActionsTakenSection:concern]];
         }
+        // Sets up the concern description section
+        [self addFormSection:[self createDescriptionSection:concern]];
+        
         
         // Sets up the concern status log
         [self addFormSection:[self createStatusLogSection:concern]];
@@ -266,6 +285,24 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
                                                 rowType:XLFormRowDescriptorTypeTextView];
     row.disabled = @YES;
     row.value = concern.actionsTaken;
+    
+    [section addFormRow:row];
+    
+    return section;
+}
+
+- (XLFormSectionDescriptor *)createDescriptionSection:(LTCConcern *)concern{
+    
+    XLFormSectionDescriptor *section;
+    section = [XLFormSectionDescriptor formSection];
+    XLFormRowDescriptor *row;
+    
+    section.title = NSLocalizedString(LTCDetailDescriptionTitle, nil);
+    
+    row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorDescription
+                                                rowType:XLFormRowDescriptorTypeTextView];
+    row.disabled = @YES;
+    row.value = concern.descriptionProperty;
     
     [section addFormRow:row];
     
