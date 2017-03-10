@@ -12,7 +12,7 @@ import com.cs371group2.concern.ConcernStatus;
  *
  * Created on 2017-02-13.
  */
-final class UpdateConcernStatusResponse {
+public final class UpdateConcernStatusResponse {
 
     /**
      * The unique identifier for the concern who's status was updated.
