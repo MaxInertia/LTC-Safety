@@ -5,6 +5,7 @@ import com.cs371group2.account.Account;
 import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernStatus;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -53,7 +54,15 @@ public class AdminApi {
         List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
 
         logger.log(Level.INFO, "Concern list request was successful.");
-        return new ConcernListRequestResponse(list);
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(list.size() != 0){
+            startIndex = request.getOffset() + 1;
+            endIndex = request.getOffset() + list.size();
+        }
+
+        return new ConcernListRequestResponse(list, startIndex, endIndex, dao.count());
     }
 
     /**
@@ -113,13 +122,13 @@ public class AdminApi {
         logger.log(Level.INFO,account + " is updating the status type of concern " + request);
 
         Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
-        loadedConcern.getStatuses().add(request.getConcernStatus());
-
+        ConcernStatus status = new ConcernStatus(request.getConcernStatus());
+        loadedConcern.getStatuses().add(status);
         new ConcernDao().save(loadedConcern);
 
         logger.log(Level.INFO, "Concern " + loadedConcern + " had its status successfully updated!");
 
-        return new UpdateConcernStatusResponse(loadedConcern.getId(), request.getConcernStatus());
+        return new UpdateConcernStatusResponse(loadedConcern.getId(), status);
     }
 
     @ApiMethod(name = "requestAccount", path = "admin/requestAccount")

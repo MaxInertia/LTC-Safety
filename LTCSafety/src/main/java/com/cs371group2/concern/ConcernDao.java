@@ -129,4 +129,15 @@ public class ConcernDao extends Dao<Concern> {
             throw new UnauthorizedException("The account " + account.getId() + "does not have permission to access concern with ID: " + concernId);
         }
     }
+
+    /**
+     * Returns the number of concerns in the database (excluding test accounts)
+     *
+     * @return The number of concern entities in the database.
+     */
+    public int count(){
+        return ObjectifyService.ofy().load().type(Concern.class)
+                .filter("isTest = ", false)
+                .count();
+    }
 }

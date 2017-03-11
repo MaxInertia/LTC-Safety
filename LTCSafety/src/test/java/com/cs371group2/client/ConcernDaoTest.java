@@ -153,4 +153,27 @@ public class ConcernDaoTest extends DatastoreTest {
         assertNotNull(concerns);
         assertTrue(concerns.size() > 0);
     }
+
+    /**
+     * This test ensures that the count method works properly
+     */
+    @Test
+    public void CountTest(){
+
+        ConcernDao dao = new ConcernDao();
+        ConcernTest concernTest = new ConcernTest();
+        ConcernData concernData = concernTest.generateConcernData().build();
+
+        Concern concern = new Concern(concernData);
+        dao.save(concern);
+
+        assert(dao.count() == 1);
+
+        concernData = concernTest.generateConcernData().build();
+
+        concern = new Concern(concernData);
+        dao.save(concern);
+
+        assert(dao.count() == 2);
+    }
 }

@@ -21,7 +21,7 @@ import java.util.List;
 public class UpdateConcernStatusRequest extends AdminRequest implements Validatable{
 
     /** The ConcernStatus to be applied to concern associated with the given ID. */
-    private ConcernStatus concernStatus;
+    private ConcernStatusType concernStatus;
 
     /** The id of the concern to update the status of */
     private long concernId;
@@ -40,7 +40,7 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
      * @precond statusType != null
      */
     public UpdateConcernStatusRequest(ConcernStatusType statusType, long id, String userToken){
-        concernStatus = new ConcernStatus(statusType);
+        concernStatus = statusType;
         concernId = id;
         accessToken = userToken;
     }
@@ -63,7 +63,7 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
         return new ValidationResult();
     }
 
-    public ConcernStatus getConcernStatus() {
+    public ConcernStatusType getConcernStatus() {
         return concernStatus;
     }
 
@@ -96,7 +96,7 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
         }
 
         public void setMutableConcernType(ConcernStatusType statusType) {
-            immutable.concernStatus = new ConcernStatus(statusType);
+            immutable.concernStatus = statusType;
         }
 
         public void setMutableConcernId(long mutableId) { immutable.concernId = mutableId; }

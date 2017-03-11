@@ -14,44 +14,42 @@ import java.util.List;
  */
 public class ConcernListRequestResponse {
 
-    /** The first concern in the list */
-    private Concern firstConcern;
+    /** The index of the first concern in the list */
+    private int firstIndex;
 
-    /** The last concern in the list */
-    private Concern lastConcern;
+    /** The index of the last concern in the list */
+    private int lastIndex;
+
+    /** The total number of concern in the datastore */
+    private int totalConcerns;
 
     /** The list of requested concerns*/
     private List<Concern> concernList;
-
-    /** The number of concerns in the concern list*/
-    private int concernCount;
 
     /**
      * Creates a new ConcernListRequestResponse based on the given list of concerns.
      * @param list The list of concerns to be represented in the response.
      * @precond list != null
      */
-    public ConcernListRequestResponse(List<Concern> list){
+    public ConcernListRequestResponse(List<Concern> list, int startIndex, int endIndex, int totalSize){
         assert(list != null);
+
         concernList = list;
-        concernCount = list.size();
-
-        if(0 < concernCount){
-            firstConcern = list.get(0);
-            lastConcern = list.get(concernCount - 1);
-        }
+        firstIndex = startIndex;
+        lastIndex = endIndex;
+        totalConcerns = totalSize;
     }
 
-    public Concern getFirstConcern() {
-        return firstConcern;
+    public int getFirstIndex() {
+        return firstIndex;
     }
 
-    public Concern getLastConcern() {
-        return lastConcern;
+    public int getLastIndex() {
+        return lastIndex;
     }
 
-    public int getConcernCount() {
-        return concernCount;
+    public int getTotalConcerns() {
+        return totalConcerns;
     }
 
     public List<Concern> getConcernList(){

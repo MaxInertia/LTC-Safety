@@ -38,9 +38,10 @@ public class AdminApiTest extends DatastoreTest {
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
-        assert(concerns.getConcernCount() == 0);
-        assertNull(concerns.getFirstConcern());
-        assertNull(concerns.getLastConcern());
+        assert(concerns.getConcernList().size() == 0);
+        assert(concerns.getFirstIndex() == 0);
+        assert(concerns.getLastIndex() == 0);
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /*** Tests that loading a single concern from the database in a list is functioning properly */
@@ -62,9 +63,12 @@ public class AdminApiTest extends DatastoreTest {
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.getConcernCount() == 1);
-        assert(concerns.getFirstConcern() == firstConcern);
-        assert(concerns.getLastConcern() == firstConcern);
+        assert(concerns.getConcernList().size() == 1);
+        assert(concerns.getFirstIndex() == 1);
+        assert(concerns.getLastIndex() == 1);
+
+        //Test accounts are not included in total concern count
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -84,7 +88,6 @@ public class AdminApiTest extends DatastoreTest {
         Concern lastConcern = new Concern(concernData, true);
         dao.save(lastConcern);
 
-
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
@@ -92,11 +95,12 @@ public class AdminApiTest extends DatastoreTest {
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.getConcernCount() == 2);
+        assert(concerns.getConcernList().size() == 2);
+        assert(concerns.getFirstIndex() == 1);
+        assert(concerns.getLastIndex() == 2);
 
-        //Since these are loaded by date, the ordering will be backwards in relation to this test
-        assert(concerns.getFirstConcern() == lastConcern);
-        assert(concerns.getLastConcern() == firstConcern);
+        //Test accounts are not included in total concern count
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /**
@@ -126,7 +130,7 @@ public class AdminApiTest extends DatastoreTest {
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.getConcernCount() == 3);
+        assert(concerns.getConcernList().size() == 3);
     }
 
     /*** Tests that loading multiple concerns from the database with a limit reached is functioning properly */
@@ -152,7 +156,7 @@ public class AdminApiTest extends DatastoreTest {
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.getConcernCount() == 3);
+        assert(concerns.getConcernList().size() == 3);
     }
 
     /**
@@ -200,7 +204,7 @@ public class AdminApiTest extends DatastoreTest {
      */
 
     /** Tries to update a concern status with a null type */
-    @Test (expected = AssertionError.class)
+    @Test (expected = BadRequestException.class)
     public void updateConcernStatusNullTypeTest() throws UnauthorizedException, BadRequestException, NotFoundException {
         AdminApi api = new AdminApi();
 
