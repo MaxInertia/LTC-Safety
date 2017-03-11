@@ -36,7 +36,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
         assert(concerns.getConcernCount() == 0);
@@ -59,7 +58,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
@@ -90,7 +88,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
@@ -125,7 +122,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
@@ -152,7 +148,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
         ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
@@ -178,7 +173,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
         Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
     }
 
