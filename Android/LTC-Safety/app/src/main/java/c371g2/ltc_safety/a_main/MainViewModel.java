@@ -1,12 +1,17 @@
 package c371g2.ltc_safety.a_main;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.appspot.ltc_safety.client.Client;
+import com.appspot.ltc_safety.client.model.Concern;
 import com.appspot.ltc_safety.client.model.ConcernCollection;
+import com.appspot.ltc_safety.client.model.ConcernStatus;
 import com.appspot.ltc_safety.client.model.OwnerToken;
+import com.appspot.ltc_safety.client.model.OwnerTokenListWrapper;
+import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +21,7 @@ import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
 import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.local.ConcernWrapper;
+import c371g2.ltc_safety.local.StatusWrapper;
 
 /**
  * This class acts as an interface between the app view in the main activity and the model. It
@@ -40,6 +46,15 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      */
     private static ArrayList<ConcernWrapper> concernList;
 
+    /**
+     * Constructor for ViewModelObserver
+     */
+    MainViewModel(){}
+
+    /**
+     * Constructor for MainActivity
+     * @param activity The main activity
+     */
     MainViewModel(@NonNull AbstractNetworkActivity activity) {
         this.activity = activity;
         observerInstance = this;
@@ -82,7 +97,8 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      *                normal use, but may be others for tests.
      */
     void updateConcerns(@NonNull Context context) {
-        // TODO: Initialize instance of ConcernUpdater, execute task
+            ConcernUpdater networkTask = new ConcernUpdater();
+            networkTask.execute();
     }
 
     @Override
@@ -119,7 +135,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      * @Invariants none
      * @HistoryProperties none
      */
-    private class ConcernUpdater extends AsyncTask<Void,Void,ReturnCode> {
+    class ConcernUpdater extends AsyncTask<Void,Void,ReturnCode> {
         /**
          * Stores the backends response to the fetchConcerns request.
          */
@@ -127,24 +143,35 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
 
         @Override
         protected ReturnCode doInBackground(Void... params) {
-            // TODO: Prepare fetch concerns request
-            ArrayList<OwnerToken> tokens = getStoredOwnerTokens();
+            Client.Builder builder = new Client.Builder(
+                    AndroidHttp.newCompatibleTransport(),
+                    new AndroidJsonFactory(),
+                    null
+            );
+            Client client = builder.build();
 
-            //try {
-                // TODO: Add fetch-API call here
-                //return ReturnCode.SUCCESS;
-            //} catch(IOException ioException) {
-                // TODO: Display error message
-                //return ReturnCode.IOEXCEPTION_THROWN_BY_API;
-            //}
-            return null;
+            OwnerTokenListWrapper listWrapper = new OwnerTokenListWrapper();
+            listWrapper.setTokens(getStoredOwnerTokens());
+            ReturnCode rCode = null;
+
+            try {
+                concernCollection = client.fetchConcerns(listWrapper).execute();
+                rCode = ReturnCode.SUCCESS;
+            } catch(IOException ioException) {
+                concernCollection = null;
+                rCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
+            }
+
+            return rCode;
         }
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
             if(ReturnCode.SUCCESS.equals(returnCode)) {
                 returnCode = addNewConcernStatuses(concernCollection);
+                assert(concernCollection != null);
             } else {
+                System.out.println("returnCode not Success");
                 //TODO: Display error message
             }
             submissionReturnCode = returnCode;
@@ -156,7 +183,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
          * Retrieve the OwnerToken from each Concern in concernList.
          * @return List of OwnerTokens from each concern stored on the Device.
          */
-        private @NonNull ArrayList<OwnerToken> getStoredOwnerTokens() {
+        public @NonNull ArrayList<OwnerToken> getStoredOwnerTokens() {
             ArrayList<OwnerToken> tokens = new ArrayList<>();
             for(ConcernWrapper concern: concernList) {
                 tokens.add(concern.getOwnerToken());
@@ -171,10 +198,33 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
          * version of the concern in device memory.
          */
         private ReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
-            // TODO: Convert new ConcernStatus' into StatusWrapper instances
-            // TODO: Add those wrappers to the end of the status list of the proper Concern
-            // TODO: Overwrite previous version of concern in Device memory
-            return null;
+            if(concernCollection==null || concernCollection.getItems()==null) {
+                return ReturnCode.NULL_POINTER;
+                // TODO: Display error message
+            }
+            int index = 0;
+            for(Concern backendConcern: concernCollection.getItems()) {
+                int newStatusCount = backendConcern.getStatuses().size() - concernList.get(index).getStatuses().size();
+                assert(newStatusCount>=0);
+
+                if(newStatusCount > 0) {
+                    ArrayList<ConcernStatus> backendConcernStatusList = (ArrayList<ConcernStatus>) backendConcern.getStatuses();
+                    ArrayList<StatusWrapper> localConcernStatusList = (ArrayList<StatusWrapper>) concernList.get(index).getStatuses();
+
+                    while( backendConcern.getStatuses().size() != concernList.get(index).getStatuses().size()) {
+                        StatusWrapper newStatus = new StatusWrapper(
+                                backendConcernStatusList.get(localConcernStatusList.size()).getType(),
+                                backendConcernStatusList.get(localConcernStatusList.size()).getCreationDate().getValue()
+                        );
+                        localConcernStatusList.add(newStatus);
+                    }
+
+                    DeviceStorage.saveConcern(activity.getBaseContext(), concernList.get(index));
+                }
+
+                index++;
+            }
+            return ReturnCode.SUCCESS;
         }
 
     }

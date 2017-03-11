@@ -1,29 +1,26 @@
 package c371g2.ltc_safety.a_main;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.appspot.ltc_safety.client.model.Concern;
-import com.appspot.ltc_safety.client.model.ConcernData;
-import com.appspot.ltc_safety.client.model.ConcernStatus;
-import com.appspot.ltc_safety.client.model.Location;
 import com.appspot.ltc_safety.client.model.OwnerToken;
-import com.appspot.ltc_safety.client.model.Reporter;
-import com.google.api.client.util.DateTime;
 
 import org.junit.Before;
 import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.ReturnCode;
+import c371g2.ltc_safety.a_new.NewConcernActivity;
 import c371g2.ltc_safety.a_new.NewConcernViewModel_TestHook;
-import c371g2.ltc_safety.local.ConcernWrapper;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
@@ -35,119 +32,81 @@ import static junit.framework.Assert.fail;
 public class MainViewModelTests {
 
     @ClassRule
-    public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class);
+    public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class, true, false);
+
+    @Rule
+    public ActivityTestRule<NewConcernActivity> newConcernRule = new ActivityTestRule<>(NewConcernActivity.class);
 
     @Before
     public void setup() {
-        mActivity.launchActivity(new Intent());
-    }
-
-    @Test
-    public void test_writeAndReadDeviceData() {
-        String reporterName = "Reporter";
-        String phoneNumber = "Phone";
-        String emailAddress = "Email";
-        String facilityName = "Facility";
-        String roomName = "B102";
-        String concernType = "Type";
-        String actionsTaken = "Actions";
-
-        // The following values do not need to be valid. The data that is used to create concerns
-        // in the NewConcernViewModel is
-        ConcernWrapper concern = generateConcernForTest(
-                reporterName,
-                phoneNumber,
-                emailAddress,
-                facilityName,
-                roomName,
-                concernType,
-                actionsTaken
-        );
-
-        Activity activity = mActivity.getActivity();
-        DeviceStorage.saveConcern(activity.getBaseContext(), concern);
-
-        // If the list is null or has no elements, save failed.
-        ArrayList<ConcernWrapper> concerns = DeviceStorage.loadConcerns(activity.getBaseContext());
-        if(concerns==null || concerns.size()==0){
-            fail();
-        }
-
-        // If the list does not contain the concern we attempted to save then the save failed.
-        for(ConcernWrapper c: concerns) {
-            if(reporterName.equals(c.getReporterName()) &&
-                    phoneNumber.equals(c.getReporterPhone()) &&
-                    emailAddress.equals(c.getReporterEmail()) &&
-                    facilityName.equals(c.getFacilityName()) &&
-                    roomName.equals(c.getRoomName()) &&
-                    concernType.equals(c.getConcernType()) &&
-                    actionsTaken.equals(c.getActionsTaken())) {
-                return;
-            }
-        }
-        fail();
-    }
-
-    public static ConcernWrapper generateConcernForTest(String reporterName, String phoneNumber, String emailAddress,
-                                                        String facilityName, String roomName, String concernType,
-                                                        String actionsTaken) {
-        ConcernData concernData = new ConcernData();
-        concernData.setConcernNature(concernType);
-        concernData.setActionsTaken(actionsTaken);
-
-        Location facility = new Location();
-        facility.setFacilityName(facilityName);
-        facility.setRoomName(roomName);
-        concernData.setLocation(facility);
-
-        Reporter reporter = new Reporter();
-        reporter.setName(reporterName);
-        reporter.setPhoneNumber(phoneNumber);
-        reporter.setEmail(emailAddress);
-        concernData.setReporter(reporter);
-
-        ArrayList<ConcernStatus> statuses = new ArrayList<>();
-        ConcernStatus status = new ConcernStatus();
-        status.setType("PENDING");
-        status.setCreationDate(new DateTime(1));
-        statuses.add(status);
-
-        Concern clientConcern = new Concern();
-        clientConcern.setData(concernData);
-        clientConcern.setSubmissionDate(new DateTime(1));
-        clientConcern.setStatuses(statuses);
-
-        return new ConcernWrapper(clientConcern,new OwnerToken());
+        // This confirms that the only Concerns on the device for a given test in this class are the
+        // concerns added in that test.
+        MainViewModel_TestHook.instance.clearConcernList();
+        SharedPreferences memory = newConcernRule.getActivity().getSharedPreferences(DeviceStorage.CONCERN_SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor memoryEditor = memory.edit();
+        memoryEditor.clear().commit();
     }
 
     @Test
     public void test_updateConcerns_withNoStoredConcerns() throws InterruptedException {
-        mActivity.launchActivity(new Intent());
+        Intent i = new Intent();
+        i.putExtra("testing",true);
+        mActivity.launchActivity(i);
         MainActivity activity = mActivity.getActivity();
         activity.viewModel.updateConcerns(activity.getBaseContext());
 
         activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue(activity.viewModel.submissionReturnCode.equals(ReturnCode.IOEXCEPTION_THROWN_BY_API));
+        assertTrue("ReturnCode was not NULL_POINTER, it was "+activity.viewModel.submissionReturnCode, ReturnCode.NULL_POINTER.equals(activity.viewModel.submissionReturnCode));
         activity.finish();
     }
 
     @Test
-    public void test_updateConcerns_withStoredConcerns() throws InterruptedException {
-        MainActivity activity = mActivity.getActivity();
-        NewConcernViewModel_TestHook.instance.submitConcern(
-                activity,
+    public void test_updateConcerns_withSubmittedConcerns() throws InterruptedException {
+        newConcernRule.launchActivity(new Intent());
+        NewConcernActivity nca = newConcernRule.getActivity();
+        boolean submitSuccessful = NewConcernViewModel_TestHook.instance.submitConcern(
+                nca,
                 "Near Miss",
                 "None.",
-                "",
+                "UofS",
                 "B101",
                 "Drake Benet",
                 "Test@valid.ca",
                 "1231231234"
         );
-        activity.viewModel.updateConcerns(activity.getBaseContext());
+        assertTrue("The submission via the NewConcernViewModel_TestHook failed! Unable to test updateSubmittedConcern()",submitSuccessful);
+        nca.finish();
 
+        Intent i = new Intent();
+        i.putExtra("testing",true);
+        mActivity.launchActivity(i);
+        MainActivity activity = mActivity.getActivity();
+        activity.viewModel.updateConcerns(activity.getBaseContext());
         activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue(activity.viewModel.submissionReturnCode.equals(ReturnCode.SUCCESS));
+        assertTrue("The return code for the retraction was null", activity.viewModel.submissionReturnCode!=null);
+        assertTrue("The return code for the retraction was not SUCCESS, it was "+activity.viewModel.submissionReturnCode,activity.viewModel.submissionReturnCode.equals(ReturnCode.SUCCESS));
         activity.finish();
+    }
+
+    @Test
+    public void test_ConcernUpdaterClass() {
+        Intent i = new Intent();
+        i.putExtra("testing",true);
+        mActivity.launchActivity(i);
+        MainActivity activity = mActivity.getActivity();
+
+        MainViewModel.ConcernUpdater updater = activity.viewModel.new ConcernUpdater();
+        ArrayList<OwnerToken> tokens = updater.getStoredOwnerTokens();
+
+        System.out.println("ZZZZ:" + tokens.size());
+        for(OwnerToken t: tokens) {
+            try {
+                System.out.println("ZZZZ:"+t.toPrettyString());
+            } catch(IOException ioException) {
+                ioException.printStackTrace();
+                activity.finish();
+                fail();
+            }
+        }
     }
 }

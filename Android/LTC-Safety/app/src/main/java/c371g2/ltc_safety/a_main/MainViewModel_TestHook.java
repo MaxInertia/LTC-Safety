@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_main;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**

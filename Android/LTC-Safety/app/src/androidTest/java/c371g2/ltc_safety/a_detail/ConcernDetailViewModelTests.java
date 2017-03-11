@@ -1,9 +1,11 @@
 package c371g2.ltc_safety.a_detail;
 
 import android.content.Intent;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.ReturnCode;
-import c371g2.ltc_safety.a_main.MainViewModelTests;
+import c371g2.ltc_safety.a_main.DeviceStorageTests;
 import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
 import c371g2.ltc_safety.a_new.NewConcernViewModel_TestHook;
@@ -33,11 +35,16 @@ public class ConcernDetailViewModelTests {
     private ConcernDetailActivity activity;
     private ConcernDetailViewModel concernDetailViewModel;
 
+    @After
+    public void cleanUp() {
+        MainViewModel_TestHook.instance.clearConcernList();
+    }
+
     @Test
     public void test_retractUnsubmittedConcern() throws InterruptedException {
         MainViewModel_TestHook.instance.clearConcernList();
         MainViewModel_TestHook.instance.addConcern(
-                MainViewModelTests.generateConcernForTest(
+                DeviceStorageTests.generateConcernForTest(
                         "Jeff",
                         "3213884",
                         "PixieGod@email.com",

@@ -19,7 +19,7 @@ public class DeviceStorage {
     /**
      * The key used to access the list of concerns in device memory.
      */
-    private static final String CONCERN_SHARED_PREF_KEY = "concerns";
+    static final String CONCERN_SHARED_PREF_KEY = "concerns";
 
     /**
      * Loads all concerns stored in the device memory, returns them in an ArrayList.

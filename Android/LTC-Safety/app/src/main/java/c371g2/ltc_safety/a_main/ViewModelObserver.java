@@ -16,7 +16,8 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * @HistoryProperties none.
  */
 public interface ViewModelObserver {
-    ViewModelObserver instance = MainViewModel.observerInstance;
+    ViewModelObserver instance = new MainViewModel();
+    //ViewModelObserver instance = MainViewModel.observerInstance;
 
     /**
      * Only by NewConcernViewModel to inform MainViewModel that a new concern has been submitted.

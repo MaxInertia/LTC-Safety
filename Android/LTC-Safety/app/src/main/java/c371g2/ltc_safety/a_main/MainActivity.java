@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
@@ -43,7 +44,10 @@ public class MainActivity extends AbstractNetworkActivity {
         setNewConcernButtonListener(newConcernButton);
         assert(newConcernButton.hasOnClickListeners());
 
-        viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
+        //if(savedInstanceState==null || !savedInstanceState.getBoolean("testing",false)) {
+            //viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
+        //}
+        Toast.makeText(getBaseContext(),"onCreate was called!",Toast.LENGTH_LONG).show();
     }
 
     /**

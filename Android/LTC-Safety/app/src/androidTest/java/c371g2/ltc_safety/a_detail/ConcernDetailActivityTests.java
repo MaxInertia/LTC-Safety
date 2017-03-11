@@ -1,6 +1,5 @@
 package c371g2.ltc_safety.a_detail;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -15,8 +14,9 @@ import org.junit.runner.RunWith;
 
 import java.util.List;
 
+import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.a_main.MainViewModelTests;
+import c371g2.ltc_safety.a_main.DeviceStorageTests;
 import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
@@ -35,11 +35,11 @@ public class ConcernDetailActivityTests {
     public ActivityTestRule<ConcernDetailActivity> mActivity = new ActivityTestRule<>(ConcernDetailActivity.class,true,false);
 
     private ConcernWrapper concern;
-    private Activity concernDetailActivity;
+    private AbstractNetworkActivity concernDetailActivity;
 
     @Before
     public void setup() {
-         concern = MainViewModelTests.generateConcernForTest(
+         concern = DeviceStorageTests.generateConcernForTest(
                 "Jeff",
                 "3213884",
                 "PixieGod@email.com",
@@ -51,6 +51,7 @@ public class ConcernDetailActivityTests {
 
         MainViewModel_TestHook.instance.clearConcernList();
         MainViewModel_TestHook.instance.addConcern(concern);
+
 
         Intent i = new Intent();
         i.putExtra("concern-index",0);
