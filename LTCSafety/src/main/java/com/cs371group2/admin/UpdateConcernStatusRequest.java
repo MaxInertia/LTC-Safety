@@ -34,11 +34,13 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
      * @param id The unique id of the concern to be updated
      * @precond statusType != null
      */
-    public UpdateConcernStatusRequest(ConcernStatusType statusType, long id){
+    public UpdateConcernStatusRequest(ConcernStatusType statusType, long id, String userToken){
         assert(statusType != null);
+        assert(userToken != null);
 
         concernStatus = new ConcernStatus(statusType);
         concernId = id;
+        accessToken = userToken;
     }
 
     /**
@@ -71,8 +73,8 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
          * @param statusType The type of concern status to apply to the concern.
          * @param id The unique id of the concern to be updated.
          */
-        public TestHook_MutableUpdateConcernStatusRequest(ConcernStatusType statusType, long id) {
-            immutable = new UpdateConcernStatusRequest(statusType, id);
+        public TestHook_MutableUpdateConcernStatusRequest(ConcernStatusType statusType, long id, String token) {
+            immutable = new UpdateConcernStatusRequest(statusType, id, token);
         }
 
         public UpdateConcernStatusRequest build(){

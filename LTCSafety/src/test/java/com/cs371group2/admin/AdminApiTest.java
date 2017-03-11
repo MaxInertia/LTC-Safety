@@ -5,10 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
 import com.cs371group2.account.AccountPermissions;
-import com.cs371group2.concern.Concern;
-import com.cs371group2.concern.ConcernDao;
-import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernTest;
+import com.cs371group2.client.UpdateConcernStatusResponse;
+import com.cs371group2.concern.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
@@ -190,5 +188,82 @@ public class AdminApiTest extends DatastoreTest {
         Concern concern = new AdminApi().requestConcern(request);
 
         assertNotNull(concern);
+    }
+
+    /**
+     * updateConcernStatus Tests
+     */
+
+    /** Tries to update a concern status with a null type */
+    @Test (expected = BadRequestException.class)
+    public void updateConcernStatusNullTypeTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest
+                        (null,toModify.getId(), account.build()));
+    }
+
+    /** Tries to update a concern status with a null user token */
+    @Test (expected = BadRequestException.class)
+    public void updateConcernStatusNullTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN,toModify.getId(), null));
+    }
+
+    /** Tries to update a concern status without proper access levels*/
+    @Test (expected = UnauthorizedException.class)
+    public void updateConcernStatusUnauthTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.DENIED, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN,toModify.getId(), account.build()).build());
+    }
+
+    /** Tries to update the concern status of a non-existent concern*/
+    @Test (expected = NotFoundException.class)
+    public void updateConcernStatusNotFoundTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN, 123 , account.build()).build());
+    }
+
+    /** Tries to update a concern status validly */
+    @Test
+    public void updateConcernStatusTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN,toModify.getId(), account.build()).build());
+
+        assertNotNull(response);
+        assert(response.getStatus().getType() == ConcernStatusType.SEEN);
     }
 }
