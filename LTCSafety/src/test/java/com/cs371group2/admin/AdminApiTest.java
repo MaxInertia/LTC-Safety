@@ -1,6 +1,7 @@
 package com.cs371group2.admin;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
@@ -25,7 +26,7 @@ public class AdminApiTest extends DatastoreTest {
     @Test (expected = UnauthorizedException.class)
     public void getConcernListUnauthorizedTest() throws UnauthorizedException, BadRequestException {
         AdminApi api = new AdminApi();
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
     }
 
     /** Tries to load concerns from an empty database and verifies that a list of size zero is returned */
@@ -36,9 +37,11 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
-        assert(concerns.size() == 0);
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
+        assert(concerns.getConcernCount() == 0);
+        assertNull(concerns.getFirstConcern());
+        assertNull(concerns.getLastConcern());
     }
 
     /*** Tests that loading a single concern from the database in a list is functioning properly */
@@ -58,10 +61,12 @@ public class AdminApiTest extends DatastoreTest {
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 1);
+        assert(concerns.getConcernCount() == 1);
+        assert(concerns.getFirstConcern() == firstConcern);
+        assert(concerns.getLastConcern() == firstConcern);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -72,23 +77,29 @@ public class AdminApiTest extends DatastoreTest {
         ConcernTest concernTest = new ConcernTest();
 
         ConcernData concernData;
-        Concern firstConcern;
 
-        for (int x = 0; x < 5; x++) {
-            concernData = concernTest.generateConcernData().build();
-            firstConcern = new Concern(concernData, true);
-            dao.save(firstConcern);
-        }
+        concernData = concernTest.generateConcernData().build();
+        Concern firstConcern = new Concern(concernData, true);
+        dao.save(firstConcern);
+
+        concernData = concernTest.generateConcernData().build();
+        Concern lastConcern = new Concern(concernData, true);
+        dao.save(lastConcern);
+
 
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 5);
+        assert(concerns.getConcernCount() == 2);
+
+        //Since these are loaded by date, the ordering will be backwards in relation to this test
+        assert(concerns.getFirstConcern() == lastConcern);
+        assert(concerns.getLastConcern() == firstConcern);
     }
 
     /**
@@ -116,10 +127,10 @@ public class AdminApiTest extends DatastoreTest {
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 3);
+        assert(concerns.getConcernCount() == 3);
     }
 
     /*** Tests that loading multiple concerns from the database with a limit reached is functioning properly */
@@ -143,10 +154,10 @@ public class AdminApiTest extends DatastoreTest {
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
         builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 3);
+        assert(concerns.getConcernCount() == 3);
     }
 
     /**

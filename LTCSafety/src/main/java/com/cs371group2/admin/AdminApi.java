@@ -37,7 +37,7 @@ public class AdminApi {
      * @throws BadRequestException If the request contained invalid paging information.
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
-    public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
+    public ConcernListRequestResponse requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
 
         ValidationResult result = request.validate();
         if (!result.isValid()){
@@ -53,7 +53,7 @@ public class AdminApi {
         List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
 
         logger.log(Level.INFO, "Concern list request was successful.");
-        return list;
+        return new ConcernListRequestResponse(list);
     }
 
     /**
