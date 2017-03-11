@@ -18,17 +18,10 @@ import java.util.List;
  *
  * Created on 2017-02-08.
  */
-public class UpdateConcernStatusRequest extends AdminRequest implements Validatable{
+public class UpdateConcernStatusRequest extends ConcernRequest implements Validatable{
 
     /** The ConcernStatus to be applied to concern associated with the given ID. */
     private ConcernStatusType concernStatus;
-
-    /** The id of the concern to update the status of */
-    private long concernId;
-
-    private static final String NULL_TOKEN_ERROR = "Unable to update a concern's status due to non-existent credentials.";
-
-    private static final String EMPTY_TOKEN_ERROR = "Unable to update a concern's status due to receiving an empty access token.";
 
     private static final String NULL_TYPE_ERROR = "Unable to update a concern's status with a null status type.";
 
@@ -52,23 +45,15 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
      */
     @Override
     public ValidationResult validate() {
-        if(null == accessToken){
-            return new ValidationResult(NULL_TOKEN_ERROR);
-        } else if (accessToken.isEmpty()) {
-            return new ValidationResult(EMPTY_TOKEN_ERROR);
-        } else if(concernStatus == null){
+        if(concernStatus == null){
             return new ValidationResult(NULL_TYPE_ERROR);
         }
 
-        return new ValidationResult();
+        return super.validate();
     }
 
     public ConcernStatusType getConcernStatus() {
         return concernStatus;
-    }
-
-    public long getConcernId() {
-        return concernId;
     }
 
     /**

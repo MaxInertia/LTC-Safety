@@ -111,17 +111,8 @@ public class AdminApi {
     public UpdateConcernStatusResponse updateConcernStatus(UpdateConcernStatusRequest request)
             throws UnauthorizedException, BadRequestException, NotFoundException {
 
-        ValidationResult result = request.validate();
-        if (!result.isValid()){
-            logger.log(Level.WARNING, "Admin tried updating a concern with invalid data.");
-            throw new BadRequestException(result.getErrorMessage());
-        }
+        Concern loadedConcern = requestConcern(request);
 
-        Account account = request.authenticate();
-        assert account != null;
-        logger.log(Level.INFO,account + " is updating the status type of concern " + request);
-
-        Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
         ConcernStatus status = new ConcernStatus(request.getConcernStatus());
         loadedConcern.getStatuses().add(status);
         new ConcernDao().save(loadedConcern);
