@@ -87,8 +87,7 @@ public class AccountDaoTest extends DatastoreTest {
         Account lazyAccount = new AccountDao().load(token);
         Account rawAccount = dao.load(id);
 
-        // Raw account should be non-null because a new account should have been created
-        // when loading from the access token.
+        // Raw account should be non-null because a new account should have been created when loading from the access token.
         assertAccounts(lazyAccount, rawAccount);
         assertEquals(lazyAccount.getPermissions(), AccountPermissions.UNVERIFIED);
     }

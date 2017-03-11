@@ -34,13 +34,19 @@ app.controller('RegistrationCtrl', function ($scope, firebase, accountStatus) {
      */
     $scope.register = function () {
 
-        console.assert($scope.newUser != null, "Attempted to register an account with no user credentials.");
+        if ($scope.newUser == null) {
+            throw new Error("Attempted to register an account with no user credentials.");
+        }
 
-        document.getElementById('register-error').style.display = "none";
+        var element = document.getElementById('register-error');
+        // Don't throw an error if the error may not need to be displayed
+        if (element != null) {
+            element.style.display = "none";
+        }
 
-        if ($scope.newUser.email == null || $scope.newUser.email.isEmpty) {
+        if ($scope.newUser.email == null || $scope.newUser.email.length == 0) {
             $scope.showErrorMessage('An email must be provided.');
-        } else if ($scope.newUser.password == null || $scope.newUser.password.isEmpty) {
+        } else if ($scope.newUser.password == null || $scope.newUser.password.length == 0) {
             $scope.showErrorMessage('A password must be provided.');
         } else if ($scope.newUser.password != $scope.newUser.confirmPassword) {
             $scope.showErrorMessage('The passwords do not match.');
@@ -49,7 +55,6 @@ app.controller('RegistrationCtrl', function ($scope, firebase, accountStatus) {
                 accountStatus.newAccount = true;
             }, function(error) {
                 $scope.showErrorMessage(error.message);
-                $scope.$apply();
             });
         }
     };
@@ -62,9 +67,17 @@ app.controller('RegistrationCtrl', function ($scope, firebase, accountStatus) {
      */
     $scope.showErrorMessage = function(message) {
 
-        console.assert(message != null, "Attempted to display an empty registration error message.");
+        if (message == null) {
+            throw new Error("Attempted to display an empty registration error message.");
+        }
 
         $scope.errorMessage = message;
-        document.getElementById('register-error').style.display = "block";
+
+        var element = document.getElementById('register-error');
+        if (element == null) {
+            throw new Error("Failed to find element with id register-error.");
+        }
+        element.display = "block";
+        $scope.$apply();
     }
 });

@@ -594,7 +594,10 @@ body {
   z-index: 10000000;
   display: block;
   background-color: #4787df;
+  -webkit-transition: opacity 200ms ease;
+  transition: opacity 200ms ease;
   color: #fff;
+  font-size: 16px;
   text-align: center;
 }
 
@@ -608,6 +611,66 @@ body {
   font-size: 19px;
   font-weight: 400;
   text-align: center;
+}
+
+.splash-tabs-menu {
+  display: none;
+}
+
+.splash-tabs {
+  display: block;
+  width: 450px;
+  margin-right: auto;
+  margin-left: auto;
+  font-size: 18px;
+  text-align: center;
+}
+
+.splash-button {
+  width: 250px;
+  margin-top: 7.5px;
+  margin-bottom: 7.5px;
+  border: 1px solid #3869ac;
+  border-radius: 5px;
+  background-color: #4787df;
+  color: #fff;
+}
+
+.splash-tabs-content {
+  padding: 25px;
+}
+
+.splash-spacer {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
+.splash-prompt {
+  display: block;
+  width: 300px;
+  margin: 9px auto;
+  padding: 9px 15px;
+  color: #000;
+  font-weight: 400;
+}
+
+.splash-container {
+  padding: 25px;
+  background-color: #fff;
+  color: #5a5a5a;
+}
+
+.error-message {
+  display: none;
+  padding: 9px 15px;
+  color: #d52d28;
+}
+
+.splash-content-pane {
+  box-shadow: 0 0 6px 0 #383e44;
 }
 
 @font-face {
