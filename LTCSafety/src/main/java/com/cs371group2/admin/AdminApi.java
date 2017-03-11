@@ -99,8 +99,27 @@ public class AdminApi {
      * @postcond The concern status has been updated
      */
     @ApiMethod(name = "updateConcernStatus", path = "admin/updateConcernStatus")
-    public UpdateConcernStatusResponse updateConcernStatus(UpdateConcernStatusRequest request) throws UnauthorizedException, BadRequestException, NotFoundException {
-        return null;
+    public UpdateConcernStatusResponse updateConcernStatus(UpdateConcernStatusRequest request)
+            throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried updating a concern with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is updating the status type of concern " + request);
+
+        Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
+        loadedConcern.getStatuses().add(request.getConcernStatus());
+
+        new ConcernDao().save(loadedConcern);
+
+        logger.log(Level.INFO, "Concern " + loadedConcern + " had its status successfully updated!");
+
+        return new UpdateConcernStatusResponse(loadedConcern.getId(), request.getConcernStatus());
     }
 
     @ApiMethod(name = "requestAccount", path = "admin/requestAccount")

@@ -37,7 +37,7 @@ public final class UpdateConcernStatusResponse {
      * @param concernId The unique identifier for the concern who's status was updated.
      * @param status The status the concern was updated to.
      */
-    UpdateConcernStatusResponse(Long concernId, ConcernStatus status) {
+    public UpdateConcernStatusResponse(Long concernId, ConcernStatus status) {
 
         assert concernId != null;
         assert status != null;

@@ -40,9 +40,6 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
      * @precond statusType != null
      */
     public UpdateConcernStatusRequest(ConcernStatusType statusType, long id, String userToken){
-        assert(statusType != null);
-        assert(userToken != null);
-
         concernStatus = new ConcernStatus(statusType);
         concernId = id;
         accessToken = userToken;
@@ -64,6 +61,14 @@ public class UpdateConcernStatusRequest extends AdminRequest implements Validata
         }
 
         return new ValidationResult();
+    }
+
+    public ConcernStatus getConcernStatus() {
+        return concernStatus;
+    }
+
+    public long getConcernId() {
+        return concernId;
     }
 
     /**

@@ -195,7 +195,7 @@ public class AdminApiTest extends DatastoreTest {
      */
 
     /** Tries to update a concern status with a null type */
-    @Test (expected = BadRequestException.class)
+    @Test (expected = AssertionError.class)
     public void updateConcernStatusNullTypeTest() throws UnauthorizedException, BadRequestException, NotFoundException {
         AdminApi api = new AdminApi();
 
@@ -254,16 +254,28 @@ public class AdminApiTest extends DatastoreTest {
     public void updateConcernStatusTest() throws UnauthorizedException, BadRequestException, NotFoundException {
         AdminApi api = new AdminApi();
 
-        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build(), true);
+
         new ConcernDao().save(toModify);
 
-        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
 
         UpdateConcernStatusResponse response =
                 api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
-                        (ConcernStatusType.SEEN,toModify.getId(), account.build()).build());
+                        (ConcernStatusType.RESOLVED,toModify.getId(), account.build()).build());
 
         assertNotNull(response);
-        assert(response.getStatus().getType() == ConcernStatusType.SEEN);
+        assert(response.getStatus().getType() == ConcernStatusType.RESOLVED);
+        assert(response.getConcernId() == toModify.getId());
+
+        boolean containsStatus = false;
+
+        for (ConcernStatus status : toModify.getStatuses()){
+            if(status.getType() == ConcernStatusType.RESOLVED){
+                containsStatus = true;
+            }
+        }
+
+        assert(containsStatus);
     }
 }
