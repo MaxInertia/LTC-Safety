@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -170,9 +171,8 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
-            if(!activity.isFinishing() && activity.progressDialog!=null) {
-                activity.progressDialog.cancel(); //progressDialog is not initialized for tests
-            }
+            String title;
+            String message;
             if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
                 // Store concern and token on device
@@ -180,25 +180,23 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
                 ViewModelObserver.instance.newConcernSubmitted(activity.getBaseContext(), concern);
 
                 // Inform user that the concern was successfully submitted
-                if(!activity.isFinishing() && !activity.isDestroyed()) {
-                    activity.displayInfoDialogue(
-                            "Submission successful",
-                            "Your concern has been submitted",
-                            null,
-                            true
-                    );
-                }
-
+                //title = "Submission successful";
+                message = "Your concern has been submitted";
+                activity.progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        activity.startActivity(activity.getParentActivityIntent());
+                    }
+                });
             } else {
                 // LocalConcern submission failed, possible cause: No internet access on device
-                if(!activity.isFinishing()) {
-                    activity.displayInfoDialogue(
-                            "Error",
-                            "Failed submitting your concern",
-                            null,
-                            true);
-                }
+                //title = "Error";
+                message = "Failed submitting your concern";
             }
+            //activity.progressDialog.setTitle(title);
+            activity.progressDialog.setMessage(message);
+            activity.progressDialog.setCancelable(true);
+
 
             submissionReturnCode = returnCode;
             signalLatch.countDown();

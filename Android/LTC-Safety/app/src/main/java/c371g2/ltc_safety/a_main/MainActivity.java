@@ -52,7 +52,7 @@ public class MainActivity extends AbstractNetworkActivity {
         //if(savedInstanceState==null || !savedInstanceState.getBoolean("testing",false)) {
             //viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
         //}
-        Toast.makeText(getBaseContext(),"onCreate was called!",Toast.LENGTH_LONG).show();
+        //Toast.makeText(getBaseContext(),"onCreate was called!",Toast.LENGTH_LONG).show();
     }
 
     @Override
