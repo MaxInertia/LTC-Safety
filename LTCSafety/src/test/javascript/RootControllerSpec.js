@@ -251,6 +251,67 @@ describe("Root Controller", function() {
             $controller('RootCtrl', { $scope: $scope, auth : auth});
             expect($scope.hideSplashScreen).toThrow(new Error("Attempted to hide non-existent splash screen."));
         });
+
+        /**
+         * Test that an error is thrown when attempting to show the modal error. This
+         * is expected due to the inability to lookup HTML elements in unit tests.
+         * Functional testing is required to guarantee complete correctness.
+         */
+        it('Show modal error test', function () {
+
+            $controller('RootCtrl', { $scope: $scope, auth : auth});
+            expect(function(){
+                $scope.showModalError("Error Message");
+            }).toThrow(new Error("Attempted to show non-existent error modal."));
+        });
+
+        /**
+         * Test that an error is thrown when attempting to hide the modal error. This
+         * is expected due to the inability to lookup HTML elements in unit tests.
+         * Functional testing is required to guarantee complete correctness.
+         */
+        it('Hide modal error test', function () {
+
+            $controller('RootCtrl', { $scope: $scope, auth : auth});
+            expect($scope.hideModalError).toThrow(new Error("Attempted to hide non-existent error modal."));
+        });
+
+        /**
+         * Test that no error is thrown when hiding an element. Functional
+         * testing is required to guarantee correctness due to this
+         * triggering an animation which can only be checked visually.
+         */
+        it('Hide element test', function() {
+
+            $controller('RootCtrl', { $scope: $scope, auth : auth});
+
+            var element = $('<div>').html('<p>'+'contents'+'</p>');
+            expect(function(){
+                $scope.hide(element);
+            }).not.toThrow(new Error("Attempted to hide a null element."));
+        });
+
+        var waitFunc = function timedWait(time) {
+            var done = false;
+            setTimeout(function() {done = true},time);
+            waitsFor(function() { return done });
+        };
+
+
+        /**
+         * Test that no error is thrown when showing an element. Functional
+         * testing is required to guarantee correctness due to this
+         * triggering an animation which can only be checked visually.
+         */
+        it('Show element test', function() {
+
+            $controller('RootCtrl', { $scope: $scope, auth : auth});
+
+            var element = $('<div>').html('<p>'+'contents'+'</p>');
+            expect(function(){
+                $scope.show(element);
+            }).not.toThrow(new Error("Attempted to show a null element."));
+        });
     });
 
     /**
@@ -266,4 +327,24 @@ describe("Root Controller", function() {
         };
         $controller('RootCtrl', { $scope: $scope, $window : $window, auth : auth});
     };
+
+    /**
+     * Unit tests for the function that maps
+     * status type enum values to human readable strings.
+     */
+    describe('Concern status mapping tests', function() {
+
+        /**
+         * Test that the the concern key is mapped using the identitiy function.
+         * TODO Update when names for statuses are decided upon.
+         */
+        it('Convert status test', function() {
+
+            $controller('RootCtrl', { $scope: $scope, $window : $window, auth : auth});
+
+            var input = "Status Key";
+            var result = $scope.statusNames(input);
+            expect(result).toEqual(input);
+        });
+    });
 });

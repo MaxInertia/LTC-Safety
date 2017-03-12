@@ -1,102 +1,101 @@
-<div ng-controller="ConcernDetailCtrl">
-    <div class="main-content">
-        <div class="paging-row">
-            <div class="w-row">
-                <div class="w-col w-col-6">
-                    <h3>Concern</h3>
-                    <ul>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Nature of Concern</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.concernNature}}</div>
+<div class="main-content" ng-controller="ConcernDetailCtrl">
+    <div class="scrollable-content">
+        <div class="w-row">
+            <div class="w-col w-col-6">
+                <h3>Concern</h3>
+                <ul>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Nature of Concern</strong>
                             </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Submission Date<br></strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.submissionDate}}</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Actions Taken</strong>
-                                </div>
-                                <p class="detail-paragraph">{{concern.data.actionsTaken}}</p>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong>Description</strong>
-                                </div>
-                                <p class="detail-paragraph">{{concern.data.description}}</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="w-col w-col-6">
-                    <h3>Location</h3>
-                    <ul>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Facility</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.location.facilityName}}</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Room</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.location.roomName}}</div>
-                            </div>
-                        </li>
-                    </ul>
-                    <h3>Contact Information</h3>
-                    <ul>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong>Reporter</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.reporter.name}}</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Email</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.reporter.email}}</div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="detail-item">
-                                <div class="detail-header"><strong class="detail-header">Phone Number</strong>
-                                </div>
-                                <div class="detail-text">{{concern.data.reporter.phoneNumber}}</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <h3>Status</h3>
-            <ul>
-                <li ng-repeat="status in concern.statuses">
-                    <div class="detail-item">
-                        <div class="detail-header"><strong class="detail-header">{{statusNames(status.type)}}</strong>
+                            <div class="detail-text">{{concern.data.concernNature}}</div>
                         </div>
-                        <div class="detail-text">{{status.creationDate | date:'MMM d &nbsp;h:mm a &nbsp;yyyy'}}</div>
-                    </div>
-                </li>
-            </ul>
-            <div class="w-dropdown" data-delay="0" data-hover="1">
-                <div class="status-dropdown w-dropdown-toggle">
-                    <div>Update Status</div>
-                    <div class="w-icon-dropdown-toggle"></div>
-                </div>
-                <nav class="status-dropdown-list w-dropdown-list"><a class="w-dropdown-link" href="#" id="Pending-Status" ng-click="updateStatus(&#39;PENDING&#39;)">Pending</a><a class="w-dropdown-link" href="#" id="Seen-Status" ng-click="updateStatus(&#39;SEEN&#39;)">Seen</a><a class="w-dropdown-link" href="#" id="Responding-24-Status" ng-click="updateStatus(&#39;RESPONDING24&#39;)">Responding in 24 Hours</a><a class="w-dropdown-link" href="#" id="Responding-48-Status" ng-click="updateStatus(&#39;RESPONDING48&#39;)">Responding in 48 Hours</a><a class="w-dropdown-link" href="#" id="Responding-72-Status" ng-click="updateStatus(&#39;RESPONDING72&#39;)">Responding in 72 Hours</a><a class="w-dropdown-link" href="#" id="Resolved-Status" ng-click="updateStatus(&#39;RESOLVED&#39;)">Resolved</a>
-                </nav>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Submission Date<br></strong>
+                            </div>
+                            <div class="detail-text">{{concern.submissionDate | date:'MMM d &nbsp;h:mm a &nbsp;yyyy'}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Actions Taken</strong>
+                            </div>
+                            <p class="detail-paragraph">{{concern.data.actionsTaken}}</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong>Description</strong>
+                            </div>
+                            <p class="detail-paragraph">{{concern.data.description}}</p>
+                        </div>
+                    </li>
+                </ul>
             </div>
+            <div class="w-col w-col-6">
+                <h3>Location</h3>
+                <ul>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Facility</strong>
+                            </div>
+                            <div class="detail-text">{{concern.data.location.facilityName}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Room</strong>
+                            </div>
+                            <div class="detail-text">{{concern.data.location.roomName}}</div>
+                        </div>
+                    </li>
+                </ul>
+                <h3>Contact Information</h3>
+                <ul>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong>Reporter</strong>
+                            </div>
+                            <div class="detail-text">{{concern.data.reporter.name}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Email</strong>
+                            </div>
+                            <div class="detail-text">{{concern.data.reporter.email}}</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="detail-item">
+                            <div class="detail-header"><strong class="detail-header">Phone Number</strong>
+                            </div>
+                            <div class="detail-text">{{concern.data.reporter.phoneNumber}}</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <h3>Status</h3>
+        <ul>
+            <li ng-repeat="status in concern.statuses">
+                <div class="detail-item">
+                    <div class="detail-header"><strong class="detail-header">{{statusNames(status.type)}}</strong>
+                    </div>
+                    <div class="detail-text">{{status.creationDate | date:'MMM d &nbsp;h:mm a &nbsp;yyyy'}}</div>
+                </div>
+            </li>
+        </ul>
+        <div class="w-dropdown" data-delay="0" data-hover="1">
+            <div class="dropdown w-dropdown-toggle">
+                <div>Update Status</div>
+                <div class="w-icon-dropdown-toggle"></div>
+            </div>
+            <nav class="status-dropdown-list w-dropdown-list"><a class="w-dropdown-link" href="#" id="Pending-Status" ng-click="updateStatus(&#39;PENDING&#39;)">Pending</a><a class="w-dropdown-link" href="#" id="Seen-Status" ng-click="updateStatus(&#39;SEEN&#39;)">Seen</a><a class="w-dropdown-link" href="#" id="Responding-24-Status" ng-click="updateStatus(&#39;RESPONDING24&#39;)">Responding in 24 Hours</a><a class="w-dropdown-link" href="#" id="Responding-48-Status" ng-click="updateStatus(&#39;RESPONDING48&#39;)">Responding in 48 Hours</a><a class="w-dropdown-link" href="#" id="Responding-72-Status" ng-click="updateStatus(&#39;RESPONDING72&#39;)">Responding in 72 Hours</a><a class="w-dropdown-link" href="#" id="Resolved-Status" ng-click="updateStatus(&#39;RESOLVED&#39;)">Resolved</a>
+            </nav>
         </div>
     </div>
 </div>
+  

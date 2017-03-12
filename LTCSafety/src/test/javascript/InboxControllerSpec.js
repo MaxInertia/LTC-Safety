@@ -27,7 +27,7 @@ describe("Inbox Controller", function() {
                 return {
                     execute: function(callback) {
                         var response = {
-                            items : ['test1', 'test2']
+                            concernList : ['test1', 'test2']
                         };
                         callback(response);
                     }
@@ -62,7 +62,7 @@ describe("Inbox Controller", function() {
             $scope.updateConcernList();
 
             // Expect that the concerns list is non-empty
-            expect($scope.concerns).toEqual(['test1', 'test2']);
+            expect($scope.concerns.concernList).toEqual(['test1', 'test2']);
 
         });
 
@@ -81,7 +81,7 @@ describe("Inbox Controller", function() {
 
             // Expect that the concerns list is not updated
             expect($scope.updateConcernList).toThrow(new Error("Attempted to refresh the concerns list with a null access token."));
-            expect($scope.concerns).toEqual([]);
+            expect($scope.concerns.concernList).toEqual([]);
         });
 
         /**
@@ -98,7 +98,7 @@ describe("Inbox Controller", function() {
 
             // Expect that the concerns list is not updated
             expect($scope.updateConcernList).toThrow(new Error("Attempted to fetch a page with a negative start index."));
-            expect($scope.concerns).toEqual([]);
+            expect($scope.concerns.concernList).toEqual([]);
         });
 
         /**
@@ -114,7 +114,7 @@ describe("Inbox Controller", function() {
 
             // Expect that the concerns list is not updated
             expect($scope.updateConcernList).toThrow(new Error("Attempted to fetch an empty page."));
-            expect($scope.concerns).toEqual([]);
+            expect($scope.concerns.concernList).toEqual([]);
         });
     });
 
@@ -134,11 +134,11 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.limit = 25;
             $scope.concernRequest.offset = 0;
-            $scope.concerns = [];
+            $scope.concerns = {};
             $scope.refresh();
 
             // Expect that the concerns list was repopulated
-            expect($scope.concerns).toEqual(['test1', 'test2']);
+            expect($scope.concerns.concernList).toEqual(['test1', 'test2']);
         });
 
         /**
@@ -237,6 +237,59 @@ describe("Inbox Controller", function() {
             $scope.concernSelected(concern);
 
             expect($location.url).toHaveBeenCalledWith('/concern-detail/1234567');
+        });
+    });
+
+
+    /**
+     * Gets the name of the current status for a concern.
+     * @param concern The concern to get the most recent status for.
+     * @pre concern != null
+     * @pre concern.statuses.length > 0
+     * @returns The name of the concern's most recent status update.
+     */
+    describe('Concern data tests', function() {
+
+        it('Status for null concern test', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            expect(function() {
+                $scope.currentStatus(null);
+            }).toThrow(new Error("Attempted to get the status of a null concern."));
+
+        });
+
+        it('Status for concern with no statuses', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            expect(function() {
+                var concern = {
+                    statuses : []
+                };
+                $scope.currentStatus(concern);
+            }).toThrow(new Error("Attempted to get the status of a concern with no statuses."));
+        });
+
+        it('Status for valid concern', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            // Mock out the call to the root controller
+            $scope.statusNames = function(key) {
+                if (key == 'RESOLVED') {
+                    return 'Resolved';
+                }
+            };
+
+            var concern = {
+                statuses : [
+                    {type : "PENDING"},
+                    {type : "RESOLVED"}
+                ]
+            };
+            expect($scope.currentStatus(concern)).toEqual("Resolved");
         });
     });
 });
