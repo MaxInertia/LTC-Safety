@@ -170,13 +170,19 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
 
         @Override
         protected void onPostExecute(ReturnCode returnCode) {
+            String message = "Concern status updates failed";
             if(ReturnCode.SUCCESS.equals(returnCode)) {
-                returnCode = addNewConcernStatuses(concernCollection);
                 assert(concernCollection != null);
-            } else {
-                System.out.println("returnCode not Success");
-                //TODO: Display error message
+                returnCode = addNewConcernStatuses(concernCollection);
+                message = "Concern statuses were updated";
             }
+
+            if(!activity.isFinishing() && activity.progressDialog!=null) { //progressDialog is not initialized for tests
+                assert(activity.progressDialog.isShowing());
+                activity.progressDialog.setMessage(message);
+                activity.progressDialog.setCancelable(true);
+            }
+
             submissionReturnCode = returnCode;
             signalLatch.countDown();
             assert(signalLatch.getCount() == 0);

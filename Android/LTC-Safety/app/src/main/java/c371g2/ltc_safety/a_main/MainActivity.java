@@ -2,8 +2,10 @@ package c371g2.ltc_safety.a_main;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -51,6 +53,33 @@ public class MainActivity extends AbstractNetworkActivity {
             //viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
         //}
         Toast.makeText(getBaseContext(),"onCreate was called!",Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_reload_concerns) {
+            if(!hasNetworkAccess()) {
+                Toast.makeText(getBaseContext(),"Internet connection required",Toast.LENGTH_LONG).show();
+            } else {
+                viewModel.updateConcerns(getBaseContext());
+                progressDialog = displayInfoDialogue(
+                        null,
+                        "Please wait... Updating concern statuses",
+                        null,
+                        false
+                );
+                assert (progressDialog != null && progressDialog.isShowing());
+            }
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
