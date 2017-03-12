@@ -21,7 +21,6 @@ import c371g2.ltc_safety.ReturnCode;
  * contains the same instance.
  */
 public class NewConcernActivity extends AbstractNetworkActivity {
-
     /**
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.

@@ -16,8 +16,10 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * @HistoryProperties none.
  */
 public interface ViewModelObserver {
+    /**
+     * Instance used to access the non-static methods declared in this interface.
+     */
     ViewModelObserver instance = new MainViewModel();
-    //ViewModelObserver instance = MainViewModel.observerInstance;
 
     /**
      * Only by NewConcernViewModel to inform MainViewModel that a new concern has been submitted.

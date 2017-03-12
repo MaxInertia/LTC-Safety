@@ -33,13 +33,11 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * lifetime) after they are set by the populateFields() method. The method is only called once.
  */
 public class ConcernDetailActivity extends AbstractNetworkActivity {
-
     /**
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.
      */
     final ConcernDetailViewModel concernDetailViewModel = new ConcernDetailViewModel(this);
-
     /**
      * Reference to the button used to retract a concern.
      */

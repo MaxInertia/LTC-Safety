@@ -38,6 +38,9 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * which can reinitialize it.
  */
 class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserver {
+    /**
+     * Instance of MainViewModel used by ViewModelObserver interface to access non-static methods
+     */
     static MainViewModel observerInstance;
 
     /**
@@ -218,10 +221,8 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
                         );
                         localConcernStatusList.add(newStatus);
                     }
-
                     DeviceStorage.saveConcern(activity.getBaseContext(), concernList.get(index));
                 }
-
                 index++;
             }
             return ReturnCode.SUCCESS;

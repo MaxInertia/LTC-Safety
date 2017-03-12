@@ -26,7 +26,6 @@ public interface MainViewModel_TestHook {
      * MainViewModel.Test_Hook: Static inner-Class of MainViewModel.
      */
     MainViewModel_TestHook instance = new MainViewModel.Test_Hook();
-
     /**
      * Clears the list of concerns in MainViewModel.
      * @preconditions none.

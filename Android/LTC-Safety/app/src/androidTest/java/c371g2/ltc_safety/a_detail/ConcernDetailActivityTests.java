@@ -143,6 +143,7 @@ public class ConcernDetailActivityTests {
     }
 
     // Status test
+
     @Test
     public void test_statusList() {
         List statuses = concern.getStatuses();

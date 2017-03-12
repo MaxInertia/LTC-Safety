@@ -98,10 +98,10 @@ public class MainViewModelTests {
         MainViewModel.ConcernUpdater updater = activity.viewModel.new ConcernUpdater();
         ArrayList<OwnerToken> tokens = updater.getStoredOwnerTokens();
 
-        System.out.println("ZZZZ:" + tokens.size());
+        System.out.println("[MainViewModelTests]\tToken count: " + tokens.size());
         for(OwnerToken t: tokens) {
             try {
-                System.out.println("ZZZZ:"+t.toPrettyString());
+                System.out.println("[MainViewModelTests]\t"+t.toPrettyString());
             } catch(IOException ioException) {
                 ioException.printStackTrace();
                 activity.finish();
