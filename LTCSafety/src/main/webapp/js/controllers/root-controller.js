@@ -227,9 +227,23 @@ safetyApp.controller('RootCtrl',
             if (key == null || key.length <= 0) {
                 throw new Error("Attempted to get the name of an invalid status enum value.");
             }
-
-            // TODO Provide the string values.
-
+            if (key == 'PENDING') {
+                return 'Unread'
+            } else if (key == 'SEEN') {
+                return 'Seen'
+            } else if (key == 'RESPONDING24') {
+                return 'Responding in 24 Hours'
+            } else if (key == 'RESPONDING48') {
+                return 'Responding in 48 Hours'
+            } else if (key == 'RESPONDING72') {
+                return 'Responding in 72 Hours'
+            } else if (key == 'RESOLVED') {
+                return 'Resolved'
+            } else if (key == 'RETRACTED') {
+                return 'Retracted'
+            } else {
+                throw new Error("Received unrecognized status key " + key);
+            }
             return key;
         };
     });

@@ -335,16 +335,35 @@ describe("Root Controller", function() {
     describe('Concern status mapping tests', function() {
 
         /**
-         * Test that the the concern key is mapped using the identitiy function.
-         * TODO Update when names for statuses are decided upon.
+         * Test that the the concern key is mapped to an appropriate
+         * user readable message for display purposes.
          */
         it('Convert status test', function() {
 
+            var result;
+
             $controller('RootCtrl', { $scope: $scope, $window : $window, auth : auth});
 
-            var input = "Status Key";
-            var result = $scope.statusNames(input);
-            expect(result).toEqual(input);
+            result = $scope.statusNames("PENDING");
+            expect(result).toEqual('Unread');
+
+            result = $scope.statusNames("SEEN");
+            expect(result).toEqual('Seen');
+
+            result = $scope.statusNames("RESPONDING24");
+            expect(result).toEqual('Responding in 24 Hours');
+
+            result = $scope.statusNames("RESPONDING48");
+            expect(result).toEqual('Responding in 48 Hours');
+
+            result = $scope.statusNames("RESPONDING72");
+            expect(result).toEqual('Responding in 72 Hours');
+
+            result = $scope.statusNames("RESOLVED");
+            expect(result).toEqual('Resolved');
+
+            result = $scope.statusNames("RETRACTED");
+            expect(result).toEqual('Retracted');
         });
     });
 });

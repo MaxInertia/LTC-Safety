@@ -29,23 +29,28 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
                 return defer.promise;
             };
 
+            var pagingResolver = {
+                offset: function ($q, $route) {
+                    return parseUnsignedInt($q.defer(),
+                        $route.current.params.offset);
+                },
+                limit: function ($q, $route) {
+                    return parseUnsignedInt($q.defer(),
+                        $route.current.params.limit);
+                }
+            };
+
             /**
              * The route provider configuration mapping partial page url's to their appropriate HTML pages and controllers.
              */
-            $routeProvider.when('/inbox/:page/:limit', {
+            $routeProvider.when('/inbox/:offset/:limit', {
                 templateUrl: '/inbox.html',
-                resolve: {
-                    page: function ($q, $route) {
-                        return parseUnsignedInt($q.defer(),
-                            $route.current.params.page);
-                    },
-                    limit: function ($q, $route) {
-                        return parseUnsignedInt($q.defer(),
-                            $route.current.params.limit);
-                    }
-                }
+                resolve: pagingResolver
             }).when('/concern-detail/:id', {
                 templateUrl: '/concern-detail.html'
+            }).when('/manage-accounts/:accountType/:offset/:limit', {
+                templateUrl: '/manage-accounts.html',
+                resolve: pagingResolver
             }).otherwise({
                 redirectTo: '/'
             });
@@ -108,6 +113,15 @@ safetyApp.service('auth', ['firebase', function (firebase) {
         }
     });
 
+    /**
+     * Perform the api call requesting the account data associated with the Firebase token.
+     * This function's only purpose is to wrap the gapi call allowing for it to be mocked
+     * out during testing.
+     * @param request The request containing the access token used to fetch the account.
+     * @param callback The callback that is triggered when the api call completes
+     *                  regardless of whether it succeeds or fails. It will contain
+     *                  resp.error if the api call fails.
+     */
     this.requestAccount = function(request, callback) {
         gapi.client.admin.requestAccount(request).execute(callback);
     };
