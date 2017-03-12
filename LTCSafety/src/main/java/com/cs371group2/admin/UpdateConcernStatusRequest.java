@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
+import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernStatus;
 import com.cs371group2.concern.ConcernStatusType;
@@ -24,19 +25,6 @@ public class UpdateConcernStatusRequest extends ConcernRequest implements Valida
     private ConcernStatusType concernStatus;
 
     private static final String NULL_TYPE_ERROR = "Unable to update a concern's status with a null status type.";
-
-    /**
-     * Creates an UpdateConcernStatusRequest for use with the AdminAPI to update the status of a concern.
-     *
-     * @param statusType The type of concern status to apply to the concern
-     * @param id The unique id of the concern to be updated
-     * @precond statusType != null
-     */
-    public UpdateConcernStatusRequest(ConcernStatusType statusType, long id, String userToken){
-        concernStatus = statusType;
-        concernId = id;
-        accessToken = userToken;
-    }
 
     /**
      * Validates the ConcernListRequest to ensure that the fields are legal and non-null.
@@ -73,11 +61,19 @@ public class UpdateConcernStatusRequest extends ConcernRequest implements Valida
          * @param id The unique id of the concern to be updated.
          */
         public TestHook_MutableUpdateConcernStatusRequest(ConcernStatusType statusType, long id, String token) {
-            immutable = new UpdateConcernStatusRequest(statusType, id, token);
+            immutable = new UpdateConcernStatusRequest();
+            immutable.concernStatus = statusType;
+            immutable.concernId = id;
+            immutable.accessToken = token;
         }
 
         public UpdateConcernStatusRequest build(){
-            return immutable;
+            UpdateConcernStatusRequest request = new UpdateConcernStatusRequest();
+            request.concernStatus = immutable.concernStatus;
+            request.concernId = immutable.concernId;
+            request.accessToken = immutable.accessToken;
+
+            return request;
         }
 
         public void setMutableConcernType(ConcernStatusType statusType) {

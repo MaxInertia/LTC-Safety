@@ -214,8 +214,8 @@ public class AdminApiTest extends DatastoreTest {
         TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
         UpdateConcernStatusResponse response =
-                api.updateConcernStatus(new UpdateConcernStatusRequest
-                        (null,toModify.getId(), account.build()));
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest(
+                        null,toModify.getId(), account.build()).build());
     }
 
     /** Tries to update a concern status with a null user token */
@@ -227,8 +227,8 @@ public class AdminApiTest extends DatastoreTest {
         new ConcernDao().save(toModify);
 
         UpdateConcernStatusResponse response =
-                api.updateConcernStatus(new UpdateConcernStatusRequest
-                        (ConcernStatusType.SEEN,toModify.getId(), null));
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest(
+                        ConcernStatusType.SEEN,toModify.getId(), null).build());
     }
 
     /** Tries to update a concern status without proper access levels*/
