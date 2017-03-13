@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -143,8 +144,9 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
      * @modifies One view is added to the activity layout for each concern in the list concernStatuses.
      * @param concernStatuses List of concern Statuses
      */
-    private void setupConcernStatusList(@NonNull List concernStatuses) {
+    void setupConcernStatusList(@NonNull List concernStatuses) {
         ViewGroup statusLayout = (ViewGroup) findViewById(R.id.detailedConcern_statusLayout);
+        statusLayout.removeAllViews();
         assert(statusLayout != null);
 
         for(int i=0; i<concernStatuses.size(); i++) {
@@ -167,6 +169,8 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
                 date.setTextColor(Color.BLACK);
                 if(status.getType().equals("RETRACTED")) {
                     retractConcernButton.setEnabled(false);
+                    retractConcernButton.setVisibility(View.GONE);
+                    ((LinearLayout)findViewById(R.id.detailedConcern_retractButtonContainer)).setVisibility(View.GONE);
                 }
             } else {
                 // Add a divider layout between the status at index i and i+1

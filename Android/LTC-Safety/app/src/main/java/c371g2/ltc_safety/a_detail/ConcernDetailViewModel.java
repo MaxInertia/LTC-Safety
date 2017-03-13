@@ -2,6 +2,7 @@ package c371g2.ltc_safety.a_detail;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.view.ViewGroup;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.UpdateConcernStatusResponse;
@@ -12,6 +13,7 @@ import java.io.IOException;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
+import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
@@ -138,6 +140,7 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
                         index
                 );
 
+                ((ConcernDetailActivity)activity).setupConcernStatusList(concern.getStatuses());
             } else {
                 if (!activity.isFinishing()) {
                     activity.displayInfoDialogue(
