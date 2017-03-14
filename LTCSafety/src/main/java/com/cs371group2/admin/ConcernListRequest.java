@@ -41,7 +41,11 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
         }
 
         public ConcernListRequest build(){
-            return immutable;
+            ConcernListRequest request = new ConcernListRequest();
+            request.limit = immutable.limit;
+            request.offset = immutable.offset;
+            request.accessToken = immutable.accessToken;
+            return request;
         }
 
         public void setMutableLimit(int mutableLimit) { immutable.limit = mutableLimit; }

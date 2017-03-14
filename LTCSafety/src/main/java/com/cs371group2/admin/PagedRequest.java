@@ -24,7 +24,7 @@ public class PagedRequest extends AdminRequest implements Validatable {
 
     private static final String INVALID_LIMIT_ERROR = "Unable to request requested list due to an invalid requested limit.";
 
-    /** The offset in the database to begin loading the concerns from */
+    /** The offset in the database to begin loading from */
     int offset;
 
     /** The maximum number of elements to be loaded from the database */
@@ -39,7 +39,7 @@ public class PagedRequest extends AdminRequest implements Validatable {
     }
 
     /**
-     * Validates the ConcernListRequest to ensure that the fields are legal and non-null.
+     * Validates the PagedRequest to ensure that the fields are legal and non-null.
      *
      * @return The result of the validation, including a reason in the case of failure
      */
@@ -59,21 +59,21 @@ public class PagedRequest extends AdminRequest implements Validatable {
     }
 
     /**
-     * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its
-     * members. An instance of TestHook_MutableConcernListRequest can be used to construct new concern request
+     * TestHook_MutablePagedRequest is a test hook to make PagedRequest testable without exposing its
+     * members. An instance of TestHook_MutableCPagedRequest can be used to construct new paged request
      * instances and set values for testing purposes.
      */
     public static class TestHook_MutablePagedRequest {
 
-        /** An immutable ConcernListRequest for use in testing*/
+        /** An immutable PagedRequest for use in testing*/
         private PagedRequest immutable;
 
         /**
          * Creates a new mutable concern request
          *
-         * @param limit The concern limit of the mutable request
-         * @param offset The concern offset of the mutable request
-         * @param token The token of the mutable request
+         * @param limit The limit of the mutable request
+         * @param offset The offset of the mutable request
+         * @param token The token for the mutable request
          */
         public TestHook_MutablePagedRequest(int limit, int offset, String token) {
             immutable = new PagedRequest();
