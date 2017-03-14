@@ -7,113 +7,160 @@
 //
 
 #import "AppDelegate.h"
-#import "DetailViewController.h"
-#import "MasterViewController.h"
+#import "GTLRClient.h"
+#import "LTCConcernViewController.h"
+#import "LTCConcernDetailViewController.h"
+#import "LTCPersistentContainer.h"
+#import "LTCLogger.h"
 
-@interface AppDelegate () <UISplitViewControllerDelegate>
+#import <UserNotifications/UserNotifications.h>
+@import Firebase;
+@import FirebaseMessaging;
 
+@interface AppDelegate () <UISplitViewControllerDelegate, UNUserNotificationCenterDelegate>
+
+/**
+ The persistent container that manages the application-wide managed object context used for loading and saving concerns.
+ */
+@property (nonatomic, strong) LTCPersistentContainer *persistentContainer;
 @end
 
 @implementation AppDelegate
 
-
+/**
+ Performs setup for the application. This method is responsible for setting up the persistence container, app-wide navigation bar appearance and initializing the split view controller.
+ */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-    navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem;
-    splitViewController.delegate = self;
 
+    // Observe the notification that is sent when the push notification token changes
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_tokenDidRefresh:) name:kFIRInstanceIDTokenRefreshNotification object:nil];
+
+    [FIRApp configure];
+
+    [LTCLogger configure];
+    [LTCLogger log:@"Setting up the application" level:kLTCLogLevelInfo];
+    
+    // Set up application wide persistence container and managed object context
+    self.persistentContainer = [[LTCPersistentContainer alloc] initWithName:@"LTC_Safety"];
+    NSAssert(self.persistentContainer != nil, @"Failed to initialize a persistent container.");
+    
+    // Set global navigation bar coloring
+    UIColor *color = [UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0];
+    UINavigationBar *appearance = [UINavigationBar appearance];
+    [appearance setBarStyle:UIBarStyleBlack];
+    [appearance setOpaque:YES];
+    [appearance setBarTintColor:color];
+    [appearance setTintColor:[UIColor whiteColor]];
+    
+    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+    
+    NSAssert1([splitViewController isKindOfClass:[UISplitViewController class]], @"Root view controller is of unexpected type: %@", [splitViewController class]);
+    NSAssert1(splitViewController.delegate == nil, @"Attempted to set the delegate for a split view controller when it already exists: %@", splitViewController.delegate);
+    NSAssert1(splitViewController.viewControllers.count == 2, @"Unexpected number of view controllers for split view: %@", splitViewController.viewControllers);
+    
+    splitViewController.delegate = self;
+    
     UINavigationController *masterNavigationController = splitViewController.viewControllers[0];
-    MasterViewController *controller = (MasterViewController *)masterNavigationController.topViewController;
-    controller.managedObjectContext = self.persistentContainer.viewContext;
+    LTCConcernViewController *controller = (LTCConcernViewController *)masterNavigationController.topViewController;
+    NSAssert1([controller isKindOfClass:[LTCConcernViewController class]], @"Master navigation controller is of unexpected type: %@", [controller class]);
+    
+    controller.viewModel = [[LTCConcernViewModel alloc] initWithContext:self.persistentContainer.viewContext];
+    
+    [self _registerForPushNotifications];
+    
     return YES;
 }
 
-
-- (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
+- (void)_registerForPushNotifications {
+    
+    // iOS 9 or earlier
+    if (floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_9_x_Max) {
+        
+        UIUserNotificationType allNotificationTypes = (UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge);
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:allNotificationTypes categories:nil];
+        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+        
+    } else {
+        // iOS 10 or later
+#if defined(__IPHONE_10_0) && __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+        UNAuthorizationOptions authOptions = UNAuthorizationOptionAlert | UNAuthorizationOptionSound | UNAuthorizationOptionBadge;
+        
+        [[UNUserNotificationCenter currentNotificationCenter] requestAuthorizationWithOptions:authOptions completionHandler:^(BOOL granted, NSError * _Nullable error) {
+            if (error) {
+                // TODO Add logging
+            }
+        }];
+        [UNUserNotificationCenter currentNotificationCenter].delegate = self;
+#endif
+    }
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
-
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+- (void)_tokenDidRefresh:(NSNotificationCenter *)notification {
+    
+    NSString *token = [[FIRInstanceID instanceID] token];
+    
+    // Send the token to the backend to update the concern
+    
+    [self _connectToFirebaseMessaging];
 }
 
+- (void)_connectToFirebaseMessaging {
+    
+    [[FIRMessaging messaging] connectWithCompletion:^(NSError *error){
+        if (error) {
+            // TODO Add logging
+        }
+    }];
+}
+
+- (void)_disconnectFromFirebaseMessaging {
+    [[FIRMessaging messaging] disconnect];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+        [[FIRInstanceID instanceID] setAPNSToken:deviceToken type:FIRInstanceIDAPNSTokenTypeSandbox];
+}
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+    [self _connectToFirebaseMessaging];
 }
 
-
-- (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    [self _disconnectFromFirebaseMessaging];
 }
 
-
-- (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    // Saves changes in the application's managed object context before the application terminates.
-    [self saveContext];
-}
-
-
-#pragma mark - Split view
-
-- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {
-    if ([secondaryViewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[DetailViewController class]] && ([(DetailViewController *)[(UINavigationController *)secondaryViewController topViewController] detailItem] == nil)) {
-        // Return YES to indicate that we have handled the collapse by doing nothing; the secondary controller will be discarded.
-        return YES;
-    } else {
-        return NO;
-    }
-}
-
-#pragma mark - Core Data stack
-
-@synthesize persistentContainer = _persistentContainer;
-
-- (NSPersistentContainer *)persistentContainer {
-    // The persistent container for the application. This implementation creates and returns a container, having loaded the store for the application to it.
-    @synchronized (self) {
-        if (_persistentContainer == nil) {
-            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"LTC_Safety"];
-            [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
-                if (error != nil) {
-                    // Replace this implementation with code to handle the error appropriately.
-                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                    
-                    /*
-                     Typical reasons for an error here include:
-                     * The parent directory does not exist, cannot be created, or disallows writing.
-                     * The persistent store is not accessible, due to permissions or data protection when the device is locked.
-                     * The device is out of space.
-                     * The store could not be migrated to the current model version.
-                     Check the error message to determine what the actual problem was.
-                    */
-                    NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-                    abort();
-                }
-            }];
-        }
-    }
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
     
-    return _persistentContainer;
+    // TODO Handle push notification
+    
+    completionHandler(UIBackgroundFetchResultNewData);
 }
 
-#pragma mark - Core Data Saving support
+/**
+ Called when the application is going to terminate. This causes the persistent container to save all entities.
+ */
+- (void)applicationWillTerminate:(UIApplication *)application {
 
-- (void)saveContext {
+    
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
+    
+    [LTCLogger log :@"Application has terminated" level:kLTCLogLevelInfo];
+    NSAssert(context != nil, @"Application terminated with nil object context.");
+    
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
-        // Replace this implementation with code to handle the error appropriately.
-        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
-        abort();
     }
+}
+
+/**
+ Determines whether the concern detail view controller should be displayed based on whether it has a non-nil concern.
+ */
+- (BOOL)splitViewController:(UISplitViewController *)splitViewController collapseSecondaryViewController:(UIViewController *)secondaryViewController ontoPrimaryViewController:(UIViewController *)primaryViewController {    
+    return [secondaryViewController isKindOfClass:[UINavigationController class]] &&
+    [[(UINavigationController *)secondaryViewController topViewController] isKindOfClass:[LTCConcernDetailViewController class]] &&
+    ([(LTCConcernDetailViewController *)[(UINavigationController *)secondaryViewController topViewController] concern] == nil);
 }
 
 @end
