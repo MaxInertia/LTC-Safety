@@ -1,6 +1,7 @@
 package com.cs371group2.account;
 
 import com.cs371group2.Dao;
+import com.cs371group2.admin.AccessToken;
 import com.googlecode.objectify.Key;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,20 +23,36 @@ public class AccountDao extends Dao<Account> {
         super(Account.class);
     }
 
-    @Override
-    public Account load(String id) {
+    /**
+     * Load an account from the datastore using its access token. If the
+     * account does not exist then a new one is created with AccountPermissions.UNVERIFIED.
+     *
+     * @param token The token used to authorize the account.
+     * @return The account that the access token was used to authorize.
+     * @precond token != null
+     * @postcond An account associated with the access token's unique identifier exists in the
+     * datastore. If the account didn't exist when loading, new account is created with
+     * AccountPermissions.UNVERIFIED.
+     */
+    public Account load(AccessToken token) {
 
-        assert (id != null);
+        assert (token != null);
 
-        Account account = super.load(id);
+        Account account = super.load(token.getId());
         if (account == null) {
-            account = new Account(id, AccountPermissions.UNVERIFIED);
+            account = new Account(token.getId(), token.getEmail(), AccountPermissions.UNVERIFIED);
             this.save(account);
 
-            logger.log(Level.FINER, "Created unverified account with ID " + id + ".");
+            logger.log(Level.FINER, "Created unverified account with ID " + token.getId() + ".");
         } else {
-            logger.log(Level.FINER, "Account " + id + " loaded from the datastore.");
+            logger.log(Level.FINER, "Account " + token.getId() + " loaded from the datastore.");
         }
+
+        System.out.println(token.getEmail() + " == " + account.getEmail());
+
+        assert (token.getEmail().equals(account.getEmail()));
+
+        account.setEmailVerified(token.isEmailVerified());
         return account;
     }
 
@@ -46,8 +63,8 @@ public class AccountDao extends Dao<Account> {
      * @param account The account to be saved to the datastore.
      * @return The key used to load the account from the datastore.
      * @precond account and it's fields are non-null
-     * @postcond The account has been saved to the datastore for future loading and / or deleting. If
-     * the entity has an identifier of type long it will have been populated with the entity's
+     * @postcond The account has been saved to the datastore for future loading and / or deleting.
+     * If the entity has an identifier of type long it will have been populated with the entity's
      * unique identifier.
      */
     public Key<Account> save(Account account) {
@@ -56,7 +73,8 @@ public class AccountDao extends Dao<Account> {
         assert (account.getId() != null);
         assert (account.getPermissions() != null);
 
-        logger.log(Level.FINER,"Successfully saved Entity " + account.toString() + " to the datastore.");
+        logger.log(Level.FINER,
+                "Successfully saved Entity " + account.toString() + " to the datastore.");
         return super.save(account);
     }
 }

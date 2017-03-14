@@ -18,7 +18,9 @@ describe("Detail Controller", function() {
         $controller = _$controller_;
 
         $scope = {
-            $apply : function() {}
+            $apply : function(callback) {
+                callback();
+            }
         };
 
         // AdminApi mock to mock out server concern calls
@@ -29,7 +31,8 @@ describe("Detail Controller", function() {
                         callback('Test Response');
                     }
                 }
-            }
+            },
+            updateConcernStatus : function(request) {}
         };
 
         // Firebase mock to mock out authentication server calls
@@ -89,7 +92,7 @@ describe("Detail Controller", function() {
 
             var routeParams = {
                 id: 12345
-            }
+            };
 
             var controller = $controller('ConcernDetailCtrl', { $scope: $scope, $routeParams: routeParams, firebase: firebaseMock, adminApi: adminApiMock });
 
@@ -104,23 +107,106 @@ describe("Detail Controller", function() {
         });
     });
 
-    /**
-     * Unit tests for the concern detail function that maps
-     * status type enum values to human readable strings.
-     */
-    describe('Concern detail status mapping tests', function() {
+    describe('Concern detail request tests', function() {
 
         /**
-         * Test that the the concern key is mapped using the identitiy function.
-         * TODO Update when names for statuses are decided upon.
+         * Test that an error is thrown when attempting to
+         * update the status when no concern is set.
          */
-        it('Convert status test', function() {
+        it('Update status for null concern test', function() {
 
-            var controller = $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
-            var input = "Status Key";
-            var result = $scope.statusNames(input);
-            expect(result).toEqual(input);
+            expect(function(){
+                $scope.updateStatus("RESOLVED");
+            }).toThrow(new Error("Attempted to update the status for a null concern."));
+        });
+
+        /**
+         * Test that the admin api call is never performed when attempting to update the status
+         * to the same status that it currently has.
+         */
+        it('Update to same status test', function() {
+
+            spyOn(adminApiMock, 'updateConcernStatus');
+
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            $scope.concern = {
+                statuses : [
+                    {type : "RESOLVED"},
+                    {type : "PENDING"}
+                ]
+            };
+            $scope.updateStatus("PENDING");
+            expect(adminApiMock.updateConcernStatus).not.toHaveBeenCalled();
+        });
+
+
+        /**
+         * Test that the error modal div is displayed when the update concern
+         * status api call fails despite valid input.
+         */
+        it('Update with server side failure test', function() {
+
+            adminApiMock.updateConcernStatus = function(request) {
+                return {
+                    execute: function (callback) {
+                        callback({
+                            error : "An error occurred"
+                        });
+                    }
+                };
+            };
+
+            $scope.showModalError = function(error) {};
+            spyOn($scope, 'showModalError');
+
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            $scope.concern = {
+                statuses : [
+                    {type : "RESOLVED"},
+                    {type : "PENDING"}
+                ]
+            };
+            $scope.updateStatus("RESPONDING24");
+            expect($scope.showModalError).toHaveBeenCalledWith('Failed to update concern status.');
+        });
+
+        /**
+         * Test that the error modal div is displayed when the update concern
+         * status api call outputs
+         */
+        it('Successful status update test', function() {
+
+            // Mock out the api call to return the expected result
+            adminApiMock.updateConcernStatus = function(request) {
+                return {
+                    execute: function (callback) {
+                        callback({
+                            status : {
+                                type : request.concernStatus
+                            }
+                        });
+                    }
+                };
+            };
+
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            $scope.concern = {
+                statuses : [
+                    {type : "RESOLVED"},
+                    {type : "PENDING"}
+                ]
+            };
+            var newStatus = "RETRACTED";
+            $scope.updateStatus(newStatus);
+
+            // Expect the concern status to be updated
+            expect($scope.concern.statuses[2].type).toEqual(newStatus);
         });
     });
+
 });

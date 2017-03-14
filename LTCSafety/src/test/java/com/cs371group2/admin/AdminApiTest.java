@@ -1,14 +1,13 @@
 package com.cs371group2.admin;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
 import com.cs371group2.account.AccountPermissions;
-import com.cs371group2.concern.Concern;
-import com.cs371group2.concern.ConcernDao;
-import com.cs371group2.concern.ConcernData;
-import com.cs371group2.concern.ConcernTest;
+import com.cs371group2.client.UpdateConcernStatusResponse;
+import com.cs371group2.concern.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
@@ -27,7 +26,7 @@ public class AdminApiTest extends DatastoreTest {
     @Test (expected = UnauthorizedException.class)
     public void getConcernListUnauthorizedTest() throws UnauthorizedException, BadRequestException {
         AdminApi api = new AdminApi();
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
     }
 
     /** Tries to load concerns from an empty database and verifies that a list of size zero is returned */
@@ -37,10 +36,12 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
-        assert(concerns.size() == 0);
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
+        assert(concerns.getConcernList().size() == 0);
+        assert(concerns.getFirstIndex() == 0);
+        assert(concerns.getLastIndex() == 0);
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /*** Tests that loading a single concern from the database in a list is functioning properly */
@@ -58,12 +59,16 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 1);
+        assert(concerns.getConcernList().size() == 1);
+        assert(concerns.getFirstIndex() == 1);
+        assert(concerns.getLastIndex() == 1);
+
+        //Test accounts are not included in total concern count
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -74,23 +79,28 @@ public class AdminApiTest extends DatastoreTest {
         ConcernTest concernTest = new ConcernTest();
 
         ConcernData concernData;
-        Concern firstConcern;
 
-        for (int x = 0; x < 5; x++) {
-            concernData = concernTest.generateConcernData().build();
-            firstConcern = new Concern(concernData, true);
-            dao.save(firstConcern);
-        }
+        concernData = concernTest.generateConcernData().build();
+        Concern firstConcern = new Concern(concernData, true);
+        dao.save(firstConcern);
+
+        concernData = concernTest.generateConcernData().build();
+        Concern lastConcern = new Concern(concernData, true);
+        dao.save(lastConcern);
 
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 5);
+        assert(concerns.getConcernList().size() == 2);
+        assert(concerns.getFirstIndex() == 1);
+        assert(concerns.getLastIndex() == 2);
+
+        //Test accounts are not included in total concern count
+        assert(concerns.getTotalConcerns() == 0);
     }
 
     /**
@@ -116,12 +126,11 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 3);
+        assert(concerns.getConcernList().size() == 3);
     }
 
     /*** Tests that loading multiple concerns from the database with a limit reached is functioning properly */
@@ -143,12 +152,11 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
 
-        List<Concern> concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
+        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
         assertNotNull(concerns);
-        assert(concerns.size() == 3);
+        assert(concerns.getConcernList().size() == 3);
     }
 
     /**
@@ -169,7 +177,6 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("OTHER_FACILITY");
         Concern concern = api.requestConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
     }
 
@@ -190,5 +197,94 @@ public class AdminApiTest extends DatastoreTest {
         Concern concern = new AdminApi().requestConcern(request);
 
         assertNotNull(concern);
+    }
+
+    /**
+     * updateConcernStatus Tests
+     */
+
+    /** Tries to update a concern status with a null type */
+    @Test (expected = BadRequestException.class)
+    public void updateConcernStatusNullTypeTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest(
+                        null,toModify.getId(), account.build()).build());
+    }
+
+    /** Tries to update a concern status with a null user token */
+    @Test (expected = BadRequestException.class)
+    public void updateConcernStatusNullTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest(
+                        ConcernStatusType.SEEN,toModify.getId(), null).build());
+    }
+
+    /** Tries to update a concern status without proper access levels*/
+    @Test (expected = UnauthorizedException.class)
+    public void updateConcernStatusUnauthTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build());
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.DENIED, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN,toModify.getId(), account.build()).build());
+    }
+
+    /** Tries to update the concern status of a non-existent concern*/
+    @Test (expected = NotFoundException.class)
+    public void updateConcernStatusNotFoundTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        TestAccountBuilder account = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.SEEN, 123 , account.build()).build());
+    }
+
+    /** Tries to update a concern status validly */
+    @Test
+    public void updateConcernStatusTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        AdminApi api = new AdminApi();
+
+        Concern toModify = new Concern(new ConcernTest().generateConcernData().build(), true);
+
+        new ConcernDao().save(toModify);
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        UpdateConcernStatusResponse response =
+                api.updateConcernStatus(new UpdateConcernStatusRequest.TestHook_MutableUpdateConcernStatusRequest
+                        (ConcernStatusType.RESOLVED,toModify.getId(), account.build()).build());
+
+        assertNotNull(response);
+        assert(response.getStatus().getType() == ConcernStatusType.RESOLVED);
+        assert(response.getConcernId() == toModify.getId());
+
+        boolean containsStatus = false;
+
+        for (ConcernStatus status : toModify.getStatuses()){
+            if(status.getType() == ConcernStatusType.RESOLVED){
+                containsStatus = true;
+            }
+        }
+
+        assert(containsStatus);
     }
 }

@@ -66,7 +66,7 @@ final class FirebaseAuthenticator extends Authenticator {
         }
 
         AccountDao dao = new AccountDao();
-        Account account = dao.load(accessToken.getId());
+        Account account = dao.load(accessToken);
 
         if (account == null) {
             throw new UnauthorizedException("Account does not exist in the datastore");

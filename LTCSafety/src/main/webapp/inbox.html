@@ -1,27 +1,25 @@
-<div ng-controller="InboxCtrl">
-    <div>
-        <div class="paging-row w-clearfix"><a class="w-button" ng-click="refresh()">Refresh</a><a class="right-button w-button" href="#" ng-click="nextPage()">Next</a><a class="right-button w-button" href="#" ng-click="previousPage()">Previous</a>
+<div class="main-content" ng-controller="InboxCtrl">
+    <div class="flex-header w-clearfix"><a class="icon-button w-button" href="#" ng-click="refresh()"></a><a class="icon-button w-button" href="#" ng-click="nextPage()"></a><a class="icon-button w-button" href="#" ng-click="previousPage()"></a>
+        <div class="paging-text">{{concerns.firstIndex}} - {{concerns.lastIndex}} of {{concerns.totalConcerns}}</div>
+    </div>
+    <div class="list-header">
+        <div class="concern-nature text-item"><strong>Nature of Concern</strong>
+        </div>
+        <div class="facility text-item"><strong>Facility</strong>
+        </div>
+        <div class="actions-taken expandable text-item"><strong>Status<br></strong>
+        </div>
+        <div class="submission-date text-item"><strong>Submission Date</strong>
         </div>
     </div>
-    <div class="text-row">
-        <div class="concern-nature list-header text-item"><strong>Nature of Concern</strong>
-        </div>
-        <div class="facility list-header text-item"><strong>Facility</strong>
-        </div>
-        <div class="list-header reporter text-item"><strong>Reporter</strong>
-        </div>
-        <div class="actions-taken expandable list-header text-item"><strong>Actions Taken<br></strong>
-        </div>
-        <div class="list-header submission-date text-item"><strong>Submission Date</strong>
-    </div>
-    </div>
-    <ul class="concern-list w-list-unstyled">
-    <li  ng-click = "concernSelected(concern)"class="text-row concern-change" ng-repeat="concern in concerns">
-      <div class="concern-nature text-item">{{concern.data.concernNature}}</div>
-      <div class="facility text-item truncate">{{concern.data.location.facilityName}}</div>
-      <div class="reporter text-item">{{concern.data.reporter.name}}</div>
-      <div class="actions-taken expandable text-item">{{concern.data.actionsTaken}}</div>
-      <div class="submission-date text-item">{{concern.submissionDate | date:'MMM dd  h:mm a  yyyy'}}</div>
-    </li>
+    <ul class="list w-list-unstyled">
+        <li class="text-row" ng-click="concernSelected(concern)" ng-repeat="concern in concerns.concernList">
+            <div class="concern-nature text-item">{{concern.data.concernNature}}</div>
+            <div class="facility text-item truncate">{{concern.data.location.facilityName}}</div>
+            <div class="actions-taken expandable text-item">{{currentStatus(concern)}}</div>
+            <div class="submission-date text-item">{{concern.submissionDate | date:'MMM d &nbsp;h:mm a &nbsp;yyyy'}}</div>
+        </li>
     </ul>
+    <div class="list-footer"></div>
 </div>
+    

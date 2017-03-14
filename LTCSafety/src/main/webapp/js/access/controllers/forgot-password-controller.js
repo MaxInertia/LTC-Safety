@@ -22,14 +22,21 @@ app.controller('ForgotPasswordCtrl', function ($scope, firebase) {
      */
     $scope.forgotPassword = function () {
 
-        document.getElementById('forgot-password-error').style.display = "none";
+        // If the element can't be found no error should be thrown unless sending the email fails
+        var forgotPasswordError = document.getElementById('forgot-password-error');
+        if (forgotPasswordError != null) {
+            forgotPasswordError.style.display = "none";
+        }
 
         firebase.auth().sendPasswordResetEmail($scope.email).catch(function(error) {
 
             $scope.errorMessage = error.message;
             $scope.$apply();
 
-            document.getElementById('forgot-password-error').style.display = "block";
+            if (forgotPasswordError == null) {
+                throw new Error("Unable to locate forgot-password-error element.");
+            }
+            forgotPasswordError.style.display = "block";
         });
     };
 });

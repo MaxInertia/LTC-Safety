@@ -5,6 +5,8 @@
  */
 safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $location, $routeParams, firebase, adminApi) {
 
+    Webflow.ready();
+
     /**
      * The concern data that is received from the concern request
      * and displayed to the administrator.
@@ -33,21 +35,6 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
     };
 
     /**
-     * The status names function maps the enum status values to human readable strings.
-     * @param key The enum value of a status.
-     * @precond key != null && !key.isEmpty
-     * @returns The string representation of the enum value.
-     */
-    $scope.statusNames = function(key) {
-
-        console.assert(key != null && !key.isEmpty, "Attempted to get the name of an invalid status enum value.");
-
-        // TODO Provide the string values.
-
-        return key;
-    };
-
-    /**
      * The callback when the user auth state changes causing the data for the concern to be fetched.
      */
     $scope.auth.onAuthStateChanged(function (firebaseUser) {
@@ -63,6 +50,52 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
             });
         }
     });
+
+    /**
+     * Update the status of the currently viewed concern to a new status.
+     * @param status The new status that is being added to the concern.
+     * @pre $scope.concern != null, there must be a concern to update its status
+     * @pre status != null and status is not empty
+     * @post If the request succeeded the concern has been updated locally and on the server to include the new status.
+     *       Otherwise, the modal error view has been displayed with a message stating that the status failed to update.
+     *
+     */
+    $scope.updateStatus = function(status) {
+
+        $("nav").removeClass("w--open");
+        $("div").removeClass("w--open");
+
+        if (status == null || status.length <= 0) {
+            throw new Error("Attempted to update a concern to a null or empty status.");
+        }
+        if ($scope.concern == null) {
+            throw new Error("Attempted to update the status for a null concern.");
+        }
+        var currentStatus = $scope.concern.statuses[$scope.concern.statuses.length-1].type;
+        if (status == currentStatus) {
+            return;
+        }
+
+        var request = {
+            concernStatus : status,
+            concernId : $scope.concern.id,
+            accessToken : $scope.concernRequest.accessToken
+        };
+
+        adminApi.updateConcernStatus(request).execute(
+            function (resp) {
+                if (resp.error) {
+                    $scope.showModalError('Failed to update concern status.');
+                } else if (resp.concernId != $scope.concern.id) {
+                    $scope.showModalError('Update Failed: Received a response with a mismatched concern identifier.');
+                } else {
+                    $scope.$apply(function () {
+                        $scope.concern.statuses.push(resp.status);
+                    });
+                }
+            }
+        );
+    };
 
     /**
      * Fetches the concern data from the admin API referenced in the concern request.

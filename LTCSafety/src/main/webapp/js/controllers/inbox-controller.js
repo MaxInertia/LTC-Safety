@@ -6,11 +6,19 @@
  */
 safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routeParams, firebase, adminApi) {
 
+    Webflow.ready();
+
     /**
      * The list of concerns that is displayed in the current inbox page.
      * @type {Array}
      */
-    $scope.concerns = [];
+    //$scope.concerns = [];
+    $scope.concerns = {
+        firstIndex : 0,
+        lastIndex : 0,
+        totalConcerns : 0,
+        concernList : []
+    };
 
     /**
      *  The auth value used for accessing the current user.
@@ -23,14 +31,14 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      *
      * accessToken: The users Firebase access token to verify that the request is authenticated
      * limit: The number of concerns that should be returned in the request
-     * page: The index of the concern that the request should start at.
+     * offset: The index of the concern that the request should start at.
      *
      * @type {{accessToken: null, limit: Number, offset: Number}}
      */
     $scope.concernRequest = {
         accessToken : null,
         limit : parseInt($routeParams.limit),
-        offset : parseInt($routeParams.page)
+        offset : parseInt($routeParams.offset)
     };
 
     /**
@@ -61,7 +69,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.refresh = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw  new Error("Attempted to refresh the concerns list with a null access token.");
+        }
 
         $scope.updateConcernList();
     };
@@ -75,10 +85,16 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.nextPage = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to fetch the next page with a null access token.");
+        }
 
         var nextOffset = +$scope.concernRequest.offset + +$scope.concernRequest.limit;
-        $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit);
+        if (nextOffset < $scope.concerns.totalConcerns) {
+            $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit);
+        } else {
+            console.log("Attempted to fetch a page with an offset greater than the total number of items.");
+        }
     };
 
     /**
@@ -91,7 +107,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.previousPage = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to fetch the previous page with a null access token.");
+        }
 
         var nextOffset = $scope.concernRequest.offset - $scope.concernRequest.limit;
         if (nextOffset < 0) {
@@ -109,7 +127,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.concernSelected = function (concern) {
 
-        console.assert(concern != null, "Attempted to select a null concern.");
+        if (concern == null) {
+            throw new Error("Attempted to select a null concern.");
+        }
 
         var identifier = concern.id;
         console.log("Selected " + identifier);
@@ -127,15 +147,41 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     $scope.updateConcernList = function () {
 
-        console.assert($scope.concernRequest.accessToken != null, "Attempted to refresh the concerns list with a null access token.");
-        console.assert($scope.concernRequest.offset >= 0, "Attempted to fetch a page with a negative start index.");
-        console.assert($scope.concernRequest.limit > 0, "Attempted to fetch an empty page.");
+        if ($scope.concernRequest.accessToken == null) {
+            throw new Error("Attempted to refresh the concerns list with a null access token.");
+        }
+        if ($scope.concernRequest.offset < 0) {
+            throw new Error("Attempted to fetch a page with a negative start index.");
+        }
+        if ($scope.concernRequest.limit <= 0) {
+            throw new Error("Attempted to fetch an empty page.");
+        }
 
         adminApi.requestConcernList($scope.concernRequest).execute(
             function (resp) {
-                $scope.concerns = resp.items;
+                console.log(resp);
+                $scope.concerns = resp;
                 $scope.$apply();
             }
         );
+    };
+
+    /**
+     * Gets the name of the current status for a concern.
+     * @param concern The concern to get the most recent status for.
+     * @pre concern != null
+     * @pre concern.statuses.length > 0
+     * @returns The name of the concern's most recent status update.
+     */
+    $scope.currentStatus = function(concern) {
+
+        if (concern == null) {
+            throw new Error("Attempted to get the status of a null concern.");
+        }
+        if (concern.statuses.length <= 0) {
+            throw new Error("Attempted to get the status of a concern with no statuses.");
+        }
+        var key = concern.statuses[concern.statuses.length-1].type;
+        return $scope.statusNames(key);
     };
 });

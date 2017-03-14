@@ -2,8 +2,10 @@ package com.cs371group2.admin;
 
 import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
+import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
+import com.cs371group2.concern.ConcernStatus;
 import com.google.api.server.spi.config.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -36,7 +38,7 @@ public class AdminApi {
      * @throws BadRequestException If the request contained invalid paging information.
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
-    public List<Concern> requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
+    public ConcernListRequestResponse requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
 
         ValidationResult result = request.validate();
         if (!result.isValid()){
@@ -52,7 +54,15 @@ public class AdminApi {
         List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
 
         logger.log(Level.INFO, "Concern list request was successful.");
-        return list;
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(list.size() != 0){
+            startIndex = request.getOffset() + 1;
+            endIndex = request.getOffset() + list.size();
+        }
+
+        return new ConcernListRequestResponse(list, startIndex, endIndex, dao.count());
     }
 
     /**
@@ -83,5 +93,37 @@ public class AdminApi {
         Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
         logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
         return loadedConcern;
+    }
+
+    /**
+     * Updates the concern status of the concern specified in the request, as long as the user submitting the
+     * request has administrative permissions.
+     *
+     * @param request The updateConcernStatus request containing the concern update, concern type, and firebase token
+     * @return The response containing the updated concern
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern
+     * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws NotFoundException Thrown if the requested concern does not exist.
+     * @precond request != null
+     * @postcond The concern status has been updated
+     */
+    @ApiMethod(name = "updateConcernStatus", path = "admin/updateConcernStatus")
+    public UpdateConcernStatusResponse updateConcernStatus(UpdateConcernStatusRequest request)
+            throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        Concern loadedConcern = requestConcern(request);
+
+        ConcernStatus status = new ConcernStatus(request.getConcernStatus());
+        loadedConcern.getStatuses().add(status);
+        new ConcernDao().save(loadedConcern);
+
+        logger.log(Level.INFO, "Concern " + loadedConcern + " had its status successfully updated!");
+
+        return new UpdateConcernStatusResponse(loadedConcern.getId(), status);
+    }
+
+    @ApiMethod(name = "requestAccount", path = "admin/requestAccount")
+    public Account requestAccount(AccountRequest request) throws UnauthorizedException {
+        return request.authenticate();
     }
 }

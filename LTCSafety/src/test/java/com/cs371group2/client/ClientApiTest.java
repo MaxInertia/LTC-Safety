@@ -17,10 +17,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.Test;
 
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Tests for testing the endpoints used by the Android and iOS mobile clients.
@@ -90,11 +87,14 @@ public class ClientApiTest extends DatastoreTest {
         LinkedList<OwnerToken> tokenSet = new LinkedList<OwnerToken>();
         tokenSet.add(token1);
         tokenSet.add(token2);
-        LinkedList<Concern> returnedConcerns = new ClientApi().fetchConcerns(new OwnerTokenListWrapper(tokenSet));
+        Collection<Concern> returnedConcerns = new ClientApi().fetchConcerns(new OwnerTokenListWrapper(tokenSet));
 
-        assertEquals(returnedConcerns.getFirst().getData(), data1);
-        assertEquals(returnedConcerns.getLast().getData(), data2);
-        assertTrue(returnedConcerns.getFirst().getData() != returnedConcerns.getLast().getData());
+        Concern concern0 = (Concern) returnedConcerns.toArray()[0];
+        Concern concern1 = (Concern) returnedConcerns.toArray()[1];
+
+        assertEquals(concern0.getData(), data1);
+        assertEquals(concern1.getData(), data2);
+        assertTrue(concern0.getData() != concern1.getData());
     }
 
 
