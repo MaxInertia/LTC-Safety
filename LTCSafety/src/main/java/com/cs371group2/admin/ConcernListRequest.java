@@ -14,49 +14,7 @@ import java.util.logging.Logger;
  *
  * Created on 2017-02-08.
  */
-public class ConcernListRequest extends AdminRequest implements Validatable {
-
-    private static final String NULL_TOKEN_ERROR = "Unable to access concern list due to non-existent credentials.";
-
-    private static final String EMPTY_TOKEN_ERROR = "Unable to access concern list due to receiving an empty access token.";
-
-    private static final String INVALID_OFFSET_ERROR = "Unable to request concern list due to an invalid requested offset.";
-
-    private static final String INVALID_LIMIT_ERROR = "Unable to request concern list due to an invalid requested limit.";
-
-    /** The offset in the database to begin loading the concerns from */
-    private int offset;
-
-    /** The maximum number of elements to be loaded from the database */
-    private int limit;
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public int getLimit() {
-        return limit;
-    }
-
-    /**
-     * Validates the ConcernListRequest to ensure that the fields are legal and non-null.
-     *
-     * @return The result of the validation, including a reason in the case of failure
-     */
-    @Override
-    public ValidationResult validate() {
-        if(null == accessToken){
-            return new ValidationResult(NULL_TOKEN_ERROR);
-        } else if (accessToken.isEmpty()){
-            return new ValidationResult(EMPTY_TOKEN_ERROR);
-        } else if (1 > limit){
-            return new ValidationResult(INVALID_LIMIT_ERROR);
-        } else if (0 > offset){
-            return new ValidationResult(INVALID_OFFSET_ERROR);
-        }
-
-        return new ValidationResult();
-    }
+public final class ConcernListRequest extends PagedRequest implements Validatable {
 
     /**
      * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its
