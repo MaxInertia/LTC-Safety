@@ -55,6 +55,7 @@ app.controller('RegistrationCtrl', function ($scope, firebase, accountStatus) {
                 accountStatus.newAccount = true;
             }, function(error) {
                 $scope.showErrorMessage(error.message);
+                $scope.$apply();
             });
         }
     };
@@ -77,7 +78,6 @@ app.controller('RegistrationCtrl', function ($scope, firebase, accountStatus) {
         if (element == null) {
             throw new Error("Failed to find element with id register-error.");
         }
-        element.display = "block";
-        $scope.$apply();
+        element.style.display = "block";
     }
 });
