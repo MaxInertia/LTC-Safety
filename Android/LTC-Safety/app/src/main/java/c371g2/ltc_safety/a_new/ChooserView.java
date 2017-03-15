@@ -8,7 +8,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import c371g2.ltc_safety.R;
@@ -56,10 +55,10 @@ class ChooserView{
             @Override
             public void onClick(DialogInterface dialog, int index) {
                 dialog.dismiss();
+                assert (view != null);
                 if(choices[index].equals("Other")) {
                     customInputPopup(view);
                 } else {
-                    assert (view != null);
                     view.setText(choices[index]);
                 }
             }
@@ -80,6 +79,7 @@ class ChooserView{
         input.setTextSize(20);
         input.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
         input.setGravity(Gravity.CENTER);
+        assert(input != null);
 
         builder.setView(input);
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -91,10 +91,12 @@ class ChooserView{
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                assert(dialog != null);
                 dialog.cancel();
             }
         });
 
+        assert(builder != null);
         builder.create().show();
     }
 
