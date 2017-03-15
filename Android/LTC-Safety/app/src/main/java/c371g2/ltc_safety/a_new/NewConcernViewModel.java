@@ -52,13 +52,14 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      *  by the classes that extend Verifier.
      * @param concernType The type of concern being submitted.
      * @param actionsTaken The actions taken for the concern.
+     * @param description A description of the concern.
      * @param facilityName The facility the concern is about.
      * @param reporterName The first and last name of the reporter.
      * @param emailAddress An email address the reporter can be contacted at.
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
-    ReturnCode[] submitConcern(String concernType, String actionsTaken, String facilityName, String roomName,
-                             String reporterName, String emailAddress, String phoneNumber) {
+    ReturnCode[] submitConcern(String concernType, String actionsTaken, String description, String facilityName,
+                               String roomName, String reporterName, String emailAddress, String phoneNumber) {
 
         // Use verifier-classes to confirm input is sufficient to submit as concern
         ReturnCode[] returnCodes = new ReturnCode[4];
@@ -90,6 +91,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         networkTask.data = buildConcernData(
                 concernType,
                 actionsTaken,
+                description,
                 facilityName,
                 roomName,
                 reporterName,
@@ -111,11 +113,13 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         return returnCodes;
     }
 
-    private ConcernData buildConcernData(String concernType, String actionsTaken, String facilityName, String roomName,
-                                         String reporterName, String emailAddress, String phoneNumber) {
+    private ConcernData buildConcernData(String concernType, String actionsTaken, String description, String facilityName,
+                                         String roomName, String reporterName, String emailAddress, String phoneNumber) {
+
         ConcernData concernData = new ConcernData();
         concernData.setConcernNature(concernType);
         concernData.setActionsTaken(actionsTaken);
+        concernData.setDescription(description);
 
         Location facility = new Location();
         facility.setFacilityName(facilityName);
@@ -239,6 +243,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         public boolean submitConcern(@NonNull AbstractNetworkActivity testActivity,
                                      String concernType,
                                      String actionsTaken,
+                                     String description,
                                      String facilityName,
                                      String roomName,
                                      String reporterName,
@@ -249,6 +254,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
             ReturnCode[] returnCode = ncvm.submitConcern(
                     concernType,
                     actionsTaken,
+                    description,
                     facilityName,
                     roomName,
                     reporterName,

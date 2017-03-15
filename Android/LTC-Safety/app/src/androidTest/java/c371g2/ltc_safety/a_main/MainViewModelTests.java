@@ -68,6 +68,7 @@ public class MainViewModelTests {
                 nca,
                 "Near Miss",
                 "None.",
+                "",
                 "UofS",
                 "B101",
                 "Drake Benet",

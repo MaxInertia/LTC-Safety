@@ -50,7 +50,7 @@ public class NewConcernViewModelTests {
         String reporterName = "All Fields";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
         assertTrue("Expecting VALID_INPUT return code but was "+rCode[0],ReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -73,7 +73,7 @@ public class NewConcernViewModelTests {
         String emailAddress = "";
         String phoneNumber = "3063063066";
 
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
         assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -96,7 +96,7 @@ public class NewConcernViewModelTests {
         String emailAddress = "IchiKuro@soulsociety.com";
         String phoneNumber = "";
 
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
 
         // Check input return code
         assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -119,7 +119,7 @@ public class NewConcernViewModelTests {
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
 
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
         assertTrue(ReturnCode.NO_CONCERN_TYPE.equals(rCode[0]));
     }
 
@@ -134,7 +134,7 @@ public class NewConcernViewModelTests {
         String emailAddress = "";
         String phoneNumber = "";
 
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
         assertTrue(ReturnCode.INVALID_PHONE_AND_EMAIL.equals(rCode[0]));
     }
 
@@ -149,7 +149,31 @@ public class NewConcernViewModelTests {
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
 
-        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
         assertTrue(ReturnCode.INVALID_NAME.equals(rCode[0]));
+    }
+
+    @Test
+    public void test_ConcernSubmission_withDescription() throws InterruptedException{
+        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
+        String concernType = activity.getResources().getStringArray(R.array.concern_types)[5];
+        String description = "They ate my cat!";
+        String actionsTaken = "none";
+        String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[5];
+        String roomName = "b101";
+        String reporterName = "Crazy Cat Lady";
+        String emailAddress = "kitty@cat.net";
+        String phoneNumber = "3063063066";
+
+        ReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,description,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+
+        // Check input return code
+        assertTrue(ReturnCode.VALID_INPUT.equals(rCode[0]));
+
+        // Wait for network thread to finish
+        newConcernViewModel.signalLatch.await(20, TimeUnit.SECONDS);
+
+        // Check submission return code
+        assertTrue(ReturnCode.SUCCESS.equals(newConcernViewModel.submissionReturnCode));
     }
 }

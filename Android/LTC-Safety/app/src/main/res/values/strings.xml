@@ -14,6 +14,7 @@
     <string name="concern_info_section_title">TELL US ABOUT YOUR CONCERN</string>
     <string name="concern_nature_hint">Concern Nature</string>
     <string name="facility_hint">Facility</string>
+    <string name="description_of_concern_section_title">DESCRIPTION OF CONCERN</string>
 
     <string-array name="longtermcare_facilities">
         <item>Central Haven Special Care Home</item>

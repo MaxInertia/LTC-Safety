@@ -35,6 +35,7 @@ public interface NewConcernViewModel_TestHook {
      * @param testActivity activity that implements AbstractNetworkActivity
      * @param concernType The Concern nature
      * @param actionsTaken The actions taken
+     * @param description A description of the concern
      * @param facilityName The name of the long term care facility
      * @param roomName A room name
      * @param reporterName First and last name of the reporter
@@ -43,7 +44,7 @@ public interface NewConcernViewModel_TestHook {
      * @return True if the concern was successfully submitted, otherwise false.
      * @throws InterruptedException
      */
-    boolean submitConcern(@NonNull AbstractNetworkActivity testActivity, String concernType, String actionsTaken, String facilityName,
+    boolean submitConcern(@NonNull AbstractNetworkActivity testActivity, String concernType, String actionsTaken, String description, String facilityName,
                           String roomName, String reporterName, String emailAddress, String phoneNumber) throws InterruptedException;
 
 }

@@ -75,6 +75,7 @@ public class ConcernDetailViewModelTests {
                 nca,
                 "Near Miss",
                 "None.",
+                "",
                 "UofS",
                 "B102",
                 "Retracting",

@@ -176,6 +176,41 @@
 
         </LinearLayout>
 
+        <!-- Description -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_of_concern_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_descriptionField" />
+        </LinearLayout>
+
         <!-- Actions taken -->
 
         <TextView

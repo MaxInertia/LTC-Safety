@@ -60,6 +60,10 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * The input field for the actions taken in response to the concern.
      */
     EditText actionsTakenField;
+    /**
+     * A description of the concern.
+     */
+    EditText concernDescriptionField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,8 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         assert(roomField != null);
         actionsTakenField = (EditText) findViewById(R.id.newConcern_actionsTakenField);
         assert(actionsTakenField != null);
+        concernDescriptionField = (EditText) findViewById(R.id.newConcern_descriptionField);
+        assert(concernDescriptionField != null);
         submitConcernButton = (Button) findViewById(R.id.newConcern_submitConcernButton);
         assert(submitConcernButton != null);
         submitConcernButton.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +143,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         ReturnCode[] response = newConcernViewModel.submitConcern(
                 concernNatureField.getText().toString(),
                 actionsTakenField.getText().toString(),
+                concernDescriptionField.getText().toString(),
                 facilityField.getText().toString(),
                 roomField.getText().toString(),
                 nameField.getText().toString(),
