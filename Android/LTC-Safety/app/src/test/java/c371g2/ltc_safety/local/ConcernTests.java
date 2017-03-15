@@ -16,7 +16,7 @@ public class ConcernTests {
         String testName = "Al Gore";
         String testEmail = "Valid.Email.Address@Form.com";
         String testNumber = "1231231234";
-        ConcernWrapper concern = new ConcernWrapper(testName,testNumber,testEmail,null,null,null,null);
+        ConcernWrapper concern = new ConcernWrapper(testName,testNumber,testEmail,null,null,null,null,null);
 
         assertTrue(concern.getReporterName().equals(testName));
         assertTrue(concern.getReporterEmail().equals(testEmail));
@@ -27,7 +27,7 @@ public class ConcernTests {
     public void test_getLocationDetailsThroughConcern() {
         String facilityName = "Luther Care Home";
         String roomName = "G-007";
-        ConcernWrapper concern = new ConcernWrapper(null,null,null,facilityName,roomName,null,null);
+        ConcernWrapper concern = new ConcernWrapper(null,null,null,facilityName,roomName,null,null,null);
 
         assertTrue(concern.getFacilityName().equals(facilityName));
         assertTrue(concern.getRoomName().equals(roomName));
@@ -36,7 +36,7 @@ public class ConcernTests {
     @Test
     public void test_getConcernType() {
         String concernType = "Biohazard";
-        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,concernType,null);
+        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,concernType,null,null);
 
         assertTrue(concern.getConcernType().equals(concernType));
     }
@@ -44,14 +44,22 @@ public class ConcernTests {
     @Test
     public void test_getActionsTaken() {
         String actionsTaken = "Nada!";
-        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,null,actionsTaken);
+        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,null,actionsTaken,null);
 
         assertTrue(concern.getActionsTaken().equals(actionsTaken));
     }
 
     @Test
+    public void test_getDescription() {
+        String description = "Bad things";
+        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,null,description,null);
+
+        assertTrue(concern.getActionsTaken().equals(description));
+    }
+
+    @Test
     public void test_getDateSubmitted() {
-        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,null,null);
+        ConcernWrapper concern = new ConcernWrapper(null,null,null,null,null,null,null,null);
 
         long date = (new Date()).getTime();
         long delta = 1000*60; // Minute accuracy
