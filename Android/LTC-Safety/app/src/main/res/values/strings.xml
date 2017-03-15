@@ -46,5 +46,6 @@
         <item>Physical abuse</item>
         <item>Mental abuse</item>
         <item>Resident aggression</item>
+        <item>Other</item>
     </string-array>
 </resources>

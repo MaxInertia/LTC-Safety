@@ -1,10 +1,17 @@
 package c371g2.ltc_safety.a_new;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import c371g2.ltc_safety.R;
 
 /**
  * The class responsible for setting up the popup selection window for Concern Nature and Facility Name.
@@ -40,7 +47,7 @@ class ChooserView{
      * @param choices The choices to be displayed in the popup.
      */
     private static void chooserAction(final TextView view, String title, final String[] choices) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         if(title == null) {
             builder.setTitle(title);
         }
@@ -49,10 +56,45 @@ class ChooserView{
             @Override
             public void onClick(DialogInterface dialog, int index) {
                 dialog.dismiss();
-                assert(view != null);
-                view.setText(choices[index]);
+                if(choices[index].equals("Other")) {
+                    customInputPopup(view);
+                } else {
+                    assert (view != null);
+                    view.setText(choices[index]);
+                }
             }
         });
+        builder.create().show();
+    }
+
+    /**
+     * Display a popup for the user to enter a custom string value.
+     * @param view The view whose text will be set to the custom string value.
+     */
+    private static void customInputPopup(final TextView view) {
+        Context context = view.getContext();
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Input Concern Nature");
+
+        final EditText input = new EditText(view.getContext());
+        input.setTextSize(20);
+        input.setBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
+        input.setGravity(Gravity.CENTER);
+
+        builder.setView(input);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                view.setText(input.getText().toString());
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
         builder.create().show();
     }
 
