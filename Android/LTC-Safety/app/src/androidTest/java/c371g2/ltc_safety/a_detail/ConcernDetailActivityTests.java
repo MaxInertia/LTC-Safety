@@ -46,7 +46,8 @@ public class ConcernDetailActivityTests {
                 "UofS",
                 "B102",
                 "Near Miss",
-                "None."
+                "None.",
+                 "Description here!"
         );
 
         MainViewModel_TestHook.instance.clearConcernList();
@@ -132,10 +133,21 @@ public class ConcernDetailActivityTests {
     }
 
     @Test
+    public void test_field_description() {
+        TextView tView = ((TextView) ((RelativeLayout)((LinearLayout)  concernDetailActivity.findViewById(
+                R.id.detailedConcern_concernInformation
+        )).getChildAt(6)).getChildAt(1));
+        assertNotNull(tView);
+
+        String descriptionString = tView.getText().toString();
+        assertEquals(descriptionString, concern.getDescription());
+    }
+
+    @Test
     public void test_field_actionsTaken() {
          TextView tView = ((TextView) ((RelativeLayout)((LinearLayout)  concernDetailActivity.findViewById(
                 R.id.detailedConcern_concernInformation
-        )).getChildAt(6)).getChildAt(1));
+        )).getChildAt(8)).getChildAt(1));
         assertNotNull(tView);
 
         String actionsTakenString = tView.getText().toString();

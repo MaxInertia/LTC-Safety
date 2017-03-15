@@ -51,7 +51,8 @@ public class ConcernDetailViewModelTests {
                         "UofS",
                         "B102",
                         "Near Miss",
-                        "None."
+                        "None.",
+                        "Description"
                 )
         );
 

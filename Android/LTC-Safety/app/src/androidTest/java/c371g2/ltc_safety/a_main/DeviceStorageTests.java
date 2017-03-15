@@ -47,6 +47,7 @@ public class DeviceStorageTests {
         String roomName = "B102";
         String concernType = "Type";
         String actionsTaken = "Actions";
+        String description = "Description";
 
         // The following values do not need to be valid. The data that is used to create concerns
         // in the NewConcernViewModel is
@@ -57,7 +58,8 @@ public class DeviceStorageTests {
                 facilityName,
                 roomName,
                 concernType,
-                actionsTaken
+                actionsTaken,
+                description
         );
 
         Activity activity = mActivity.getActivity();
@@ -78,6 +80,7 @@ public class DeviceStorageTests {
                     facilityName.equals(c.getFacilityName()) &&
                     roomName.equals(c.getRoomName()) &&
                     concernType.equals(c.getConcernType()) &&
+                    description.equals(c.getDescription()) &&
                     actionsTaken.equals(c.getActionsTaken())) {
                 successfullyLoaded = true;
             }
@@ -95,10 +98,11 @@ public class DeviceStorageTests {
 
     public static ConcernWrapper generateConcernForTest(String reporterName, String phoneNumber, String emailAddress,
                                                         String facilityName, String roomName, String concernType,
-                                                        String actionsTaken) {
+                                                        String actionsTaken, String description) {
         ConcernData concernData = new ConcernData();
         concernData.setConcernNature(concernType);
         concernData.setActionsTaken(actionsTaken);
+        concernData.setDescription(description);
 
         Location facility = new Location();
         facility.setFacilityName(facilityName);

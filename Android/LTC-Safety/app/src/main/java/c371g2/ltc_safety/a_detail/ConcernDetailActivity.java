@@ -125,10 +125,19 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
             addViewRow("Room", room, R.id.detailedConcern_concernInformation, R.layout.detail_concern_row);
         }
 
+        String description = concern.getDescription();
+        assert(description != null);
+        if(!description.equals("")) {
+            if(!room.equals("")) {
+                addViewRow(null, null, R.id.detailedConcern_concernInformation, R.layout.divider);
+            }
+            addViewRow("Description", description, R.id.detailedConcern_concernInformation, R.layout.detail_concern_row);
+        }
+
         String actions = concern.getActionsTaken();
         assert(actions != null);
         if(!actions.equals("")) {
-            if(!room.equals("")) {
+            if(!description.equals("")) {
                 addViewRow(null, null, R.id.detailedConcern_concernInformation, R.layout.divider);
             }
             addViewRow("Actions Taken", actions, R.id.detailedConcern_concernInformation, R.layout.detail_concern_row);

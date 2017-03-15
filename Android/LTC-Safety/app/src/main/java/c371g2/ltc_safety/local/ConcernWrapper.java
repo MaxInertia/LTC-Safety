@@ -27,6 +27,10 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
      */
     final private String actionsTaken;
     /**
+     *
+     */
+    final private String description;
+    /**
      * The Reporter of this concern. Name as well as Phone number and/or Email address
      */
     final private Reporter reporter;
@@ -68,6 +72,12 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
             actionsTaken = concern.getData().getActionsTaken();
         }
 
+        if(concern.getData().getDescription() == null) {
+            description = "";
+        } else {
+            description = concern.getData().getDescription();
+        }
+
         String reporterName = concern.getData().getReporter().getName();
         if(reporterName==null) reporterName = "";
         String reporterEmail = concern.getData().getReporter().getEmail();
@@ -102,11 +112,12 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
      * @param concernType The concern nature.
      * @param actionsTaken Actions taken in light of the concern.
      */
-    ConcernWrapper(String reporterName, String reporterPhone, String reporterEmail, String facilityName, String roomName, String concernType, String actionsTaken) {
+    ConcernWrapper(String reporterName, String reporterPhone, String reporterEmail, String facilityName, String roomName, String concernType, String actionsTaken, String description) {
         reporter = new Reporter(reporterName, reporterEmail, reporterPhone);
         location = new Location(facilityName, roomName);
         this.concernType = concernType;
         this.actionsTaken = actionsTaken;
+        this.description = description;
         dateSubmitted = (new Date()).getTime();
         statuses = new ArrayList<>();
     }
@@ -129,6 +140,16 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
      */
     public String getActionsTaken() {
         return actionsTaken;
+    }
+
+    /**
+     * Retrieves the concern description.
+     * @preconditions none.
+     * @modifies nothing.
+     * @return Concern description or empty string.
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**
