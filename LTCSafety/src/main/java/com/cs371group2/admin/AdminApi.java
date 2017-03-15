@@ -126,4 +126,18 @@ public class AdminApi {
     public Account requestAccount(AccountRequest request) throws UnauthorizedException {
         return request.authenticate();
     }
+
+    /**
+     * Requests a list of accounts from the datastore with the request offset and limit. The user submitting
+     * the request must have administrative permissions which will be verified for the request.
+     *
+     * @param request The account request containing the user's firebase token, requested offset/limit, and account type
+     * @return A list of accounts loaded from the datastore at the given offset and limit
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the account list
+     * @throws BadRequestException If the request contained invalid paging information or a null permissions.
+     */
+    @ApiMethod(name = "requestAccountList", path = "admin/requestAccountList")
+    public PagedResponse<Account> requestAccountList(AccountListRequest request) throws UnauthorizedException, BadRequestException {
+        return null;
+    }
 }
