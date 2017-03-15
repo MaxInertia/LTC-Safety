@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
 import c371g2.ltc_safety.a_new.NewConcernViewModel_TestHook;
 
@@ -56,7 +55,7 @@ public class MainViewModelTests {
         activity.viewModel.updateConcerns(activity.getBaseContext());
 
         activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue("ReturnCode was not NULL_POINTER, it was "+activity.viewModel.submissionReturnCode, ReturnCode.NULL_POINTER.equals(activity.viewModel.submissionReturnCode));
+        assertTrue("The return code was not NULL_POINTER, it was "+activity.viewModel.fetchReturnCode, FetchReturnCode.NULL_POINTER.equals(activity.viewModel.fetchReturnCode));
         activity.finish();
     }
 
@@ -84,8 +83,8 @@ public class MainViewModelTests {
         MainActivity activity = mActivity.getActivity();
         activity.viewModel.updateConcerns(activity.getBaseContext());
         activity.viewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue("The return code for the retraction was null", activity.viewModel.submissionReturnCode!=null);
-        assertTrue("The return code for the retraction was not SUCCESS, it was "+activity.viewModel.submissionReturnCode,activity.viewModel.submissionReturnCode.equals(ReturnCode.SUCCESS));
+        assertTrue("The return code for the retraction was null", activity.viewModel.fetchReturnCode!=null);
+        assertTrue("The return code for the retraction was not SUCCESS, it was "+activity.viewModel.fetchReturnCode,activity.viewModel.fetchReturnCode.equals(FetchReturnCode.SUCCESS));
         activity.finish();
     }
 

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.ReturnCode;
 
 /**
  * This activity displays a form with various fields for specifying a safety concern. A concern with
@@ -140,7 +139,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         assert(submitConcernButton != null);
         submitConcernButton.setEnabled(false); // Prevent sending the same concern multiple times
         // Attempt submission of concern containing input fields on the activity
-        ReturnCode[] response = newConcernViewModel.submitConcern(
+        SubmissionReturnCode[] response = newConcernViewModel.submitConcern(
                 concernNatureField.getText().toString(),
                 actionsTakenField.getText().toString(),
                 concernDescriptionField.getText().toString(),
@@ -151,7 +150,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
                 phoneNumberField.getText().toString()
         );
         assert(response != null);
-        if(!response[0].equals(ReturnCode.VALID_INPUT)) {
+        if(!response[0].equals(SubmissionReturnCode.VALID_INPUT)) {
             // Inform user that they are missing required input
             displayInvalidInputDialogue(response);
             submitConcernButton.setEnabled(true);
@@ -174,7 +173,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * @modifies nothing
      * @param rCodes the return codes generated when a concern submission was attempted
      */
-    private void displayInvalidInputDialogue(ReturnCode[] rCodes) {
+    private void displayInvalidInputDialogue(SubmissionReturnCode[] rCodes) {
         String message = "";
         String title = "Missing required field";
         for(int r=0; r<4; r++) {

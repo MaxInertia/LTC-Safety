@@ -19,9 +19,4 @@ public abstract class AbstractNetworkViewModel {
      * A class used to inform a test class that a network operation has been completed.
      */
     public final CountDownLatch signalLatch = new CountDownLatch(1);
-    /**
-     * The return code that results from an attempt to submit or retract a concern.
-     * This variable is null until a concern submission or retraction is attempted.
-     */
-    public ReturnCode submissionReturnCode;
 }

@@ -2,7 +2,6 @@ package c371g2.ltc_safety.a_detail;
 
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.UpdateConcernStatusResponse;
@@ -13,8 +12,6 @@ import java.io.IOException;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
@@ -40,6 +37,11 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * The index the loaded concern is stored at inside MainViewModel.concernList.
      */
     private int index;
+    /**
+     * The return code that results from an attempt to submit or retract a concern.
+     * This variable is null until a concern submission or retraction is attempted.
+     */
+    public RetractionReturnCode retractionReturnCode;
 
     /**
      * Package-private ConcernDetailViewModel constructor.
@@ -85,7 +87,7 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * @Invariants none
      * @HistoryProperties none
      */
-    private class ConcernRetractor extends AsyncTask<Void, Void, ReturnCode> {
+    private class ConcernRetractor extends AsyncTask<Void, Void, RetractionReturnCode> {
 
         /**
          * The response received from the backend after retracting a concern.
@@ -94,8 +96,8 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
         UpdateConcernStatusResponse statusResponse;
 
         @Override
-        protected ReturnCode doInBackground(Void... params) {
-            ReturnCode returnCode;
+        protected RetractionReturnCode doInBackground(Void... params) {
+            RetractionReturnCode returnCode;
             Client.Builder builder = new Client.Builder(
                     AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(),
@@ -106,21 +108,21 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
             try {
                 statusResponse = client.retractConcern(concern.getOwnerToken()).execute();
                 assert(statusResponse != null);
-                returnCode = ReturnCode.SUCCESS;
+                returnCode = RetractionReturnCode.SUCCESS;
             } catch (IOException ioException) {
-                returnCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
+                returnCode = RetractionReturnCode.IOEXCEPTION_THROWN_BY_API;
             }
 
             return returnCode;
         }
 
         @Override
-        protected void onPostExecute(ReturnCode returnCode) {
+        protected void onPostExecute(RetractionReturnCode returnCode) {
             if(!activity.isFinishing() && activity.progressDialog!=null) {
                 activity.progressDialog.cancel(); //progressDialog is not initialized for tests
             }
 
-            if (returnCode.equals(ReturnCode.SUCCESS)) {
+            if (returnCode.equals(RetractionReturnCode.SUCCESS)) {
                 if (!activity.isFinishing() && !activity.isDestroyed()) {
                     activity.displayInfoDialogue(
                             "Retraction successful",
@@ -151,7 +153,7 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
                 }
             }
 
-            submissionReturnCode = returnCode;
+            retractionReturnCode = returnCode;
             signalLatch.countDown();
             assert(signalLatch.getCount() == 0);
         }

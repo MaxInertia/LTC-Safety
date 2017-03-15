@@ -17,7 +17,6 @@ import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.ViewModelObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -33,6 +32,11 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * - The value of the signalLatch only decreases.
  */
 class NewConcernViewModel extends AbstractNetworkViewModel {
+    /**
+     * The return code that results from an attempt to submit or retract a concern.
+     * This variable is null until a concern submission or retraction is attempted.
+     */
+    public SubmissionReturnCode submissionReturnCode;
 
     /**
      * Package-private NewConcernViewModel constructor.
@@ -58,28 +62,28 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      * @param emailAddress An email address the reporter can be contacted at.
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
-    ReturnCode[] submitConcern(String concernType, String actionsTaken, String description, String facilityName,
+    SubmissionReturnCode[] submitConcern(String concernType, String actionsTaken, String description, String facilityName,
                                String roomName, String reporterName, String emailAddress, String phoneNumber) {
 
         // Use verifier-classes to confirm input is sufficient to submit as concern
-        ReturnCode[] returnCodes = new ReturnCode[4];
+        SubmissionReturnCode[] returnCodes = new SubmissionReturnCode[4];
         int invalidFields = 0;
 
         if ( !((new NameVerifier()).verify(reporterName)) ) {
-            returnCodes[invalidFields] = ReturnCode.INVALID_NAME;
+            returnCodes[invalidFields] = SubmissionReturnCode.INVALID_NAME;
             invalidFields++;
         }
         if ( !((new PhoneNumberVerifier()).verify(phoneNumber)) && !((new EmailAddressVerifier()).verify(emailAddress)) ) {
-            returnCodes[invalidFields] = ReturnCode.INVALID_PHONE_AND_EMAIL;
+            returnCodes[invalidFields] = SubmissionReturnCode.INVALID_PHONE_AND_EMAIL;
             System.out.println();
             invalidFields++;
         }
         if ( !(concernType.length()>0) ) { // TODO: make concernVerifier class?
-            returnCodes[invalidFields] = ReturnCode.NO_CONCERN_TYPE;
+            returnCodes[invalidFields] = SubmissionReturnCode.NO_CONCERN_TYPE;
             invalidFields++;
         }
         if ( !(facilityName.length()>0) ) { // TODO: make facilityVerifier class?
-            returnCodes[invalidFields] = ReturnCode.NO_FACILITY_NAME;
+            returnCodes[invalidFields] = SubmissionReturnCode.NO_FACILITY_NAME;
             invalidFields++;
         }
         if(invalidFields>0) {
@@ -109,7 +113,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         assert(networkTask.client != null);
         networkTask.execute();
 
-        returnCodes[0] = ReturnCode.VALID_INPUT;
+        returnCodes[0] = SubmissionReturnCode.VALID_INPUT;
         return returnCodes;
     }
 
@@ -142,7 +146,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      * @Invariants none
      * @HistoryProperties none
      */
-    private class ConcernSubmitter extends AsyncTask<Void,Void,ReturnCode> {
+    private class ConcernSubmitter extends AsyncTask<Void,Void,SubmissionReturnCode> {
         /**
          * The response received from the backend after submitting a concern.
          * Contains the concern and an owner token.
@@ -158,14 +162,14 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         private ConcernData data;
 
         @Override
-        protected ReturnCode doInBackground(Void... params) {
+        protected SubmissionReturnCode doInBackground(Void... params) {
             response = null;
-            ReturnCode returnCode = ReturnCode.SUCCESS;
+            SubmissionReturnCode returnCode = SubmissionReturnCode.SUCCESS;
             try{
                 response = client.submitConcern(data).execute();
                 assert(response != null);
             } catch(IOException ioException) {
-                returnCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
+                returnCode = SubmissionReturnCode.IOEXCEPTION_THROWN_BY_API;
             } finally {
                 data = null;
                 client = null;
@@ -174,10 +178,10 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         }
 
         @Override
-        protected void onPostExecute(ReturnCode returnCode) {
+        protected void onPostExecute(SubmissionReturnCode returnCode) {
             String title;
             String message;
-            if(returnCode!=ReturnCode.IOEXCEPTION_THROWN_BY_API) {
+            if(returnCode!=SubmissionReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
                 // Store concern and token on device
                 ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
@@ -251,7 +255,7 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
                                      String phoneNumber) throws InterruptedException {
 
             NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);
-            ReturnCode[] returnCode = ncvm.submitConcern(
+            SubmissionReturnCode[] returnCode = ncvm.submitConcern(
                     concernType,
                     actionsTaken,
                     description,
@@ -263,11 +267,11 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
             );
 
             // Inputs were accepted by the Verifier classes
-            if(returnCode[0]==ReturnCode.VALID_INPUT) {
+            if(returnCode[0]==SubmissionReturnCode.VALID_INPUT) {
                 // Wait for network thread to finish
                 ncvm.signalLatch.await(20, TimeUnit.SECONDS);
                 // Submission successful, return true.
-                if(ncvm.submissionReturnCode==ReturnCode.SUCCESS) {
+                if(ncvm.submissionReturnCode==SubmissionReturnCode.SUCCESS) {
                     return true;
                 }
             }

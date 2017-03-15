@@ -1,7 +1,6 @@
 package c371g2.ltc_safety.a_detail;
 
 import android.content.Intent;
-import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,7 +11,6 @@ import org.junit.runner.RunWith;
 
 import java.util.concurrent.TimeUnit;
 
-import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.a_main.DeviceStorageTests;
 import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
@@ -63,7 +61,7 @@ public class ConcernDetailViewModelTests {
         concernDetailViewModel.getConcern(0);
         concernDetailViewModel.retractConcern();
         concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue(concernDetailViewModel.submissionReturnCode.equals(ReturnCode.IOEXCEPTION_THROWN_BY_API));
+        assertTrue(concernDetailViewModel.retractionReturnCode.equals(RetractionReturnCode.IOEXCEPTION_THROWN_BY_API));
 
         activity.finish();
     }
@@ -91,8 +89,8 @@ public class ConcernDetailViewModelTests {
         activity = activityRule.launchActivity(i);
         activity.concernDetailViewModel.retractConcern();
         activity.concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue("The return code for the retraction was null", activity.concernDetailViewModel.submissionReturnCode!=null);
-        assertTrue("The return code for the retraction was not SUCCESS",ReturnCode.SUCCESS.equals(activity.concernDetailViewModel.submissionReturnCode));
+        assertTrue("The return code for the retraction was null", activity.concernDetailViewModel.retractionReturnCode!=null);
+        assertTrue("The return code for the retraction was not SUCCESS", RetractionReturnCode.SUCCESS.equals(activity.concernDetailViewModel.retractionReturnCode));
         activity.finish();
     }
 }

@@ -19,7 +19,6 @@ import java.util.Collections;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.ReturnCode;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -41,7 +40,12 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
     /**
      * Instance of MainViewModel used by ViewModelObserver interface to access non-static methods
      */
-    static MainViewModel observerInstance;
+    static MainViewModel mainViewModel;
+    /**
+     * The return code that results from an attempt to submit or retract a concern.
+     * This variable is null until a concern submission or retraction is attempted.
+     */
+    public FetchReturnCode fetchReturnCode;
 
     /**
      * The list of all concerns stored on the device.
@@ -60,7 +64,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      */
     MainViewModel(@NonNull AbstractNetworkActivity activity) {
         this.activity = activity;
-        observerInstance = this;
+        mainViewModel = this;
     }
 
     /**
@@ -138,14 +142,14 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      * @Invariants none
      * @HistoryProperties none
      */
-    class ConcernUpdater extends AsyncTask<Void,Void,ReturnCode> {
+    class ConcernUpdater extends AsyncTask<Void,Void,FetchReturnCode> {
         /**
          * Stores the backends response to the fetchConcerns request.
          */
         ConcernCollection concernCollection;
 
         @Override
-        protected ReturnCode doInBackground(Void... params) {
+        protected FetchReturnCode doInBackground(Void... params) {
             Client.Builder builder = new Client.Builder(
                     AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(),
@@ -155,23 +159,23 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
 
             OwnerTokenListWrapper listWrapper = new OwnerTokenListWrapper();
             listWrapper.setTokens(getStoredOwnerTokens());
-            ReturnCode rCode = null;
+            FetchReturnCode rCode = null;
 
             try {
                 concernCollection = client.fetchConcerns(listWrapper).execute();
-                rCode = ReturnCode.SUCCESS;
+                rCode = FetchReturnCode.SUCCESS;
             } catch(IOException ioException) {
                 concernCollection = null;
-                rCode = ReturnCode.IOEXCEPTION_THROWN_BY_API;
+                rCode = FetchReturnCode.IOEXCEPTION_THROWN_BY_API;
             }
 
             return rCode;
         }
 
         @Override
-        protected void onPostExecute(ReturnCode returnCode) {
+        protected void onPostExecute(FetchReturnCode returnCode) {
             String message = "Concern status updates failed";
-            if(ReturnCode.SUCCESS.equals(returnCode)) {
+            if(FetchReturnCode.SUCCESS.equals(returnCode)) {
                 assert(concernCollection != null);
                 returnCode = addNewConcernStatuses(concernCollection);
                 message = "Concern statuses were updated";
@@ -183,7 +187,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
                 activity.progressDialog.setCancelable(true);
             }
 
-            submissionReturnCode = returnCode;
+            fetchReturnCode = returnCode;
             signalLatch.countDown();
             assert(signalLatch.getCount() == 0);
         }
@@ -206,9 +210,9 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
          * inserting that StatusWrapper into the relevant concern, and overwriting the previous
          * version of the concern in device memory.
          */
-        private ReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
+        private FetchReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
             if(concernCollection==null || concernCollection.getItems()==null) {
-                return ReturnCode.NULL_POINTER;
+                return FetchReturnCode.NULL_POINTER;
                 // TODO: Display error message
             }
             int index = 0;
@@ -231,7 +235,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
                 }
                 index++;
             }
-            return ReturnCode.SUCCESS;
+            return FetchReturnCode.SUCCESS;
         }
 
     }
