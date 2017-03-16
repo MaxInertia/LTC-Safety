@@ -18,8 +18,26 @@ import java.util.logging.Logger;
  */
 public final class AccountListRequest extends PagedRequest implements Validatable {
 
+    private static final String NULL_PERMISSION_ERROR = "Unable to request list due to null permission level requested.";
+
     /** This is the type of the accounts to load from the database. */
     private AccountPermissions accountType;
+
+
+    /**
+     * Validates the PagedRequest to ensure that the fields are legal and non-null.
+     *
+     * @return The result of the validation, including a reason in the case of failure
+     */
+    @Override
+    public ValidationResult validate() {
+
+        if(null == accountType){
+            return new ValidationResult(NULL_PERMISSION_ERROR);
+        }
+
+        return super.validate();
+    }
 
     /**
      * TestHook_MutableAccountListRequest is a test hook to make AccountListRequest testable without exposing its

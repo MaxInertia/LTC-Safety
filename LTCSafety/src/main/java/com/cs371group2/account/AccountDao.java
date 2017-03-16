@@ -5,6 +5,7 @@ import com.cs371group2.admin.AccessToken;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -81,13 +82,39 @@ public class AccountDao extends Dao<Account> {
     }
 
     /**
+     * Loads a list of accounts from the datastore starting at the given offset and ending by limit.
+     * The account is used to determine whether or not it should be loading testing accounts.
+     *
+     * @param account The account that is requesting the list of concerns.
+     * @param offset The offset to begin loading from
+     * @param limit The maximum amount of concerns to load
+     * @return A list of entities in the datastore from the given offset and limit
+     * @precond offset != null && offset >= 0
+     * @precond limit != null && limit > 0
+     * @precond account != null
+     */
+    public List<Account> load(Account account, int offset, int limit){
+
+        assert account != null;
+        assert(offset >= 0);
+        assert(limit > 0);
+
+        return ObjectifyService.ofy().load().type(Account.class)
+                .filter("isTestingAccount = ", account.isTestingAccount())
+                .order("-permissions")
+                .offset(offset)
+                .limit(limit)
+                .list();
+    }
+
+    /**
      * Returns the number of accounts in the database (excluding test accounts)
      *
      * @return The number of accounts entities in the database.
      */
-    public int count(){
+    public int count(Account account){
         return ObjectifyService.ofy().load().type(Account.class)
-                .filter("isTestingAccount = ", false)
+                .filter("isTestingAccount = ", account.isTestingAccount())
                 .count();
     }
 }

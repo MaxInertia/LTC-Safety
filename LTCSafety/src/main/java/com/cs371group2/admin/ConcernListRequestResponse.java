@@ -28,11 +28,19 @@ public class ConcernListRequestResponse {
 
     /**
      * Creates a new ConcernListRequestResponse based on the given list of concerns.
+     *
      * @param list The list of concerns to be represented in the response.
+     * @param startIndex The paging index of the first concern (starting at 1)
+     * @param endIndex The paging index of the last concern (starting at 1)
+     * @param totalSize The total amount concerns stored in the database
      * @precond list != null
+     * @precond startIndex <= endIndex
+     * @precond totalSize >= 0
      */
     public ConcernListRequestResponse(List<Concern> list, int startIndex, int endIndex, int totalSize){
         assert(list != null);
+        assert(startIndex <= endIndex);
+        assert(0 <= totalSize);
 
         concernList = list;
         firstIndex = startIndex;

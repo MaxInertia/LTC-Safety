@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountDao;
 import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
@@ -48,7 +49,7 @@ public class AdminApi {
 
         Account account = request.authenticate();
         assert account != null;
-        logger.log(Level.INFO,account + " is requesting a concern " + request);
+        logger.log(Level.INFO,account + " is requesting a concern list " + request);
 
         ConcernDao dao = new ConcernDao();
         List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
@@ -138,6 +139,29 @@ public class AdminApi {
      */
     @ApiMethod(name = "requestAccountList", path = "admin/requestAccountList")
     public AccountListResponse requestAccountList(AccountListRequest request) throws UnauthorizedException, BadRequestException {
-        return null;
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried requesting an account list with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is requesting an account list " + request);
+
+        AccountDao dao = new AccountDao();
+        List<Account> list = dao.load(account, request.getOffset(), request.getLimit());
+
+        logger.log(Level.INFO, "Account list request was successful.");
+
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(list.size() != 0){
+            startIndex = request.getOffset() + 1;
+            endIndex = request.getOffset() + list.size();
+        }
+
+        return new AccountListResponse(list, startIndex, endIndex, dao.count(account));
     }
 }

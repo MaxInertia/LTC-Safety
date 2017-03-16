@@ -359,10 +359,11 @@ public class AdminApiTest extends DatastoreTest {
         new AdminApi().requestAccountList(request.build());
     }
 
+
     /** Tries to request an account list validly */
     @Test
     public void requestAccountListTest() throws UnauthorizedException, BadRequestException {
-        new AccountDao().save(new Account("Administrator","Administrator", AccountPermissions.ADMIN));
+        new AccountDao().save(new Account("Administrator","Administrator", AccountPermissions.ADMIN, true));
         TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
 
         AccountListRequest.TestHook_MutableAccountListRequest request =
@@ -373,8 +374,50 @@ public class AdminApiTest extends DatastoreTest {
 
         AccountListResponse response = new AdminApi().requestAccountList(request.build());
         assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 1);
         assert(response.getStartIndex() == 1);
         assert(response.getEndIndex() == 1);
-        assert(response.getTotalItemsCount() == 1);
+    }
+
+    /** Tries to request an account list validly containing multiple accounts*/
+    @Test
+    public void requestAccountListMultipleTest() throws UnauthorizedException, BadRequestException {
+        AccountDao dao = new AccountDao();
+        dao.save(new Account("Administrator","Administrator", AccountPermissions.ADMIN, true));
+        dao.save(new Account("Administrator2","Administrator2", AccountPermissions.ADMIN, true));
+        dao.save(new Account("Administrator3","Administrator3", AccountPermissions.ADMIN, true));
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(3, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 3);
+        assert(response.getStartIndex() == 1);
+        assert(response.getEndIndex() == 3);
+    }
+
+    /** Tries to request an account list validly from an empty database */
+    @Test
+    public void requestAccountListEmptyTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 0);
+        assert(response.getStartIndex() == 0);
+        assert(response.getEndIndex() == 0);
     }
 }

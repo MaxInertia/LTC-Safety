@@ -15,14 +15,19 @@ public final class AccountListResponse extends PagedResponse {
     private List<Account> responseList;
 
     /**
-     * Creates a new PagedResponse containing a list of entities and the paging information associated with it.
+     * Creates a new AccountListResponse containing a list of accounts and the paging information associated with it.
      *
-     * @param responseList The list of elements represented by the response
-     * @param pageStartIndex The index of the first element (starting at 1)
-     * @precond responseList != null
+     * @param accountList The list of accounts to be represented in the response.
+     * @param startIndex The paging index of the first account (starting at 1)
+     * @param endIndex The paging index of the last account (starting at 1)
+     * @param totalSize The total amount accounts stored in the database
+     * @precond list != null
+     * @precond startIndex <= endIndex
+     * @precond totalSize >= 0
      */
-    public AccountListResponse(List<Account> responseList, int pageStartIndex) {
-        super(pageStartIndex, pageStartIndex + responseList.size(), new AccountDao().count());
+    public AccountListResponse(List<Account> accountList, int startIndex, int endIndex, int totalSize) {
+        super(startIndex, endIndex, totalSize);
+        this.responseList = accountList;
     }
 
     public List<Account> getItems() { return responseList; }
