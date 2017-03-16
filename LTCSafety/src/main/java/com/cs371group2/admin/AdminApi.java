@@ -137,7 +137,7 @@ public class AdminApi {
      * @throws BadRequestException If the request contained invalid paging information or a null permissions.
      */
     @ApiMethod(name = "requestAccountList", path = "admin/requestAccountList")
-    public PagedResponse<Account> requestAccountList(AccountListRequest request) throws UnauthorizedException, BadRequestException {
+    public AccountListResponse requestAccountList(AccountListRequest request) throws UnauthorizedException, BadRequestException {
         return null;
     }
 }

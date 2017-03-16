@@ -3,6 +3,8 @@ package com.cs371group2.account;
 import com.cs371group2.Dao;
 import com.cs371group2.admin.AccessToken;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.ObjectifyService;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -76,5 +78,16 @@ public class AccountDao extends Dao<Account> {
         logger.log(Level.FINER,
                 "Successfully saved Entity " + account.toString() + " to the datastore.");
         return super.save(account);
+    }
+
+    /**
+     * Returns the number of concerns in the database (excluding test accounts)
+     *
+     * @return The number of concern entities in the database.
+     */
+    public int count(){
+        return ObjectifyService.ofy().load().type(Account.class)
+                .filter("isTestingAccount = ", false)
+                .count();
     }
 }
