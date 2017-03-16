@@ -81,9 +81,9 @@ public class AccountDao extends Dao<Account> {
     }
 
     /**
-     * Returns the number of concerns in the database (excluding test accounts)
+     * Returns the number of accounts in the database (excluding test accounts)
      *
-     * @return The number of concern entities in the database.
+     * @return The number of accounts entities in the database.
      */
     public int count(){
         return ObjectifyService.ofy().load().type(Account.class)

@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
+import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountDao;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.*;
@@ -286,5 +288,93 @@ public class AdminApiTest extends DatastoreTest {
         }
 
         assert(containsStatus);
+    }
+
+    /****************************
+     * requestAccountList Tests *
+     ****************************/
+
+    /** Tries to request an account list with a null permission */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListNullPermissionTest() throws UnauthorizedException, BadRequestException {
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        account.build(),
+                        null);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with a null token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListNullTokenTest() throws UnauthorizedException, BadRequestException {
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        null,
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an empty token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListEmptyTokenTest() throws UnauthorizedException, BadRequestException {
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        "",
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an invalid limit */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListInvalidLimitTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(0, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an invalid token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListInvalidOffsetTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, -1,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list validly */
+    @Test
+    public void requestAccountListTest() throws UnauthorizedException, BadRequestException {
+        new AccountDao().save(new Account("Administrator","Administrator", AccountPermissions.ADMIN));
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                                                                            account.build(),
+                                                                            AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getStartIndex() == 1);
+        assert(response.getEndIndex() == 1);
+        assert(response.getTotalItemsCount() == 1);
     }
 }
