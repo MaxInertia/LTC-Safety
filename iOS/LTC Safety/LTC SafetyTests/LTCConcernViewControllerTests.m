@@ -12,7 +12,10 @@
 #import "LTCCoreDataTestCase.h"
 #import "LTCNewConcernViewController.h"
 #import "LTCConcern_Testing.h"
+#import "LTCClientApi.h"
 #import "LTCConcernTableViewCell.h"
+#import <OCHamcrest/OCHamcrest.h>
+#import <OCMockito/OCMockito.h>
 /**
  Tests the functionality of the concern view controller.
  */
@@ -22,6 +25,9 @@
  The test button needed to be imolimented as to not have an assertion fail in the viewDidLoad of the concern view controller
  */
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
+
+@property (nonatomic, strong) LTCClientApi *clientApi;
+
 /**
  The test tableView needed to be imolimented as to not have an assertion fail in the viewDidLoad of the concern view controller
  */
@@ -29,6 +35,7 @@
 - (IBAction)presentCreateConcernController:(id)sender;
 - (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern;
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)_refresh;
 @end
 
 @interface LTCConcernViewControllerTests : LTCCoreDataTestCase
@@ -102,6 +109,38 @@
     
     XCTAssertEqual([viewController.viewModel rowCountForSection:0], 0);
     XCTAssertEqual([viewController.viewModel sectionCount], 1);
+}
+/**
+ Tests the refresh of concerns in the view model by mocking the clientApi call to fetchConcerns and checking that the correct behaviour is achieved.
+ */
+-(void)test_refresh {
+    LTCClientApi *mockApi = mock([LTCClientApi class]);
+    LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
+    __strong UITableView *tableView =  [[UITableView alloc] init];
+    __strong UIButton *addConcernButton = [UIButton buttonWithType:UIButtonTypeSystem];;
+    
+    LTCConcernViewController *viewController = [[LTCConcernViewController alloc] init];
+    viewController.viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
+    
+    //Adding concern button and table view to prevent assertions failing in the viewDidLoad of the concern view controller.
+    viewController.addConcernButton = addConcernButton;
+    viewController.tableView = tableView;
+    
+    viewController.clientApi = mockApi;
+    [viewController _refresh];
+    
+    HCArgumentCaptor *argument = [[HCArgumentCaptor alloc] init];
+    
+    //[verify(mockApi) fetchConcerns:anything() completion:(id)argument];
+    void (^completion)(GTLRClient_OwnerTokenListWrapper *response, NSError *error) = [argument value];
+    
+    GTLRClient_OwnerTokenListWrapper *response = [[GTLRClient_OwnerTokenListWrapper alloc] init];
+    
+    
+    
+    
+    
+    
 }
 
 @end
