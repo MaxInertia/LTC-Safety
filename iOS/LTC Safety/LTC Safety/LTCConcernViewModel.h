@@ -81,4 +81,6 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
  @return The number of rows in the section.
  */
 - (NSUInteger )rowCountForSection:(NSUInteger)section;
+
+- (void)updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns;
 @end

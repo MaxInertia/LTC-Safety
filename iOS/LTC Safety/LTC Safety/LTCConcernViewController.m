@@ -14,6 +14,9 @@
 #import "LTCConcernTableViewCell.h"
 #import "LTCConcernDetailViewModel.h"
 #import "LTCConcernDetailViewController.h"
+#import "LTCLoadingViewController.h"
+#import "LTCClientApi.h"
+
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -23,9 +26,19 @@
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
 
 /**
+ The button that the user clicks to refresh the list of concerns.
+ */
+@property (nonatomic, weak) IBOutlet UIButton *addRefreshButton;
+
+/**
  <#Description#>
  */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+
+@property (nonatomic, strong) LTCClientApi *clientApi;
+
+
+
 @end
 
 @implementation LTCConcernViewController
@@ -49,6 +62,7 @@
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.clientApi = [[LTCClientApi alloc] init];
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
     
@@ -58,7 +72,59 @@
     self.addConcernButton.layer.cornerRadius = 2.5f;
     self.addConcernButton.layer.borderColor = [[UIColor colorWithRed:0xE2/255.0 green:0xE2/255.0 blue:0xE2/255.0 alpha:0xE2/255.0] CGColor];
     self.addConcernButton.layer.borderWidth = 1.0f;
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(_refresh)];
+    self.navigationItem.rightBarButtonItem = button;
 }
+/**
+ Called when the user selects the refresh button. This method displays a loading spinner while calling a method in the clientApi to refresh all concerns
+ known to the app.
+*/
+-(void)_refresh {
+    
+    // Display the loading spinner to the user until the retract call has finished
+    LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
+    [self presentViewController: loadingMessage animated: YES completion: nil];
+ 
+    //Creating the token wrapper to pass into the fetch concerns clientApi method
+    GTLRClient_OwnerTokenListWrapper *tokensWrapper = [[GTLRClient_OwnerTokenListWrapper alloc] init];
+    NSMutableArray *tokens = [NSMutableArray array];
+
+    //Populating the tokensWrapper with all of the tokens of concerns submitted by the user
+    for(int i = 0; i < [self.viewModel rowCountForSection: 0]; i++){
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        GTLRClient_OwnerToken *curToken = [[GTLRClient_OwnerToken alloc] init];
+        curToken.token = [self.viewModel concernAtIndexPath:indexPath].ownerToken;
+        [tokens addObject:curToken];
+    }
+    tokensWrapper.tokens = [tokens copy];
+
+
+    // Call the fetch concerns endpoint on the Client API using the view model's concern's owner tokens inside of the token wrapper
+    [self.clientApi fetchConcerns:tokensWrapper completion:^(GTLRClient_ConcernCollection *fetchResponse, NSError *error) {
+        [loadingMessage dismissViewControllerAnimated:YES completion:^(){
+            UIAlertController *alert;
+            if (error != nil){
+                NSString *errorMessage = [error.userInfo valueForKey:@"error"];
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                                                            message:errorMessage
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:nil];
+                [alert addAction:cancelAction];
+                [self presentViewController:alert
+                                   animated:YES
+                                 completion:nil];
+            }else {
+                [self.viewModel updateConcernsStatus:fetchResponse.items];
+            }
+        }];
+        
+    }];
+}
+
+
 
 /**
  Action callback triggered when the add concern button is clicked.

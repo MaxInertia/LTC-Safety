@@ -36,6 +36,7 @@
         completion(object, error);
     }];
 }
+
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
  
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");
@@ -45,6 +46,17 @@
     clientToken.token = ownerToken;
     
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
+    [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        completion(object, error);
+    }];
+}
+
+- (void)fetchConcerns:(GTLRClient_OwnerTokenListWrapper *)inputTokenWrapper completion:(LTCFetchConcernsCompletion)completion {
+    
+    NSAssert(inputTokenWrapper != nil, @"Attempted to fetch a collection of concerns with a nil tokenWrapper");
+    NSAssert(completion != nil, @"Attempted to fetch a collection of concerns with a nil completion block");
+    
+    GTLRClientQuery_FetchConcerns *query = [GTLRClientQuery_FetchConcerns queryWithObject:inputTokenWrapper];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
         completion(object, error);
     }];
