@@ -103,7 +103,9 @@ public final class Concern {
         return isTest;
     }
 
+    /* No-arg constructor for loading the entity from the datastore. */
     private Concern() {
+
     }
 
     /**

@@ -2,6 +2,7 @@ package com.cs371group2.admin;
 
 import com.cs371group2.ValidationResult;
 import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountDao;
 import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
@@ -38,7 +39,7 @@ public class AdminApi {
      * @throws BadRequestException If the request contained invalid paging information.
      */
     @ApiMethod(name = "requestConcernList", path = "admin/requestConcernList")
-    public ConcernListRequestResponse requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
+    public ConcernListResponse requestConcernList(ConcernListRequest request) throws UnauthorizedException, BadRequestException {
 
         ValidationResult result = request.validate();
         if (!result.isValid()){
@@ -48,7 +49,7 @@ public class AdminApi {
 
         Account account = request.authenticate();
         assert account != null;
-        logger.log(Level.INFO,account + " is requesting a concern " + request);
+        logger.log(Level.INFO,account + " is requesting a concern list " + request);
 
         ConcernDao dao = new ConcernDao();
         List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
@@ -62,7 +63,7 @@ public class AdminApi {
             endIndex = request.getOffset() + list.size();
         }
 
-        return new ConcernListRequestResponse(list, startIndex, endIndex, dao.count());
+        return new ConcernListResponse(list, startIndex, endIndex, dao.count());
     }
 
     /**
@@ -125,5 +126,42 @@ public class AdminApi {
     @ApiMethod(name = "requestAccount", path = "admin/requestAccount")
     public Account requestAccount(AccountRequest request) throws UnauthorizedException {
         return request.authenticate();
+    }
+
+    /**
+     * Requests a list of accounts from the datastore with the request offset and limit. The user submitting
+     * the request must have administrative permissions which will be verified for the request.
+     *
+     * @param request The account request containing the user's firebase token, requested offset/limit, and account type
+     * @return A list of accounts loaded from the datastore at the given offset and limit
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the account list
+     * @throws BadRequestException If the request contained invalid paging information or a null permissions.
+     */
+    @ApiMethod(name = "requestAccountList", path = "admin/requestAccountList")
+    public AccountListResponse requestAccountList(AccountListRequest request) throws UnauthorizedException, BadRequestException {
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried requesting an account list with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is requesting an account list " + request);
+
+        AccountDao dao = new AccountDao();
+        List<Account> list = dao.load(account, request.getOffset(), request.getLimit());
+
+        logger.log(Level.INFO, "Account list request was successful.");
+
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(list.size() != 0){
+            startIndex = request.getOffset() + 1;
+            endIndex = request.getOffset() + list.size();
+        }
+
+        return new AccountListResponse(list, startIndex, endIndex, dao.count(account));
     }
 }

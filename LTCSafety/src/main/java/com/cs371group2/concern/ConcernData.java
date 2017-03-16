@@ -179,7 +179,6 @@ public final class ConcernData implements Validatable {
             logger.log(Level.WARNING, "Validating unsuccessful: location is not valid");
             return locationResult;
         }
-
         logger.log(Level.FINER,
                 "Validation of Concern \"" + this.concernNature + "\" was successful.");
         return new ValidationResult();

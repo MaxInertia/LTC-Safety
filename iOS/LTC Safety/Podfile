@@ -5,9 +5,15 @@ platform :ios, '9.0'
 source 'https://github.com/CocoaPods/Specs.git'
 
 target 'LTC Safety' do
-pod 'XLForm', :git => 'https://github.com/xmartlabs/XLForm.git'
-pod 'AFNetworking'
-pod 'GoogleAPIClientForREST'
-pod 'Firebase/Core'
-pod 'Firebase/Messaging'
+    pod 'XLForm', :git => 'https://github.com/xmartlabs/XLForm.git'
+    pod 'AFNetworking'
+    pod 'GoogleAPIClientForREST'
+    pod 'Firebase/Core'
+    pod 'Firebase/Messaging'
+    pod 'UICKeyChainStore'
+    
+    target 'LTC SafetyTests' do
+        inherit! :search_paths
+        pod 'OCMockito', '~> 4.0'
+    end
 end

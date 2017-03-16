@@ -131,7 +131,7 @@ public class ConcernDao extends Dao<Concern> {
     }
 
     /**
-     * Returns the number of concerns in the database (excluding test accounts)
+     * Returns the number of concerns in the database (excluding test concerns)
      *
      * @return The number of concern entities in the database.
      */

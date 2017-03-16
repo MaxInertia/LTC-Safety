@@ -5,13 +5,14 @@ import static org.junit.Assert.assertNull;
 
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.TestAccountBuilder;
+import com.cs371group2.account.Account;
+import com.cs371group2.account.AccountDao;
 import com.cs371group2.account.AccountPermissions;
 import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import java.util.List;
 import org.junit.Test;
 
 /**
@@ -26,7 +27,7 @@ public class AdminApiTest extends DatastoreTest {
     @Test (expected = UnauthorizedException.class)
     public void getConcernListUnauthorizedTest() throws UnauthorizedException, BadRequestException {
         AdminApi api = new AdminApi();
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
     }
 
     /** Tries to load concerns from an empty database and verifies that a list of size zero is returned */
@@ -36,12 +37,12 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 0);
-        assert(concerns.getFirstIndex() == 0);
-        assert(concerns.getLastIndex() == 0);
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getStartIndex() == 0);
+        assert(concerns.getEndIndex() == 0);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /*** Tests that loading a single concern from the database in a list is functioning properly */
@@ -60,15 +61,13 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 1);
-        assert(concerns.getFirstIndex() == 1);
-        assert(concerns.getLastIndex() == 1);
-
-        //Test accounts are not included in total concern count
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getStartIndex() == 1);
+        assert(concerns.getEndIndex() == 1);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -92,15 +91,15 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 2);
-        assert(concerns.getFirstIndex() == 1);
-        assert(concerns.getLastIndex() == 2);
+        assert(concerns.getStartIndex() == 1);
+        assert(concerns.getEndIndex() == 2);
 
         //Test accounts are not included in total concern count
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /**
@@ -127,7 +126,7 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 3);
@@ -153,7 +152,7 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 3);
@@ -286,5 +285,136 @@ public class AdminApiTest extends DatastoreTest {
         }
 
         assert(containsStatus);
+    }
+
+    /****************************
+     * requestAccountList Tests *
+     ****************************/
+
+    /** Tries to request an account list with a null permission */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListNullPermissionTest() throws UnauthorizedException, BadRequestException {
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        account.build(),
+                        null);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with a null token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListNullTokenTest() throws UnauthorizedException, BadRequestException {
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        null,
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an empty token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListEmptyTokenTest() throws UnauthorizedException, BadRequestException {
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        "",
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an invalid limit */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListInvalidLimitTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(0, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+    /** Tries to request an account list with an invalid token */
+    @Test (expected = BadRequestException.class)
+    public void requestAccountListInvalidOffsetTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, -1,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+        new AdminApi().requestAccountList(request.build());
+    }
+
+
+    /** Tries to request an account list validly */
+    @Test
+    public void requestAccountListTest() throws UnauthorizedException, BadRequestException {
+        new AccountDao().save(new Account("Administrator","Administrator", AccountPermissions.ADMIN, true));
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                                                                            account.build(),
+                                                                            AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 1);
+        assert(response.getStartIndex() == 1);
+        assert(response.getEndIndex() == 1);
+    }
+
+    /** Tries to request an account list validly containing multiple accounts*/
+    @Test
+    public void requestAccountListMultipleTest() throws UnauthorizedException, BadRequestException {
+        AccountDao dao = new AccountDao();
+        dao.save(new Account("Administrator","Administrator", AccountPermissions.ADMIN, true));
+        dao.save(new Account("Administrator2","Administrator2", AccountPermissions.ADMIN, true));
+        dao.save(new Account("Administrator3","Administrator3", AccountPermissions.ADMIN, true));
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(3, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 3);
+        assert(response.getStartIndex() == 1);
+        assert(response.getEndIndex() == 3);
+    }
+
+    /** Tries to request an account list validly from an empty database */
+    @Test
+    public void requestAccountListEmptyTest() throws UnauthorizedException, BadRequestException {
+
+        TestAccountBuilder account = new TestAccountBuilder("test admin", "email", AccountPermissions.ADMIN, true);
+
+        AccountListRequest.TestHook_MutableAccountListRequest request =
+                new AccountListRequest.TestHook_MutableAccountListRequest(1, 0,
+                        account.build(),
+                        AccountPermissions.ADMIN);
+
+
+        AccountListResponse response = new AdminApi().requestAccountList(request.build());
+        assertNotNull( response.getItems() );
+        assert(response.getTotalItemsCount() == 0);
+        assert(response.getStartIndex() == 0);
+        assert(response.getEndIndex() == 0);
     }
 }
