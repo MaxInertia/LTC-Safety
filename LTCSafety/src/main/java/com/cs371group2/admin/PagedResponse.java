@@ -1,6 +1,10 @@
 package com.cs371group2.admin;
 
+import com.cs371group2.Dao;
+
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * This class represents a PagedResponse in the database, and is used to return a list of elements along with paging
@@ -10,10 +14,7 @@ import java.util.List;
  *
  * Created on 2017-03-13.
  */
-public class PagedResponse<E>{
-
-    /** The list of elements received from the response */
-    private List<E> responseList;
+public class PagedResponse {
 
     /** The paging index of the first concern in the list .*/
     private int pageStartIndex;
@@ -25,20 +26,22 @@ public class PagedResponse<E>{
     private int totalItemsCount;
 
     /**
-     * Creates a new PagedResponse containing a list of entities and the paging information associated with it.
+     * Creates a new PagedResponse containing the paging information associated with it.
      *
-     * @param responseList The list of elements represented by the response
-     * @param pageStartIndex The index of the first element (starting at 1)
-     * @precond responseList != null
+     * @param startIndex The index of the first element (indexed starting at 1)
+     * @param endIndex The index of the last element (indexed starting at 1
+     * @param totalItems The total number of items in the datastore
+     * @precond totalItems >= 0
+     * @precond startIndex <= endIndex
      */
-    public PagedResponse(List<E> responseList, int pageStartIndex) {
-        assert(responseList != null);
-        this.responseList = responseList;
-        this.totalItemsCount = responseList.size();
-        this.pageStartIndex = pageStartIndex;
-        this.pageEndIndex = pageStartIndex + totalItemsCount;
-
+    protected PagedResponse(int startIndex, int endIndex, int totalItems) {
+        assert (0 <= totalItems);
+        assert (startIndex <= endIndex);
+        this.totalItemsCount = totalItems;
+        this.pageStartIndex = startIndex;
+        this.pageEndIndex = endIndex;
     }
+
 
     public int getStartIndex() {
         return pageStartIndex;
@@ -50,9 +53,5 @@ public class PagedResponse<E>{
 
     public int getTotalItemsCount() {
         return totalItemsCount;
-    }
-
-    public List<E> getItems(){
-        return responseList;
     }
 }
