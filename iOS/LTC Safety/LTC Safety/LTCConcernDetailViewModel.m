@@ -187,13 +187,15 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         // Sets up the concern information section
         [self addFormSection:[self createConcernInfoSection:concern]];
 
+        // Sets up the concern description section
+        if(concern.descriptionProperty != nil){
+            [self addFormSection:[self createDescriptionSection:concern]];
+        }
+        
         // Sets up the actions taken section
         if(concern.actionsTaken != nil){
             [self addFormSection:[self createActionsTakenSection:concern]];
         }
-        // Sets up the concern description section
-        [self addFormSection:[self createDescriptionSection:concern]];
-        
         
         // Sets up the concern status log
         [self addFormSection:[self createStatusLogSection:concern]];
