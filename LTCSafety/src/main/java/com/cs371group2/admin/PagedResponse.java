@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 public class PagedResponse {
 
     /** The paging index of the first concern in the list .*/
-    private int pageStartIndex;
+    int pageStartIndex;
 
     /** The paging index of the last concern in the list. */
-    private int pageEndIndex;
+    int pageEndIndex;
 
     /** The total number of items returned from the response */
-    private int totalItemsCount;
+    int totalItemsCount;
 
     /**
      * Creates a new PagedResponse containing the paging information associated with it.
@@ -34,7 +34,7 @@ public class PagedResponse {
      * @precond totalItems >= 0
      * @precond startIndex <= endIndex
      */
-    protected PagedResponse(int startIndex, int endIndex, int totalItems) {
+    public PagedResponse(int startIndex, int endIndex, int totalItems) {
         assert (0 <= totalItems);
         assert (startIndex <= endIndex);
         this.totalItemsCount = totalItems;

@@ -13,7 +13,6 @@ import com.cs371group2.concern.*;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-import java.util.List;
 import org.junit.Test;
 
 /**
@@ -28,7 +27,7 @@ public class AdminApiTest extends DatastoreTest {
     @Test (expected = UnauthorizedException.class)
     public void getConcernListUnauthorizedTest() throws UnauthorizedException, BadRequestException {
         AdminApi api = new AdminApi();
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
     }
 
     /** Tries to load concerns from an empty database and verifies that a list of size zero is returned */
@@ -38,12 +37,12 @@ public class AdminApiTest extends DatastoreTest {
         AdminApi api = new AdminApi();
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 0);
-        assert(concerns.getFirstIndex() == 0);
-        assert(concerns.getLastIndex() == 0);
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getStartIndex() == 0);
+        assert(concerns.getEndIndex() == 0);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /*** Tests that loading a single concern from the database in a list is functioning properly */
@@ -62,15 +61,13 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(1, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 1);
-        assert(concerns.getFirstIndex() == 1);
-        assert(concerns.getLastIndex() == 1);
-
-        //Test accounts are not included in total concern count
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getStartIndex() == 1);
+        assert(concerns.getEndIndex() == 1);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -94,15 +91,15 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(5, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 2);
-        assert(concerns.getFirstIndex() == 1);
-        assert(concerns.getLastIndex() == 2);
+        assert(concerns.getStartIndex() == 1);
+        assert(concerns.getEndIndex() == 2);
 
         //Test accounts are not included in total concern count
-        assert(concerns.getTotalConcerns() == 0);
+        assert(concerns.getTotalItemsCount() == 0);
     }
 
     /**
@@ -129,7 +126,7 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 0, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 3);
@@ -155,7 +152,7 @@ public class AdminApiTest extends DatastoreTest {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
 
-        ConcernListRequestResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
+        ConcernListResponse concerns = api.requestConcernList(new ConcernListRequest.TestHook_MutableConcernListRequest(3, 2, builder.build()).build());
 
         assertNotNull(concerns);
         assert(concerns.getConcernList().size() == 3);
