@@ -64,7 +64,6 @@
 		117DBDFC1E45BE69002F2EED /* LTCConcernTableViewCellTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFB1E45BE69002F2EED /* LTCConcernTableViewCellTests.m */; };
 		117DBDFE1E45DFF5002F2EED /* LTCConcernViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBDFD1E45DFF5002F2EED /* LTCConcernViewControllerTests.m */; };
 		117DBDFF1E463C95002F2EED /* LTCConcern+CoreDataClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 117DBD631E42DED9002F2EED /* LTCConcern+CoreDataClass.m */; };
-		118D2CF31E5C11850020A43A /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 118D2CF21E5C11850020A43A /* UserNotifications.framework */; };
 		118D2CF51E5C15750020A43A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 118D2CF41E5C15750020A43A /* GoogleService-Info.plist */; };
 		1196A7FE1E3EB6A000FFA757 /* LTCCoreDataTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 1196A7FD1E3EB6A000FFA757 /* LTCCoreDataTestCase.m */; };
 		9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71FB767D6B2EF1D73E1164EE /* libPods-LTC Safety.a */; };
@@ -202,7 +201,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				118D2CF31E5C11850020A43A /* UserNotifications.framework in Frameworks */,
 				9230BBE9FDE38CBA70C7838E /* libPods-LTC Safety.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -527,7 +525,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 1;
+								enabled = 0;
 							};
 							com.apple.Push = {
 								enabled = 1;
