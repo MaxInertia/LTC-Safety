@@ -103,7 +103,7 @@ public class ConcernDaoTest extends DatastoreTest {
         dao.save(firstConcern);
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        List<Concern> concernList = dao.load(account, 0, 1);
+        List<Concern> concernList = dao.load(account, 0, 1, false);
 
         assertEquals(firstConcern, concernList.get(0));
 
@@ -111,7 +111,7 @@ public class ConcernDaoTest extends DatastoreTest {
         Concern secondConcern = new Concern(concernData);
         dao.save(secondConcern);
 
-        concernList = dao.load(account, 0, 1);
+        concernList = dao.load(account, 0, 1, false);
 
         assertEquals(secondConcern, concernList.get(0));
     }
@@ -122,7 +122,7 @@ public class ConcernDaoTest extends DatastoreTest {
         List<Concern> concernList;
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        concernList = dao.load(account, -1, 5);
+        concernList = dao.load(account, -1, 5, false);
     }
 
     @Test (expected = AssertionError.class)
@@ -131,27 +131,7 @@ public class ConcernDaoTest extends DatastoreTest {
         List<Concern> concernList;
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        concernList = dao.load(account, 0, -1);
-    }
-
-    /**
-     * This test saves and loads a concern from the "Other" facility in the form of a list
-     */
-    @Test
-    public void LoadConcernsFromOther(){
-
-        ConcernDao dao = new ConcernDao();
-        ConcernTest concernTest = new ConcernTest();
-        ConcernData concernData = concernTest.generateConcernData().build();
-
-        Concern firstConcern = new Concern(concernData);
-        dao.save(firstConcern);
-
-        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        List<Concern> concerns = dao.load(account, 0, 1);
-
-        assertNotNull(concerns);
-        assertTrue(concerns.size() > 0);
+        concernList = dao.load(account, 0, -1, false);
     }
 
     /**

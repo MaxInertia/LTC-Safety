@@ -88,7 +88,7 @@ public class ConcernDao extends Dao<Concern> {
      * @precond limit != null && limit > 0
      * @precond account != null
      */
-    public List<Concern> load(Account account, int offset, int limit){
+    public List<Concern> load(Account account, int offset, int limit, boolean archived){
 
         assert account != null;
         assert(offset >= 0);
@@ -96,6 +96,7 @@ public class ConcernDao extends Dao<Concern> {
 
         return ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
+                .filter("isArchived = ", archived)
                 .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)

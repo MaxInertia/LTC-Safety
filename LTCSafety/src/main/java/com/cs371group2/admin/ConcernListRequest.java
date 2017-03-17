@@ -16,6 +16,12 @@ import java.util.logging.Logger;
  */
 public final class ConcernListRequest extends PagedRequest implements Validatable {
 
+    /** Should the request load archived or non-archived concerns? */
+    private boolean archived;
+
+    /** @return Whether the request should load archived or non-archived concerns */
+    public boolean Archived() { return archived; }
+
     /**
      * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its
      * members. An instance of TestHook_MutableConcernListRequest can be used to construct new concern request
@@ -33,11 +39,12 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
          * @param offset The concern offset of the mutable request
          * @param token The token of the mutable request
          */
-        public TestHook_MutableConcernListRequest(int limit, int offset, String token) {
+        public TestHook_MutableConcernListRequest(int limit, int offset, String token, boolean archived) {
             immutable = new ConcernListRequest();
             immutable.limit = limit;
             immutable.offset = offset;
             immutable.accessToken = token;
+            immutable.archived = archived;
         }
 
         public ConcernListRequest build(){
@@ -45,6 +52,7 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
             request.limit = immutable.limit;
             request.offset = immutable.offset;
             request.accessToken = immutable.accessToken;
+            request.archived = immutable.archived;
             return request;
         }
 
@@ -53,5 +61,7 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
         public void setMutableOffset(int mutableOffset) { immutable.offset = mutableOffset; }
 
         public void setMutableToken(String mutableToken) { immutable.accessToken = mutableToken; }
+
+        public void setMutableArchived(boolean mutableArchived) { immutable.archived = mutableArchived; }
     }
 }

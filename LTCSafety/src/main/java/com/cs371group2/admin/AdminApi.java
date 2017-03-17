@@ -52,7 +52,7 @@ public class AdminApi {
         logger.log(Level.INFO,account + " is requesting a concern list " + request);
 
         ConcernDao dao = new ConcernDao();
-        List<Concern> list = dao.load(account, request.getOffset(), request.getLimit());
+        List<Concern> list = dao.load(account, request.getOffset(), request.getLimit(), request.Archived());
 
         logger.log(Level.INFO, "Concern list request was successful.");
         int startIndex = 0;
