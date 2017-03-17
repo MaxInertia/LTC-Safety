@@ -120,4 +120,33 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
             }
         );
     };
+
+
+    /** Toggle the archive status of concern through the admin API
+     * @precond $scope.concernRequest.accessToken != null
+     * @precond $scope.concernRequest.accessToken is not empty
+     * @precond $scope.concernRequest.concernId != null
+     * @post If the request succeeded the concern has been updated locally and on the server to be archived if it
+     *       was previously unarchived or unarchived if it was archived.
+     *       Otherwise, the modal error view has been displayed with a message stating that toggle the status failed.
+     */
+    $scope.toggleArchived = function() {
+
+        if ($scope.concernRequest.accessToken == null || $scope.concernRequest.accessToken.isEmpty) {
+            throw new Error("Attempted to update the archive status of a concern without providing an access token.");
+        }
+        if ($scope.concernRequest.concernId == null) {
+            throw new Error("Attempted to update the archive status of a concern with no id.");
+        }
+        adminApi.updateArchiveStatus($scope.concernRequest).execute(
+            function (resp) {
+                if (resp.error) {
+                    $scope.showModalError('Failed to toggle the concern archive status.');
+                } else {
+                    $scope.concern.isArchived = !$scope.concern.isArchived;
+                    $scope.$apply();
+                }
+            }
+        );
+    };
 });

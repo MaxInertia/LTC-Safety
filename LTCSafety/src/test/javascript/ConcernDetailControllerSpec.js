@@ -32,7 +32,8 @@ describe("Detail Controller", function() {
                     }
                 }
             },
-            updateConcernStatus : function(request) {}
+            updateConcernStatus : function(request) {},
+            updateArchiveStatus : function(request) {}
         };
 
         // Firebase mock to mock out authentication server calls
@@ -209,4 +210,106 @@ describe("Detail Controller", function() {
         });
     });
 
+    /**
+     * Tests for the detail controllers archive function that sends a message
+     * to the admin API to toggle the archived status of a specific concern.
+     */
+    describe('Concern archive toggle tests', function() {
+
+        /**
+         * Test that toggling the archive status fails when no token is provided.
+         */
+        it('Toggle without token test', function () {
+
+            $controller('ConcernDetailCtrl', {
+                $scope: $scope,
+                firebase: firebaseMock,
+                adminApi: adminApiMock
+            });
+
+            $scope.concernRequest.accessToken = null;
+            $scope.concernRequest.concernId = 12345;
+
+            expect($scope.toggleArchived).toThrow(
+                new Error("Attempted to update the archive status of a concern without providing an access token."));
+        });
+
+        /**
+         * Test that toggling the archive status fails when no concern id is provided.
+         */
+        it('Toggle with null concern id test', function () {
+
+            $controller('ConcernDetailCtrl', {
+                $scope: $scope,
+                firebase: firebaseMock,
+                adminApi: adminApiMock
+            });
+
+            $scope.concernRequest.accessToken = "fakeToken";
+            $scope.concernRequest.concernId = null;
+
+            expect($scope.toggleArchived).toThrow(
+                new Error("Attempted to update the archive status of a concern with no id."));
+        });
+
+        /**
+         * Test that the modal error view is displayed when toggling the status
+         * fails on the server.
+         */
+        it('Toggle with server side failure test', function () {
+
+            adminApiMock.updateArchiveStatus = function(request) {
+                return {
+                    execute: function (callback) {
+                        callback({
+                            error : "An error occurred"
+                        });
+                    }
+                };
+            };
+
+            $scope.showModalError = function(error) {};
+            spyOn($scope, 'showModalError');
+
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            $scope.concernRequest.accessToken = "fakeToken";
+            $scope.concernRequest.concernId = '12334443';
+
+            $scope.toggleArchived();
+
+            expect($scope.showModalError).toHaveBeenCalledWith('Failed to toggle the concern archive status.');
+        });
+
+        /**
+         * Test that concern.isArchived is properly toggled locally
+         * when updating the status succeeds on the server.
+         */
+        it('Successful toggle test', function () {
+
+            adminApiMock.updateArchiveStatus = function(request) {
+                return {
+                    execute: function (callback) {
+                        callback({});
+                    }
+                };
+            };
+
+            spyOn($scope, '$apply');
+
+            $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            $scope.concern = {
+                isArchived : false
+            };
+
+            $scope.concernRequest.accessToken = "fakeToken";
+            $scope.concernRequest.concernId = '12334443';
+
+            $scope.toggleArchived();
+
+            expect($scope.concern.isArchived).toEqual(true);
+            expect($scope.$apply).toHaveBeenCalled();
+        });
+    });
 });

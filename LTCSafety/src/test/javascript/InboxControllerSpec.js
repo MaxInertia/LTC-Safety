@@ -148,17 +148,20 @@ describe("Inbox Controller", function() {
 
             var limit = 25;
             var offset = 0;
+            var archived = false;
 
             // Mock out location to catch the page redirect
             var $location = {
                 url: function(path) {
-                    expect(path).toEqual('/inbox/' + limit + '/' + limit)
+                    expect(path).toEqual('/inbox/' + limit + '/' + limit + '/' + archived)
                 }
             };
 
             var controller = $controller('InboxCtrl', { $scope: $scope, $location: $location, firebase: firebaseMock, adminApi: adminApiMock });
 
+            $scope.concerns.totalItemsCount = 500;
             $scope.concernRequest.accessToken = "fakeAccessToken";
+            $scope.concernRequest.archived = archived;
             $scope.concernRequest.offset = offset;
             $scope.concernRequest.limit = limit;
 
@@ -172,11 +175,12 @@ describe("Inbox Controller", function() {
 
             var limit = 25;
             var offset = 25;
+            var archived = false;
 
             // Mock out location to catch the page redirect
             var $location = {
                 url: function(path) {
-                    expect(path).toEqual('/inbox/' + (offset - limit) + '/' + limit)
+                    expect(path).toEqual('/inbox/' + (offset - limit) + '/' + limit + '/' + archived)
                 }
             };
 
@@ -185,6 +189,7 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.offset = offset;
             $scope.concernRequest.limit = limit;
+            $scope.concernRequest.archived = archived;
 
             $scope.previousPage();
         });
@@ -205,6 +210,7 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.offset = 0;
             $scope.concernRequest.limit = 25;
+            $scope.concernRequest.archived = false;
 
             $scope.previousPage();
 
@@ -240,16 +246,14 @@ describe("Inbox Controller", function() {
         });
     });
 
-
     /**
-     * Gets the name of the current status for a concern.
-     * @param concern The concern to get the most recent status for.
-     * @pre concern != null
-     * @pre concern.statuses.length > 0
-     * @returns The name of the concern's most recent status update.
+     * Tests that the most recent status is properly loaded for each concern in the inbox controller.
      */
     describe('Concern data tests', function() {
 
+        /**
+         * Test that an error is thrown when attempting to get the current status for a null concern.
+         */
         it('Status for null concern test', function() {
 
             $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
@@ -260,6 +264,9 @@ describe("Inbox Controller", function() {
 
         });
 
+        /**
+         * Test that an error is thrown when attempting to get the current status for a concern with no statuses.
+         */
         it('Status for concern with no statuses', function() {
 
             $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
@@ -272,6 +279,9 @@ describe("Inbox Controller", function() {
             }).toThrow(new Error("Attempted to get the status of a concern with no statuses."));
         });
 
+        /**
+         * Test that the most recent status is returned when attempting to get the current status for a valid concern.
+         */
         it('Status for valid concern', function() {
 
             $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });

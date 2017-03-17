@@ -152,21 +152,6 @@ body {
   font-weight: 400;
 }
 
-.side-bar {
-  position: static;
-  display: block;
-  overflow: visible;
-  width: 15%;
-  height: auto;
-  min-width: 200px;
-  float: left;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  background-color: #434d57;
-}
-
 .side-bar-section {
   width: 100%;
   border-bottom: 2px solid #3d3d3d;
@@ -209,40 +194,6 @@ body {
   display: inline-block;
   font-size: 16px;
   text-decoration: none;
-}
-
-.nav-button {
-  display: inline-block;
-  width: 100px;
-  height: 75px;
-  padding-top: 29px;
-  float: right;
-  border-left: 2px solid #305fa0;
-  background-color: #4787df;
-  color: #fff;
-  font-size: 16px;
-  text-align: center;
-  text-decoration: none;
-}
-
-.nav-button:hover {
-  background-color: #3f7aca;
-}
-
-.nav-button:active {
-  background-color: #305fa0;
-}
-
-.view {
-  display: inline-block;
-  overflow: scroll;
-  width: 85%;
-  float: left;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  background-color: #e8e8e8;
 }
 
 .body {
@@ -323,53 +274,6 @@ body {
   flex: 1;
 }
 
-.concern-item {
-  border-bottom: 2px solid #e5e5e5;
-  text-decoration: none;
-}
-
-.concern-data {
-  display: inline-block;
-  padding-right: 25px;
-  padding-left: 25px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  color: #000;
-  font-size: 16px;
-  text-decoration: none;
-}
-
-.concern-data.expandable {
-  overflow: visible;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.concern-data.expandable.truncate {
-  overflow: visible;
-}
-
-.concern-content {
-  width: 100%;
-  padding: 25px 15px;
-}
-
-.inbox-content {
-  overflow: visible;
-  height: 50%;
-  padding-right: 25px;
-  padding-left: 25px;
-}
-
-.concern-header {
-  padding: 25px 15px;
-  border-bottom: 2px solid #e5e5e5;
-}
-
 .text-row {
   display: -webkit-box;
   display: -webkit-flex;
@@ -398,49 +302,8 @@ body {
   flex: 1;
 }
 
-.text-item.list-header.expandable.actions-taken {
-  border-bottom-style: none;
-}
-
-.text-item.list-header.concern-nature {
-  border-bottom-style: none;
-}
-
-.text-item.list-header.facility {
-  border-bottom-style: none;
-}
-
-.text-item.list-header.reporter {
-  border-bottom-style: none;
-}
-
-.text-item.list-header.phone-number {
-  width: 175px;
-}
-
-.text-item.list-header.email {
-  width: 250px;
-}
-
-.text-item.list-header.room-name {
-  width: 150px;
-}
-
-.text-item.reporter {
-  position: static;
-  width: 150px;
-}
-
 .text-item.submission-date {
   width: 200px;
-}
-
-.text-item.phone-number {
-  width: 175px;
-}
-
-.text-item.email {
-  width: 250px;
 }
 
 .text-item.permissions {
@@ -461,10 +324,6 @@ body {
   width: 150px;
 }
 
-.reporter {
-  width: 150px;
-}
-
 .actions-taken {
   min-width: 150px;
 }
@@ -473,32 +332,12 @@ body {
   width: 175px;
 }
 
-.concern-list {
-  overflow: scroll;
-  height: 100%;
-  margin-top: 123px;
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
 .scrollable-content {
   overflow: scroll;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
-}
-
-.right-button {
-  margin-left: 24px;
-  float: right;
-}
-
-.right-button.paging-button {
-  background-color: #4787df;
-  font-size: 16px;
 }
 
 .access-tab-container {
@@ -525,26 +364,6 @@ body {
   text-align: center;
 }
 
-.carehome-selector {
-  margin-bottom: 45px;
-  font-size: 18px;
-}
-
-.access-success {
-  margin-top: 16px;
-  padding: 8px 12px;
-  color: #61ac2b;
-}
-
-.page-info {
-  float: right;
-}
-
-.paging-button {
-  background-color: #4787df;
-  font-size: 16px;
-}
-
 .detail-header {
   display: inline-block;
   min-width: 175px;
@@ -568,26 +387,11 @@ body {
   font-size: 16px;
 }
 
-.status-dropdown {
-  display: block;
-  margin-right: 18px;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  float: left;
-  background-color: #4787df;
-  color: #fff;
-  font-size: 16px;
-}
-
 .status-dropdown-list.w--open {
   position: absolute;
   margin-bottom: 30px;
   background-color: #fff;
   box-shadow: 0 1px 3px 0 #b6b6b6;
-}
-
-.concern-detail-row {
-  margin-bottom: 250px;
 }
 
 .modal-wrapper {
@@ -604,31 +408,12 @@ body {
   text-align: center;
 }
 
-.email-verification-wrapper {
-  display: block;
-  width: 400px;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 15px 25px 25px;
-  background-color: #fff;
-}
-
-.modal-button {
-  display: block;
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-
 .modal-text {
   padding: 15px;
 }
 
 .modal-text.error {
   color: #d52d28;
-}
-
-.modal-spacer {
-  height: 30px;
 }
 
 .splash-wrapper {
@@ -644,18 +429,6 @@ body {
   transition: opacity 200ms ease;
   color: #fff;
   font-size: 16px;
-  text-align: center;
-}
-
-.splash-content {
-  display: block;
-  width: 450px;
-  margin-top: 175px;
-  margin-right: auto;
-  margin-left: auto;
-  font-family: 'Droid Sans', sans-serif;
-  font-size: 19px;
-  font-weight: 400;
   text-align: center;
 }
 
@@ -719,31 +492,6 @@ body {
   box-shadow: 0 0 6px 0 #383e44;
 }
 
-.inbox-header {
-  position: fixed;
-  left: 200px;
-  top: 80px;
-  right: 0px;
-  z-index: 10;
-  display: none;
-  margin-right: 25px;
-  padding-left: 25px;
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 auto;
-  -ms-flex: 0 0 auto;
-  flex: 0 0 auto;
-  background-color: #fff;
-}
-
-.modal-error {
-  display: block;
-  width: 350px;
-  margin-right: auto;
-  margin-left: auto;
-  padding: 25px;
-  background-color: #fff;
-}
-
 .modal-container {
   display: block;
   width: 375px;
@@ -757,7 +505,8 @@ body {
 
 .icon-button {
   min-width: 50px;
-  margin: 6px;
+  margin-right: 6px;
+  margin-left: 6px;
   float: right;
   background-color: #4787df;
   font-family: Fontawesome, sans-serif;
@@ -784,14 +533,16 @@ body {
 }
 
 .dropdown {
-  margin-top: 6px;
-  margin-bottom: 6px;
   padding-top: 10px;
   padding-bottom: 10px;
   background-color: #4787df;
   font-family: Fontawesome, sans-serif;
   color: #fff;
   font-size: 16px;
+}
+
+.dropdown.status-dropdown {
+  width: 175px;
 }
 
 .list-header {
@@ -813,6 +564,7 @@ body {
 
 .permissions-dropdown {
   width: 200px;
+  margin-top: 7px;
 }
 
 .list-footer {
@@ -850,9 +602,31 @@ body {
 }
 
 .button {
+  display: inline-block;
+  height: 42px;
   min-width: 100px;
   margin: 6px;
   background-color: #4787df;
+}
+
+.button.archive {
+  display: inline-block;
+  width: 175px;
+  padding-top: 11px;
+  float: left;
+  font-size: 16px;
+  text-align: center;
+}
+
+.column {
+  margin-bottom: 250px;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+
+.dropdown-container {
+  margin: 6px;
+  float: left;
 }
 
 @font-face {

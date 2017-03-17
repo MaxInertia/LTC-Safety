@@ -31,8 +31,8 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
      * @type {{pageStartIndex: number, pageEndIndex: number, totalItemsCount: number, items: Array}}
      */
     $scope.accounts = {
-        pageStartIndex : 0,
-        pageEndIndex : 0,
+        startIndex : 0,
+        endIndex : 0,
         totalItemsCount : 0,
         items : []
     };

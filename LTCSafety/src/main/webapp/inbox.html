@@ -1,6 +1,6 @@
 <div class="main-content" ng-controller="InboxCtrl">
     <div class="flex-header w-clearfix"><a class="icon-button w-button" href="#" ng-click="refresh()"></a><a class="icon-button w-button" href="#" ng-click="nextPage()"></a><a class="icon-button w-button" href="#" ng-click="previousPage()"></a>
-        <div class="paging-text">{{concerns.firstIndex}} - {{concerns.lastIndex}} of {{concerns.totalConcerns}}</div>
+        <div class="paging-text">{{concerns.startIndex}} - {{concerns.endIndex}} of {{concerns.totalItemsCount}}</div>
     </div>
     <div class="list-header">
         <div class="concern-nature text-item"><strong>Nature of Concern</strong>

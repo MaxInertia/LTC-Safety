@@ -8,7 +8,7 @@
       <nav class="status-dropdown-list w-dropdown-list"><a class="w-dropdown-link" href="#" ng-click="filterType(&#39;UNVERIFIED&#39;)">Unverified</a><a class="w-dropdown-link" href="#" ng-click="filterType(&#39;ADMIN&#39;)">Admin</a><a class="w-dropdown-link" href="#" ng-click="filterType(&#39;DENIED&#39;)">Denied</a>
       </nav>
     </div><a class="icon-button w-button" href="#" ng-click="refreshAccounts()"></a><a class="icon-button w-button" href="#" ng-click="nextPage()"></a><a class="icon-button w-button" href="#" ng-click="previousPage()"></a>
-    <div class="paging-text">{{accounts.pageStartIndex}} - {{accounts.pageEndIndex}} of {{accounts.totalItemsCount}}</div>
+    <div class="paging-text">{{accounts.startIndex}} - {{accounts.endIndex}} of {{accounts.totalItemsCount}}</div>
   </div>
   <div class="list-header">
     <div class="expandable text-item"><strong>Account Email</strong>
@@ -33,4 +33,3 @@
   </ul>
   <div class="list-footer"></div>
 </div>
-  

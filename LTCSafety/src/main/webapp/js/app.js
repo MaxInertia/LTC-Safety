@@ -9,14 +9,14 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
             $locationProvider.hashPrefix('!');
 
             /**
-             * Converts an object into an unsigned it and returns a promise that evaluates to the result.
+             * Converts a string into an unsigned it and returns a promise that evaluates to the result.
              * This function should be used for safely routing unsigned integers to controllers.
              * @precond defer != null
              * @param defer The defer that the returned promise is created from.
              * @param value The value that is attempted to be converted into an unsigned integer.
              * @returns A promise that can be used to extract the result.
              *      If parsing fails then the promise evaluates to an error message.
-             *      If the parsing succeeded then the parsing evaluates to an unsigned integer.
+             *      If the parsing succeeded then it evaluates to an unsigned integer.
              */
             var parseUnsignedInt = function (defer, value) {
 
@@ -29,7 +29,48 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
                 return defer.promise;
             };
 
-            var pagingResolver = {
+            /**
+             * Converts a string into a boolean and returns a promise that evaluates to the parsed boolean value
+             * used to check that valid boolean values are passed as route providers.
+             * @param defer The defer that the returned promise is created from.
+             * @param value The value that is attempted to be converted into a boolean.
+             * @returns A promise that can be used to extract the result.
+             *      If parsing fails then the promise evaluates to an error message.
+             *      If the parsing succeeded then it evaluates to a boolean.
+             */
+            var parseBoolean = function(defer, value) {
+
+                if (value == 'true' || value == 'false') {
+                    defer.resolve(Boolean(value));
+                } else {
+                    defer.reject('Expected boolean. Found: ' + value);
+                }
+                return defer.promise;
+            };
+
+            /**
+             * Resolver for the manage-accounts.html view that verifies that the offset and limit are integers
+             * and that the archived value is a boolean.
+             */
+            var inboxResolver = {
+                offset: function ($q, $route) {
+                    return parseUnsignedInt($q.defer(),
+                        $route.current.params.offset);
+                },
+                limit: function ($q, $route) {
+                    return parseUnsignedInt($q.defer(),
+                        $route.current.params.limit);
+                },
+                archived: function ($q, $route) {
+                    return parseBoolean($q.defer(),
+                        $route.current.params.archived);
+                }
+            };
+
+            /**
+             * Resolver for the manage-accounts.html view that verifies that the offset and limit are integers.
+             */
+            var manageAccountResolver = {
                 offset: function ($q, $route) {
                     return parseUnsignedInt($q.defer(),
                         $route.current.params.offset);
@@ -43,14 +84,14 @@ var safetyApp = angular.module('safetyApp', ['ngRoute']).config(
             /**
              * The route provider configuration mapping partial page url's to their appropriate HTML pages and controllers.
              */
-            $routeProvider.when('/inbox/:offset/:limit', {
+            $routeProvider.when('/inbox/:offset/:limit/:archived', {
                 templateUrl: '/inbox.html',
-                resolve: pagingResolver
+                resolve: inboxResolver
             }).when('/concern-detail/:id', {
                 templateUrl: '/concern-detail.html'
             }).when('/manage-accounts/:accountType/:offset/:limit', {
                 templateUrl: '/manage-accounts.html',
-                resolve: pagingResolver
+                resolve: manageAccountResolver
             }).otherwise({
                 redirectTo: '/'
             });

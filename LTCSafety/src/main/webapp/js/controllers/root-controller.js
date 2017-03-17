@@ -46,7 +46,7 @@ safetyApp.controller('RootCtrl',
                     $scope.showTab('Splash-Status-Verification-Tab');
                 } else {
                     $scope.hideSplashScreen();
-                    $location.path('/inbox/0/25');
+                    $location.path('/inbox/0/25/false');
                 }
                 $scope.$apply();
             }

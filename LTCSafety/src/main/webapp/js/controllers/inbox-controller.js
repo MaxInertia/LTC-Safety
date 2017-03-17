@@ -14,9 +14,9 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      */
     //$scope.concerns = [];
     $scope.concerns = {
-        firstIndex : 0,
-        lastIndex : 0,
-        totalConcerns : 0,
+        startIndex : 0,
+        endIndex : 0,
+        totalItemsCount : 0,
         concernList : []
     };
 
@@ -39,7 +39,7 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
         accessToken : null,
         limit : parseInt($routeParams.limit),
         offset : parseInt($routeParams.offset),
-        archived: Boolean($routeParams.archived)
+        archived: $routeParams.archived
     };
 
     /**
@@ -96,7 +96,7 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
         }
 
         var nextOffset = +$scope.concernRequest.offset + +$scope.concernRequest.limit;
-        if (nextOffset < $scope.concerns.totalConcerns) {
+        if (nextOffset < $scope.concerns.totalItemsCount) {
             $location.url('/inbox/' + nextOffset + '/' + $scope.concernRequest.limit + '/' + $scope.concernRequest.archived);
         } else {
             console.log("Attempted to fetch a page with an offset greater than the total number of items.");
@@ -109,7 +109,7 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
      * @precond $scope.concernRequest.accessToken is a valid Firebase token
      * @precond $scope.concernRequest.accessToken != null
      * @precond $scope.concernRequest.offset >= $scope.concernRequest.limit
-     * @precond $scope.concernRequest.archived != null
+     * @precond $scope.concernRequest.archived != null`
      * @postcond The concern list view has been updated to show the previous page of newer concerns.
      */
     $scope.previousPage = function () {
@@ -169,37 +169,8 @@ safetyApp.controller('InboxCtrl', function InboxCtrl($scope, $location, $routePa
 
         adminApi.requestConcernList($scope.concernRequest).execute(
             function (resp) {
-                console.log(resp);
                 $scope.concerns = resp;
                 $scope.$apply();
-            }
-        );
-    };
-
-    /** Toggle the archive status of concern
-    * @pre
-     */
-    $scope.toggleArchived = function() {
-
-        if ($scope.concernRequest.accessToken == null || $scope.concernRequest.accessToken.isEmpty) {
-            throw new Error("Attempted to update the archive status of a concern without providing an access token.");
-        }
-        if ($scope.concernRequest.concernId == null) {
-            throw new Error("Attempted to update the archive status of a concern with no id.");
-        }
-
-        var request = {
-            concernId : $scope.concern.id,
-            accessToken : $scope.concernRequest.accessToken
-        };
-        adminApi.updateArchiveStatus(request).execute(
-            function (resp) {
-                if (resp.error) {
-                    $scope.showModalError('Failed to toggle the concern archive status.');
-                } else {
-                    $scope.concern.isArchived = !$scope.concern.isArchived;
-                    $scope.$apply();
-                }
             }
         );
     };
