@@ -18,6 +18,10 @@ import c371g2.ltc_safety.R;
  * @HistoryProperties none
  */
 class ChooserView{
+
+    /**
+     * Constructor to prevent initializing instances of the class.
+     */
     private ChooserView(){}
 
     /**
@@ -46,6 +50,7 @@ class ChooserView{
      * @param choices The choices to be displayed in the popup.
      */
     private static void chooserAction(final TextView view, String title, final String[] choices) {
+        System.out.println("onClickCalled!");
         final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
         if(title == null) {
             builder.setTitle(title);

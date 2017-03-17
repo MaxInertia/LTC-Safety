@@ -1,6 +1,7 @@
 package c371g2.ltc_safety.a_main;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.AbstractNetworkViewModel;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
@@ -31,7 +32,7 @@ public interface MainViewModel_TestHook {
      * @preconditions none.
      * @modifies MainViewModel.concernList is reinitialized.
      */
-    void clearConcernList();
+    void clearConcernList(MainViewModel mainViewModel);
 
     /**
      * Adds a concern to the list of concerns in MainViewModel.
@@ -42,5 +43,11 @@ public interface MainViewModel_TestHook {
      * @param concern The concern to be added.
      * @throws NullPointerException If MainViewModel.concernList was not initialized prior to calling
      */
-    void addConcern(ConcernWrapper concern) throws NullPointerException;
+    //void addConcern(MainViewModel mainViewModel, ConcernWrapper concern) throws NullPointerException;
+
+    MainViewModel getMainViewModelInstance();
+
+    ConcernWrapper getConcern(ConcernRetractionObserver mainViewModel, int index);
+
+    void initializeConcernList(MainViewModel mainViewModel);
 }

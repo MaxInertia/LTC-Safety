@@ -13,19 +13,24 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.InfoDialog;
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.a_detail.ConcernDetailActivity;
 import c371g2.ltc_safety.a_new.NewConcernActivity;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
- * This is the main activity, it contains:
- * - A button that brings the user to the NewConcernActivity
- * - A list of all previously submitted concerns that, when pressed, brings the user to the ConcernDetailActivity.
+ * This is the main activity which is created when launching the application. It contains...
+ * - A button that brings the user to the NewConcernActivity.
+ * - A list of all previously submitted concerns that, when pressed, brings the user to the
+ * ConcernDetailActivity.
  *
  * Activity: ~ View-Controller
+ * Contains a static inner-Class 'Test_Hook' to aid testing.
  *
  * @Invariants
  * - The number of rows in the ListView is equal to MainViewModel.concernList.size()
+ * - This activity is only initialized once for any standard use case of the app (non-testing).
  * @HistoryProperties none
  */
 public class MainActivity extends AbstractNetworkActivity {
@@ -33,26 +38,22 @@ public class MainActivity extends AbstractNetworkActivity {
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.
      */
-    MainViewModel viewModel;
+    private MainViewModel mainViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewModel = new MainViewModel(this);
-        MainViewModel.initialize(getBaseContext());
-        assert(MainViewModel.getSortedConcernList() != null);
+        if(getIntent().getSerializableExtra("observer") != null) {
+            mainViewModel = ((MainViewModel) getIntent().getSerializableExtra("observer"));
+        } else {
+            mainViewModel = new MainViewModel(this);
+        }
+
+        assert(mainViewModel.getSortedConcernList() != null);
         populateConcernsList();
-
-        Button newConcernButton = (Button) findViewById(R.id.main_newConcernButton);
-        setNewConcernButtonListener(newConcernButton);
-        assert(newConcernButton.hasOnClickListeners());
-
-        //if(savedInstanceState==null || !savedInstanceState.getBoolean("testing",false)) {
-            //viewModel.updateConcerns(getBaseContext()); // Calls client-API fetchConcerns
-        //}
-        //Toast.makeText(getBaseContext(),"onCreate was called!",Toast.LENGTH_LONG).show();
+        setupNewConcernButton();
     }
 
     @Override
@@ -66,15 +67,30 @@ public class MainActivity extends AbstractNetworkActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.action_reload_concerns) {
             if(!hasNetworkAccess()) {
-                Toast.makeText(getBaseContext(),"Internet connection required",Toast.LENGTH_LONG).show();
+                Toast.makeText(
+                        getBaseContext(),
+                        "Internet connection required",
+                        Toast.LENGTH_LONG
+                ).show();
             } else {
-                viewModel.updateConcerns(getBaseContext());
-                progressDialog = displayInfoDialogue(
-                        null,
-                        "Please wait... Updating concern statuses",
-                        null,
-                        false
-                );
+                if(mainViewModel.updateConcerns()) { // TODO: removed getContext() from updateConcern
+                    progressDialog = InfoDialog.createInfoDialogue(
+                            MainActivity.this,
+                            null,
+                            "Please wait... Updating concern statuses",
+                            null,
+                            false
+                    );
+                } else {
+                    progressDialog = InfoDialog.createInfoDialogue(
+                            MainActivity.this,
+                            null,
+                            "No concerns to update!",
+                            null,
+                            true
+                    );
+                }
+                progressDialog.show();
                 assert (progressDialog != null && progressDialog.isShowing());
             }
             return true;
@@ -83,18 +99,22 @@ public class MainActivity extends AbstractNetworkActivity {
     }
 
     /**
-     * Sets the onClickListener for the newConcernButton.
-     * @preconditions newConcernButton is not null.
-     * @modifies An onClickListener is assigned to newConcernButton.
-     * @param newConcernButton The button that brings the user to the NewConcernActivity.
+     * Sets up the onClickListener for the button that brings the user to the NewConcernActivity
+     * for submitting concerns.
+     * @preconditions none
+     * @modifies
+     * - An onClickListener is assigned to newConcernButton.
      */
-    private void setNewConcernButtonListener(@NonNull Button newConcernButton) {
+    private void setupNewConcernButton() {
+        Button newConcernButton = (Button) findViewById(R.id.main_newConcernButton);
+        assert(newConcernButton != null);
         newConcernButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openNewConcernActivity();
             }
         });
+        assert(newConcernButton.hasOnClickListeners());
     }
 
     /**
@@ -108,7 +128,7 @@ public class MainActivity extends AbstractNetworkActivity {
         ConcernListAdapter adapter = new ConcernListAdapter(
                 this,
                 R.layout.concern_list_item,
-                MainViewModel.getSortedConcernList()
+                mainViewModel.getSortedConcernList()
         );
         ListView concernList = (ListView) findViewById(R.id.main_concernListView);
         assert(concernList != null);
@@ -117,7 +137,7 @@ public class MainActivity extends AbstractNetworkActivity {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        openConcernDetailActivity(position);
+                        openConcernDetailActivity(mainViewModel.getConcernAtIndex(position));
                     }
                 }
         );
@@ -127,28 +147,68 @@ public class MainActivity extends AbstractNetworkActivity {
     /**
      * Switches the activity to the new concern activity. The new concern activity contains fields
      * which when filled specify a concern. The specified concern can then be submitted.
-     * @preconditions none
+     * @preconditions mainViewModel has been initialized
      * @modifies The active activity changes from MainActivity to NewConcernActivity.
      */
     private void openNewConcernActivity() {
         Intent newConcernIntent = new Intent(MainActivity.this, NewConcernActivity.class);
         assert(newConcernIntent != null);
+        newConcernIntent.putExtra("observer",mainViewModel);
+        assert(newConcernIntent.getExtras().getSerializable("observer").equals(mainViewModel));
         MainActivity.this.startActivity(newConcernIntent);
     }
 
     /**
      * Switches the activity to ConcernDetailActivity. The activity contains fields which are filled
      * with data from a Concern object.
-     * @preconditions none
+     * @preconditions mainViewModel has been initialized
      * @modifies The active activity changes from MainActivity to ConcernDetailActivity.
-     * @param index The row of the listView pressed and the storage index of the concern whose data
-     *              was displayed on that row.
+     * @param concern The concern that corresponds to the row in the ListView of concerns that was
+     *                pressed.
      */
-    private void openConcernDetailActivity(int index) {
+    private void openConcernDetailActivity(@NonNull ConcernWrapper concern) {
         Intent concernDetailIntent = new Intent(MainActivity.this, ConcernDetailActivity.class);
         assert(concernDetailIntent != null);
-        concernDetailIntent.putExtra("concern-index",index);
-        assert(concernDetailIntent.getExtras().getInt("concern-index")==index);
+        concernDetailIntent.putExtra("observer",mainViewModel);
+        concernDetailIntent.getExtras().getSerializable("observer").equals(mainViewModel);
+        assert(concernDetailIntent.getExtras().getSerializable("observer").equals(mainViewModel));
+        concernDetailIntent.putExtra("concern",concern);
+        assert(concernDetailIntent.getExtras().getSerializable("concern").equals(concern));
         MainActivity.this.startActivity(concernDetailIntent);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
+     *
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
+     */
+    public static class Test_Hook {
+        public static MainViewModel getMainViewModel(MainActivity mainActivity) {
+            return mainActivity.mainViewModel;
+        }
+
+        public static void call_openConcernDetailActivity(MainActivity activity,
+                                                          ConcernWrapper concern) {
+            activity.openConcernDetailActivity(concern);
+        }
+
+        public static void testhook_call_openNewConcernActivity(MainActivity activity) {
+            activity.openNewConcernActivity();
+        }
+
+        public static void addConcern(MainActivity activity, ConcernWrapper concern) {
+            MainViewModel.Test_Hook.addConcern(activity.mainViewModel, concern);
+        }
+
+        public static MainViewModel getNewMainViewModel() {
+            return MainViewModel.Test_Hook.instance.getMainViewModelInstance();
+        }
     }
 }

@@ -1,43 +1,10 @@
 apply plugin: 'com.android.application'
-//apply plugin: 'jacoco'
 apply plugin: 'jacoco-android'
-//apply from: 'gradle/jacoco.gradle'
-//apply from: 'gradle/functionalTest.gradle'
 
-//jacocoTestReport {
-//    reports {
-//        html.enabled true
-//    }
-//}
-
-/*apply plugin: 'com.vanniktech.android.junit.jacoco'
-apply plugin: 'com.github.kt3k.coveralls'
-
-junitJacoco {
-    //jacocoVersion = '0.7.6.201602180812'
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/jacoco/debug/jacoco.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
-}*/
 
 jacoco {
-    //toolVersion = "0.6.4.201312101107"
     toolVersion = "0.7.7.201606060606"
-    //toolVersion = "0.7.5.201505241946"
-    //toolVersion = "0.7.4.201502262128"
 }
-
-//junitJacoco {
-//    jacocoVersion = '0.7.2.201409121644' // type String
-//    ignoreProjects = [] // type String array
-//    excludes // type String List
-//}
 
 android {
     compileSdkVersion 25
@@ -57,10 +24,10 @@ android {
 
     }
     buildTypes {
-        //release {
-        //    minifyEnabled false
-        //    proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        //}
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         debug {
             testCoverageEnabled = true
         }
@@ -88,8 +55,8 @@ dependencies {
     }
 
     // -- Dependencies for testing --
-    testCompile "org.mockito:mockito-android:2.+"
     testCompile 'junit:junit:4.12'
+    androidTestCompile "org.mockito:mockito-android:2.+"
     androidTestCompile 'com.android.support:support-annotations:25.1.1'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'

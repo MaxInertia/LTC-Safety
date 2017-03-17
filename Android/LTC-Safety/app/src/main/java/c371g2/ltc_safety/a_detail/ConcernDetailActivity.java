@@ -1,34 +1,38 @@
 package c371g2.ltc_safety.a_detail;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
 import java.util.List;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.InfoDialog;
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_main.ConcernRetractionObserver;
+import c371g2.ltc_safety.a_main.MainActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
 /**
- * This activity displays all data corresponding to a given concern. The concern is specified by
- * it's index in MainViewModel.concernList which is recovered from the Activity intent (Placed in
- * the intent by the parent activity: MainActivity).
+ * This activity displays all data corresponding to a given concern. The concern is passed to this
+ * activity along with the ConcernRetractionObserver instance through the Activity Intent.
  *
  * Activity: ~ View-Controller
  *
+ * Contains a static inner-class 'Test_Hook' to aid testing.
+ *
  * @Invariants
  * - The text fields with name, concernType, and faculty data are not empty.
- * - The text fields with phoneNumber and emailAddress data are not both empty.
+ * - The text field with the phoneNumber and the text field with the emailAddress are not both empty.
  * @HistoryProperties
  * - For a given instance of this activity, the fields do not change (same instances throughout
  * lifetime) after they are set by the populateFields() method. The method is only called once.
@@ -38,48 +42,60 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.
      */
-    final ConcernDetailViewModel concernDetailViewModel = new ConcernDetailViewModel(this);
+    private ConcernDetailViewModel concernDetailViewModel;
     /**
      * Reference to the button used to retract a concern.
      */
-    Button retractConcernButton;
+    private Button retractConcernButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_concern);
 
-        retractConcernButton = (Button) findViewById(R.id.detailedConcern_retractButton);
-        setRetractConcernButtonListener();
+        ConcernWrapper concern = ((ConcernWrapper) getIntent().getSerializableExtra("concern"));
+        concernDetailViewModel = new ConcernDetailViewModel(
+                this,
+                concern,
+                (ConcernRetractionObserver) getIntent().getSerializableExtra("observer")
+        );
 
-        populateFields(concernDetailViewModel.getConcern(
-                getIntent().getExtras().getInt("concern-index")
-        ));
+        setupRetractConcernButton();
+        populateFields(concern) ;
     }
 
     @Override
-    public void onDestroy() {
-        concernDetailViewModel.nullifyInstance();
-        super.onDestroy();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("observer",concernDetailViewModel.getObserver());
+            this.startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
-     * Sets the onClickListener for the retractConcernButton.
-     * @preconditions retractConcernButton was initialized via 'findViewById()' prior to calling
-     * this method.
-     * @modifies Assigns a OnClickListener to retraceConcernButton.
+     * Sets up the button used to retract the concern that is currently being viewed.
+     * @preconditions none
+     * @modifies
+     * - Initializes retractConcernButton with reference to button on view.
+     * - Assigns an OnClickListener to retraceConcernButton.
      */
-    private void setRetractConcernButtonListener() {
+    private void setupRetractConcernButton() {
+        retractConcernButton = (Button) findViewById(R.id.detailedConcern_retractButton);
         assert(retractConcernButton != null);
         retractConcernButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = displayInfoDialogue(
+                progressDialog = InfoDialog.createInfoDialogue(
+                        ConcernDetailActivity.this,
                         null,
                         "Please wait",
                         null,
                         false
                 );
+                progressDialog.show();
                 assert(progressDialog != null && progressDialog.isShowing());
                 concernDetailViewModel.retractConcern();
             }
@@ -149,9 +165,11 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
 
     /**
      * Add one row to the layout for each concern Status in the concernStatuses list.
-     * @preconditions concernStatuses is not null.
-     * @modifies One view is added to the activity layout for each concern in the list concernStatuses.
-     * @param concernStatuses List of concern Statuses
+     * @preconditions
+     * - concernStatuses is not null.
+     * @modifies
+     * - One view is added to the activity layout for each concern in the list concernStatuses.
+     * @param concernStatuses List of concern Statuses corresponding to the concern of interest.
      */
     void setupConcernStatusList(@NonNull List concernStatuses) {
         ViewGroup statusLayout = (ViewGroup) findViewById(R.id.detailedConcern_statusLayout);
@@ -214,5 +232,24 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
                     .setText(value);
         }
         view.addView(row);
+    }
+
+    // ---------------------------------------------------------------------------------------------
+
+
+    /**
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
+     *
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
+     */
+    static class Test_Hook {
+        static ConcernDetailViewModel getConcernDetailViewModel(ConcernDetailActivity activity) {
+            return activity.concernDetailViewModel;
+        }
     }
 }

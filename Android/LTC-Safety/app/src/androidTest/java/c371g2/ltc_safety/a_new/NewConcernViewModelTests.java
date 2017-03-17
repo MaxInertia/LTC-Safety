@@ -9,10 +9,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_main.ConcernSubmissionObserver;
 
 import static junit.framework.Assert.assertTrue;
 
@@ -23,25 +26,25 @@ import static junit.framework.Assert.assertTrue;
 public class NewConcernViewModelTests {
 
     @Rule
-    public ActivityTestRule<NewConcernActivity> activityRule = new ActivityTestRule<>(NewConcernActivity.class);
+    public ActivityTestRule<NewConcernActivity> newConcernRule = new ActivityTestRule<>(NewConcernActivity.class, true, false);
 
-    private NewConcernActivity activity;
-    private NewConcernViewModel newConcernViewModel;
+    NewConcernActivity activity;
+    NewConcernViewModel newConcernViewModel;
 
     @Before
     public void beforeEach() {
-        activity = activityRule.launchActivity(new Intent());
-        newConcernViewModel = new NewConcernViewModel(activity);
-    }
+        ConcernSubmissionObserver concernSubmissionObserver = Mockito.mock(ConcernSubmissionObserver.class);
 
-    @After
-    public void tearDown() {
-        activity.finish();
+        Intent i = new Intent();
+        i.putExtra("observer", concernSubmissionObserver);
+        activity = newConcernRule.launchActivity(i);
+        newConcernViewModel = NewConcernActivity.Test_Hook.getViewModel(activity);
+
+        //MainViewModel_TestHook.instance.initializeConcernList(); // To initialize ConcernList
     }
 
     @Test
     public void test_ConcernSubmission_allFields() throws InterruptedException{
-
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[2];
         String actionsTaken = "Stopped wearing nerve-gear";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[2];
@@ -49,7 +52,16 @@ public class NewConcernViewModelTests {
         String reporterName = "All Fields";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
         // Check input return code
         assertTrue("Expecting VALID_INPUT return code but was "+rCode[0],SubmissionReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -63,7 +75,6 @@ public class NewConcernViewModelTests {
 
     @Test
     public void test_ConcernSubmission_NoEmail() throws InterruptedException {
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[1];
         String actionsTaken = "Ate lots of pumpkin pie";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[1];
@@ -71,8 +82,16 @@ public class NewConcernViewModelTests {
         String reporterName = "No Email";
         String emailAddress = "";
         String phoneNumber = "3063063066";
-
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
         // Check input return code
         assertTrue(SubmissionReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -86,7 +105,6 @@ public class NewConcernViewModelTests {
 
     @Test
     public void test_ConcernSubmission_NoPhone() throws InterruptedException {
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[0];
         String actionsTaken = "Had a picnic";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[0];
@@ -94,8 +112,16 @@ public class NewConcernViewModelTests {
         String reporterName = "No Phone";
         String emailAddress = "IchiKuro@soulsociety.com";
         String phoneNumber = "";
-
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
         // Check input return code
         assertTrue(SubmissionReturnCode.VALID_INPUT.equals(rCode[0]));
@@ -109,7 +135,6 @@ public class NewConcernViewModelTests {
 
     @Test
     public void test_ConcernSubmission_noConcernType() {
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = "";
         String actionsTaken = "none";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[3];
@@ -117,14 +142,23 @@ public class NewConcernViewModelTests {
         String reporterName = "No LocalConcern Type";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        // Check input return code
         assertTrue(SubmissionReturnCode.NO_CONCERN_TYPE.equals(rCode[0]));
     }
 
     @Test
     public void test_ConcernSubmission_noContactInfo() {
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[4];
         String actionsTaken = "none";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[4];
@@ -132,14 +166,23 @@ public class NewConcernViewModelTests {
         String reporterName = "Kayaba Akihiko";
         String emailAddress = "";
         String phoneNumber = "";
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        // Check input return code
         assertTrue(SubmissionReturnCode.INVALID_PHONE_AND_EMAIL.equals(rCode[0]));
     }
 
     @Test
     public void test_ConcernSubmission_noName() {
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[5];
         String actionsTaken = "none";
         String facultyName = activity.getResources().getStringArray(R.array.longtermcare_facilities)[5];
@@ -147,14 +190,23 @@ public class NewConcernViewModelTests {
         String reporterName = "";
         String emailAddress = "Kayaki@Aincrad.net";
         String phoneNumber = "3063063066";
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                "",
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,"",facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        // Check input return code
         assertTrue(SubmissionReturnCode.INVALID_NAME.equals(rCode[0]));
     }
 
     @Test
     public void test_ConcernSubmission_withDescription() throws InterruptedException{
-        NewConcernViewModel newConcernViewModel = new NewConcernViewModel(activity);
         String concernType = activity.getResources().getStringArray(R.array.concern_types)[5];
         String description = "They ate my cat!";
         String actionsTaken = "none";
@@ -163,8 +215,16 @@ public class NewConcernViewModelTests {
         String reporterName = "Crazy Cat Lady";
         String emailAddress = "kitty@cat.net";
         String phoneNumber = "3063063066";
-
-        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(concernType,actionsTaken,description,facultyName,roomName,reporterName,emailAddress,phoneNumber);
+        SubmissionReturnCode[] rCode = newConcernViewModel.submitConcern(
+                concernType,
+                actionsTaken,
+                description,
+                facultyName,
+                roomName,
+                reporterName,
+                emailAddress,
+                phoneNumber
+        );
 
         // Check input return code
         assertTrue(SubmissionReturnCode.VALID_INPUT.equals(rCode[0]));

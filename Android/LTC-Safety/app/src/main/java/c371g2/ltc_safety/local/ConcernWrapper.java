@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.appspot.ltc_safety.client.model.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * @HistoryProperties All fields are final except for the OwnerToken. For a given instance of
  * ConcernWrapper, each of those fields is only initialized via the constructor.
  */
-public class ConcernWrapper implements Comparable<ConcernWrapper>{
+public class ConcernWrapper implements Comparable<ConcernWrapper>, Serializable{
     /**
      * The Concern Nature.
      */
@@ -27,7 +28,7 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
      */
     final private String actionsTaken;
     /**
-     *
+     * Description of the concern.
      */
     final private String description;
     /**
@@ -49,7 +50,7 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
     /**
      * The token that proves ownership of this concern.
      */
-    private OwnerToken token;
+    private String tokenString;
 
     /**
      * Constructor for ConcernWrapper. Takes a Concern as input and generates a ConcernWrapper.
@@ -93,7 +94,7 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
         location = new Location(facilityName, roomName);
 
         dateSubmitted = concern.getSubmissionDate().getValue();
-        this.token = token;
+        this.tokenString = token.getToken();
 
         statuses = new ArrayList<>();
         for(ConcernStatus aStatus: concern.getStatuses()) {
@@ -229,11 +230,13 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>{
      * @return owner token.
      */
     public OwnerToken getOwnerToken() {
-        return token;
+        OwnerToken ownerToken = new OwnerToken();
+        ownerToken.setToken(tokenString);
+        return ownerToken;
     }
 
     @Override
-    public int compareTo(ConcernWrapper otherConcern) {
+    public int compareTo(@NonNull ConcernWrapper otherConcern) {
         if(dateSubmitted>otherConcern.dateSubmitted) {
             return -1;
         } else {

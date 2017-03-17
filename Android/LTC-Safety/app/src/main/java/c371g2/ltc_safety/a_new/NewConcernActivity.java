@@ -1,73 +1,85 @@
 package c371g2.ltc_safety.a_new;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
+import c371g2.ltc_safety.InfoDialog;
 import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_main.ConcernSubmissionObserver;
+import c371g2.ltc_safety.a_main.MainActivity;
+import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
  * This activity displays a form with various fields for specifying a safety concern. A concern with
- * sufficient details can be submitted to the database.
+ * sufficient details can be submitted to the database from this activity.
  *
  * Activity: ~ View-Controller
  *
  * @Invariants none
- * @HistoryProperties For a given instance of this class, the newConcernViewModel field always
- * contains the same instance.
+ * @HistoryProperties
+ * - For a given instance of this class after onCreate has been called, each field will contain a
+ * unchanging and non-null reference, effectively final.
  */
 public class NewConcernActivity extends AbstractNetworkActivity {
     /**
      * Reference to the View-Model for this Activity. All functionality in this activity that is
      * not directly related to the UI is encapsulated in the View-Model.
      */
-    final NewConcernViewModel newConcernViewModel = new NewConcernViewModel(this);
+    private NewConcernViewModel newConcernViewModel;
     /**
      * Reference to the button used to submit a concern.
      */
-    Button submitConcernButton;
+    private Button submitConcernButton;
     /**
      * The input field for the Reporters name.
      */
-    EditText nameField;
+    private EditText nameField;
     /**
      * The input field for the Reporters phone number.
      */
-    EditText phoneNumberField;
+    private EditText phoneNumberField;
     /**
      * The input field for the Reporters email address.
      */
-    EditText emailAddressField;
+    private EditText emailAddressField;
     /**
      * The input field for the name of the long term care facility.
      * Possible values located at 'R.array.longtermcare_facilities'
      */
-    TextView facilityField;
+    private TextView facilityField;
     /**
      * The input field for a room within the aforementioned LTC facility.
      */
-    EditText roomField;
+    private EditText roomField;
     /**
      * The input field for the nature of the concern.
      * Possible values located at 'R.array.concern_types'
      */
-    TextView concernNatureField;
+    private TextView concernNatureField;
     /**
      * The input field for the actions taken in response to the concern.
      */
-    EditText actionsTakenField;
+    private EditText actionsTakenField;
     /**
      * A description of the concern.
      */
-    EditText concernDescriptionField;
+    private EditText concernDescriptionField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_concern);
+        newConcernViewModel = new NewConcernViewModel(
+                this,
+                (ConcernSubmissionObserver) getIntent().getSerializableExtra("observer")
+        );
 
         nameField = (EditText) findViewById(R.id.newConcern_nameTextField);
         assert(nameField != null);
@@ -110,19 +122,25 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         super.onResume();
         // If the device has no network connection, inform user that one is required to submit a concern.
         if( !hasNetworkAccess() ) {
-            displayInfoDialogue(
+            InfoDialog.createInfoDialogue(
+                    NewConcernActivity.this,
                     "No internet connection",
                     "Internet required to submit concern",
                     null,
                     true
-            );
+            ).show();
         }
     }
 
     @Override
-    public void onDestroy() {
-        newConcernViewModel.nullifyInstance();
-        super.onDestroy();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home) {
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("observer",newConcernViewModel.getObserver());
+            this.startActivity(i);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -131,9 +149,9 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * dialog box appears asking the user to fill in the field.
      * @preconditions None.
      * @modifies
-     * - See NewConcernViewModel.submitConcern(...)
      * - Initializes progressDialog if user input for concern submission was valid.
      * - Disables the submitConcernButton if user input for concern submission was valid.
+     * - See NewConcernViewModel.submitConcern(...) for more.
      */
     private void submitConcernButtonAction() {
         assert(submitConcernButton != null);
@@ -152,16 +170,18 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         assert(response != null);
         if(!response[0].equals(SubmissionReturnCode.VALID_INPUT)) {
             // Inform user that they are missing required input
-            displayInvalidInputDialogue(response);
+            createInvalidInputDialogue(response).show();
             submitConcernButton.setEnabled(true);
         } else {
             // Actions to be performed if input is valid
-            progressDialog = displayInfoDialogue(
+            progressDialog = InfoDialog.createInfoDialogue(
+                    NewConcernActivity.this,
                     null,
                     "Please wait",
                     null,
                     false
             );
+            progressDialog.show();
             assert(progressDialog!=null && progressDialog.isShowing());
         }
     }
@@ -171,9 +191,9 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * missing one or more of the required input fields.
      * @preconditions none
      * @modifies nothing
-     * @param rCodes the return codes generated when a concern submission was attempted
+     * @param rCodes the return codes generated when a concern submission was attempted.
      */
-    private void displayInvalidInputDialogue(SubmissionReturnCode[] rCodes) {
+    private AlertDialog createInvalidInputDialogue(SubmissionReturnCode[] rCodes) {
         String message = "";
         String title = "Missing required field";
         for(int r=0; r<4; r++) {
@@ -201,11 +221,55 @@ public class NewConcernActivity extends AbstractNetworkActivity {
             }
         }
         // Display missing fields in popup
-        displayInfoDialogue(
+        return InfoDialog.createInfoDialogue(
+                NewConcernActivity.this,
                 title,
                 message,
                 null,
                 true
         );
     }
+
+    // ---------------------------------------------------------------------------------------------
+
+    /**
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
+     *
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
+     */
+    public static class Test_Hook {
+        static NewConcernViewModel getViewModel(NewConcernActivity activity) {
+            return activity.newConcernViewModel;
+        }
+
+        static void testhook_call_submitConcernButtonAction(NewConcernActivity activity) {
+            activity.submitConcernButtonAction();
+        }
+
+        static AlertDialog testhook_call_createInvalidInputDialogue(NewConcernActivity activity,
+                                                              SubmissionReturnCode[] codes) {
+            return activity.createInvalidInputDialogue(codes);
+        }
+
+        public static boolean submitConcern(
+                AbstractNetworkActivity activity,
+                ConcernSubmissionObserver mainViewModel,
+                ConcernWrapper concern) throws InterruptedException {
+
+            NewConcernViewModel newConcernViewModel = new NewConcernViewModel(
+                    activity,
+                    mainViewModel
+            );
+            return NewConcernViewModel.Test_Hook.submitConcernOutsideWithConcern(
+                    newConcernViewModel,
+                    concern
+            );
+        }
+    }
+
 }

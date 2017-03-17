@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch;
 
 /**
  * The abstract class extended by each ViewModel that performs a network operation.
+ * MainViewModel: Concern fetching (updating statuses).
  * NewConcernViewModel: Concern submission.
  * ConcernDetailViewModel: Concern retraction.
  *
@@ -16,7 +17,7 @@ public abstract class AbstractNetworkViewModel {
      */
     public AbstractNetworkActivity activity;
     /**
-     * A class used to inform a test class that a network operation has been completed.
+     * Used to inform a test class that a network operation has been completed.
      */
     public final CountDownLatch signalLatch = new CountDownLatch(1);
 }

@@ -17,7 +17,6 @@ import java.util.List;
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.a_main.DeviceStorageTests;
-import c371g2.ltc_safety.a_main.MainViewModel_TestHook;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -50,12 +49,8 @@ public class ConcernDetailActivityTests {
                  "Description here!"
         );
 
-        MainViewModel_TestHook.instance.clearConcernList();
-        MainViewModel_TestHook.instance.addConcern(concern);
-
-
         Intent i = new Intent();
-        i.putExtra("concern-index",0);
+        i.putExtra("concern",concern);
         mActivity.launchActivity(i);
 
         concernDetailActivity = mActivity.getActivity();

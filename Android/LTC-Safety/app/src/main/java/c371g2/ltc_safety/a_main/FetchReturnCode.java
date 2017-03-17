@@ -15,9 +15,9 @@ public enum FetchReturnCode {
     SUCCESS(2),
 
     /**
-     * Null object returned from fetch-API.
+     * Update attempted, but no concerns are stored on this device.
      */
-    NULL_POINTER(3);
+    NO_CONCERNS(3);
 
     public int id;
     FetchReturnCode(int id) {

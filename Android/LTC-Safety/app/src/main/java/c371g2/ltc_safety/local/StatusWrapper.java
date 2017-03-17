@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.local;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
 /**
@@ -8,7 +9,7 @@ import java.text.SimpleDateFormat;
  * - All fields are non-null
  * - The fields are final, they always contain the same instance of their class.
  */
-public class StatusWrapper {
+public class StatusWrapper implements Serializable {
     final private String type;
     final private long date;
 

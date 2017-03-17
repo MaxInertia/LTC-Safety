@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
 
         <activity android:name=".a_main.MainActivity"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

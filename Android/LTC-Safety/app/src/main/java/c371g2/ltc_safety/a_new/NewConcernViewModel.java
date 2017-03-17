@@ -1,6 +1,7 @@
 package c371g2.ltc_safety.a_new;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -17,7 +18,10 @@ import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.a_main.ViewModelObserver;
+import c371g2.ltc_safety.R;
+import c371g2.ltc_safety.a_main.ConcernRetractionObserver;
+import c371g2.ltc_safety.a_main.ConcernSubmissionObserver;
+import c371g2.ltc_safety.a_main.MainActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
 /**
@@ -27,11 +31,17 @@ import c371g2.ltc_safety.local.ConcernWrapper;
  * Contains a static inner-Class 'Test_Hook' to aid testing.
  *
  * @Invariants
- * - activity is never null after being initialized in the constructor.
+ * - Neither activity (from superclass) nor concernSubmissionObserver are ever null after being
+ * initialized in the constructor.
+ * - concernSubmissionObserver always contains the same instance (final).
  * @HistoryProperties
  * - The value of the signalLatch only decreases.
  */
 class NewConcernViewModel extends AbstractNetworkViewModel {
+    /**
+     * Observer that is notified when a concern has been submitted.
+     */
+    final private ConcernSubmissionObserver concernSubmissionObserver;
     /**
      * The return code that results from an attempt to submit or retract a concern.
      * This variable is null until a concern submission or retraction is attempted.
@@ -42,10 +52,21 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      * Package-private NewConcernViewModel constructor.
      * @param activity The calling activity.
      */
-    NewConcernViewModel(@NonNull AbstractNetworkActivity activity) {
+    NewConcernViewModel(@NonNull AbstractNetworkActivity activity,
+                        @NonNull ConcernSubmissionObserver observer) {
         this.activity = activity;
+        this.concernSubmissionObserver = observer;
         submissionReturnCode = null;
-        instance = this;
+    }
+
+    /**
+     * Retrieve reference of observer
+     * @preconditions none
+     * @modifies none
+     * @return ConcernSubmissionObserver
+     */
+    ConcernSubmissionObserver getObserver() {
+        return concernSubmissionObserver;
     }
 
     /**
@@ -58,12 +79,19 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      * @param actionsTaken The actions taken for the concern.
      * @param description A description of the concern.
      * @param facilityName The facility the concern is about.
+     * @param roomName The room the event of concern took place.
      * @param reporterName The first and last name of the reporter.
      * @param emailAddress An email address the reporter can be contacted at.
      * @param phoneNumber A phone number that the reporter can be contacted at.
      */
-    SubmissionReturnCode[] submitConcern(String concernType, String actionsTaken, String description, String facilityName,
-                               String roomName, String reporterName, String emailAddress, String phoneNumber) {
+    SubmissionReturnCode[] submitConcern(String concernType,
+                                         String actionsTaken,
+                                         String description,
+                                         String facilityName,
+                                         String roomName,
+                                         String reporterName,
+                                         String emailAddress,
+                                         String phoneNumber) {
 
         // Use verifier-classes to confirm input is sufficient to submit as concern
         SubmissionReturnCode[] returnCodes = new SubmissionReturnCode[4];
@@ -117,6 +145,20 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         return returnCodes;
     }
 
+    /**
+     * Convenience method for creating a ConcernData instance.
+     * @preconditions none
+     * @modifies nothing
+     * @param concernType The type of concern being submitted.
+     * @param actionsTaken The actions taken for the concern.
+     * @param description A description of the concern.
+     * @param facilityName The facility the concern is about.
+     * @param roomName The room the event of concern took place.
+     * @param reporterName The first and last name of the reporter.
+     * @param emailAddress An email address the reporter can be contacted at.
+     * @param phoneNumber A phone number that the reporter can be contacted at.
+     * @return Instance of ConcernData class containing the values provided.
+     */
     private ConcernData buildConcernData(String concernType, String actionsTaken, String description, String facilityName,
                                          String roomName, String reporterName, String emailAddress, String phoneNumber) {
 
@@ -138,7 +180,6 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
 
         return concernData;
     }
-
 
     /**
      * This class is responsible for utilizing the network connection to send the concern to the
@@ -179,23 +220,22 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
 
         @Override
         protected void onPostExecute(SubmissionReturnCode returnCode) {
-            String title;
-            String message;
             if(returnCode!=SubmissionReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
                 // Store concern and token on device
                 ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
-                ViewModelObserver.instance.newConcernSubmitted(activity.getBaseContext(), concern);
+                concernSubmissionObserver.concernSubmitted(activity.getBaseContext(), concern);
 
                 // Inform user that the concern was successfully submitted
                 if(!activity.isFinishing() && activity.progressDialog!=null) {
                     activity.progressDialog.setMessage("Your concern has been submitted");
                     activity.progressDialog.setCancelable(true);
-
                     activity.progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
-                            activity.startActivity(activity.getParentActivityIntent());
+                            Intent i = new Intent(activity, MainActivity.class);
+                            i.putExtra("observer",concernSubmissionObserver);
+                            activity.startActivity(i);
                         }
                     });
                 }
@@ -215,63 +255,35 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * A reference to the current instance of NewConcernViewModel for use with the Test_Hook class.
-     * This will be null unless NewConcernViewActivity was launched.
-     */
-    private static NewConcernViewModel instance;
-
-    /**
-     * Used to set the instance to null when the activity is being destroyed.
-     * This is not to be called anywhere except NewConcernActivity.onDestroy()
-     * @preconditions none
-     * @modifies NewConcernViewModel is set to null.
-     */
-    void nullifyInstance() {
-        instance = null;
-    }
-
-    /**
-     * Any methods or fields can be added to this static inner-Class to aid testing. Feel free to use
-     * the field 'instance' here. To use this class do the following:
-     * 1) Add method headers to the interface 'NewConcernViewModel_TestHook'.
-     * 2) Implement those methods in this class (Test_Hook).
-     * 3) Call on those methods from a text class via the Interface NewConcernViewModel_TestHook.
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
      *
-     * Examples:
-     * NewConcernViewModel_TestHook.instance.submitConcern();
-     * NewConcernViewModel_TestHook.instance.otherMethodName();
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
      */
-    static class Test_Hook implements NewConcernViewModel_TestHook {
+    public static class Test_Hook {
 
-        @Override
-        public boolean submitConcern(@NonNull AbstractNetworkActivity testActivity,
-                                     String concernType,
-                                     String actionsTaken,
-                                     String description,
-                                     String facilityName,
-                                     String roomName,
-                                     String reporterName,
-                                     String emailAddress,
-                                     String phoneNumber) throws InterruptedException {
-
-            NewConcernViewModel ncvm = new NewConcernViewModel(testActivity);
-            SubmissionReturnCode[] returnCode = ncvm.submitConcern(
-                    concernType,
-                    actionsTaken,
-                    description,
-                    facilityName,
-                    roomName,
-                    reporterName,
-                    emailAddress,
-                    phoneNumber
+        public static boolean submitConcernOutsideWithConcern(NewConcernViewModel newConcernViewModel, @NonNull ConcernWrapper concern) throws InterruptedException {
+            SubmissionReturnCode[] returnCode = newConcernViewModel.submitConcern(
+                    concern.getConcernType(),
+                    concern.getActionsTaken(),
+                    concern.getDescription(),
+                    concern.getFacilityName(),
+                    concern.getRoomName(),
+                    concern.getReporterName(),
+                    concern.getReporterEmail(),
+                    concern.getReporterPhone()
             );
 
             // Inputs were accepted by the Verifier classes
             if(returnCode[0]==SubmissionReturnCode.VALID_INPUT) {
                 // Wait for network thread to finish
-                ncvm.signalLatch.await(20, TimeUnit.SECONDS);
+                newConcernViewModel.signalLatch.await(20, TimeUnit.SECONDS);
                 // Submission successful, return true.
-                if(ncvm.submissionReturnCode==SubmissionReturnCode.SUCCESS) {
+                if(newConcernViewModel.submissionReturnCode==SubmissionReturnCode.SUCCESS) {
                     return true;
                 }
             }
@@ -279,5 +291,6 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
             // Submission failed.
             return false;
         }
+
     }
 }

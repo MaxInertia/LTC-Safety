@@ -49,7 +49,7 @@ public class DeviceStorage {
      * @preconditions context and newConcern are not null.
      * @modifies concernList; adds newConcern to the list.
      * @param context The context of the activity calling this method (Typically NewConcernActivity
-     *                or ConcernDetailActivity via the ViewModelObserver interface).
+     *                or ConcernDetailActivity via the ConcernRetractionObserver interface).
      * @param newConcern The concern to be saved.
      */
     static void saveConcern(@NonNull Context context, @NonNull ConcernWrapper newConcern) {

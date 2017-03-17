@@ -66,4 +66,14 @@ public class ConcernTests {
 
         assertTrue( (concern.getSubmissionDate() > date-delta) && (concern.getSubmissionDate() < date+delta) );
     }
+
+    @Test
+    public void test_CompareTo() throws InterruptedException {
+        ConcernWrapper firstConcern = new ConcernWrapper(null,null,null,null,null,null,null,null);
+        Thread.sleep(20);
+        ConcernWrapper secondConcern = new ConcernWrapper(null,null,null,null,null,null,null,null);
+
+        assertTrue(firstConcern.compareTo(secondConcern) == 1);
+        assertTrue(secondConcern.compareTo(firstConcern) == -1);
+    }
 }

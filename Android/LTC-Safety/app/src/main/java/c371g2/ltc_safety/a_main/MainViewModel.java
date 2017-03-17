@@ -3,6 +3,7 @@ package c371g2.ltc_safety.a_main;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.Concern;
@@ -14,6 +15,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -24,7 +26,7 @@ import c371g2.ltc_safety.local.StatusWrapper;
 
 /**
  * This class acts as an interface between the app view in the main activity and the model. It
- * contains the list of Concerns submitted from this device in concernList. The ViewModelObserver
+ * contains the list of Concerns submitted from this device in concernList. The ConcernRetractionObserver
  * interface is used by the other two View-Model classes to update the concernList with changes
  * resulting from the network operations performed in each.
  *
@@ -36,46 +38,37 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * running. However, this is not the case when performing tests. The Test_Hook contains a method
  * which can reinitialize it.
  */
-class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserver {
-    /**
-     * Instance of MainViewModel used by ViewModelObserver interface to access non-static methods
-     */
-    static MainViewModel mainViewModel;
+class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractionObserver, ConcernSubmissionObserver, Serializable {
+
     /**
      * The return code that results from an attempt to submit or retract a concern.
      * This variable is null until a concern submission or retraction is attempted.
      */
-    public FetchReturnCode fetchReturnCode;
+    FetchReturnCode fetchReturnCode;
 
     /**
      * The list of all concerns stored on the device.
      * Retracted concerns persist.
      */
-    private static ArrayList<ConcernWrapper> concernList;
+    private ArrayList<ConcernWrapper> concernList;
 
     /**
-     * Constructor for ViewModelObserver
+     * Constructor for Testing
      */
-    MainViewModel(){}
-
-    /**
-     * Constructor for MainActivity
-     * @param activity The main activity
-     */
-    MainViewModel(@NonNull AbstractNetworkActivity activity) {
-        this.activity = activity;
-        mainViewModel = this;
+    private MainViewModel(){
+        concernList = new ArrayList<>();
     }
 
     /**
-     * Initialize model; loads the concerns from device memory and stores them in concernList.
-     * @preconditions context is not null.
-     * @modifies concernList; adds all concerns stored in device memory to the list.
-     * @param context The base context of the activity that called this method (typically MainActivity)
+     * Package-private MainViewModel constructor.
+     * @param activity The main activity
      */
-    static void initialize(@NonNull Context context) {
-        concernList = DeviceStorage.loadConcerns(context);
+    MainViewModel(@NonNull AbstractNetworkActivity activity) {
+        concernList = DeviceStorage.loadConcerns(activity.getBaseContext());
         assert(concernList!=null);
+        this.activity = activity;
+        Toast.makeText(activity,"MainViewModel Constructed",Toast.LENGTH_SHORT).show();
+        updateConcerns();
     }
 
     /**
@@ -85,7 +78,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
      * @modifies concernList is sorted; more recent concerns at lower indices.
      * @return The sorted list of previously submitted concerns
      */
-    static ArrayList<ConcernWrapper> getSortedConcernList(){
+    ArrayList<ConcernWrapper> getSortedConcernList(){
         assert(concernList != null);
         Collections.sort(concernList);
         return concernList;
@@ -94,34 +87,58 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
     /**
      * Uses the inner-class ConcernUpdater to update the list of concern statuses for each concern
      * stored on this device.
-     * @preconditions Must be called after loadConcerns()
+     * @preconditions Device has internet access
      * @modifies
      * If any concerns have changed and an internet connection is available:
-     * - The updated version replaces the old concern in the concernList
-     * - The updated version overwrites the old version in device memory
+     *  - The updated version replaces the old concern in the concernList
+     *  - The updated version overwrites the old version in device memory
      * If no concerns have changed: Nothing happens.
-     * @param context The context of the activity the method is being called from. MainActivity in
-     *                normal use, but may be others for tests.
+     * @return true if concern fetching has started, else false
      */
-    void updateConcerns(@NonNull Context context) {
+    boolean updateConcerns() {
+        if(concernList.size()>0) {
             ConcernUpdater networkTask = new ConcernUpdater();
             networkTask.execute();
+            return true;
+        } else {
+            fetchReturnCode = FetchReturnCode.NO_CONCERNS;
+            return false;
+        }
     }
 
-    @Override
-    public void newConcernSubmitted(@NonNull Context context,@NonNull ConcernWrapper newConcern) {
-        DeviceStorage.saveConcern(context, newConcern);
-        concernList.add(newConcern);
-    }
-
-    @Override
-    public ConcernWrapper getConcernAtIndex(int index) {
+    /**
+     * Retrieve concern in concernList at index provided
+     * @preconditions none
+     * @modifies nothing
+     * @param index index of concern. index >= 0
+     * @return concern at index provided
+     */
+    ConcernWrapper getConcernAtIndex(int index) {
         return concernList.get(index);
     }
 
     @Override
-    public void concernRetracted(Context context, ConcernWrapper concern, int index) {
-        ConcernWrapper oldConcern = concernList.get(index);
+    public void concernSubmitted(@NonNull Context context, @NonNull ConcernWrapper newConcern) {
+        DeviceStorage.saveConcern(context, newConcern);
+        Toast.makeText(context,"Size before: "+concernList.size(),Toast.LENGTH_SHORT).show();
+        concernList.add(newConcern);
+        Toast.makeText(context,"Size after: "+concernList.size(),Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void concernRetracted(@NonNull Context context, @NonNull ConcernWrapper concern) {
+        int index = 0;
+        ConcernWrapper oldConcern = null;
+        for(index = 0; index<concernList.size(); index++) {
+            oldConcern = concernList.get(index);
+            if(oldConcern.getOwnerToken().equals(concern.getOwnerToken())){
+                break;
+            }
+        }
+
+        assert(oldConcern != null);
+
         assert(oldConcern.getReporterName().equals(concern.getReporterName()));
         assert(oldConcern.getReporterEmail().equals(concern.getReporterEmail()));
         assert(oldConcern.getReporterPhone().equals(concern.getReporterPhone()));
@@ -211,10 +228,6 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
          * version of the concern in device memory.
          */
         private FetchReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
-            if(concernCollection==null || concernCollection.getItems()==null) {
-                return FetchReturnCode.NULL_POINTER;
-                // TODO: Display error message
-            }
             int index = 0;
             for(Concern backendConcern: concernCollection.getItems()) {
                 int newStatusCount = backendConcern.getStatuses().size() - concernList.get(index).getStatuses().size();
@@ -243,24 +256,42 @@ class MainViewModel extends AbstractNetworkViewModel implements ViewModelObserve
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * Any methods or fields can be added to this static inner-Class to aid testing. To use it:
-     * 1) Add method headers to the interface 'MainViewModel_TestHook'.
-     * 2) Implement those methods in this class (Test_Hook).
-     * 3) Call on those methods from a text class via the Interface MainViewModel_TestHook.
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
      *
-     * Examples:
-     * MainViewModel_TestHook.instance.setAsOnlyConcern();
-     * MainViewModel_TestHook.instance.otherMethodName();
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
      */
     static class Test_Hook implements MainViewModel_TestHook {
         @Override
-        public void clearConcernList() {
-            concernList = new ArrayList<>();
+        public void clearConcernList(MainViewModel mainViewModel) {
+            mainViewModel.concernList = new ArrayList<>();
         }
 
         @Override
-        public void addConcern(ConcernWrapper concern) throws NullPointerException {
-            concernList.add(concern);
+        public MainViewModel getMainViewModelInstance() {
+            return new MainViewModel();
+        }
+
+        @Override
+        public ConcernWrapper getConcern(ConcernRetractionObserver mainViewModel, int index) {
+            return ((MainViewModel)mainViewModel).concernList.get(index);
+        }
+
+        @Override
+        public void initializeConcernList(MainViewModel mainViewModel) {
+            mainViewModel.concernList = new ArrayList<>();
+        }
+
+        static void addConcern(MainViewModel viewModel, ConcernWrapper concern) throws NullPointerException {
+            viewModel.concernList.add(concern);
+        }
+
+        static void updateConcerns(MainViewModel viewModel) {
+            viewModel.updateConcerns();
         }
 
     }

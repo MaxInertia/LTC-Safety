@@ -12,7 +12,8 @@ import java.io.IOException;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.a_main.ViewModelObserver;
+import c371g2.ltc_safety.InfoDialog;
+import c371g2.ltc_safety.a_main.ConcernRetractionObserver;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -23,50 +24,46 @@ import c371g2.ltc_safety.local.StatusWrapper;
  * Contains a static inner-class 'Test_Hook' to aid testing.
  *
  * @Invariants
- * - index is in the range [0, MainViewModel.concernList.size()-1]
- * - activity is never null after being initialized in the constructor.
+ * - activity is never null and cannot be reassigned (final)
+ * - concern is never null and cannot be reassigned (final)
  * @HistoryProperties
  * - The value of the signalLatch only decreases.
  */
 class ConcernDetailViewModel extends AbstractNetworkViewModel{
     /**
+     * Observer that is notified when a concern has been retracted.
+     */
+    final private ConcernRetractionObserver concernRetractionObserver;
+    /**
      * The concern whose data is loaded into the layout.
      */
-    private ConcernWrapper concern;
-    /**
-     * The index the loaded concern is stored at inside MainViewModel.concernList.
-     */
-    private int index;
+    final private ConcernWrapper concern;
+
     /**
      * The return code that results from an attempt to submit or retract a concern.
      * This variable is null until a concern submission or retraction is attempted.
      */
-    public RetractionReturnCode retractionReturnCode;
+    RetractionReturnCode retractionReturnCode;
 
     /**
      * Package-private ConcernDetailViewModel constructor.
      * @param activity The calling activity.
      */
-    ConcernDetailViewModel(@NonNull AbstractNetworkActivity activity) {
+    ConcernDetailViewModel(@NonNull AbstractNetworkActivity activity, ConcernWrapper concern,
+                           ConcernRetractionObserver observer) {
         this.activity = activity;
-        instance = this;
+        this.concern = concern;
+        this.concernRetractionObserver = observer;
     }
 
     /**
-     * Retrieve concern at the provided index of concernList from MainViewModel.
-     * @preconditions index is between zero and MainViewModel.concernList.size()
-     * @modifies
-     * - 'this.concern' and 'this.index' are initialized.
-     * - The index of 'this.concern' in MainViewModel.concernList is 'this.index'
-     * @param index index of requested concern.
-     * @return concern at the provided index
+     * Retrieve reference of observer
+     * @preconditions none
+     * @modifies none
+     * @return ConcernRetractionObserver
      */
-    ConcernWrapper getConcern(int index) {
-        this.index = index;
-        assert(index > -1);
-        this.concern = ViewModelObserver.instance.getConcernAtIndex(index);
-        assert(concern != null);
-        return concern;
+    ConcernRetractionObserver getObserver() {
+        return concernRetractionObserver;
     }
 
     /**
@@ -124,32 +121,33 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
 
             if (returnCode.equals(RetractionReturnCode.SUCCESS)) {
                 if (!activity.isFinishing() && !activity.isDestroyed()) {
-                    activity.displayInfoDialogue(
+                    InfoDialog.createInfoDialogue(
+                            activity,
                             "Retraction successful",
                             "Your concern has been retracted",
                             null,
                             true
-                    );
+                    ).show();
                 }
                 concern.getStatuses().add( new StatusWrapper(
                         statusResponse.getStatus().getType(),
                         statusResponse.getStatus().getCreationDate().getValue()
                 ));
 
-                ViewModelObserver.instance.concernRetracted(
+                concernRetractionObserver.concernRetracted(
                         activity.getBaseContext(),
-                        concern,
-                        index
+                        concern
                 );
 
                 ((ConcernDetailActivity)activity).setupConcernStatusList(concern.getStatuses());
             } else {
                 if (!activity.isFinishing()) {
-                    activity.displayInfoDialogue(
+                    InfoDialog.createInfoDialogue(
+                            activity,
                             "Error",
                             "Failed retracting your concern",
                             null,
-                            true);
+                            true).show();
                 }
             }
 
@@ -162,31 +160,18 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
     // ---------------------------------------------------------------------------------------------
 
     /**
-     * A reference to the current instance of ConcernDetailViewModel for use with the Test_Hook class.
-     * This will be null unless ConcernDetailViewActivity was launched.
-     */
-    private static ConcernDetailViewModel instance;
-
-    /**
-     * Used to set the instance to null when the activity is being destroyed.
-     * This is not to be called anywhere except ConcernDetailActivity.onDestroy()
-     * @preconditions none
-     * @modifies ConcernDetailViewModel is set to null.
-     */
-    void nullifyInstance() {
-        instance = null;
-    }
-
-    /**
-     * Any methods or fields can be added to this static inner-Class to aid testing. Feel free to use
-     * the field 'instance' here. To use this class do the following:
-     * 1) Add method headers to the interface 'ConcernDetailViewModel_TestHook'.
-     * 2) Implement those methods in this class (Test_Hook).
-     * 3) Call on those methods from a text class via the Interface ConcernDetailViewModel_TestHook.
+     * Any methods or fields can be added to this static inner-Class to aid testing. To use this
+     * class...
      *
-     * Examples:
-     * ConcernDetailViewModel_TestHook.instance.someMethod();
-     * ConcernDetailViewModel_TestHook.instance.otherMethod();
+     * 1) Implement required getters/modifiers here
+     * 2) Call those methods in the test class
+     *
+     * @Invariants none
+     * @HistoryProperties none
      */
-    static class Test_Hook implements ConcernDetailViewModel_TestHook {}
+    static class Test_Hook {
+        public static ConcernWrapper getConcern(ConcernDetailViewModel viewModel) {
+            return viewModel.concern;
+        }
+    }
 }

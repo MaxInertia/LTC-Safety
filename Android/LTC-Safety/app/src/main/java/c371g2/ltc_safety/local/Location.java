@@ -1,12 +1,14 @@
 package c371g2.ltc_safety.local;
 
+import java.io.Serializable;
+
 /**
  * This class is used to store data on the location of concern.
  * NOT TO BE CONFUSED WITH CLIENT-API Location
  * @Invariants No fields are null.
  * @HistoryProperties All fields are final.
  */
-public class Location {
+public class Location implements Serializable {
     private final String facilityName;
     private final String roomName;
 

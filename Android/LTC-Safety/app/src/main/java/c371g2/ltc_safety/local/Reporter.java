@@ -1,5 +1,7 @@
 package c371g2.ltc_safety.local;
 
+import java.io.Serializable;
+
 /**
  * This class is used to store data on the reporter of concerns.
  * NOT TO BE CONFUSED WITH CLIENT-API Reporter
@@ -8,7 +10,7 @@ package c371g2.ltc_safety.local;
  * - Of the two fields emailAddress and phoneNumber, only one can be an empty string.
  * @HistoryProperties All fields are final, they always contain the same instance.
  */
-public class Reporter {
+public class Reporter implements Serializable {
 
     /**
      * The first and last name of the reporter.
