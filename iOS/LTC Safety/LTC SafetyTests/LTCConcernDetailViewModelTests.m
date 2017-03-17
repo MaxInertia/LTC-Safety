@@ -39,7 +39,7 @@
 
 @implementation LTCDetailConcernViewModelTests
 /**
- Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 4.
+ Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 6.
  */
 - (void)testInitWithConcern {
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
@@ -54,7 +54,7 @@
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value, testConcern.location.roomName);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value, testConcern.actionsTaken);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value, testConcern.descriptionProperty);
-    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , testConcern.statuses.firstObject.concernType);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , NSLocalizedString(testConcern.statuses.firstObject.concernType, nil));
     XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
     
     XCTAssertNotNil(viewModel.clientApi);
