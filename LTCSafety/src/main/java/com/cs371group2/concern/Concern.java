@@ -173,6 +173,18 @@ public final class Concern {
         return status;
     }
 
+    /**
+     * Toggles the concern's archived status.
+     *
+     * @postcond The concern's archive status is the opposite of what it was before.
+     * @return The new archived status of the
+     */
+    public boolean toggleArchived() {
+        isArchived = !isArchived;
+        logger.log(Level.FINER, "Concern Archive Status toggled: ID# " + this.id + " Archived: " + isArchived);
+        return isArchived;
+    }
+
     @Override
     public String toString() {
         return "Concern:\nID# " + this.id + this.getData().toString();

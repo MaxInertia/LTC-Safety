@@ -164,4 +164,34 @@ public class AdminApi {
 
         return new AccountListResponse(list, startIndex, endIndex, dao.count(account));
     }
+
+    /**
+     * Requests an individual concern from the database based on the given unique concern id. The user submitting
+     * the request must have administrative permissions which will be verified before the request is completed.
+     *
+     * @param request The concern request containing the user's firebase token, along with the desired concern id
+     * @return The concern requested from the database
+     * @throws UnauthorizedException If the admin is unauthorized or there is an error loading the concern
+     * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws NotFoundException Thrown if the requested concern does not exist.
+     * @precond request != null
+     */
+    @ApiMethod(name = "archiveConcern", path = "admin/archiveConcern")
+    public void archiveConcern(ConcernRequest request)
+            throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried requesting a concern archive toggle with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is requesting a concern archive toggle: " + request);
+
+        Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
+        logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
+        loadedConcern.toggleArchived();
+    }
 }
