@@ -261,16 +261,6 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         [section addFormRow:row];
         
         
-        // Sets up the actions taken section
-
-        section = [XLFormSectionDescriptor formSection];
-        section.title = NSLocalizedString(LTCActionsTakenTitle, nil);
-        [self addFormSection:section];
-        
-        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorActionsTaken rowType:XLFormRowDescriptorTypeTextView];
-        row.required = YES;
-        [section addFormRow:row];
-        
         // Sets up the concern description section
         
         section = [XLFormSectionDescriptor formSection];
@@ -278,6 +268,17 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         [self addFormSection:section];
         
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorDescription rowType:XLFormRowDescriptorTypeTextView];
+        row.required = YES;
+        [section addFormRow:row];
+        
+        
+        // Sets up the actions taken section
+
+        section = [XLFormSectionDescriptor formSection];
+        section.title = NSLocalizedString(LTCActionsTakenTitle, nil);
+        [self addFormSection:section];
+        
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorActionsTaken rowType:XLFormRowDescriptorTypeTextView];
         row.required = YES;
         [section addFormRow:row];
         

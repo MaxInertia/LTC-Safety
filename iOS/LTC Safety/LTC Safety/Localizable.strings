@@ -44,6 +44,15 @@
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
 "DETAIL_DESCRIPTION_TITLE" = "Concern Description";
 
+//Concern status Names
+"PENDING" = "Pending";
+"SEEN" = "Seen";
+"RESPONDING24" = "Responding in 24 hours";
+"RESPONDING48" = "Responding in 48 hours";
+"RESPONDING72" = "Responding in 72 hours";
+"RESOLVED" = "Resolved";
+"RETRACTED" = "Retracted";
+
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";

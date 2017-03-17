@@ -201,7 +201,7 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         [self addFormSection:[self createStatusLogSection:concern]];
 
         // Sets up the actions retract button section
-        if(![concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
+        if(!([concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"] || [concern.statuses.lastObject.concernType isEqualToString: @"RESOLVED"])){
             [self addFormSection:[self createRetractButtonSection:concern]];
         }
     }
@@ -326,8 +326,9 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
                                                     timeStyle:NSDateFormatterShortStyle];
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus
                                                     rowType:XLFormRowDescriptorTypeInfo
-                                                      title:status.concernType];
+                                                      title:NSLocalizedString(status.concernType,nil)];
         row.value = dateString;
+        
         [section addFormRow:row];
     }
     
@@ -375,9 +376,8 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
     XLFormRowDescriptor *descriptor =  [self formRowWithTag:LTCDetailDescriptorRetractConcern];
     //NSAssert1(descriptor != nil, @"Unable to find descriptor with tag %@", LTCDetailDescriptorRetractConcern);
     
-    if(![self.concern.statuses.lastObject.concernType isEqualToString: @"RETRACTED"]){
-       descriptor.action.formSelector = retractCallback;
-    }
+    descriptor.action.formSelector = retractCallback;
+    
 }
 
 @end
