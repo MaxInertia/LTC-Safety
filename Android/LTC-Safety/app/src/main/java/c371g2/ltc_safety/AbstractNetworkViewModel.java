@@ -1,5 +1,6 @@
 package c371g2.ltc_safety;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -15,9 +16,15 @@ public abstract class AbstractNetworkViewModel {
     /**
      * Reference to the Activity class which initialized this class.
      */
-    public AbstractNetworkActivity activity;
+    transient public WeakReference<AbstractNetworkActivity> activityWeakReference;
     /**
      * Used to inform a test class that a network operation has been completed.
      */
-    public final CountDownLatch signalLatch = new CountDownLatch(1);
+    transient public final CountDownLatch signalLatch = new CountDownLatch(1);
+
+    /**
+     * Called in the onDestroy method of an AbstractNetworkActivity to end any threads running prior
+     * to destroying the activity that thread was created in.
+     */
+    protected abstract void stopNetworkThread();
 }

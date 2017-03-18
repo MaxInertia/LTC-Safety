@@ -14,12 +14,11 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
-import c371g2.ltc_safety.R;
-import c371g2.ltc_safety.a_main.ConcernRetractionObserver;
 import c371g2.ltc_safety.a_main.ConcernSubmissionObserver;
 import c371g2.ltc_safety.a_main.MainActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
@@ -43,10 +42,16 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      */
     final private ConcernSubmissionObserver concernSubmissionObserver;
     /**
+     * Reference to thread that is used to perform the submit network operation. Only initialized
+     * when a concern is submitted, set to null when the thread ends. Used to help prevent memory
+     * leaks.
+     */
+    private ConcernSubmitter networkTask;
+    /**
      * The return code that results from an attempt to submit or retract a concern.
      * This variable is null until a concern submission or retraction is attempted.
      */
-    public SubmissionReturnCode submissionReturnCode;
+    SubmissionReturnCode submissionReturnCode;
 
     /**
      * Package-private NewConcernViewModel constructor.
@@ -54,9 +59,21 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      */
     NewConcernViewModel(@NonNull AbstractNetworkActivity activity,
                         @NonNull ConcernSubmissionObserver observer) {
-        this.activity = activity;
+        this.activityWeakReference = new WeakReference<>(activity);
         this.concernSubmissionObserver = observer;
         submissionReturnCode = null;
+    }
+
+    @Override
+    protected void stopNetworkThread() {
+        if(networkTask != null) {
+            networkTask.cancel(true);
+            networkTask.data = null;
+            networkTask.client = null;
+            networkTask.response = null;
+            networkTask.viewModel = null;
+            networkTask = null;
+        }
     }
 
     /**
@@ -119,7 +136,8 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
         }
 
         // Use 'client' API here to generate and submit concern
-        ConcernSubmitter networkTask = new ConcernSubmitter();
+        networkTask = new ConcernSubmitter();
+        networkTask.viewModel = this;
         networkTask.data = buildConcernData(
                 concernType,
                 actionsTaken,
@@ -187,7 +205,11 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
      * @Invariants none
      * @HistoryProperties none
      */
-    private class ConcernSubmitter extends AsyncTask<Void,Void,SubmissionReturnCode> {
+    private static class ConcernSubmitter extends AsyncTask<Void,Void,SubmissionReturnCode> {
+        /**
+         * Reference to the NewConcernViewModel tied to the activity.
+         */
+        NewConcernViewModel viewModel;
         /**
          * The response received from the backend after submitting a concern.
          * Contains the concern and an owner token.
@@ -220,11 +242,14 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
 
         @Override
         protected void onPostExecute(SubmissionReturnCode returnCode) {
+            viewModel.networkTask = null;
+            final AbstractNetworkActivity activity = viewModel.activityWeakReference.get();
+
             if(returnCode!=SubmissionReturnCode.IOEXCEPTION_THROWN_BY_API) {
                 assert(response != null);
                 // Store concern and token on device
                 ConcernWrapper concern = new ConcernWrapper(response.getConcern(), response.getOwnerToken());
-                concernSubmissionObserver.concernSubmitted(activity.getBaseContext(), concern);
+                viewModel.concernSubmissionObserver.concernSubmitted(activity.getBaseContext(), concern);
 
                 // Inform user that the concern was successfully submitted
                 if(!activity.isFinishing() && activity.progressDialog!=null) {
@@ -234,8 +259,10 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
                         @Override
                         public void onDismiss(DialogInterface dialog) {
                             Intent i = new Intent(activity, MainActivity.class);
-                            i.putExtra("observer",concernSubmissionObserver);
+                            i.putExtra("observer",viewModel.concernSubmissionObserver);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             activity.startActivity(i);
+                            activity.finish();
                         }
                     });
                 }
@@ -246,9 +273,12 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
                 activity.progressDialog.setCancelable(true);
             }
 
-            submissionReturnCode = returnCode;
-            signalLatch.countDown();
-            assert(signalLatch.getCount() == 0);
+            viewModel.submissionReturnCode = returnCode;
+            response = null;
+            client = null;
+            data = null;
+            viewModel.signalLatch.countDown();
+            assert(viewModel.signalLatch.getCount() == 0);
         }
     }
 

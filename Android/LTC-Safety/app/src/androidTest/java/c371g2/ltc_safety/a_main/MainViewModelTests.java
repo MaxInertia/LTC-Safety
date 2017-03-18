@@ -36,31 +36,28 @@ public class MainViewModelTests {
     @ClassRule
     public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class, true, false);
 
-    @Rule
-    public ActivityTestRule<NewConcernActivity> newConcernRule = new ActivityTestRule<>(NewConcernActivity.class);
-
     private MainActivity activity;
     private MainViewModel mainViewModel;
 
     @Before
     public void setup() {
+        activity = mActivity.launchActivity(new Intent());
+        mainViewModel = MainActivity.Test_Hook.getMainViewModel(activity);
+
         // This confirms that the only Concerns on the device for a given test in this class are the
         // concerns added in that test.
-        SharedPreferences memory = newConcernRule.getActivity().getSharedPreferences(
+        SharedPreferences memory = mActivity.getActivity().getSharedPreferences(
                 DeviceStorage.CONCERN_SHARED_PREF_KEY, Context.MODE_PRIVATE
         );
         SharedPreferences.Editor memoryEditor = memory.edit();
         memoryEditor.clear().commit();
-
-        Intent i = new Intent();
-        i.putExtra("testing",true);
-        activity = mActivity.launchActivity(i);
-        mainViewModel = MainActivity.Test_Hook.getMainViewModel(activity);
     }
 
     @After
     public void cleanup() {
         activity.finish();
+        activity = null;
+        mainViewModel = null;
     }
 
     @Test
@@ -103,7 +100,8 @@ public class MainViewModelTests {
 
     @Test
     public void test_ConcernUpdaterClass() {
-        MainViewModel.ConcernUpdater updater = mainViewModel.new ConcernUpdater();
+        MainViewModel.ConcernUpdater updater = new MainViewModel.ConcernUpdater();
+        updater.viewModel = mainViewModel;
         ArrayList<OwnerToken> tokens = updater.getStoredOwnerTokens();
 
         System.out.println("[MainViewModelTests]\tToken count: " + tokens.size());

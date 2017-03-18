@@ -99,6 +99,12 @@ public class MainActivity extends AbstractNetworkActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        if(mainViewModel != null) mainViewModel.stopNetworkThread();
+        super.onDestroy();
+    }
+
     /**
      * Sets up the onClickListener for the button that brings the user to the NewConcernActivity
      * for submitting concerns.
@@ -154,10 +160,12 @@ public class MainActivity extends AbstractNetworkActivity {
     private void openNewConcernActivity() {
         Intent newConcernIntent = new Intent(MainActivity.this, NewConcernActivity.class);
         assert(newConcernIntent != null);
-        newConcernIntent.putExtra("observer",mainViewModel);
+        newConcernIntent.putExtra("observer",((ConcernSubmissionObserver)mainViewModel));
         assert(newConcernIntent.getExtras().getSerializable("observer").equals(mainViewModel));
-        mainViewModel.setActivity(null);
-        mainViewModel = null;
+        //mainViewModel.setActivity(null);
+        //mainViewModel = null;
+
+        newConcernIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         MainActivity.this.startActivity(newConcernIntent);
     }
 
@@ -172,13 +180,15 @@ public class MainActivity extends AbstractNetworkActivity {
     private void openConcernDetailActivity(@NonNull ConcernWrapper concern) {
         Intent concernDetailIntent = new Intent(MainActivity.this, ConcernDetailActivity.class);
         assert(concernDetailIntent != null);
-        concernDetailIntent.putExtra("observer",mainViewModel);
+        concernDetailIntent.putExtra("observer",((ConcernRetractionObserver)mainViewModel));
         concernDetailIntent.getExtras().getSerializable("observer").equals(mainViewModel);
         assert(concernDetailIntent.getExtras().getSerializable("observer").equals(mainViewModel));
         concernDetailIntent.putExtra("concern",concern);
         assert(concernDetailIntent.getExtras().getSerializable("concern").equals(concern));
-        mainViewModel.setActivity(null);
-        mainViewModel = null;
+        //mainViewModel.setActivity(null);
+        //mainViewModel = null;
+
+        concernDetailIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         MainActivity.this.startActivity(concernDetailIntent);
     }
 

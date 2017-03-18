@@ -137,10 +137,18 @@ public class NewConcernActivity extends AbstractNetworkActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("observer",newConcernViewModel.getObserver());
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             this.startActivity(i);
+            this.finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        newConcernViewModel.stopNetworkThread();
+        super.onDestroy();
     }
 
     /**

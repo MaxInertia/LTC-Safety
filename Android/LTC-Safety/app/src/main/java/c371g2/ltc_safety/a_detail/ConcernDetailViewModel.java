@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_detail;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
@@ -9,6 +10,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
@@ -38,7 +40,12 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * The concern whose data is loaded into the layout.
      */
     final private ConcernWrapper concern;
-
+    /**
+     * Reference to thread that is used to perform the retract network operation. Only initialized
+     * when a concern is retracted, set to null when the thread ends. Used to help prevent memory
+     * leaks.
+     */
+    ConcernRetractor networkTask;
     /**
      * The return code that results from an attempt to submit or retract a concern.
      * This variable is null until a concern submission or retraction is attempted.
@@ -51,9 +58,19 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      */
     ConcernDetailViewModel(@NonNull AbstractNetworkActivity activity, ConcernWrapper concern,
                            ConcernRetractionObserver observer) {
-        this.activity = activity;
+        this.activityWeakReference = new WeakReference<>(activity);
         this.concern = concern;
         this.concernRetractionObserver = observer;
+    }
+
+    @Override
+    protected void stopNetworkThread() {
+        if(networkTask != null) {
+            networkTask.cancel(true);
+            networkTask.statusResponse = null;
+            networkTask.viewModel = null;
+            networkTask = null;
+        }
     }
 
     /**
@@ -74,7 +91,9 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * - If the retraction was successful: A "RETRACTED" state is added to 'this.concern'
      */
     void retractConcern() {
-        (new ConcernRetractor()).execute();
+        networkTask = new ConcernRetractor();
+        networkTask.viewModel = this;
+        networkTask.execute();
     }
 
     /**
@@ -84,8 +103,11 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * @Invariants none
      * @HistoryProperties none
      */
-    private class ConcernRetractor extends AsyncTask<Void, Void, RetractionReturnCode> {
-
+    private static class ConcernRetractor extends AsyncTask<Void, Void, RetractionReturnCode> {
+        /**
+         * Reference to the ConcernDetailViewModel tied to the activity.
+         */
+        ConcernDetailViewModel viewModel;
         /**
          * The response received from the backend after retracting a concern.
          * Contains the retracted status.
@@ -103,7 +125,7 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
             Client client = builder.build();
 
             try {
-                statusResponse = client.retractConcern(concern.getOwnerToken()).execute();
+                statusResponse = client.retractConcern(viewModel.concern.getOwnerToken()).execute();
                 assert(statusResponse != null);
                 returnCode = RetractionReturnCode.SUCCESS;
             } catch (IOException ioException) {
@@ -115,6 +137,9 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
 
         @Override
         protected void onPostExecute(RetractionReturnCode returnCode) {
+            viewModel.networkTask = null;
+            AbstractNetworkActivity activity = viewModel.activityWeakReference.get();
+
             if(!activity.isFinishing() && activity.progressDialog!=null) {
                 activity.progressDialog.cancel(); //progressDialog is not initialized for tests
             }
@@ -129,17 +154,17 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
                             true
                     ).show();
                 }
-                concern.getStatuses().add( new StatusWrapper(
+                viewModel.concern.getStatuses().add( new StatusWrapper(
                         statusResponse.getStatus().getType(),
                         statusResponse.getStatus().getCreationDate().getValue()
                 ));
 
-                concernRetractionObserver.concernRetracted(
+                viewModel.concernRetractionObserver.concernRetracted(
                         activity.getBaseContext(),
-                        concern
+                        viewModel.concern
                 );
 
-                ((ConcernDetailActivity)activity).setupConcernStatusList(concern.getStatuses());
+                ((ConcernDetailActivity) activity).setupConcernStatusList(viewModel.concern.getStatuses());
             } else {
                 if (!activity.isFinishing()) {
                     InfoDialog.createInfoDialogue(
@@ -151,9 +176,11 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
                 }
             }
 
-            retractionReturnCode = returnCode;
-            signalLatch.countDown();
-            assert(signalLatch.getCount() == 0);
+            statusResponse = null;
+            viewModel.retractionReturnCode = returnCode;
+            viewModel.signalLatch.countDown();
+            assert(viewModel.signalLatch.getCount() == 0);
+            viewModel = null;
         }
     }
 
@@ -170,8 +197,8 @@ class ConcernDetailViewModel extends AbstractNetworkViewModel{
      * @HistoryProperties none
      */
     static class Test_Hook {
-        public static ConcernWrapper getConcern(ConcernDetailViewModel viewModel) {
+        /*public static ConcernWrapper getConcern(ConcernDetailViewModel viewModel) {
             return viewModel.concern;
-        }
+        }*/
     }
 }

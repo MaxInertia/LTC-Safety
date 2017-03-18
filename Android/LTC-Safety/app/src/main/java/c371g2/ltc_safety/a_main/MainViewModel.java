@@ -15,6 +15,7 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,15 +41,22 @@ import c371g2.ltc_safety.local.StatusWrapper;
  */
 class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractionObserver, ConcernSubmissionObserver, Serializable {
     /**
-     * The return code that results from an attempt to submit or retract a concern.
-     * This variable is null until a concern submission or retraction is attempted.
-     */
-    FetchReturnCode fetchReturnCode;
-    /**
      * The list of all concerns stored on the device.
      * Retracted concerns persist.
      */
     private TreeSet<ConcernWrapper> concerns;
+    /**
+     * Reference to thread that is used to perform the fetch network operation. Only initialized
+     * when fetching is performed, set to null when the thread ends. Used to help prevent memory
+     * leaks.
+     */
+    private transient ConcernUpdater networkTask;
+    /**
+     * The return code that results from an attempt to submit or retract a concern.
+     * This variable is null until a concern submission or retraction is attempted.
+     */
+    transient FetchReturnCode fetchReturnCode;
+
 
     /**
      * Constructor for Testing
@@ -64,68 +72,8 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
     MainViewModel(@NonNull AbstractNetworkActivity activity) {
         concerns = DeviceStorage.loadConcerns(activity.getBaseContext());
         assert(concerns!=null);
-        this.activity = activity;
+        this.activityWeakReference = new WeakReference<>(activity);
         updateConcerns();
-    }
-
-    /**
-     * Sets the current instance of MainActivity that is running. Can be null, such as when passing
-     * this object to a new activity. This avoids the memory leak caused by holding onto a reference
-     * to an Activity that is destroyed. Only called when MainActivity is launched for the nth time
-     * since the application started (n!=1) or right before another Activity is about to start.
-     * @preconditions
-     * - if |activity| is null, NewConcernActivity or ConcernDetailActivity is about to be started.
-     * - if |activity| is not null, another activity is about to be started.
-     * @modifies activity instance stored in this object is changed to |activity|.
-     * @param activity MainActivity instance or null.
-     */
-    void setActivity(MainActivity activity) {
-        this.activity = activity;
-    }
-
-    /**
-     * Retrieves the list of previously submitted concerns. The list is sorted with the most recent
-     * concerns at lower indices.
-     * @preconditions none
-     * @modifies none.
-     * @return The sorted list of previously submitted concerns.
-     */
-    List<ConcernWrapper> getSortedConcernList(){
-        assert(concerns != null);
-        return new ArrayList<>(concerns);
-    }
-
-    /**
-     * Uses the inner-class ConcernUpdater to update the list of concern statuses for each concern
-     * stored on this device.
-     * @preconditions Device has internet access
-     * @modifies
-     * If any concerns have changed and an internet connection is available:
-     *  - The updated version replaces the old concern in the concerns
-     *  - The updated version overwrites the old version in device memory
-     * If no concerns have changed: Nothing happens.
-     * @return true if concern fetching has started, else false
-     */
-    boolean updateConcerns() {
-        if(concerns.size()>0) {
-            ConcernUpdater networkTask = new ConcernUpdater();
-            networkTask.execute();
-            return true;
-        } else {
-            fetchReturnCode = FetchReturnCode.NO_CONCERNS;
-            return false;
-        }
-    }
-
-    /**
-     * Retrieve concern in concerns at index provided
-     * @preconditions none
-     * @modifies nothing
-     * @param index index of concern. index >= 0
-     * @return concern at index provided
-     */
-    ConcernWrapper getConcernAtIndex(int index) {
-        return (ConcernWrapper) concerns.toArray()[index];
     }
 
     @Override
@@ -156,6 +104,74 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
         DeviceStorage.saveConcern(context, newConcern);
     }
 
+    @Override
+    protected void stopNetworkThread() {
+        if(networkTask != null) {
+            networkTask.cancel(true);
+            networkTask.concernCollection = null;
+            networkTask.viewModel = null;
+            networkTask = null;
+        }
+    }
+
+    /**
+     * Sets the current instance of MainActivity that is running. Only called when MainActivity is
+     * launched for the nth time since the application started (n!=1).
+     * @preconditions
+     * - if |activity| is not null, MainActivity has just started.
+     * @modifies activity instance stored in this object is changed to |activity|.
+     * @param activity MainActivity instance.
+     */
+    void setActivity(@NonNull AbstractNetworkActivity activity) {
+        this.activityWeakReference = new WeakReference<>(activity);
+    }
+
+    /**
+     * Retrieves the list of previously submitted concerns. The list is sorted with the most recent
+     * concerns at lower indices.
+     * @preconditions none
+     * @modifies none.
+     * @return The sorted list of previously submitted concerns.
+     */
+    List<ConcernWrapper> getSortedConcernList(){
+        assert(concerns != null);
+        return new ArrayList<>(concerns);
+    }
+
+    /**
+     * Retrieve concern in concerns at index provided
+     * @preconditions none
+     * @modifies nothing
+     * @param index index of concern. index >= 0
+     * @return concern at index provided
+     */
+    ConcernWrapper getConcernAtIndex(int index) {
+        return (ConcernWrapper) concerns.toArray()[index];
+    }
+
+    /**
+     * Uses the inner-class ConcernUpdater to update the list of concern statuses for each concern
+     * stored on this device.
+     * @preconditions Device has internet access
+     * @modifies
+     * If any concerns have changed and an internet connection is available:
+     *  - The updated version replaces the old concern in the concerns
+     *  - The updated version overwrites the old version in device memory
+     * If no concerns have changed: Nothing happens.
+     * @return true if concern fetching has started, else false
+     */
+    boolean updateConcerns() {
+        if(concerns.size()>0) {
+            networkTask = new ConcernUpdater();
+            networkTask.viewModel = this;
+            networkTask.execute();
+            return true;
+        } else {
+            fetchReturnCode = FetchReturnCode.NO_CONCERNS;
+            return false;
+        }
+    }
+
     /**
      * This class is responsible for utilizing the network connection to fetch the all concerns that
      * correspond to the owner tokens stored on the device. This is for updating the concern status
@@ -163,7 +179,11 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
      * @Invariants none
      * @HistoryProperties none
      */
-    class ConcernUpdater extends AsyncTask<Void,Void,FetchReturnCode> {
+    static class ConcernUpdater extends AsyncTask<Void,Void,FetchReturnCode> {
+        /**
+         * Reference to MainViewModel instance
+         */
+        MainViewModel viewModel;
         /**
          * Stores the backends response to the fetchConcerns request.
          */
@@ -195,22 +215,29 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
 
         @Override
         protected void onPostExecute(FetchReturnCode returnCode) {
+            viewModel.networkTask = null;
+            final AbstractNetworkActivity activity = viewModel.activityWeakReference.get();
+
             String message = "Concern status updates failed";
             if(FetchReturnCode.SUCCESS.equals(returnCode)) {
                 assert(concernCollection != null);
-                returnCode = addNewConcernStatuses(concernCollection);
+                returnCode = addNewConcernStatuses(activity.getBaseContext(), concernCollection);
                 message = "Concern statuses were updated";
             }
 
-            if(!activity.isFinishing() && activity.progressDialog!=null) { //progressDialog is not initialized for tests
+            //progressDialog is not initialized for tests
+            if(!activity.isFinishing() && activity.progressDialog!=null){
                 assert(activity.progressDialog.isShowing());
                 activity.progressDialog.setMessage(message);
                 activity.progressDialog.setCancelable(true);
             }
 
-            fetchReturnCode = returnCode;
-            signalLatch.countDown();
-            assert(signalLatch.getCount() == 0);
+            viewModel.fetchReturnCode = returnCode;
+            viewModel.networkTask = null;
+            concernCollection = null;
+            viewModel.signalLatch.countDown();
+            assert(viewModel.signalLatch.getCount() == 0);
+            viewModel = null;
         }
 
         /**
@@ -219,7 +246,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
          */
         public @NonNull ArrayList<OwnerToken> getStoredOwnerTokens() {
             ArrayList<OwnerToken> tokens = new ArrayList<>();
-            for(ConcernWrapper concern: concerns) {
+            for(ConcernWrapper concern: viewModel.concerns) {
                 tokens.add(concern.getOwnerToken());
             }
             return tokens;
@@ -231,8 +258,8 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
          * inserting that StatusWrapper into the relevant concern, and overwriting the previous
          * version of the concern in device memory.
          */
-        private FetchReturnCode addNewConcernStatuses(ConcernCollection concernCollection) {
-            Iterator<ConcernWrapper> iterator = concerns.iterator();
+        private FetchReturnCode addNewConcernStatuses(Context context, ConcernCollection concernCollection) {
+            Iterator<ConcernWrapper> iterator = viewModel.concerns.iterator();
             for(Concern backendConcern: concernCollection.getItems()) {
                 ConcernWrapper localConcern = iterator.next();
                 int newStatusCount = backendConcern.getStatuses().size() - localConcern.getStatuses().size();
@@ -249,7 +276,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
                         );
                         localConcernStatusList.add(newStatus);
                     }
-                    DeviceStorage.saveConcern(activity.getBaseContext(), localConcern);
+                    DeviceStorage.saveConcern(context, localConcern);
                 }
             }
             return FetchReturnCode.SUCCESS;
@@ -270,10 +297,6 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
      * @HistoryProperties none
      */
     static class Test_Hook implements MainViewModel_TestHook {
-        //@Override
-        //public void clearConcernList(MainViewModel mainViewModel) {
-        //    mainViewModel.concerns = new TreeSet<>();
-        //}
 
         @Override
         public MainViewModel getMainViewModelInstance() {

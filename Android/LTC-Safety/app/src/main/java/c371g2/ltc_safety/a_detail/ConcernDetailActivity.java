@@ -69,10 +69,30 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
         if(item.getItemId() == android.R.id.home) {
             Intent i = new Intent(this, MainActivity.class);
             i.putExtra("observer",concernDetailViewModel.getObserver());
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             this.startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getParent()!=null) {
+            super.onBackPressed();
+        } else {
+            // Prevents loading an out of date ListView
+            Intent i = new Intent(this, MainActivity.class);
+            i.putExtra("observer", concernDetailViewModel.getObserver());
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            this.startActivity(i);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        concernDetailViewModel.stopNetworkThread();
+        super.onDestroy();
     }
 
     /**
@@ -96,6 +116,10 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
                         false
                 );
                 progressDialog.show();
+                if(getParent()!=null) {
+                    // Prevents loading an out of date ListView if back nav is pressed
+                    getParent().finish();
+                }
                 assert(progressDialog != null && progressDialog.isShowing());
                 concernDetailViewModel.retractConcern();
             }
