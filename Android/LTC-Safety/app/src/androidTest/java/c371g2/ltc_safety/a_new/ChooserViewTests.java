@@ -34,29 +34,7 @@ public class ChooserViewTests {
                 items
         );
         assertTrue("View was not assigned an onClickListener.", textView.hasOnClickListeners());
-        //ArgumentCaptor<View.OnClickListener> argument = ArgumentCaptor.forClass(View.OnClickListener.class);
-        //verify(textView).setOnClickListener(argument.capture());
-        //assertTrue(argument.getValue()!=null);
         newConcernActivity.finish();
     }
-
-    /*@Test
-    public void test_chooserAction() {
-
-        Context context = Mockito.mock(Context.class);
-        TextView textView = new TextView(context);
-        //TextView textView = new TextView(context);
-        String[] items = {"A","B","C"};
-        ChooserView.setup(
-                textView,
-                "Title",
-                items
-        );
-
-        textView.performClick();
-
-        //ArgumentCaptor<View.OnClickListener> argument = ArgumentCaptor.forClass(View.OnClickListener.class);
-        //verify(textView).setOnClickListener(argument.capture());
-    }*/
 
 }

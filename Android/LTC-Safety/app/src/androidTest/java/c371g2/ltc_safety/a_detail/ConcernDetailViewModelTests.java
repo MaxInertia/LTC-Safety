@@ -64,7 +64,9 @@ public class ConcernDetailViewModelTests {
     
     @After
     public void cleanUp() {
-        activity.finish();
+        if(activity != null) {
+            activity.finish();
+        }
     }
 
     @Test

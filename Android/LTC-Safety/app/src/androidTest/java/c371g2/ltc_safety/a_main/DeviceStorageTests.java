@@ -45,7 +45,9 @@ public class DeviceStorageTests {
 
     @After
     public void cleanUp() {
-        activity.finish();
+        if(activity != null) {
+            activity.finish();
+        }
     }
 
     @Test

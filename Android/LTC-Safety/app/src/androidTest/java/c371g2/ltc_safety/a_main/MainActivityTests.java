@@ -51,7 +51,9 @@ public class MainActivityTests {
 
     @After
     public void cleanUp() {
-        mainActivity.finish();
+        if(mainActivity != null) {
+            mainActivity.finish();
+        }
     }
 
     /**

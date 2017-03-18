@@ -55,8 +55,10 @@ public class MainViewModelTests {
 
     @After
     public void cleanup() {
-        activity.finish();
-        activity = null;
+        if(activity != null) {
+            activity.finish();
+            activity = null;
+        }
         mainViewModel = null;
     }
 

@@ -41,7 +41,9 @@ public class NewConcernActivityTests {
 
     @After
     public void cleanUp() {
-        newConcernActivity.finish();
+        if(newConcernActivity != null) {
+            newConcernActivity.finish();
+        }
     }
 
     /**
