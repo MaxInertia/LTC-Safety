@@ -261,6 +261,9 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>, Serializable{
         public static ConcernWrapper getEmptyConcern() {
             return new ConcernWrapper();
         }
+        public static void addStatus(ConcernWrapper concern, String statusText) {
+            concern.statuses.add(new StatusWrapper(statusText, (long)concern.statuses.size()));
+        }
     }
 }
 

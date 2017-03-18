@@ -19,7 +19,8 @@ public class StatusWrapper implements Serializable {
     }
 
     public String getFormattedDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d, yyyy, h:mm a");
+        //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d, yyyy, h:mm a");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM d, h:mm a");
         return simpleDateFormat.format(date);
     }
 

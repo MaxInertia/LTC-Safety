@@ -8,7 +8,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,15 +34,15 @@ import static junit.framework.Assert.assertNotNull;
 @RunWith(AndroidJUnit4.class)
 public class ConcernDetailActivityTests {
 
-    @Rule
-    public ActivityTestRule<ConcernDetailActivity> mActivity = new ActivityTestRule<>(ConcernDetailActivity.class,true,false);
+    @ClassRule
+    public static ActivityTestRule<ConcernDetailActivity> mActivity = new ActivityTestRule<>(ConcernDetailActivity.class,true,false);
 
-    private ConcernWrapper concern;
-    private AbstractNetworkActivity concernDetailActivity;
+    private static AbstractNetworkActivity concernDetailActivity;
+    private static ConcernWrapper concern;
 
-    @Before
-    public void setup() {
-         concern = DeviceStorageTests.generateConcernForTest(
+    @BeforeClass
+    public static void setup() {
+        concern = DeviceStorageTests.generateConcernForTest(
                 "Jeff",
                 "3213884",
                 "PixieGod@email.com",
@@ -47,17 +50,28 @@ public class ConcernDetailActivityTests {
                 "B102",
                 "Near Miss",
                 "None.",
-                 "Description here!"
+                "Description here!"
         );
+        ConcernWrapper.Test_Hook.addStatus(concern, "PENDING");
+        ConcernWrapper.Test_Hook.addStatus(concern, "SEEN");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RESPONDING24");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RESPONDING48");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RESPONDING72");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RESPONDING72");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RESOLVED");
+        ConcernWrapper.Test_Hook.addStatus(concern, "RETRACTED");
 
         Intent i = new Intent();
         i.putExtra("concern",concern);
         concernDetailActivity = mActivity.launchActivity(i);
     }
 
-    @After
-    public void cleanUp() {
-        concernDetailActivity.finish();
+    @AfterClass
+    public static void cleanUp() {
+        if(concernDetailActivity!=null) {
+            concernDetailActivity.finish();
+        }
+        concern = null;
     }
 
     // Contact information tests
@@ -159,12 +173,40 @@ public class ConcernDetailActivityTests {
     public void test_statusList() {
         List statuses = concern.getStatuses();
 
-        for(int i=0; i<concern.getStatuses().size(); i=i+2) {
-            String statusType = ((TextView)((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
+        for(int i=0; i<concern.getStatuses().size(); i++) {
+            String displayedText = ((TextView)((RelativeLayout)((LinearLayout) concernDetailActivity.findViewById(
                     R.id.detailedConcern_statusLayout
-            )).getChildAt(i)).getChildAt(0)).getText().toString();
+            )).getChildAt(i*2)).getChildAt(0)).getText().toString();
 
-            assertEquals(statusType, ((StatusWrapper)statuses.get(i)).getType());
+            String statusEnum = ((StatusWrapper)statuses.get(i)).getType();
+            String statusText;
+            switch(statusEnum) {
+                case "PENDING":
+                    statusText = concernDetailActivity.getResources().getString(R.string.PENDING_text);
+                    break;
+                case "SEEN":
+                    statusText = concernDetailActivity.getResources().getString(R.string.SEEN_text);
+                    break;
+                case "RESPONDING24":
+                    statusText = concernDetailActivity.getResources().getString(R.string.RESPONDING24_text);
+                    break;
+                case "RESPONDING48":
+                    statusText = concernDetailActivity.getResources().getString(R.string.RESPONDING48_text);
+                    break;
+                case "RESPONDING72":
+                    statusText = concernDetailActivity.getResources().getString(R.string.RESPONDING72_text);
+                    break;
+                case "RESOLVED":
+                    statusText = concernDetailActivity.getResources().getString(R.string.RESOLVED_text);
+                    break;
+                case "RETRACTED":
+                    statusText = concernDetailActivity.getResources().getString(R.string.RETRACTED_text);
+                    break;
+                default:
+                    statusText = "";
+            }
+
+            assertEquals(displayedText, statusText);
         }
     }
 }

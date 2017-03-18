@@ -15,6 +15,13 @@
     <string name="concern_nature_hint">Concern Nature</string>
     <string name="facility_hint">Facility</string>
     <string name="description_of_concern_section_title">DESCRIPTION OF CONCERN</string>
+    <string name="PENDING_text">Unread</string>
+    <string name="SEEN_text">Seen</string>
+    <string name="RESPONDING24_text">Responding in 24 hours</string>
+    <string name="RESPONDING48_text">Responding in 48 hours</string>
+    <string name="RESPONDING72_text">Responding in 72 hours</string>
+    <string name="RESOLVED_text">Resolved</string>
+    <string name="RETRACTED_text">Retracted</string>
 
     <string-array name="longtermcare_facilities">
         <item>Central Haven Special Care Home</item>

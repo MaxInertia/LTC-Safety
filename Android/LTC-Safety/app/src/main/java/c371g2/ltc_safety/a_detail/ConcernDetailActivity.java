@@ -210,7 +210,29 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
             StatusWrapper status = (StatusWrapper) concernStatuses.get(i);
             date.setText(status.getFormattedDate());
             assert(date.getText()!=null && !date.getText().equals(""));
-            type.setText(status.getType());
+            switch(status.getType()) {
+                case "PENDING":
+                    type.setText(R.string.PENDING_text);
+                    break;
+                case "SEEN":
+                    type.setText(R.string.SEEN_text);
+                    break;
+                case "RESPONDING24":
+                    type.setText(R.string.RESPONDING24_text);
+                    break;
+                case "RESPONDING48":
+                    type.setText(R.string.RESPONDING48_text);
+                    break;
+                case "RESPONDING72":
+                    type.setText(R.string.RESPONDING72_text);
+                    break;
+                case "RESOLVED":
+                    type.setText(R.string.RESOLVED_text);
+                    break;
+                case "RETRACTED":
+                    type.setText(R.string.RETRACTED_text);
+                    break;
+            }
             assert(type.getText()!=null && !type.getText().equals(""));
             statusLayout.addView(statusRow);
 
@@ -218,7 +240,7 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
                 // Distinguish the most recent Status by setting the text color to black.
                 type.setTextColor(Color.BLACK);
                 date.setTextColor(Color.BLACK);
-                if(status.getType().equals("RETRACTED")) {
+                if(status.getType().equals("RETRACTED") || status.getType().equals("RESOLVED")) {
                     retractConcernButton.setEnabled(false);
                     retractConcernButton.setVisibility(View.GONE);
                     ((LinearLayout)findViewById(R.id.detailedConcern_retractButtonContainer)).setVisibility(View.GONE);
