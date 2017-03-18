@@ -58,14 +58,13 @@ public class ConcernDetailViewModelTests {
     @Before
     public void beforeEach() {
         // Initialize MainViewModel
-        //mainViewModel = MainViewModel_TestHook.instance.getMainViewModelInstance();
         mainViewModel = MainActivity.Test_Hook.getNewMainViewModel();
         assert(mainViewModel != null);
     }
     
     @After
     public void cleanUp() {
-        //MainViewModel_TestHook.instance.clearConcernList(mainViewModel);
+        activity.finish();
     }
 
     @Test
@@ -79,7 +78,6 @@ public class ConcernDetailViewModelTests {
         concernDetailViewModel.retractConcern();
         concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
         assertTrue(concernDetailViewModel.retractionReturnCode.equals(RetractionReturnCode.IOEXCEPTION_THROWN_BY_API));
-        activity.finish();
     }
 
     @Test
@@ -106,6 +104,5 @@ public class ConcernDetailViewModelTests {
         concernDetailViewModel.signalLatch.await(20, TimeUnit.SECONDS);
         assertTrue("The return code for the retraction was null", concernDetailViewModel.retractionReturnCode!=null);
         assertTrue("The return code for the retraction was not SUCCESS", RetractionReturnCode.SUCCESS.equals(concernDetailViewModel.retractionReturnCode));
-        activity.finish();
     }
 }

@@ -27,11 +27,11 @@ import static org.junit.Assert.fail;
 public class NewConcernRegressionTests {
 
     @Rule
-    public ActivityTestRule<NewConcernActivity> mActivityRule = new ActivityTestRule<>(NewConcernActivity.class);
+    public ActivityTestRule<NewConcernActivity> ncActivityRule = new ActivityTestRule<>(NewConcernActivity.class);
 
     @Test
     public void scrollBug1() {
-        mActivityRule.launchActivity(new Intent());
+        ncActivityRule.launchActivity(new Intent());
         // Increase view height and enable scrolling
         onView(withId(R.id.newConcern_actionsTakenField)).perform(scrollTo()).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
         // Scroll up to the concernNatureChooser, then scroll down with initial screen touch being on the concernNatureChooser
@@ -40,13 +40,15 @@ public class NewConcernRegressionTests {
         try {
             onView(withId(R.id.activity_new_concern)).check(matches(isDisplayed()));
         } catch(NoMatchingViewException noMatchingViewException) {
+            ncActivityRule.getActivity().finish();
             fail("The NewConcernAcitivity view is not visible after scrolling via initial touch on concernNatureChooser.");
         }
+        ncActivityRule.getActivity().finish();
     }
 
     @Test
     public void scrollBug2() {
-        mActivityRule.launchActivity(new Intent());
+        ncActivityRule.launchActivity(new Intent());
         // Increase view height and enable scrolling
         onView(withId(R.id.newConcern_actionsTakenField)).perform(scrollTo()).perform(typeText("\n\n\n\n\n\n\n\n\n\n"));
         // Scroll up to the facilityChooser, then scroll down with initial screen touch being on the facilityChooser
@@ -55,7 +57,9 @@ public class NewConcernRegressionTests {
         try {
             onView(withId(R.id.activity_new_concern)).check(matches(isDisplayed()));
         } catch(NoMatchingViewException noMatchingViewException) {
+            ncActivityRule.getActivity().finish();
             fail("The NewConcernAcitivity view is not visible after scrolling via initial touch on facilityChooser.");
         }
+        ncActivityRule.getActivity().finish();
     }
 }

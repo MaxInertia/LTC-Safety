@@ -15,6 +15,8 @@ import com.appspot.ltc_safety.client.model.OwnerToken;
 import com.appspot.ltc_safety.client.model.Reporter;
 import com.google.api.client.util.DateTime;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,13 +36,20 @@ public class DeviceStorageTests {
 
     @ClassRule
     public static ActivityTestRule<MainActivity> mActivity = new ActivityTestRule<>(MainActivity.class);
+    MainActivity activity;
+
+    @Before
+    public void setup() {
+        activity = mActivity.launchActivity(new Intent());
+    }
+
+    @After
+    public void cleanUp() {
+        activity.finish();
+    }
 
     @Test
     public void test_writeAndReadDeviceData() {
-        Intent i = new Intent();
-        i.putExtra("testing",true);
-        mActivity.launchActivity(i);
-
         String reporterName = "Reporter";
         String phoneNumber = "Phone";
         String emailAddress = "Email";
@@ -63,7 +72,7 @@ public class DeviceStorageTests {
                 description
         );
 
-        Activity activity = mActivity.getActivity();
+        activity = mActivity.getActivity();
         DeviceStorage.saveConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
@@ -87,11 +96,10 @@ public class DeviceStorageTests {
             }
         }
 
-        SharedPreferences memory = mActivity.getActivity().getSharedPreferences(DeviceStorage.CONCERN_SHARED_PREF_KEY, Context.MODE_PRIVATE);
+        SharedPreferences memory = activity.getSharedPreferences(DeviceStorage.CONCERN_SHARED_PREF_KEY, Context.MODE_PRIVATE);
         SharedPreferences.Editor memoryEditor = memory.edit();
         memoryEditor.clear().commit();
 
-        mActivity.getActivity().finish();
         if(!successfullyLoaded) {
             fail();
         }

@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -51,9 +52,12 @@ public class ConcernDetailActivityTests {
 
         Intent i = new Intent();
         i.putExtra("concern",concern);
-        mActivity.launchActivity(i);
+        concernDetailActivity = mActivity.launchActivity(i);
+    }
 
-        concernDetailActivity = mActivity.getActivity();
+    @After
+    public void cleanUp() {
+        concernDetailActivity.finish();
     }
 
     // Contact information tests

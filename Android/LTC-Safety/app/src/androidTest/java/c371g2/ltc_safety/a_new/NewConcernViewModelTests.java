@@ -27,20 +27,22 @@ public class NewConcernViewModelTests {
 
     @Rule
     public ActivityTestRule<NewConcernActivity> newConcernRule = new ActivityTestRule<>(NewConcernActivity.class, true, false);
-
-    NewConcernActivity activity;
-    NewConcernViewModel newConcernViewModel;
+    private NewConcernActivity activity;
+    private NewConcernViewModel newConcernViewModel;
 
     @Before
-    public void beforeEach() {
+    public void setup() {
         ConcernSubmissionObserver concernSubmissionObserver = Mockito.mock(ConcernSubmissionObserver.class);
 
         Intent i = new Intent();
         i.putExtra("observer", concernSubmissionObserver);
         activity = newConcernRule.launchActivity(i);
         newConcernViewModel = NewConcernActivity.Test_Hook.getViewModel(activity);
+    }
 
-        //MainViewModel_TestHook.instance.initializeConcernList(); // To initialize ConcernList
+    @After
+    public void cleanUp() {
+        activity.finish();
     }
 
     @Test

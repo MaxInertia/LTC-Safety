@@ -61,7 +61,6 @@ public class MainViewModelTests {
     @After
     public void cleanup() {
         activity.finish();
-
     }
 
     @Test

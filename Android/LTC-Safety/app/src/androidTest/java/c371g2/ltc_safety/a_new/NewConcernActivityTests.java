@@ -7,6 +7,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,15 +28,20 @@ import static junit.framework.Assert.fail;
 @RunWith(AndroidJUnit4.class)
 public class NewConcernActivityTests {
     @Rule
-    public ActivityTestRule<NewConcernActivity> mActivity = new ActivityTestRule<>(NewConcernActivity.class, true, false);
+    public ActivityTestRule<NewConcernActivity> ncActivity = new ActivityTestRule<>(NewConcernActivity.class, true, false);
     private NewConcernActivity newConcernActivity;
 
     @Before
-    public void beforeEach() {
+    public void setup() {
         Intent i = new Intent();
         ConcernSubmissionObserver observer = Mockito.mock(ConcernSubmissionObserver.class);
         i.putExtra("observer", observer);
-        newConcernActivity = mActivity.launchActivity(i);
+        newConcernActivity = ncActivity.launchActivity(i);
+    }
+
+    @After
+    public void cleanUp() {
+        newConcernActivity.finish();
     }
 
     /**
