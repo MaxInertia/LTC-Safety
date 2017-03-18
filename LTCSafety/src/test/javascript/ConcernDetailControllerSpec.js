@@ -300,7 +300,7 @@ describe("Detail Controller", function() {
             $controller('ConcernDetailCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
             $scope.concern = {
-                isArchived : false
+                archived : false
             };
 
             $scope.concernRequest.accessToken = "fakeToken";
@@ -308,7 +308,7 @@ describe("Detail Controller", function() {
 
             $scope.toggleArchived();
 
-            expect($scope.concern.isArchived).toEqual(true);
+            expect($scope.concern.archived).toEqual(true);
             expect($scope.$apply).toHaveBeenCalled();
         });
     });

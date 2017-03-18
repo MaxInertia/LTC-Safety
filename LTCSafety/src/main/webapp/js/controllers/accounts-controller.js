@@ -13,6 +13,7 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
      * used to initialize the update permissions drop downs in the list.
      */
     $scope.accountsDidLoad = function() {
+        console.log("ACCOUNTS DID LOAD");
         Webflow.ready();
     };
 
@@ -184,7 +185,7 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
             limit : $scope.accountsRequest.limit,
             offset : $scope.accountsRequest.offset
         };
-        adminApi.requestAccountsList(request).execute(
+        adminApi.requestAccountList(request).execute(
             function (resp) {
                 if (resp.error) {
                     $scope.showModalError('Failed to refresh the accounts list.');
