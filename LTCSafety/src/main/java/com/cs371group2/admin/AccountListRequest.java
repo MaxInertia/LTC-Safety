@@ -23,7 +23,6 @@ public final class AccountListRequest extends PagedRequest implements Validatabl
     /** This is the type of the accounts to load from the database. */
     private AccountPermissions accountType;
 
-
     /**
      * Validates the PagedRequest to ensure that the fields are legal and non-null.
      *
@@ -38,6 +37,9 @@ public final class AccountListRequest extends PagedRequest implements Validatabl
 
         return super.validate();
     }
+
+    /** @return the account permission of the request */
+    public AccountPermissions getAccountType() {return accountType;}
 
     /**
      * TestHook_MutableAccountListRequest is a test hook to make AccountListRequest testable without exposing its

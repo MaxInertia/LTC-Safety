@@ -67,7 +67,7 @@ public class AdminApiTest extends DatastoreTest {
         assert(concerns.getConcernList().size() == 1);
         assert(concerns.getStartIndex() == 1);
         assert(concerns.getEndIndex() == 1);
-        assert(concerns.getTotalItemsCount() == 0);
+        assert(concerns.getTotalItemsCount() == 1);
     }
 
     /*** Tests that loading multiple concerns from the database is functioning properly */
@@ -99,7 +99,7 @@ public class AdminApiTest extends DatastoreTest {
         assert(concerns.getEndIndex() == 2);
 
         //Test accounts are not included in total concern count
-        assert(concerns.getTotalItemsCount() == 0);
+        assert(concerns.getTotalItemsCount() == 2);
     }
 
     /**
@@ -444,7 +444,7 @@ public class AdminApiTest extends DatastoreTest {
     /** Tries to toggle the archive status of a concern with an invalid token */
     @Test (expected = UnauthorizedException.class)
     public void toggleArchivedUnauthTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
-        new AdminApi().archiveConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
+        new AdminApi().updateArchiveStatus(new ConcernRequest.TestHook_MutableConcernRequest(123, "x5gvMAYGfNcKv74VyHFgr4Ytcge2").build());
     }
 
     /** Tries to toggle the archive status of a concern from an empty database and verifies that a not found exception is thrown */
@@ -452,7 +452,7 @@ public class AdminApiTest extends DatastoreTest {
     public void toggleArchivedUnverifiedTest() throws UnauthorizedException, BadRequestException, NotFoundException {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.UNVERIFIED, true);
-        new AdminApi().archiveConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
+        new AdminApi().updateArchiveStatus(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
     }
 
     /** Tries to toggle the archive status of a concern from an empty database and verifies that a not found exception is thrown */
@@ -460,7 +460,7 @@ public class AdminApiTest extends DatastoreTest {
     public void toggleArchivedUnverifiedEmailTest() throws UnauthorizedException, BadRequestException, NotFoundException {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, false);
-        new AdminApi().archiveConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
+        new AdminApi().updateArchiveStatus(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
     }
 
     /** Tries to toggle the archive status of a concern from an empty database and verifies that a not found exception is thrown */
@@ -468,7 +468,7 @@ public class AdminApiTest extends DatastoreTest {
     public void toggleArchivedFromEmptyDatabaseTest() throws UnauthorizedException, BadRequestException, NotFoundException {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        new AdminApi().archiveConcern(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
+        new AdminApi().updateArchiveStatus(new ConcernRequest.TestHook_MutableConcernRequest(123, builder.build() ).build());
     }
 
     /** Tries to toggle the archive status of a concern from the database is functioning properly */
@@ -488,9 +488,9 @@ public class AdminApiTest extends DatastoreTest {
         Concern concern = new AdminApi().requestConcern(request);
 
         assert(!concern.isArchived());
-        new AdminApi().archiveConcern(request);
+        new AdminApi().updateArchiveStatus(request);
         assert(concern.isArchived());
-        new AdminApi().archiveConcern(request);
+        new AdminApi().updateArchiveStatus(request);
         assert(!concern.isArchived());
     }
 }

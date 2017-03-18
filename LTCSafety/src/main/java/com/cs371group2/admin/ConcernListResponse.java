@@ -11,6 +11,10 @@ import java.util.List;
  * History property: Instances of this class are mutable from the time they are created,
  * due to referential nature of the list of elements.
  *
+ * Invariance Properties: This class assumes that an administrator has requested a list of concerns
+ * and has been validly authenticated. It also assumed the list it is given is not null, the start index
+ * is smaller or equal to the end index, and the total size is non-negative.
+ *
  * Created on 2017-03-02.
  */
 public final class ConcernListResponse extends PagedResponse {

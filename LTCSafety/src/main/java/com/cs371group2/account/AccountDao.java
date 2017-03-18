@@ -2,6 +2,8 @@ package com.cs371group2.account;
 
 import com.cs371group2.Dao;
 import com.cs371group2.admin.AccessToken;
+import com.cs371group2.admin.AccountListRequest;
+import com.cs371group2.admin.AccountListResponse;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 
@@ -86,25 +88,39 @@ public class AccountDao extends Dao<Account> {
      * The account is used to determine whether or not it should be loading testing accounts.
      *
      * @param account The account that is requesting the list of concerns.
-     * @param offset The offset to begin loading from
-     * @param limit The maximum amount of concerns to load
+     * @param request The AccountListRequest containing the requested offset, limit, and account type
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
      * @precond account != null
      */
-    public List<Account> load(Account account, int offset, int limit){
+    public AccountListResponse load(Account account, AccountListRequest request){
 
         assert account != null;
-        assert(offset >= 0);
-        assert(limit > 0);
+        assert(request.getOffset() >= 0);
+        assert(request.getLimit() > 0);
 
-        return ObjectifyService.ofy().load().type(Account.class)
+        List<Account> accounts =  ObjectifyService.ofy().load().type(Account.class)
+                                    .filter("isTestingAccount = ", account.isTestingAccount())
+                                    .filter("permissions = ", request.getAccountType())
+                                    .offset(request.getOffset())
+                                    .limit(request.getLimit())
+                                    .list();
+
+        int count = ObjectifyService.ofy().load().type(Account.class)
                 .filter("isTestingAccount = ", account.isTestingAccount())
-                .order("-permissions")
-                .offset(offset)
-                .limit(limit)
-                .list();
+                .filter("permissions = ", request.getAccountType())
+                .count();
+
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(accounts.size() != 0){
+            startIndex = request.getOffset() + 1;
+            endIndex = request.getOffset() + accounts.size();
+        }
+
+        return new AccountListResponse(accounts, startIndex, endIndex, count);
     }
 
     /**

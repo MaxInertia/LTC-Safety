@@ -51,19 +51,7 @@ public class AdminApi {
         assert account != null;
         logger.log(Level.INFO,account + " is requesting a concern list " + request);
 
-        ConcernDao dao = new ConcernDao();
-        List<Concern> list = dao.load(account, request.getOffset(), request.getLimit(), request.Archived());
-
-        logger.log(Level.INFO, "Concern list request was successful.");
-        int startIndex = 0;
-        int endIndex = 0;
-
-        if(list.size() != 0){
-            startIndex = request.getOffset() + 1;
-            endIndex = request.getOffset() + list.size();
-        }
-
-        return new ConcernListResponse(list, startIndex, endIndex, dao.count());
+        return new ConcernDao().load(account, request.getOffset(), request.getLimit(), request.Archived());
     }
 
     /**
@@ -149,25 +137,12 @@ public class AdminApi {
         assert account != null;
         logger.log(Level.INFO,account + " is requesting an account list " + request);
 
-        AccountDao dao = new AccountDao();
-        List<Account> list = dao.load(account, request.getOffset(), request.getLimit());
-
-        logger.log(Level.INFO, "Account list request was successful.");
-
-        int startIndex = 0;
-        int endIndex = 0;
-
-        if(list.size() != 0){
-            startIndex = request.getOffset() + 1;
-            endIndex = request.getOffset() + list.size();
-        }
-
-        return new AccountListResponse(list, startIndex, endIndex, dao.count(account));
+        return new AccountDao().load(account, request);
     }
 
     /**
-     * Requests an individual concern from the database based on the given unique concern id. The user submitting
-     * the request must have administrative permissions which will be verified before the request is completed.
+     * Updates the archival status of the requested concern. Unarchived concerns become archived and vice-versa.
+     * This takes the concern's id, as well as the user's firebase token for verification of credentials.
      *
      * @param request The concern request containing the user's firebase token, along with the desired concern id
      * @return The concern requested from the database
@@ -176,22 +151,13 @@ public class AdminApi {
      * @throws NotFoundException Thrown if the requested concern does not exist.
      * @precond request != null
      */
-    @ApiMethod(name = "archiveConcern", path = "admin/archiveConcern")
-    public void archiveConcern(ConcernRequest request)
+    @ApiMethod(name = "updateArchiveStatus", path = "admin/updateArchiveStatus")
+    public void updateArchiveStatus(ConcernRequest request)
             throws UnauthorizedException, BadRequestException, NotFoundException {
 
-        ValidationResult result = request.validate();
-        if (!result.isValid()){
-            logger.log(Level.WARNING, "Admin tried requesting a concern archive toggle with invalid data.");
-            throw new BadRequestException(result.getErrorMessage());
-        }
-
-        Account account = request.authenticate();
-        assert account != null;
-        logger.log(Level.INFO,account + " is requesting a concern archive toggle: " + request);
-
-        Concern loadedConcern = new ConcernDao().load(account, request.getConcernId());
-        logger.log(Level.INFO, "Concern " + loadedConcern + " was successfully loaded!");
+        Concern loadedConcern = requestConcern(request);
         loadedConcern.toggleArchived();
+        new ConcernDao().save(loadedConcern);
+        logger.log(Level.INFO, "Concern " + loadedConcern + " archive status was successfully updated!");
     }
 }

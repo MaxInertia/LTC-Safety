@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
+import com.cs371group2.admin.ConcernListResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
@@ -99,21 +100,22 @@ public class ConcernDaoTest extends DatastoreTest {
 
         ConcernData concernData = concernTest.generateConcernData().build();
 
-        Concern firstConcern = new Concern(concernData);
+        Concern firstConcern = new Concern(concernData, false);
         dao.save(firstConcern);
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        List<Concern> concernList = dao.load(account, 0, 1, false);
+        ConcernListResponse response = dao.load(account, 0, 1, false);
 
-        assertEquals(firstConcern, concernList.get(0));
+        assert(response.getConcernList().contains(firstConcern));
 
         concernData = concernTest.generateConcernData().build();
-        Concern secondConcern = new Concern(concernData);
+        Concern secondConcern = new Concern(concernData, false);
         dao.save(secondConcern);
 
-        concernList = dao.load(account, 0, 1, false);
+        response = dao.load(account, 0, 2, false);
 
-        assertEquals(secondConcern, concernList.get(0));
+        assert(response.getConcernList().contains(secondConcern));
+        assert(response.getTotalItemsCount() == 2);
     }
 
     @Test (expected = AssertionError.class)
@@ -122,7 +124,7 @@ public class ConcernDaoTest extends DatastoreTest {
         List<Concern> concernList;
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        concernList = dao.load(account, -1, 5, false);
+        ConcernListResponse response = dao.load(account, -1, 5, false);
     }
 
     @Test (expected = AssertionError.class)
@@ -131,29 +133,6 @@ public class ConcernDaoTest extends DatastoreTest {
         List<Concern> concernList;
 
         Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
-        concernList = dao.load(account, 0, -1, false);
-    }
-
-    /**
-     * This test ensures that the count method works properly
-     */
-    @Test
-    public void CountTest(){
-
-        ConcernDao dao = new ConcernDao();
-        ConcernTest concernTest = new ConcernTest();
-        ConcernData concernData = concernTest.generateConcernData().build();
-
-        Concern concern = new Concern(concernData);
-        dao.save(concern);
-
-        assert(dao.count() == 1);
-
-        concernData = concernTest.generateConcernData().build();
-
-        concern = new Concern(concernData);
-        dao.save(concern);
-
-        assert(dao.count() == 2);
+        ConcernListResponse response = dao.load(account, 0, -1, false);
     }
 }

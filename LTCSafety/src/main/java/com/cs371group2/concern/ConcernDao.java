@@ -2,6 +2,7 @@ package com.cs371group2.concern;
 
 import com.cs371group2.Dao;
 import com.cs371group2.account.Account;
+import com.cs371group2.admin.ConcernListResponse;
 import com.cs371group2.client.OwnerToken;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
@@ -88,28 +89,42 @@ public class ConcernDao extends Dao<Concern> {
      * @precond limit != null && limit > 0
      * @precond account != null
      */
-    public List<Concern> load(Account account, int offset, int limit, boolean archived){
+    public ConcernListResponse load(Account account, int offset, int limit, boolean archived){
 
         assert account != null;
         assert(offset >= 0);
         assert(limit > 0);
 
-        return ObjectifyService.ofy().load().type(Concern.class)
+        List<Concern> loadedConcerns = ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
                 .filter("isArchived = ", archived)
                 .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)
                 .list();
+
+        int count =ObjectifyService.ofy().load().type(Concern.class)
+                .filter("isTest = ", account.isTestingAccount())
+                .filter("isArchived = ", archived)
+                .count();
+
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(loadedConcerns.size() != 0){
+            startIndex = offset + 1;
+            endIndex = offset + loadedConcerns.size();
+        }
+
+        return new ConcernListResponse(loadedConcerns, startIndex, endIndex, count);
     }
 
     /**
-     * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
-     * The facilities is the list of facilities to load the concern for, and an exception is thrown
-     * if the concern loaded is not among the given locations.
+     * Loads a concern from the database based on the given id. The account is used to ensure that
+     * only a test/non-test account is loaded depending on the type of account requesting it
      *
-     * @param concernId The unique id of the Concern to load from the datastore
-     * @param account The list of facilities to load the concerns from
+     * @param concernId The unique id of the Concern to load from the database
+     * @param account The account requesting the concern
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0
@@ -129,16 +144,5 @@ public class ConcernDao extends Dao<Concern> {
         } else {
             throw new UnauthorizedException("The account " + account.getId() + "does not have permission to access concern with ID: " + concernId);
         }
-    }
-
-    /**
-     * Returns the number of concerns in the database (excluding test concerns)
-     *
-     * @return The number of concern entities in the database.
-     */
-    public int count(){
-        return ObjectifyService.ofy().load().type(Concern.class)
-                .filter("isTest = ", false)
-                .count();
     }
 }
