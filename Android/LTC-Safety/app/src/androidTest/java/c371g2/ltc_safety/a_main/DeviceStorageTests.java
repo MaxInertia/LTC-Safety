@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 import c371g2.ltc_safety.local.ConcernWrapper;
 
@@ -66,7 +67,7 @@ public class DeviceStorageTests {
         DeviceStorage.saveConcern(activity.getBaseContext(), concern);
 
         // If the list is null or has no elements, save failed.
-        ArrayList<ConcernWrapper> concerns = DeviceStorage.loadConcerns(activity.getBaseContext());
+        TreeSet<ConcernWrapper> concerns = DeviceStorage.loadConcerns(activity.getBaseContext());
         if(concerns==null || concerns.size()==0){
             fail();
         }

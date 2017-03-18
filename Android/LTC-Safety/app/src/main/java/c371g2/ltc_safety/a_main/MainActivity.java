@@ -47,6 +47,7 @@ public class MainActivity extends AbstractNetworkActivity {
 
         if(getIntent().getSerializableExtra("observer") != null) {
             mainViewModel = ((MainViewModel) getIntent().getSerializableExtra("observer"));
+            mainViewModel.setActivity(this);
         } else {
             mainViewModel = new MainViewModel(this);
         }
@@ -155,6 +156,8 @@ public class MainActivity extends AbstractNetworkActivity {
         assert(newConcernIntent != null);
         newConcernIntent.putExtra("observer",mainViewModel);
         assert(newConcernIntent.getExtras().getSerializable("observer").equals(mainViewModel));
+        mainViewModel.setActivity(null);
+        mainViewModel = null;
         MainActivity.this.startActivity(newConcernIntent);
     }
 
@@ -174,6 +177,8 @@ public class MainActivity extends AbstractNetworkActivity {
         assert(concernDetailIntent.getExtras().getSerializable("observer").equals(mainViewModel));
         concernDetailIntent.putExtra("concern",concern);
         assert(concernDetailIntent.getExtras().getSerializable("concern").equals(concern));
+        mainViewModel.setActivity(null);
+        mainViewModel = null;
         MainActivity.this.startActivity(concernDetailIntent);
     }
 

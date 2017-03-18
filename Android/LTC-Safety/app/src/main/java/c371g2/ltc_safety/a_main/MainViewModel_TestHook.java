@@ -32,9 +32,9 @@ public interface MainViewModel_TestHook {
      * @preconditions none.
      * @modifies MainViewModel.concernList is reinitialized.
      */
-    void clearConcernList(MainViewModel mainViewModel);
+    //void clearConcernList(MainViewModel mainViewModel);
 
-    /**
+    /*
      * Adds a concern to the list of concerns in MainViewModel.
      * @preconditions Either clearConcernList() or MainViewModel.initialize() has been called at
      * some point during the current runtime. If this is not the case, the concernList will be null
@@ -49,5 +49,5 @@ public interface MainViewModel_TestHook {
 
     ConcernWrapper getConcern(ConcernRetractionObserver mainViewModel, int index);
 
-    void initializeConcernList(MainViewModel mainViewModel);
+    //void initializeConcernSet(MainViewModel mainViewModel);
 }

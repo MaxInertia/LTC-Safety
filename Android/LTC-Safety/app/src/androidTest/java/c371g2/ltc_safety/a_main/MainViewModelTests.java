@@ -17,11 +17,13 @@ import org.junit.runner.RunWith;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import c371g2.ltc_safety.a_new.NewConcernActivity;
 import c371g2.ltc_safety.local.ConcernWrapper;
 
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
 
@@ -89,13 +91,13 @@ public class MainViewModelTests {
                 mainViewModel,
                 testConcern
         );
-        assertTrue("The submission via the NewConcernViewModel_TestHook failed! Unable to test updateSubmittedConcern()",submitSuccessful);
+        assertTrue("The submission via the NewConcernViewModel_TestHook failed! Unable to test updateSubmittedConcern()", submitSuccessful);
 
         MainViewModel.Test_Hook.updateConcerns(mainViewModel);
         mainViewModel.signalLatch.await(20, TimeUnit.SECONDS);
-        assertTrue("The return code for the retraction was null", mainViewModel.fetchReturnCode!=null);
+        assertTrue("The return code for the retraction was null", mainViewModel.fetchReturnCode != null);
         assertTrue(
-                "The return code for the retraction was not SUCCESS, it was "+mainViewModel.fetchReturnCode,
+                "The return code for the retraction was not SUCCESS, it was " + mainViewModel.fetchReturnCode,
                 mainViewModel.fetchReturnCode.equals(FetchReturnCode.SUCCESS)
         );
     }
@@ -116,6 +118,25 @@ public class MainViewModelTests {
                 fail();
             }
         }
+    }
+
+    @Test
+    public void test_getSortedListOrder() throws InterruptedException {
+        ConcernWrapper concern_0 = ConcernWrapper.Test_Hook.getEmptyConcern();
+        MainViewModel.Test_Hook.addConcern(mainViewModel,concern_0);
+        Thread.sleep(20);
+        ConcernWrapper concern_1 = ConcernWrapper.Test_Hook.getEmptyConcern();
+        MainViewModel.Test_Hook.addConcern(mainViewModel,concern_1);
+        Thread.sleep(20);
+        ConcernWrapper concern_2 = ConcernWrapper.Test_Hook.getEmptyConcern();
+        MainViewModel.Test_Hook.addConcern(mainViewModel,concern_2);
+
+        List<ConcernWrapper> concerns = mainViewModel.getSortedConcernList();
+
+        // Concerns added at later times should be at lower indices in the list.
+        assertEquals(concern_0.getSubmissionDate(), concerns.get(2).getSubmissionDate());
+        assertEquals(concern_1.getSubmissionDate(), concerns.get(1).getSubmissionDate());
+        assertEquals(concern_2.getSubmissionDate(), concerns.get(0).getSubmissionDate());
     }
 
 }

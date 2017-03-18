@@ -124,6 +124,19 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>, Serializable{
     }
 
     /**
+     * ConcernWrapper constructor for tests
+     */
+    private ConcernWrapper() {
+        dateSubmitted = (new Date()).getTime();
+        reporter = null;
+        location = null;
+        concernType = null;
+        actionsTaken = null;
+        description = null;
+        statuses = null;
+    }
+
+    /**
      * Retrieves the Concern Nature.
      * @preconditions none.
      * @modifies nothing.
@@ -241,6 +254,12 @@ public class ConcernWrapper implements Comparable<ConcernWrapper>, Serializable{
             return -1;
         } else {
             return 1;
+        }
+    }
+
+    public static class Test_Hook {
+        public static ConcernWrapper getEmptyConcern() {
+            return new ConcernWrapper();
         }
     }
 }
