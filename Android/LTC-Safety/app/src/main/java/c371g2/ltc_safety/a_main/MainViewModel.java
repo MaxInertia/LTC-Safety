@@ -34,9 +34,8 @@ import c371g2.ltc_safety.local.StatusWrapper;
  *
  * @Invariants none
  * @HistoryProperties
- * - The concernList is the same ArrayList instance for the duration of the time the application is
- * running. However, this is not the case when performing tests. The Test_Hook contains a method
- * which can reinitialize it.
+ * - Only one instance of this class exists for the duration of the time the application is
+ * running.
  */
 class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractionObserver, ConcernSubmissionObserver, Serializable {
 
@@ -67,7 +66,6 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
         concernList = DeviceStorage.loadConcerns(activity.getBaseContext());
         assert(concernList!=null);
         this.activity = activity;
-        Toast.makeText(activity,"MainViewModel Constructed",Toast.LENGTH_SHORT).show();
         updateConcerns();
     }
 
@@ -120,10 +118,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
     @Override
     public void concernSubmitted(@NonNull Context context, @NonNull ConcernWrapper newConcern) {
         DeviceStorage.saveConcern(context, newConcern);
-        Toast.makeText(context,"Size before: "+concernList.size(),Toast.LENGTH_SHORT).show();
         concernList.add(newConcern);
-        Toast.makeText(context,"Size after: "+concernList.size(),Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
