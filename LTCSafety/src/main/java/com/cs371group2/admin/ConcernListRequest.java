@@ -1,9 +1,6 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
-import com.cs371group2.ValidationResult;
-
-import java.util.logging.Logger;
 
 /**
  * This object represents a concern request containing an offset and a limit,
@@ -20,7 +17,9 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
     private boolean archived;
 
     /** @return Whether the request should load archived or non-archived concerns */
-    public boolean Archived() { return archived; }
+    public boolean isArchived() {
+        return archived;
+    }
 
     /**
      * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its

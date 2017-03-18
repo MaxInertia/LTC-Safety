@@ -8,10 +8,10 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-
-import java.util.List;
+import com.googlecode.objectify.cmd.Query;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,18 +95,19 @@ public class ConcernDao extends Dao<Concern> {
         assert(offset >= 0);
         assert(limit > 0);
 
-        List<Concern> loadedConcerns = ObjectifyService.ofy().load().type(Concern.class)
+
+        Query<Concern> query = ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
-                .filter("isArchived = ", archived)
+                .filter("isArchived = ", archived);
+
+
+        List<Concern> loadedConcerns = query
                 .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)
                 .list();
 
-        int count =ObjectifyService.ofy().load().type(Concern.class)
-                .filter("isTest = ", account.isTestingAccount())
-                .filter("isArchived = ", archived)
-                .count();
+        int count = query.count();
 
         int startIndex = 0;
         int endIndex = 0;

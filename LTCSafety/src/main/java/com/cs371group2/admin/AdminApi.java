@@ -7,12 +7,11 @@ import com.cs371group2.client.UpdateConcernStatusResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernStatus;
-import com.google.api.server.spi.config.*;
+import com.google.api.server.spi.config.Api;
+import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.response.BadRequestException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
-
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +50,7 @@ public class AdminApi {
         assert account != null;
         logger.log(Level.INFO,account + " is requesting a concern list " + request);
 
-        return new ConcernDao().load(account, request.getOffset(), request.getLimit(), request.Archived());
+        return new ConcernDao().load(account, request.getOffset(), request.getLimit(), request.isArchived());
     }
 
     /**
