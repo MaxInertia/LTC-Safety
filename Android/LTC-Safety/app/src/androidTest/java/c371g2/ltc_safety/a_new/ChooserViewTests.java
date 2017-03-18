@@ -1,9 +1,12 @@
 package c371g2.ltc_safety.a_new;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.test.rule.ActivityTestRule;
 import android.view.View;
 import android.widget.TextView;
 
+import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
@@ -16,18 +19,25 @@ import static org.mockito.Mockito.verify;
  */
 public class ChooserViewTests {
 
+    @Rule
+    public ActivityTestRule<NewConcernActivity> newConcernRule = new ActivityTestRule<>(NewConcernActivity.class, true, false);
+
     @Test
     public void test_setup() {
-        TextView textView = Mockito.mock(TextView.class);
+        //TextView textView = Mockito.mock(TextView.class);
+        NewConcernActivity newConcernActivity = newConcernRule.launchActivity(new Intent());
+        TextView textView = new TextView(newConcernActivity);
         String[] items = {"A","B","C"};
         ChooserView.setup(
                 textView,
                 "Title",
                 items
         );
-        ArgumentCaptor<View.OnClickListener> argument = ArgumentCaptor.forClass(View.OnClickListener.class);
-        verify(textView).setOnClickListener(argument.capture());
-        assertTrue(argument.getValue()!=null);
+        assertTrue("View was not assigned an onClickListener.", textView.hasOnClickListeners());
+        //ArgumentCaptor<View.OnClickListener> argument = ArgumentCaptor.forClass(View.OnClickListener.class);
+        //verify(textView).setOnClickListener(argument.capture());
+        //assertTrue(argument.getValue()!=null);
+        newConcernActivity.finish();
     }
 
     /*@Test
