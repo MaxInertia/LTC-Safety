@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <item
+        android:title="Reload"
+        android:id="@+id/action_reload_concerns"
+        android:icon="@mipmap/ic_reload_concerns"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+</menu>
