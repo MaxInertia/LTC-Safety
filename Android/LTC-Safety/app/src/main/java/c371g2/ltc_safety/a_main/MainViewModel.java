@@ -1,5 +1,7 @@
 package c371g2.ltc_safety.a_main;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -218,18 +220,26 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
             viewModel.networkTask = null;
             final AbstractNetworkActivity activity = viewModel.activityWeakReference.get();
 
-            String message = "Concern status updates failed";
+            String message;
             if(FetchReturnCode.SUCCESS.equals(returnCode)) {
                 assert(concernCollection != null);
                 returnCode = addNewConcernStatuses(activity.getBaseContext(), concernCollection);
                 message = "Concern statuses were updated";
+            } else {
+                returnCode = FetchReturnCode.IOEXCEPTION_THROWN_BY_API;
+                message = "Concern status updates failed";
             }
 
             //progressDialog is not initialized for tests
             if(!activity.isFinishing() && activity.progressDialog!=null){
                 assert(activity.progressDialog.isShowing());
-                activity.progressDialog.setMessage(message);
+                activity.progressDialog.cancel();
+                AlertDialog.Builder b = new AlertDialog.Builder(activity);
+                b.setMessage(message);
+                activity.progressDialog = b.create();
+                //activity.progressDialog.setTitle(message);
                 activity.progressDialog.setCancelable(true);
+                activity.progressDialog.show();
             }
 
             viewModel.fetchReturnCode = returnCode;
@@ -308,10 +318,9 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
             return (ConcernWrapper) ((MainViewModel)mainViewModel).concerns.toArray()[index];
         }
 
-        //@Override
-        public void initializeConcernSet(MainViewModel mainViewModel) {
-            mainViewModel.concerns = new TreeSet<>();
-        }
+        //public static void initializeConcernSet(MainViewModel mainViewModel) {
+        //    mainViewModel.concerns = new TreeSet<>();
+        //}
 
         static void addConcern(MainViewModel viewModel, ConcernWrapper concern) throws NullPointerException {
             viewModel.concerns.add(concern);

@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_detail;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -104,17 +105,14 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
      */
     private void setupRetractConcernButton() {
         retractConcernButton = (Button) findViewById(R.id.detailedConcern_retractButton);
+        final ConcernDetailActivity me = this;
         assert(retractConcernButton != null);
         retractConcernButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressDialog = InfoDialog.createInfoDialogue(
-                        ConcernDetailActivity.this,
-                        null,
-                        "Please wait",
-                        null,
-                        false
-                );
+                progressDialog = new ProgressDialog(me);
+                progressDialog.setTitle("Loading");
+                ((ProgressDialog)progressDialog).setMessage("Please wait...");
                 progressDialog.show();
                 if(getParent()!=null) {
                     // Prevents loading an out of date ListView if back nav is pressed

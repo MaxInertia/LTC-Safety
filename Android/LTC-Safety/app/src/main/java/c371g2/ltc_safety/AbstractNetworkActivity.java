@@ -1,6 +1,7 @@
 package c371g2.ltc_safety;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.ConnectivityManager;
@@ -22,7 +23,7 @@ public abstract class AbstractNetworkActivity extends AppCompatActivity {
      * This variable is null until a concern is retracted or a concern submission is attempted with
      * valid inputs.
      */
-    public AlertDialog progressDialog;
+    public Dialog progressDialog;
 
     /**
      * Check if the device has network access.

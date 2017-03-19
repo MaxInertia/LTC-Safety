@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_new;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -253,7 +254,10 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
 
                 // Inform user that the concern was successfully submitted
                 if(!activity.isFinishing() && activity.progressDialog!=null) {
-                    activity.progressDialog.setMessage("Your concern has been submitted");
+                    activity.progressDialog.cancel();
+                    AlertDialog.Builder b = new AlertDialog.Builder(activity);
+                    b.setMessage("Your concern has been submitted");
+                    activity.progressDialog = b.create();
                     activity.progressDialog.setCancelable(true);
                     activity.progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                         @Override
@@ -265,12 +269,17 @@ class NewConcernViewModel extends AbstractNetworkViewModel {
                             activity.finish();
                         }
                     });
+                    activity.progressDialog.show();
                 }
 
             } else if(!activity.isFinishing() && activity.progressDialog!=null) {
                 // LocalConcern submission failed, possible cause: No internet access on device
-                activity.progressDialog.setMessage("Failed submitting your concern");
+                activity.progressDialog.cancel();
+                AlertDialog.Builder b = new AlertDialog.Builder(activity);
+                b.setMessage("Failed submitting your concern");
+                activity.progressDialog = b.create();
                 activity.progressDialog.setCancelable(true);
+                activity.progressDialog.show();
             }
 
             viewModel.submissionReturnCode = returnCode;
