@@ -55,6 +55,7 @@
     
     viewModel.delegate = self;
     _viewModel = viewModel;
+
 }
 
 /**
@@ -73,15 +74,16 @@
     self.addConcernButton.layer.borderColor = [[UIColor colorWithRed:0xE2/255.0 green:0xE2/255.0 blue:0xE2/255.0 alpha:0xE2/255.0] CGColor];
     self.addConcernButton.layer.borderWidth = 1.0f;
     
-    UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(_refresh)];
+    UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = button;
+    [self refresh];
 }
 /**
  Called when the user selects the refresh button. This method displays a loading spinner while calling a method in the clientApi to refresh all concerns
  known to the app.
 */
--(void)_refresh {
-    
+-(void)refresh {
+        
     // Display the loading spinner to the user until the retract call has finished
     LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
     [self presentViewController: loadingMessage animated: YES completion: nil];
@@ -98,10 +100,14 @@
         [tokens addObject:curToken];
     }
     tokensWrapper.tokens = [tokens copy];
+    
+    /**
+     <#Description#>
 
-
-    // Call the fetch concerns endpoint on the Client API using the view model's concern's owner tokens inside of the token wrapper
-    [self.clientApi fetchConcerns:tokensWrapper completion:^(GTLRClient_ConcernCollection *fetchResponse, NSError *error) {
+     @param error <#error description#>
+     @return <#return value description#>
+     */
+    [self.viewModel refreshConcernsWithCompletion:tokensWrapper completion:^(NSError *error) {
         [loadingMessage dismissViewControllerAnimated:YES completion:^(){
             UIAlertController *alert;
             if (error != nil){
@@ -116,11 +122,8 @@
                 [self presentViewController:alert
                                    animated:YES
                                  completion:nil];
-            }else {
-                [self.viewModel updateConcernsStatus:fetchResponse.items];
             }
         }];
-        
     }];
 }
 
@@ -132,13 +135,14 @@
  @param sender The sender of the action.
  */
 - (IBAction)presentCreateConcernController:(id)sender {
-    
+
     LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.viewModel.objectContext];
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModel];
     viewController.delegate = self;
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentViewController:navController animated:YES completion:nil];
+
 }
 
 - (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern {

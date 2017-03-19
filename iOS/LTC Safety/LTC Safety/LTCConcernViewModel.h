@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "LTCConcern+CoreDataClass.h"
 #import "LTCConcernViewModelDelegate.h"
+#import "LTCClientApi.h"
+
 
 extern NSString * const LTCUpdatedConcernStatusNotification;
 
@@ -16,6 +18,10 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
  The LTCConcernViewModel class is used for modelling the data required for the LTCConcernViewController to display the client's submitted concerns.
  */
 @interface LTCConcernViewModel : NSObject
+
+typedef void(^LTCRefreshConcernsCompletion)(NSError *error);
+@property (nonatomic, strong) LTCClientApi *clientApi;
+
 
 /**
  The number of sections in the view model which is guaranteed to be non-negative.
@@ -82,5 +88,5 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
  */
 - (NSUInteger )rowCountForSection:(NSUInteger)section;
 
-- (void)updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns;
+- (void)refreshConcernsWithCompletion:(GTLRClient_OwnerTokenListWrapper *)tokensWrapper completion:(LTCRefreshConcernsCompletion)completion;
 @end

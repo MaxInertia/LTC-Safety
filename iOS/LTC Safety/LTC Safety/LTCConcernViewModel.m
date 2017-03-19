@@ -7,6 +7,7 @@
 //
 
 #import "LTCConcernViewModel.h"
+#import "LTCClientApi.h"
 
 NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatusNotification";
 
@@ -37,12 +38,12 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
 
         self.fetchedResultsController.delegate = self;
         self.objectContext = context;
+        self.clientApi = [[LTCClientApi alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updatedConcernStatus:) name:LTCUpdatedConcernStatusNotification object:nil];
         
         
     }
-    
     
     return self;
 }
@@ -194,16 +195,28 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
         [concern addStatusesObject:status];
     }
-    [self.objectContext save:nil];
-
-    
 }
+
+- (void)refreshConcernsWithCompletion:(GTLRClient_OwnerTokenListWrapper *)tokensWrapper completion:(LTCRefreshConcernsCompletion)completion  {
+    [self.clientApi fetchConcerns:tokensWrapper completion:^(GTLRClient_ConcernCollection *fetchResponse, NSError *error) {
+        if (error) {
+            completion(error);
+        } else {
+            [self _updateConcernsStatus:fetchResponse.items];
+            completion(nil);
+        }
+    }];
+}
+
+
 /**
     Called when the user pressed the refresh putton in main concern view. This method will update the statuses of all concerns known to the app.
  @param concerns the array of concerns that has come from the clientApi call to be used to update all concerns.
  */
-- (void)updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns{
+- (void)_updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns{
     
+    NSAssert(self.objectContext != nil, @"Attempted fetcing concerns with a nil context");
+
     for(GTLRClient_Concern *curConcern in concerns){
         
         NSString *identifier = [curConcern.identifier stringValue];
@@ -223,6 +236,7 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         if (error == nil && concern != nil) {
             NSMutableOrderedSet *newStatuses = [[NSMutableOrderedSet alloc] init];
             for(GTLRClient_ConcernStatus *curStatus in curConcern.statuses){
+                NSLog(@"Concern%@ WITH NEW STATUS: %@", curConcern.data.concernNature, curStatus.type);
                 LTCConcernStatus *status = [LTCConcernStatus statusWithData:curStatus inManagedObjectContext:self.objectContext];
                 if(counter == 0){
                     [newStatuses addObject:status];
@@ -234,6 +248,7 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         }
     }
     [self.objectContext save:nil];
+    
 }
 
 

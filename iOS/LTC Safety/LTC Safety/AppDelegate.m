@@ -69,7 +69,6 @@
     NSManagedObjectContext *context = self.persistentContainer.viewContext;
     
     NSAssert(context != nil, @"Application terminated with nil object context.");
-    
     NSError *error = nil;
     if ([context hasChanges] && ![context save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
