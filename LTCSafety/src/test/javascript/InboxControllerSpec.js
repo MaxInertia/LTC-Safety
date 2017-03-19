@@ -27,7 +27,7 @@ describe("Inbox Controller", function() {
                 return {
                     execute: function(callback) {
                         var response = {
-                            items : ['test1', 'test2']
+                            concernList : ['test1', 'test2']
                         };
                         callback(response);
                     }
@@ -62,7 +62,7 @@ describe("Inbox Controller", function() {
             $scope.updateConcernList();
 
             // Expect that the concerns list is non-empty
-            expect($scope.concerns).toEqual(['test1', 'test2']);
+            expect($scope.concerns.concernList).toEqual(['test1', 'test2']);
 
         });
 
@@ -76,15 +76,12 @@ describe("Inbox Controller", function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
-            spyOn($scope, 'updateConcernList');
-
             $scope.concernRequest.limit = 25;
             $scope.concernRequest.offset = 0;
-            $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
-            expect($scope.updateConcernList).toHaveBeenCalled();
-            expect($scope.concerns).toEqual([]);
+            expect($scope.updateConcernList).toThrow(new Error("Attempted to refresh the concerns list with a null access token."));
+            expect($scope.concerns.concernList).toEqual([]);
         });
 
         /**
@@ -94,17 +91,14 @@ describe("Inbox Controller", function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
-            spyOn($scope, 'updateConcernList');
 
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.limit = 25;
             $scope.concernRequest.offset = -1;
-            $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
-            expect($scope.updateConcernList).toHaveBeenCalled();
-            expect($scope.concerns).toEqual([]);
-
+            expect($scope.updateConcernList).toThrow(new Error("Attempted to fetch a page with a negative start index."));
+            expect($scope.concerns.concernList).toEqual([]);
         });
 
         /**
@@ -114,17 +108,13 @@ describe("Inbox Controller", function() {
 
             var controller = $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
-            spyOn($scope, 'updateConcernList');
-
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.limit = 0;
             $scope.concernRequest.offset = 0;
-            $scope.updateConcernList();
 
             // Expect that the concerns list is not updated
-            expect($scope.updateConcernList).toHaveBeenCalled();
-            expect($scope.concerns).toEqual([]);
-
+            expect($scope.updateConcernList).toThrow(new Error("Attempted to fetch an empty page."));
+            expect($scope.concerns.concernList).toEqual([]);
         });
     });
 
@@ -144,11 +134,11 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.limit = 25;
             $scope.concernRequest.offset = 0;
-            $scope.concerns = [];
+            $scope.concerns = {};
             $scope.refresh();
 
             // Expect that the concerns list was repopulated
-            expect($scope.concerns).toEqual(['test1', 'test2']);
+            expect($scope.concerns.concernList).toEqual(['test1', 'test2']);
         });
 
         /**
@@ -158,17 +148,20 @@ describe("Inbox Controller", function() {
 
             var limit = 25;
             var offset = 0;
+            var archived = false;
 
             // Mock out location to catch the page redirect
             var $location = {
                 url: function(path) {
-                    expect(path).toEqual('/inbox/' + limit + '/' + limit)
+                    expect(path).toEqual('/inbox/' + limit + '/' + limit + '/' + archived)
                 }
             };
 
             var controller = $controller('InboxCtrl', { $scope: $scope, $location: $location, firebase: firebaseMock, adminApi: adminApiMock });
 
+            $scope.concerns.totalItemsCount = 500;
             $scope.concernRequest.accessToken = "fakeAccessToken";
+            $scope.concernRequest.archived = archived;
             $scope.concernRequest.offset = offset;
             $scope.concernRequest.limit = limit;
 
@@ -182,11 +175,12 @@ describe("Inbox Controller", function() {
 
             var limit = 25;
             var offset = 25;
+            var archived = false;
 
             // Mock out location to catch the page redirect
             var $location = {
                 url: function(path) {
-                    expect(path).toEqual('/inbox/' + (offset - limit) + '/' + limit)
+                    expect(path).toEqual('/inbox/' + (offset - limit) + '/' + limit + '/' + archived)
                 }
             };
 
@@ -195,6 +189,7 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.offset = offset;
             $scope.concernRequest.limit = limit;
+            $scope.concernRequest.archived = archived;
 
             $scope.previousPage();
         });
@@ -215,10 +210,97 @@ describe("Inbox Controller", function() {
             $scope.concernRequest.accessToken = "fakeAccessToken";
             $scope.concernRequest.offset = 0;
             $scope.concernRequest.limit = 25;
+            $scope.concernRequest.archived = false;
 
             $scope.previousPage();
 
             expect($location.url).not.toHaveBeenCalled();
         });
     });
+
+    /**
+     * Unit tests for the concern selection functionality of the inbox controller.
+     * This is related to when a concern in the inbox is clicked.
+     */
+    describe('Concern selection tests', function() {
+
+        /**
+         * Test to check that the previousPage request is ignored if it would result in a negative page offset.
+         */
+        it('Invalid previous page test', function() {
+
+            // Mock out location to catch the page redirect
+            var $location = {
+                url: function(path) {}
+            };
+            spyOn($location, 'url');
+
+            var controller = $controller('InboxCtrl', { $scope: $scope, $location: $location, firebase: firebaseMock, adminApi: adminApiMock });
+
+            var concern = {
+                id : 1234567
+            };
+            $scope.concernSelected(concern);
+
+            expect($location.url).toHaveBeenCalledWith('/concern-detail/1234567');
+        });
+    });
+
+    /**
+     * Tests that the most recent status is properly loaded for each concern in the inbox controller.
+     */
+    describe('Concern data tests', function() {
+
+        /**
+         * Test that an error is thrown when attempting to get the current status for a null concern.
+         */
+        it('Status for null concern test', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            expect(function() {
+                $scope.currentStatus(null);
+            }).toThrow(new Error("Attempted to get the status of a null concern."));
+
+        });
+
+        /**
+         * Test that an error is thrown when attempting to get the current status for a concern with no statuses.
+         */
+        it('Status for concern with no statuses', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            expect(function() {
+                var concern = {
+                    statuses : []
+                };
+                $scope.currentStatus(concern);
+            }).toThrow(new Error("Attempted to get the status of a concern with no statuses."));
+        });
+
+        /**
+         * Test that the most recent status is returned when attempting to get the current status for a valid concern.
+         */
+        it('Status for valid concern', function() {
+
+            $controller('InboxCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            // Mock out the call to the root controller
+            $scope.statusNames = function(key) {
+                if (key == 'RESOLVED') {
+                    return 'Resolved';
+                }
+            };
+
+            var concern = {
+                statuses : [
+                    {type : "PENDING"},
+                    {type : "RESOLVED"}
+                ]
+            };
+            expect($scope.currentStatus(concern)).toEqual("Resolved");
+        });
+    });
 });
+

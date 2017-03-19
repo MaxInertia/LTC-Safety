@@ -17,5 +17,10 @@ public enum AccountPermissions {
     /**
      * An account that has signed up but hasn't been given access to the system yet.
      */
-    UNVERIFIED
+    UNVERIFIED,
+
+    /**
+     * An account who's access request has been rejected by an existing administrator.
+     */
+    DENIED
 }

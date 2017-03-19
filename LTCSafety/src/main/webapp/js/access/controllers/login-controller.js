@@ -20,16 +20,26 @@ app.controller('LoginCtrl', function ($scope, firebase) {
      */
     $scope.signIn = function () {
 
-        console.assert($scope.user != null, "Attempted to sign in an account with no user credentials.");
+        if ($scope.user == null) {
+            throw new Error("Attempted to sign in an account with no user credentials.");
+        }
 
-        document.getElementById('login-error').style.display = "none";
+        // If the element can't be found no error should be thrown unless sign in fails
+        var loginError = document.getElementById('login-error');
+        if (loginError != null) {
+            loginError.style.display = "none";
+        }
 
-        firebase.auth().signInWithEmailAndPassword($scope.user.email, $scope.user.password).catch(function(error) {
+        var result = firebase.auth().signInWithEmailAndPassword($scope.user.email, $scope.user.password);
+        result.catch(function(error) {
 
             $scope.errorMessage = error.message;
             $scope.$apply();
 
-            document.getElementById('login-error').style.display = "block";
+            if (loginError == null) {
+                throw new Error("Unable to locate login-error element.");
+            }
+            loginError.style.display = "block";
         });
     };
 });

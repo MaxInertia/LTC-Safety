@@ -1,9 +1,12 @@
 package com.cs371group2;
 
+import com.cs371group2.concern.Concern;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Result;
 
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -86,6 +89,21 @@ public abstract class Dao<E> {
 
         logger.log(Level.FINER, "Successfully loaded Entity# " + key + " from the datastore.");
         return ObjectifyService.ofy().load().key(key).now();
+    }
+
+    /**
+     * Loads a collection of entities synchronously from the datastore directly using its keys.
+     *
+     * @param keysList The objectify keys created directly using the entity's identifier and class.
+     * @return The entitys in the datastore that the keys reference.
+     * @precond keysList != null
+     */
+    public Collection<E> load(Collection<Key<E>> keysList) {
+
+        assert keysList != null;
+
+        logger.log(Level.FINER, "Successfully loaded a list of entities from the datastore.");
+        return ObjectifyService.ofy().load().keys(keysList).values();
     }
 
     /**

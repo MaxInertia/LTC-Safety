@@ -8,11 +8,11 @@ import static org.junit.Assert.assertTrue;
 import com.cs371group2.DatastoreTest;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
+import com.cs371group2.admin.ConcernListResponse;
 import com.cs371group2.concern.Concern;
 import com.cs371group2.concern.ConcernDao;
 import com.cs371group2.concern.ConcernData;
 import com.cs371group2.concern.ConcernTest;
-import com.cs371group2.facility.Facility;
 import com.googlecode.objectify.Key;
 import java.util.List;
 import org.junit.Test;
@@ -100,23 +100,22 @@ public class ConcernDaoTest extends DatastoreTest {
 
         ConcernData concernData = concernTest.generateConcernData().build();
 
-        Concern firstConcern = new Concern(concernData);
+        Concern firstConcern = new Concern(concernData, false);
         dao.save(firstConcern);
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
-        account.addFacility(new Facility("OTHER_FACILITY"));
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
+        ConcernListResponse response = dao.load(account, 0, 1, false);
 
-        List<Concern> concernList = dao.load(account, 0, 1);
-
-        assertEquals(firstConcern, concernList.get(0));
+        assert(response.getConcernList().contains(firstConcern));
 
         concernData = concernTest.generateConcernData().build();
-        Concern secondConcern = new Concern(concernData);
+        Concern secondConcern = new Concern(concernData, false);
         dao.save(secondConcern);
 
-        concernList = dao.load(account, 0, 1);
+        response = dao.load(account, 0, 2, false);
 
-        assertEquals(secondConcern, concernList.get(0));
+        assert(response.getConcernList().contains(secondConcern));
+        assert(response.getTotalItemsCount() == 2);
     }
 
     @Test (expected = AssertionError.class)
@@ -124,9 +123,8 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
-        account.addFacility(new Facility("Other"));
-        concernList = dao.load(account, -1, 5);
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
+        ConcernListResponse response = dao.load(account, -1, 5, false);
     }
 
     @Test (expected = AssertionError.class)
@@ -134,32 +132,7 @@ public class ConcernDaoTest extends DatastoreTest {
         ConcernDao dao = new ConcernDao();
         List<Concern> concernList;
 
-        Account account = new Account("testing", AccountPermissions.ADMIN);
-        account.addFacility(new Facility("Other"));
-        concernList = dao.load(account, 0, -1);
+        Account account = new Account("testing", "test@email.com", AccountPermissions.ADMIN);
+        ConcernListResponse response = dao.load(account, 0, -1, false);
     }
-
-    /**
-     * This test saves and loads a concern from the "Other" facility in the form of a list
-     */
-    @Test
-    public void LoadConcernsFromOther(){
-
-        ConcernDao dao = new ConcernDao();
-        ConcernTest concernTest = new ConcernTest();
-        ConcernData concernData = concernTest.generateConcernData().build();
-
-        Concern firstConcern = new Concern(concernData);
-        dao.save(firstConcern);
-
-        Account account = new Account("testing", AccountPermissions.ADMIN);
-        account.addFacility(new Facility("OTHER_FACILITY"));
-
-        List<Concern> concerns = dao.load(account, 0, 1);
-
-        assertNotNull(concerns);
-        assertTrue(concerns.size() > 0);
-    }
-
-
 }

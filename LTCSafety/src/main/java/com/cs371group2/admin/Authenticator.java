@@ -4,7 +4,6 @@ import android.util.Pair;
 import com.cs371group2.ApiKeys;
 import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
-import com.cs371group2.facility.Facility;
 import com.google.api.server.spi.response.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -107,15 +106,11 @@ abstract class Authenticator {
             Claims claims = claim.getBody();
 
             String id = claims.getSubject();
-            AccountPermissions permissions = AccountPermissions.valueOf((String)claims.get("permissions"));
-            Account account = new Account(id, permissions, true);
-
-            Collection<String> facilities = (Collection<String>)claims.get("facilities");
-            for (String name : facilities) {
-                account.addFacility(new Facility(name));
-            }
-
             String email = (String)claims.get("email");
+            AccountPermissions permissions = AccountPermissions.valueOf((String)claims.get("permissions"));
+            Account account = new Account(id, email, permissions, true);
+
+
             Boolean isEmailVerified = (Boolean)claims.get("emailVerified");
             AccessToken accessToken = new AccessToken(email, id, id, isEmailVerified);
 

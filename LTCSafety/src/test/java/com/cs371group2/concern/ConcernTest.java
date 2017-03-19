@@ -125,4 +125,17 @@ public class ConcernTest extends DatastoreTest {
         data.getMutableLocation().setFacilityName("Unknown facility name");
         new ClientApi().submitConcern(data.build());
     }
+
+    /**
+     * Tests that toggling the concern's archived status
+     */
+    @Test
+    public void toggleArchived() throws Exception {
+        ConcernData.TestHook_MutableConcernData data = generateConcernData();
+        data.getMutableLocation().setFacilityName("Unknown facility name");
+        Concern concern = new Concern(data.build());
+        assert(!concern.isArchived());
+        assert(concern.toggleArchived());
+        assert(concern.isArchived());
+    }
 }
