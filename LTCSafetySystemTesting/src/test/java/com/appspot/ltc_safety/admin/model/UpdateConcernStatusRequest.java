@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.admin.model;
 
 /**
- * Model definition for ConcernRequest.
+ * Model definition for UpdateConcernStatusRequest.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the Admin API. For a detailed explanation see:
@@ -29,7 +29,7 @@ package com.appspot.ltc_safety.admin.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernRequest extends com.google.api.client.json.GenericJson {
+public final class UpdateConcernStatusRequest extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
@@ -44,6 +44,12 @@ public final class ConcernRequest extends com.google.api.client.json.GenericJson
   private java.lang.Long concernId;
 
   /**
+   * The value may be {@code null}.
+   */
+  @com.google.api.client.util.Key
+  private java.lang.String concernStatus;
+
+  /**
    * @return value or {@code null} for none
    */
   public java.lang.String getAccessToken() {
@@ -53,7 +59,7 @@ public final class ConcernRequest extends com.google.api.client.json.GenericJson
   /**
    * @param accessToken accessToken or {@code null} for none
    */
-  public ConcernRequest setAccessToken(java.lang.String accessToken) {
+  public UpdateConcernStatusRequest setAccessToken(java.lang.String accessToken) {
     this.accessToken = accessToken;
     return this;
   }
@@ -68,19 +74,34 @@ public final class ConcernRequest extends com.google.api.client.json.GenericJson
   /**
    * @param concernId concernId or {@code null} for none
    */
-  public ConcernRequest setConcernId(java.lang.Long concernId) {
+  public UpdateConcernStatusRequest setConcernId(java.lang.Long concernId) {
     this.concernId = concernId;
     return this;
   }
 
-  @Override
-  public ConcernRequest set(String fieldName, Object value) {
-    return (ConcernRequest) super.set(fieldName, value);
+  /**
+   * @return value or {@code null} for none
+   */
+  public java.lang.String getConcernStatus() {
+    return concernStatus;
+  }
+
+  /**
+   * @param concernStatus concernStatus or {@code null} for none
+   */
+  public UpdateConcernStatusRequest setConcernStatus(java.lang.String concernStatus) {
+    this.concernStatus = concernStatus;
+    return this;
   }
 
   @Override
-  public ConcernRequest clone() {
-    return (ConcernRequest) super.clone();
+  public UpdateConcernStatusRequest set(String fieldName, Object value) {
+    return (UpdateConcernStatusRequest) super.set(fieldName, value);
+  }
+
+  @Override
+  public UpdateConcernStatusRequest clone() {
+    return (UpdateConcernStatusRequest) super.clone();
   }
 
 }

@@ -1,8 +1,8 @@
 package com.cs371group2.system.admin.api;
 
 import com.appspot.ltc_safety.admin.Admin;
-import com.appspot.ltc_safety.admin.model.ConcernCollection;
 import com.appspot.ltc_safety.admin.model.ConcernListRequest;
+import com.appspot.ltc_safety.admin.model.ConcernListResponse;
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.ConcernData;
 import com.appspot.ltc_safety.client.model.Location;
@@ -138,15 +138,61 @@ public class RequestConcernListSystemTest {
     public void testValidToken() throws IOException {
 
         TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
-        builder.addFacility("random");
+        builder.addFacility("OTHER_FACILITY");
         String token = builder.build();
 
+        for (int i = 0; i < 5; i++) {
+            submitConcern("OTHER_FACILITY");
+        }
         ConcernListRequest test1 = new ConcernListRequest();
         test1.setAccessToken(token);
         test1.setLimit(5);
-        test1.setOffset(5);
-        ConcernCollection response = admin.requestConcernList(test1).execute();
-        //TODO
+        test1.setOffset(0);
+        ConcernListResponse result = admin.requestConcernList(test1).execute();
+
+        test1.setLimit(2);
+        test1.setOffset(2);
+        ConcernListResponse resultB = admin.requestConcernList(test1).execute();
+
+        assertEquals(result.getConcernList().get(2).getId(), resultB.getConcernList().get(0).getId());
+        assertEquals(result.getConcernList().get(3).getId(), resultB.getConcernList().get(1).getId());
+    }
+
+    /**
+     * Test submitting a from \ unverified and denied accounts, expect to receive http 401 in response
+     */
+    @Test
+    @Category(AdminAPISystemTests.class)
+    public void testUnauthorizedAccount() throws IOException {
+
+        TestAccountBuilder builder = new TestAccountBuilder("id", "email", AccountPermissions.UNVERIFIED, true);
+        builder.addFacility("random");
+        String token = builder.build();
+        ConcernListRequest test1 = new ConcernListRequest();
+
+        TestAccountBuilder builder2 = new TestAccountBuilder("id", "email", AccountPermissions.DENIED, true);
+        builder2.addFacility("random");
+        String token2 = builder.build();
+        ConcernListRequest test2 = new ConcernListRequest();
+
+        test1.setAccessToken(token);
+        test1.setLimit(5);
+        test1.setOffset(0);
+
+        test2.setAccessToken(token2);
+        test2.setLimit(5);
+        test2.setOffset(0);
+
+        try {
+            admin.requestConcernList(test1).execute();
+        } catch (GoogleJsonResponseException e) {
+            assertEquals(e.getStatusCode(), 401);
+        }
+        try {
+            admin.requestConcernList(test2).execute();
+        } catch (GoogleJsonResponseException e) {
+            assertEquals(e.getStatusCode(), 401);
+        }
     }
 
     /**
@@ -169,7 +215,7 @@ public class RequestConcernListSystemTest {
             admin.requestConcernList(test1).execute();
         } catch (GoogleJsonResponseException e) {
 
-            assertEquals(e.getDetails().getMessage(), "Unable to request concern list due to an invalid requested limit.");
+            assertEquals(e.getDetails().getMessage(), "Unable to request requested list due to an invalid requested limit.");
         }
     }
 
@@ -192,7 +238,7 @@ public class RequestConcernListSystemTest {
         try {
             admin.requestConcernList(test1).execute();
         } catch (GoogleJsonResponseException e) {
-            assertEquals(e.getDetails().getMessage(), "Unable to request concern list due to an invalid requested offset.");
+            assertEquals(e.getDetails().getMessage(), "Unable to request requested list due to an invalid requested offset.");
         }
     }
 
@@ -215,7 +261,7 @@ public class RequestConcernListSystemTest {
         try {
             admin.requestConcernList(test1).execute();
         } catch (GoogleJsonResponseException e) {
-            assertEquals(e.getDetails().getMessage(), "Unable to request concern list due to an invalid requested limit.");
+            assertEquals(e.getDetails().getMessage(), "Unable to request requested list due to an invalid requested limit.");
         }
     }
 
@@ -238,14 +284,14 @@ public class RequestConcernListSystemTest {
         test1.setAccessToken(token);
         test1.setLimit(50000000);
         test1.setOffset(2);
-        ConcernCollection result = admin.requestConcernList(test1).execute();
+        ConcernListResponse result = admin.requestConcernList(test1).execute();
 
         test1.setLimit(2);
         test1.setOffset(3);
-        ConcernCollection resultB = admin.requestConcernList(test1).execute();
+        ConcernListResponse resultB = admin.requestConcernList(test1).execute();
 
-        assertEquals(result.getItems().get(1).getId(), resultB.getItems().get(0).getId());
-        assertEquals(result.getItems().get(2).getId(), resultB.getItems().get(1).getId());
+        assertEquals(result.getConcernList().get(1).getId(), resultB.getConcernList().get(0).getId());
+        assertEquals(result.getConcernList().get(2).getId(), resultB.getConcernList().get(1).getId());
     }
 
     /**
@@ -263,9 +309,9 @@ public class RequestConcernListSystemTest {
         test1.setAccessToken(token);
         test1.setLimit(5);
         test1.setOffset(50000000);
-        ConcernCollection result = admin.requestConcernList(test1).execute();
+        ConcernListResponse result = admin.requestConcernList(test1).execute();
 
-        assertNull(result.getItems());
+        assertNull(result.getConcernList());
     }
 
     /**
@@ -286,13 +332,13 @@ public class RequestConcernListSystemTest {
         test1.setAccessToken(token);
         test1.setLimit(5);
         test1.setOffset(0);
-        ConcernCollection result = admin.requestConcernList(test1).execute();
+        ConcernListResponse result = admin.requestConcernList(test1).execute();
 
         test1.setLimit(2);
         test1.setOffset(3);
-        ConcernCollection resultB = admin.requestConcernList(test1).execute();
+        ConcernListResponse resultB = admin.requestConcernList(test1).execute();
 
-        assertEquals(result.getItems().get(3).getId(), resultB.getItems().get(0).getId());
-        assertEquals(result.getItems().get(4).getId(), resultB.getItems().get(1).getId());
+        assertEquals(result.getConcernList().get(3).getId(), resultB.getConcernList().get(0).getId());
+        assertEquals(result.getConcernList().get(4).getId(), resultB.getConcernList().get(1).getId());
     }
 }

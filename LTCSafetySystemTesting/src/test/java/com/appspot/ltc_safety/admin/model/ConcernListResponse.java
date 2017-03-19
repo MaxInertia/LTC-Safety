@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.admin.model;
 
 /**
- * Model definition for ConcernData.
+ * Model definition for ConcernListResponse.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the Admin API. For a detailed explanation see:
@@ -29,121 +29,100 @@ package com.appspot.ltc_safety.admin.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernData extends com.google.api.client.json.GenericJson {
+public final class ConcernListResponse extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String actionsTaken;
+  private java.util.List<Concern> concernList;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String concernNature;
+  private java.lang.Integer endIndex;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String description;
+  private java.lang.Integer startIndex;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Location location;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private Reporter reporter;
+  private java.lang.Integer totalItemsCount;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getActionsTaken() {
-    return actionsTaken;
+  public java.util.List<Concern> getConcernList() {
+    return concernList;
   }
 
   /**
-   * @param actionsTaken actionsTaken or {@code null} for none
+   * @param concernList concernList or {@code null} for none
    */
-  public ConcernData setActionsTaken(java.lang.String actionsTaken) {
-    this.actionsTaken = actionsTaken;
+  public ConcernListResponse setConcernList(java.util.List<Concern> concernList) {
+    this.concernList = concernList;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getConcernNature() {
-    return concernNature;
+  public java.lang.Integer getEndIndex() {
+    return endIndex;
   }
 
   /**
-   * @param concernNature concernNature or {@code null} for none
+   * @param endIndex endIndex or {@code null} for none
    */
-  public ConcernData setConcernNature(java.lang.String concernNature) {
-    this.concernNature = concernNature;
+  public ConcernListResponse setEndIndex(java.lang.Integer endIndex) {
+    this.endIndex = endIndex;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getDescription() {
-    return description;
+  public java.lang.Integer getStartIndex() {
+    return startIndex;
   }
 
   /**
-   * @param description description or {@code null} for none
+   * @param startIndex startIndex or {@code null} for none
    */
-  public ConcernData setDescription(java.lang.String description) {
-    this.description = description;
+  public ConcernListResponse setStartIndex(java.lang.Integer startIndex) {
+    this.startIndex = startIndex;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public Location getLocation() {
-    return location;
+  public java.lang.Integer getTotalItemsCount() {
+    return totalItemsCount;
   }
 
   /**
-   * @param location location or {@code null} for none
+   * @param totalItemsCount totalItemsCount or {@code null} for none
    */
-  public ConcernData setLocation(Location location) {
-    this.location = location;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public Reporter getReporter() {
-    return reporter;
-  }
-
-  /**
-   * @param reporter reporter or {@code null} for none
-   */
-  public ConcernData setReporter(Reporter reporter) {
-    this.reporter = reporter;
+  public ConcernListResponse setTotalItemsCount(java.lang.Integer totalItemsCount) {
+    this.totalItemsCount = totalItemsCount;
     return this;
   }
 
   @Override
-  public ConcernData set(String fieldName, Object value) {
-    return (ConcernData) super.set(fieldName, value);
+  public ConcernListResponse set(String fieldName, Object value) {
+    return (ConcernListResponse) super.set(fieldName, value);
   }
 
   @Override
-  public ConcernData clone() {
-    return (ConcernData) super.clone();
+  public ConcernListResponse clone() {
+    return (ConcernListResponse) super.clone();
   }
 
 }

@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.admin.model;
 
 /**
- * Model definition for ConcernData.
+ * Model definition for Account.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the Admin API. For a detailed explanation see:
@@ -29,121 +29,121 @@ package com.appspot.ltc_safety.admin.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernData extends com.google.api.client.json.GenericJson {
+public final class Account extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String actionsTaken;
+  private java.lang.String email;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String concernNature;
+  private java.lang.Boolean emailVerified;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String description;
+  private java.lang.String id;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Location location;
+  private java.lang.String permissions;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Reporter reporter;
+  private java.lang.Boolean testingAccount;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getActionsTaken() {
-    return actionsTaken;
+  public java.lang.String getEmail() {
+    return email;
   }
 
   /**
-   * @param actionsTaken actionsTaken or {@code null} for none
+   * @param email email or {@code null} for none
    */
-  public ConcernData setActionsTaken(java.lang.String actionsTaken) {
-    this.actionsTaken = actionsTaken;
+  public Account setEmail(java.lang.String email) {
+    this.email = email;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getConcernNature() {
-    return concernNature;
+  public java.lang.Boolean getEmailVerified() {
+    return emailVerified;
   }
 
   /**
-   * @param concernNature concernNature or {@code null} for none
+   * @param emailVerified emailVerified or {@code null} for none
    */
-  public ConcernData setConcernNature(java.lang.String concernNature) {
-    this.concernNature = concernNature;
+  public Account setEmailVerified(java.lang.Boolean emailVerified) {
+    this.emailVerified = emailVerified;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getDescription() {
-    return description;
+  public java.lang.String getId() {
+    return id;
   }
 
   /**
-   * @param description description or {@code null} for none
+   * @param id id or {@code null} for none
    */
-  public ConcernData setDescription(java.lang.String description) {
-    this.description = description;
+  public Account setId(java.lang.String id) {
+    this.id = id;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public Location getLocation() {
-    return location;
+  public java.lang.String getPermissions() {
+    return permissions;
   }
 
   /**
-   * @param location location or {@code null} for none
+   * @param permissions permissions or {@code null} for none
    */
-  public ConcernData setLocation(Location location) {
-    this.location = location;
+  public Account setPermissions(java.lang.String permissions) {
+    this.permissions = permissions;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public Reporter getReporter() {
-    return reporter;
+  public java.lang.Boolean getTestingAccount() {
+    return testingAccount;
   }
 
   /**
-   * @param reporter reporter or {@code null} for none
+   * @param testingAccount testingAccount or {@code null} for none
    */
-  public ConcernData setReporter(Reporter reporter) {
-    this.reporter = reporter;
+  public Account setTestingAccount(java.lang.Boolean testingAccount) {
+    this.testingAccount = testingAccount;
     return this;
   }
 
   @Override
-  public ConcernData set(String fieldName, Object value) {
-    return (ConcernData) super.set(fieldName, value);
+  public Account set(String fieldName, Object value) {
+    return (Account) super.set(fieldName, value);
   }
 
   @Override
-  public ConcernData clone() {
-    return (ConcernData) super.clone();
+  public Account clone() {
+    return (Account) super.clone();
   }
 
 }

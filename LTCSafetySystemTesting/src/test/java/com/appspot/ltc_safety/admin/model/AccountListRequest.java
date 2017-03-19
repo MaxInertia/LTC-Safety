@@ -19,7 +19,7 @@
 package com.appspot.ltc_safety.admin.model;
 
 /**
- * Model definition for ConcernData.
+ * Model definition for AccountListRequest.
  *
  * <p> This is the Java data model class that specifies how to parse/serialize into the JSON that is
  * transmitted over HTTP when working with the Admin API. For a detailed explanation see:
@@ -29,121 +29,100 @@ package com.appspot.ltc_safety.admin.model;
  * @author Google, Inc.
  */
 @SuppressWarnings("javadoc")
-public final class ConcernData extends com.google.api.client.json.GenericJson {
+public final class AccountListRequest extends com.google.api.client.json.GenericJson {
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String actionsTaken;
+  private java.lang.String accessToken;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String concernNature;
+  private java.lang.String accountType;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private java.lang.String description;
+  private java.lang.Integer limit;
 
   /**
    * The value may be {@code null}.
    */
   @com.google.api.client.util.Key
-  private Location location;
-
-  /**
-   * The value may be {@code null}.
-   */
-  @com.google.api.client.util.Key
-  private Reporter reporter;
+  private java.lang.Integer offset;
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getActionsTaken() {
-    return actionsTaken;
+  public java.lang.String getAccessToken() {
+    return accessToken;
   }
 
   /**
-   * @param actionsTaken actionsTaken or {@code null} for none
+   * @param accessToken accessToken or {@code null} for none
    */
-  public ConcernData setActionsTaken(java.lang.String actionsTaken) {
-    this.actionsTaken = actionsTaken;
+  public AccountListRequest setAccessToken(java.lang.String accessToken) {
+    this.accessToken = accessToken;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getConcernNature() {
-    return concernNature;
+  public java.lang.String getAccountType() {
+    return accountType;
   }
 
   /**
-   * @param concernNature concernNature or {@code null} for none
+   * @param accountType accountType or {@code null} for none
    */
-  public ConcernData setConcernNature(java.lang.String concernNature) {
-    this.concernNature = concernNature;
+  public AccountListRequest setAccountType(java.lang.String accountType) {
+    this.accountType = accountType;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public java.lang.String getDescription() {
-    return description;
+  public java.lang.Integer getLimit() {
+    return limit;
   }
 
   /**
-   * @param description description or {@code null} for none
+   * @param limit limit or {@code null} for none
    */
-  public ConcernData setDescription(java.lang.String description) {
-    this.description = description;
+  public AccountListRequest setLimit(java.lang.Integer limit) {
+    this.limit = limit;
     return this;
   }
 
   /**
    * @return value or {@code null} for none
    */
-  public Location getLocation() {
-    return location;
+  public java.lang.Integer getOffset() {
+    return offset;
   }
 
   /**
-   * @param location location or {@code null} for none
+   * @param offset offset or {@code null} for none
    */
-  public ConcernData setLocation(Location location) {
-    this.location = location;
-    return this;
-  }
-
-  /**
-   * @return value or {@code null} for none
-   */
-  public Reporter getReporter() {
-    return reporter;
-  }
-
-  /**
-   * @param reporter reporter or {@code null} for none
-   */
-  public ConcernData setReporter(Reporter reporter) {
-    this.reporter = reporter;
+  public AccountListRequest setOffset(java.lang.Integer offset) {
+    this.offset = offset;
     return this;
   }
 
   @Override
-  public ConcernData set(String fieldName, Object value) {
-    return (ConcernData) super.set(fieldName, value);
+  public AccountListRequest set(String fieldName, Object value) {
+    return (AccountListRequest) super.set(fieldName, value);
   }
 
   @Override
-  public ConcernData clone() {
-    return (ConcernData) super.clone();
+  public AccountListRequest clone() {
+    return (AccountListRequest) super.clone();
   }
 
 }
