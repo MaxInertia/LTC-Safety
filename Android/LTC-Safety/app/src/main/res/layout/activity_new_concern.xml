@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_new_concern"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/appBackground"
+    tools:context="c371g2.ltc_safety.a_new.NewConcernActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:focusableInTouchMode="true">
+
+        <!-- Contact information -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/contact_information_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textPersonName"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/nameTextField_hint"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_nameTextField" />
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="phone"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/phoneNumberField_hint"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_phoneNumberField" />
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:inputType="textEmailAddress"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/emailTextField_hint"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_emailTextField" />
+
+        </LinearLayout>
+
+        <!-- LocalConcern information -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/concern_info_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp"
+            android:id="@+id/newConcern_chooserLinearLayout">
+
+            <TextView
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/concern_nature_hint"
+                android:focusable="true"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:freezesText="true"
+                android:id="@+id/newConcern_concernNatureChooser"/>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <TextView
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/facility_hint"
+                android:focusable="true"
+                android:clickable="true"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:freezesText="true"
+                android:id="@+id/newConcern_facilityChooser"/>
+
+            <View
+                android:background="@color/lighter_gray"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textColorHint="@color/lighter_gray"
+                android:hint="@string/roomField_hint"
+                android:textSize="20sp"
+                android:maxLines="1"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="0dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_roomNumberField" />
+
+        </LinearLayout>
+
+        <!-- Description -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/description_of_concern_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_descriptionField" />
+        </LinearLayout>
+
+        <!-- Actions taken -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/actions_taken_section_title"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/section_border"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
+
+            <EditText
+                android:background="@android:color/transparent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:gravity="top"
+                android:textSize="20sp"
+                android:ems="10"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="0dp"
+                android:id="@+id/newConcern_actionsTakenField" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="1dp">
+            <Button
+                android:background="@android:color/white"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/submit_concern_button_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/newConcern_submitConcernButton"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+</ScrollView>

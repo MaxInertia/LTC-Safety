@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_view_concern"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="c371g2.ltc_safety.a_detail.ConcernDetailActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- CONTACT INFORMATION -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONTACT INFORMATION"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailedConcern_contactInformation"/>
+
+        <!-- CONCERN INFORMATION -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONCERN INFORMATION"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailedConcern_concernInformation">
+
+        </LinearLayout>
+
+        <!-- CONCERN STATUS LOG -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CONCERN STATUS LOG"
+            android:textSize="@dimen/newConcern_section_title_textSize"
+            android:paddingTop="30dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="8dp"/>
+
+        <LinearLayout
+            android:id="@+id/detailedConcern_statusLayout"
+            android:background="@drawable/section_border"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <!-- RETRACT BUTTON -->
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailedConcern_retractButtonContainer"
+            android:background="@drawable/section_border"
+            android:padding="1dp">
+            <Button
+                android:id="@+id/detailedConcern_retractButton"
+                android:background="@android:color/white"
+                android:text="Retract"
+                android:textColor="@android:color/holo_red_dark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+    </LinearLayout>
+</ScrollView>
