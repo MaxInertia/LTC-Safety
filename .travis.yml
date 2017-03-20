@@ -24,7 +24,7 @@ script:
 # - open -a "simulator" --args -CurrentDeviceUDID A84965FC-070D-4EAF-83E8-84FFE99F5866
 # - xcodebuild -workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace -scheme LTC\ Safety -sdk iphonesimulator build test
  - chmod +x iOS/build_scripts/script.sh
- - ./iOS/build_scripts/script.sh
+# - ./iOS/build_scripts/script.sh
  - mvn clean package -f LTCSafety/pom.xml
  - mvn test -f LTCSafetySystemTesting/pom.xml
  #- chmod +x Android/build_scripts/beforeScript.sh
