@@ -1,27 +1,24 @@
 language: objective-c
 osx_image: xcode8.2
 
-android:
-  components:
+#android:
+  #components:
     # Android SDK Tools
-    - platform-tools
-    - tools
-    
+    #- platform-tools
+    #- tools
     # Project BuildTools version
-    - build-tools-25.0.2
-    
+    #- build-tools-25.0.2
     # Compile SDK
-    - android-25
-    
+    #- android-25
     # Other components
-    - extra-android-support
-    - extra-google-m2repository
-    - extra-android-m2repository
+    #- extra-android-support
+    #- extra-google-m2repository
+    #- extra-android-m2repository
     
-env:
-  global:
+#env:
+  #global:
    # install timeout in minutes (2 minutes by default)
-    - ADB_INSTALL_TIMEOUT=8
+    #- ADB_INSTALL_TIMEOUT=8
 
 script:
 # - open -a "simulator" --args -CurrentDeviceUDID A84965FC-070D-4EAF-83E8-84FFE99F5866
@@ -30,7 +27,7 @@ script:
  - ./iOS/build_scripts/script.sh
  - mvn clean package -f LTCSafety/pom.xml
  - mvn test -f LTCSafetySystemTesting/pom.xml
- - chmod +x Android/build_scripts/beforeScript.sh
- - chmod +x Android/build_scripts/script.sh
- - ./Android/build_scripts/beforeScript.sh
- - ./Android/build_scripts/script.sh
+ #- chmod +x Android/build_scripts/beforeScript.sh
+ #- chmod +x Android/build_scripts/script.sh
+ #- ./Android/build_scripts/beforeScript.sh
+ #- ./Android/build_scripts/script.sh
