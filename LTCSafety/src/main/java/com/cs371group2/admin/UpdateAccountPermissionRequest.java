@@ -2,7 +2,6 @@ package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
 import com.cs371group2.ValidationResult;
-import com.cs371group2.account.Account;
 import com.cs371group2.account.AccountPermissions;
 
 /**
@@ -50,7 +49,7 @@ public class UpdateAccountPermissionRequest extends AdminRequest implements Vali
         if(accessToken == null){
             return new ValidationResult(NULL_TOKEN_ERROR);
         } else if (accessToken.isEmpty()){
-            return new ValidationResult(NULL_TOKEN_ERROR);
+            return new ValidationResult(EMPTY_TOKEN_ERROR);
         } else if(accountId == null){
             return new ValidationResult(NULL_ID_ERROR);
         } else if (accountId.isEmpty()){
