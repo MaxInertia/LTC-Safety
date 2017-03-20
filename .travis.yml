@@ -8,3 +8,8 @@ script:
  - ./iOS/build_scripts/script.sh
  - mvn clean package -f LTCSafety/pom.xml
  - mvn test -f LTCSafetySystemTesting/pom.xml
+ - chmod +x Android/build_scripts/beforeScript.sh
+ - chmod +x Android/build_scripts/script.sh
+ - chmod +x Android/build_scripts/afterSuccess.sh
+ - ./Android/build_scripts/beforeScript.sh
+ - ./Android/build_scripts/script.sh
