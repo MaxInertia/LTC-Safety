@@ -1,6 +1,7 @@
 package c371g2.ltc_safety.a_new;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -182,13 +183,9 @@ public class NewConcernActivity extends AbstractNetworkActivity {
             submitConcernButton.setEnabled(true);
         } else {
             // Actions to be performed if input is valid
-            progressDialog = InfoDialog.createInfoDialogue(
-                    NewConcernActivity.this,
-                    null,
-                    "Please wait",
-                    null,
-                    false
-            );
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Loading");
+            ((ProgressDialog)progressDialog).setMessage("Please wait...");
             progressDialog.show();
             assert(progressDialog!=null && progressDialog.isShowing());
         }
@@ -251,7 +248,7 @@ public class NewConcernActivity extends AbstractNetworkActivity {
      * @HistoryProperties none
      */
     public static class Test_Hook {
-        static NewConcernViewModel getViewModel(NewConcernActivity activity) {
+        public static NewConcernViewModel getViewModel(NewConcernActivity activity) {
             return activity.newConcernViewModel;
         }
 

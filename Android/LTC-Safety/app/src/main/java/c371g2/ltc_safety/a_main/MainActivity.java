@@ -1,5 +1,6 @@
 package c371g2.ltc_safety.a_main;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.os.Bundle;
@@ -75,13 +76,9 @@ public class MainActivity extends AbstractNetworkActivity {
                 ).show();
             } else {
                 if(mainViewModel.updateConcerns()) { // TODO: removed getContext() from updateConcern
-                    progressDialog = InfoDialog.createInfoDialogue(
-                            MainActivity.this,
-                            null,
-                            "Please wait... Updating concern statuses",
-                            null,
-                            false
-                    );
+                    progressDialog = new ProgressDialog(this);
+                    progressDialog.setTitle("Loading");
+                    ((ProgressDialog)progressDialog).setMessage("Please wait...");
                 } else {
                     progressDialog = InfoDialog.createInfoDialogue(
                             MainActivity.this,
@@ -216,6 +213,10 @@ public class MainActivity extends AbstractNetworkActivity {
 
         public static void testhook_call_openNewConcernActivity(MainActivity activity) {
             activity.openNewConcernActivity();
+        }
+
+        static void clearConcerns(MainActivity activity) {
+            //activity.mainViewModel;
         }
 
         public static void addConcern(MainActivity activity, ConcernWrapper concern) {
