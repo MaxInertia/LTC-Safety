@@ -11,7 +11,12 @@ import java.security.GeneralSecurityException;
 /**
  * This abstract class represents a request that requires authentication and should be extended for more specific
  * types of requests (see ConcernListRequest for example).
- * Created by Brandon on 2017-02-09.
+ *
+ * History property: This class is abstract and therefore un-instantiatable. Its fields are immutable.
+ *
+ * Invariance Properties:
+ *
+ * Created by on 2017-02-09.
  */
 abstract class AuthenticatedRequest{
 

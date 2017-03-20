@@ -3,6 +3,11 @@ package com.cs371group2.admin;
 /**
  * Represents an access token to be used for checking permissions of a user's account.
  *
+ * History property: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance Properties: This class assumes that the given email, id, and name are validly formatted. It also assumes
+ * that the given email verified boolean is in-fact correct.
+ *
  * Created on 2017-02-09.
  */
 public final class AccessToken {

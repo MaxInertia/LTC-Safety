@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * This class represents a PagedResponse in the database, and is used to return a list of elements along with paging
  * information to the administrative website via the AdminApi.
  *
- * History property: Instances of this class are mutable from the time they are created.
+ * History property: Instances of this class are immutable from the time they are created.
  *
  * Created on 2017-03-13.
  */

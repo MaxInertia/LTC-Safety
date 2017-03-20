@@ -8,14 +8,19 @@ import java.util.List;
  * can be used for requests that fetch account information because a valid token is sufficient
  * regardless of permissions.
  *
+ * History property: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance Properties: This class assumes that no administrative privileges are required for the request
+ * to be fulfilled.
+ *
  * Created on 2017-03-07.
  */
 public class AccountRequest extends AuthenticatedRequest {
 
     /**
-     * Returns a reference to an admin authenticator
+     * Returns a reference to an authenticator
      *
-     * @return An admin authenticator
+     * @return An authenticator
      */
     protected Authenticator getAuthenticator() {
         Authenticator authenticator = super.getAuthenticator();
