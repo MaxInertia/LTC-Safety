@@ -58,7 +58,6 @@ public class SubmitSystemTest {
             SubmitConcernResponse response = client.submitConcern(data).execute();
 
         } catch (GoogleJsonResponseException e) {
-            e.printStackTrace();
             assertEquals(e.getDetails().getMessage(), expectedErrorMessage);
 
         }

@@ -11,14 +11,14 @@ import com.cs371group2.ValidationResult;
  *
  * Created on 2017-02-26.
  */
-public final class ConcernRequest extends AdminRequest implements Validatable {
+public class ConcernRequest extends AdminRequest implements Validatable {
 
     private static final String NULL_TOKEN_ERROR = "Unable to access concern due to non-existent credentials.";
 
     private static final String EMPTY_TOKEN_ERROR = "Unable to access concern due to receiving an empty access token.";
 
     /** The unique id of the concern to load from the database */
-    private long concernId;
+    protected long concernId;
 
     public long getConcernId(){ return concernId; }
 

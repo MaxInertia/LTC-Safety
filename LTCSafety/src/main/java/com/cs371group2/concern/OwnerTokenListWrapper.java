@@ -34,5 +34,9 @@ public class OwnerTokenListWrapper {
         this.tokens = tokens;
     }
 
+    public OwnerTokenListWrapper(){
+        this.tokens = new LinkedList<OwnerToken>();
+    }
+
 
 }

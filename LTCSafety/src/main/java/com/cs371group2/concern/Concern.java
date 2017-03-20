@@ -1,8 +1,6 @@
 package com.cs371group2.concern;
 
 import com.cs371group2.client.OwnerToken;
-import com.cs371group2.facility.Facility;
-import com.cs371group2.facility.FacilityDao;
 import com.google.api.server.spi.config.AnnotationBoolean;
 import com.google.api.server.spi.config.ApiResourceProperty;
 import com.googlecode.objectify.Ref;
@@ -57,14 +55,6 @@ public final class Concern {
      */
     @Index
     private boolean isArchived = false;
-
-    /**
-     * A reference to the care home facility this concern is linked to. If the location of the
-     * care home has not yet been added to the database or does not exist, this will refer to a
-     * the placeholder care home facility, Other.
-     */
-    @Index
-    private Ref<Facility> facilityRef;
 
     /**
      * The exact date and time the concern was submitted.
@@ -143,8 +133,6 @@ public final class Concern {
         this.statuses.add(new ConcernStatus(ConcernStatusType.PENDING));
         this.isTest = isTest;
         this.data = data;
-
-        facilityRef = Ref.create(new FacilityDao().load(data.getLocation().getFacilityName()));
         
         if (isTest) {
             logger.log(Level.FINER, "Test concern created: \n" + this.toString());
@@ -185,9 +173,16 @@ public final class Concern {
         return status;
     }
 
-    @ApiResourceProperty(ignored = AnnotationBoolean.TRUE)
-    public Facility getFacility(){
-        return facilityRef.get();
+    /**
+     * Toggles the concern's archived status.
+     *
+     * @postcond The concern's archive status is the opposite of what it was before.
+     * @return The new archived status of the
+     */
+    public boolean toggleArchived() {
+        isArchived = !isArchived;
+        logger.log(Level.FINER, "Concern Archive Status toggled: ID# " + this.id + " Archived: " + isArchived);
+        return isArchived;
     }
 
     @Override

@@ -1,16 +1,17 @@
 package com.cs371group2.concern;
 
-import com.cs371group2.ApiKeys;
 import com.cs371group2.Dao;
 import com.cs371group2.account.Account;
+import com.cs371group2.admin.ConcernListResponse;
 import com.cs371group2.client.OwnerToken;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.api.server.spi.response.UnauthorizedException;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
+
 import java.util.List;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -44,14 +45,36 @@ public class ConcernDao extends Dao<Concern> {
         assert token != null;
         assert token.validate().isValid();
 
-        Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
-                .parseClaimsJws(token.getToken());
-        Claims claims = claim.getBody();
-
-        Long id = Long.parseLong(claims.getSubject());
+        Long id = token.parseToken();
         logger.log(Level.FINER, "Loading concern # " + id + "  from the datastore...");
         return super.load(id);
     }
+
+    /**
+     * Loads a collection of concerns from the datastore using a list of owner tokens that were previously created by it.
+     *
+     * @param tokens The owner tokens containing the concern ID in the payload.
+     * @return The entitys in the datastore that the tokens reference or an empty collection if there were no tokens passed.
+     * @precond tokens != null
+     * @precond all the tokens in the tokens list contain a properly formatted and signed JWS for parsing.
+     */
+    public Collection<Concern> load(LinkedList<OwnerToken> tokens) {
+
+        assert tokens != null;
+
+        List<Key<Concern>> keysList = new LinkedList<>();
+
+        for(OwnerToken curToken : tokens){
+            assert curToken.validate().isValid();
+            keysList.add(Key.create(Concern.class, curToken.parseToken()));
+            System.out.println("\n\n\n\n" + curToken.parseToken());
+        }
+
+        Collection<Concern> concerns = load(keysList);
+
+        return concerns;
+    }
+
 
     /**
      * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
@@ -66,27 +89,42 @@ public class ConcernDao extends Dao<Concern> {
      * @precond limit != null && limit > 0
      * @precond account != null
      */
-    public List<Concern> load(Account account, int offset, int limit){
+    public ConcernListResponse load(Account account, int offset, int limit, boolean archived){
 
         assert account != null;
         assert(offset >= 0);
         assert(limit > 0);
 
-        return ObjectifyService.ofy().load().type(Concern.class)
+        List<Concern> loadedConcerns = ObjectifyService.ofy().load().type(Concern.class)
                 .filter("isTest = ", account.isTestingAccount())
+                .filter("isArchived = ", archived)
                 .order("-submissionDate")
                 .offset(offset)
                 .limit(limit)
                 .list();
+
+        int count =ObjectifyService.ofy().load().type(Concern.class)
+                .filter("isTest = ", account.isTestingAccount())
+                .filter("isArchived = ", archived)
+                .count();
+
+        int startIndex = 0;
+        int endIndex = 0;
+
+        if(loadedConcerns.size() != 0){
+            startIndex = offset + 1;
+            endIndex = offset + loadedConcerns.size();
+        }
+
+        return new ConcernListResponse(loadedConcerns, startIndex, endIndex, count);
     }
 
     /**
-     * Loads a list of concerns from the datastore starting at the given offset and ending by limit.
-     * The facilities is the list of facilities to load the concern for, and an exception is thrown
-     * if the concern loaded is not among the given locations.
+     * Loads a concern from the database based on the given id. The account is used to ensure that
+     * only a test/non-test account is loaded depending on the type of account requesting it
      *
-     * @param concernId The unique id of the Concern to load from the datastore
-     * @param account The list of facilities to load the concerns from
+     * @param concernId The unique id of the Concern to load from the database
+     * @param account The account requesting the concern
      * @return A list of entities in the datastore from the given offset and limit
      * @precond offset != null && offset >= 0
      * @precond limit != null && limit > 0

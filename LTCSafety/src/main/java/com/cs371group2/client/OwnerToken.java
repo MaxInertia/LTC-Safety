@@ -58,6 +58,21 @@ public class OwnerToken implements Validatable {
     }
 
     /**
+     * Parses the JWS token to retract the concern id.
+     * @return the unique concern id
+     */
+    public Long parseToken(){
+
+        assert token != null;
+
+        Jws<Claims> claim = Jwts.parser().setSigningKey(ApiKeys.JWS_SIGNING_KEY)
+                .parseClaimsJws(this.getToken());
+        Claims claims = claim.getBody();
+
+        return Long.parseLong(claims.getSubject());
+    }
+
+    /**
      * A constructor to make the owner token class more testable. This allows for tokens
      * to be created with invalid or null JWS's. This should only be used for testing.
      */

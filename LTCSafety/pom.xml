@@ -124,6 +124,9 @@
                         <goals>
                             <goal>test</goal>
                         </goals>
+                        <configuration>
+                            <keepServerAlive>true</keepServerAlive>
+                        </configuration>
                     </execution>
                 </executions>
                 <!-- keep the configuration out of the execution so that the bdd goal has access to it -->
@@ -140,6 +143,22 @@
                     </preloadSources>
 
                     <!-- configuration properties will go here -->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.timurstrekalov</groupId>
+                <artifactId>saga-maven-plugin</artifactId>
+                <version>1.5.5</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>coverage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+                    <outputDir>${project.basedir}/target/coverage</outputDir>
                 </configuration>
             </plugin>
             <plugin>

@@ -27,11 +27,6 @@ public final class TestAccountBuilder {
     private final String email;
 
     /**
-     * The list of facilities that the test account has access to.
-     */
-    private final List<String> facilities = new LinkedList<String>();
-
-    /**
      * The account's permission level.
      */
     private final AccountPermissions permissions;
@@ -68,19 +63,6 @@ public final class TestAccountBuilder {
     }
 
     /**
-     * Add a facility to the accounts permissions list. This allows the account to access
-     * test concerns assigned to this facility.
-     * @param facility
-     */
-    public void addFacility(String facility) {
-
-        assert facility != null;
-        assert !facility.isEmpty();
-
-        this.facilities.add(facility);
-    }
-
-    /**
      * Build an access token based on the specified test account data.
      * This token can be used anywhere a Firebase token can be used but has
      * restricted access to concerns flagged with "isTest" as true.
@@ -91,7 +73,6 @@ public final class TestAccountBuilder {
         Map<String, Object> payload = new HashMap<String, Object>();
         payload.put("emailVerified", isEmailVerified);
         payload.put("permissions", permissions);
-        payload.put("facilities", facilities);
         payload.put("email", email);
 
         Claims claims = new DefaultClaims(payload);

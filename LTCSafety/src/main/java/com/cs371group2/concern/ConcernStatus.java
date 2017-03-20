@@ -38,7 +38,7 @@ public class ConcernStatus implements Comparable<ConcernStatus> {
      * @param type The type of the new concern status.
      * @precond type != null
      */
-    ConcernStatus(ConcernStatusType type) {
+    public ConcernStatus(ConcernStatusType type) {
         assert type != null;
         this.type = type;
     }

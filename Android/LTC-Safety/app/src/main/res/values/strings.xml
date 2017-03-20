@@ -1,3 +1,58 @@
 <resources>
     <string name="app_name">LTC-Safety</string>
+    <string name="new_concern_text">New Safety Concern</string>
+
+    <string name="submit_concern_button_text">Submit Concern</string>
+    <string name="nameTextField_hint">First and Last Name</string>
+    <string name="actionsTakenTextField_hint">Actions Taken</string>
+    <string name="phoneNumberField_hint">Phone Number</string>
+    <string name="emailTextField_hint">Email Address</string>
+    <string name="alertview_buttontext">OK</string>
+    <string name="roomField_hint">Room</string>
+    <string name="actions_taken_section_title">WHAT ACTIONS HAVE BEEN TAKEN?</string>
+    <string name="contact_information_section_title">CONTACT INFORMATION</string>
+    <string name="concern_info_section_title">TELL US ABOUT YOUR CONCERN</string>
+    <string name="concern_nature_hint">Concern Nature</string>
+    <string name="facility_hint">Facility</string>
+    <string name="description_of_concern_section_title">DESCRIPTION OF CONCERN</string>
+    <string name="PENDING_text">Unread</string>
+    <string name="SEEN_text">Seen</string>
+    <string name="RESPONDING24_text">Responding in 24 hours</string>
+    <string name="RESPONDING48_text">Responding in 48 hours</string>
+    <string name="RESPONDING72_text">Responding in 72 hours</string>
+    <string name="RESOLVED_text">Resolved</string>
+    <string name="RETRACTED_text">Retracted</string>
+
+    <string-array name="longtermcare_facilities">
+        <item>Central Haven Special Care Home</item>
+        <item>Circle Drive Special Care Home</item>
+        <item>Extendicare Special Care Home</item>
+        <item>Jubilee Residences</item>
+        <item>Luther Special Care Home</item>
+        <item>Oliver Lodge</item>
+        <item>Parkridge Centre</item>
+        <item>Porteous Lodge</item>
+        <item>Samaritan Place</item>
+        <item>Saskatoon Convalescent Home</item>
+        <item>Sherbrooke Community Centre</item>
+        <item>Stensrud Lodge</item>
+        <item>Sunnyside Adventist Care Centre</item>
+        <item>St. Ann\'s Home</item>
+        <item>St. Joseph\'s Home</item>
+    </string-array>
+
+    <string-array name="concern_types">
+        <item>Infection control</item>
+        <item>Medication issue</item>
+        <item>Improper equipment use</item>
+        <item>Witnessed fall</item>
+        <item>Environment</item>
+        <item>Near miss</item>
+        <item>No response to requests</item>
+        <item>Equipment failure</item>
+        <item>Physical abuse</item>
+        <item>Mental abuse</item>
+        <item>Resident aggression</item>
+        <item>Other</item>
+    </string-array>
 </resources>
