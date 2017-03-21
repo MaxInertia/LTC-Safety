@@ -493,4 +493,166 @@ public class AdminApiTest extends DatastoreTest {
         new AdminApi().updateArchiveStatus(request);
         assert(!concern.isArchived());
     }
+
+    /*********************************
+     * updateAccountPermission Tests *
+     *********************************/
+
+    /** Tests updating the permissions of an account with a null id */
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionNullIdTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        "",
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with an empty id */
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionEmptyIdTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        null,
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with a null permission */
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionNullPermissionTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        null,
+                        testAccount.getId(),
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with a null access token*/
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionNullTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        null
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with an empty access token*/
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionEmptyTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        ""
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with non-admin rights */
+    @Test (expected = UnauthorizedException.class)
+    public void updateAccountPermissionInvalidPermissionTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.UNVERIFIED, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account that does not exist in the database */
+    @Test (expected = NotFoundException.class)
+    public void updateAccountPermissionNonExistentAccountTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account with an invalid access token */
+    @Test (expected = BadRequestException.class)
+    public void updateAccountPermissionInvalidTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        "this is an invalid token :)"
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+    }
+
+    /** Tests updating the permissions of an account validly */
+    @Test
+    public void updateAccountPermissionTest() throws UnauthorizedException, BadRequestException, NotFoundException {
+        Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
+        new AccountDao().save(testAccount);
+
+        TestAccountBuilder accountBuilder = new TestAccountBuilder("id", "email", AccountPermissions.ADMIN, true);
+
+        UpdateAccountPermissionRequest request =
+                new UpdateAccountPermissionRequest.TestHook_MutableUpdateAccountPermissionRequest(
+                        AccountPermissions.DENIED,
+                        testAccount.getId(),
+                        accountBuilder.build()
+                ).build();
+
+        new AdminApi().updateAccountPermission(request);
+
+        testAccount = new AccountDao().load(testAccount.getId());
+
+        assert(testAccount.getPermissions() == AccountPermissions.DENIED);
+    }
 }
