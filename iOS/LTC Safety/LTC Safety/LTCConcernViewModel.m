@@ -192,8 +192,15 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
     NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
     
     if (error == nil && concern != nil) {
-        LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
-        [concern addStatusesObject:status];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
+            [concern addStatusesObject:status];
+            
+            NSError *error = nil;
+            [self.objectContext save:&error];
+            NSLog(@"ERROR: %@", error);
+        });
     }
 }
 
@@ -207,7 +214,6 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         }
     }];
 }
-
 
 /**
     Called when the user pressed the refresh putton in main concern view. This method will update the statuses of all concerns known to the app.
@@ -234,21 +240,25 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         int counter = (int) concern.statuses.count;
         
         if (error == nil && concern != nil) {
-            NSMutableOrderedSet *newStatuses = [[NSMutableOrderedSet alloc] init];
             for(GTLRClient_ConcernStatus *curStatus in curConcern.statuses){
-                NSLog(@"Concern%@ WITH NEW STATUS: %@", curConcern.data.concernNature, curStatus.type);
-                LTCConcernStatus *status = [LTCConcernStatus statusWithData:curStatus inManagedObjectContext:self.objectContext];
+                
                 if(counter == 0){
-                    [newStatuses addObject:status];
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        LTCConcernStatus *status = [LTCConcernStatus statusWithData:curStatus inManagedObjectContext:self.objectContext];
+                        [concern addStatusesObject:status];
+                        status.status = concern;
+                        
+                        NSError *error = nil;
+                        [self.objectContext save:&error];
+                        NSLog(@"ERROR: %@", error);
+                    });
+                    
                 }else{
                     counter--;
                 }
             }
-            [concern addStatuses:newStatuses];
         }
     }
-    [self.objectContext save:nil];
-    
 }
 
 

@@ -2,7 +2,7 @@
 //  LTCConcern+CoreDataProperties.h
 //  
 //
-//  Created by Allan Kerr on 2017-02-02.
+//  Created by Daniel Morris on 2017-03-20.
 //
 //
 
@@ -13,14 +13,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCConcern (CoreDataProperties)
 
-+ (NSFetchRequest *)fetchRequest;
++ (NSFetchRequest<LTCConcern *> *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *actionsTaken;
-@property (nullable, nonatomic, copy) NSString *descriptionProperty;
 @property (nullable, nonatomic, copy) NSString *concernNature;
+@property (nullable, nonatomic, copy) NSString *descriptionProperty;
 @property (nullable, nonatomic, copy) NSString *identifier;
-@property (nullable, nonatomic, copy) NSDate *submissionDate;
 @property (nullable, nonatomic, copy) NSString *ownerToken;
+@property (nullable, nonatomic, copy) NSDate *submissionDate;
 @property (nullable, nonatomic, retain) LTCLocation *location;
 @property (nullable, nonatomic, retain) LTCReporter *reporter;
 @property (nullable, nonatomic, retain) NSOrderedSet<LTCConcernStatus *> *statuses;

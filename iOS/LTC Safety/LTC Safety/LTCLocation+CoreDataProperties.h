@@ -2,7 +2,7 @@
 //  LTCLocation+CoreDataProperties.h
 //  
 //
-//  Created by Allan Kerr on 2017-01-27.
+//  Created by Daniel Morris on 2017-03-20.
 //
 //
 
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface LTCLocation (CoreDataProperties)
 
-+ (NSFetchRequest *)fetchRequest;
++ (NSFetchRequest<LTCLocation *> *)fetchRequest;
 
 @property (nullable, nonatomic, copy) NSString *facilityName;
 @property (nullable, nonatomic, copy) NSString *roomName;

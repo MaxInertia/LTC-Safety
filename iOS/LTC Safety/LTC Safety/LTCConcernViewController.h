@@ -20,6 +20,10 @@
  */
 @property (nonatomic, strong) LTCConcernViewModel *viewModel;
 
+/**
+ Called when the user selects the refresh button. This method displays a loading spinner while calling a method in the viewModel to refresh all concerns
+ known to the app.
+ */
 -(void)refresh;
 @end
 

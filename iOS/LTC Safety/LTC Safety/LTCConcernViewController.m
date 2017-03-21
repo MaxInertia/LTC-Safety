@@ -78,10 +78,7 @@
     self.navigationItem.rightBarButtonItem = button;
     [self refresh];
 }
-/**
- Called when the user selects the refresh button. This method displays a loading spinner while calling a method in the clientApi to refresh all concerns
- known to the app.
-*/
+
 -(void)refresh {
         
     // Display the loading spinner to the user until the retract call has finished
@@ -101,12 +98,6 @@
     }
     tokensWrapper.tokens = [tokens copy];
     
-    /**
-     <#Description#>
-
-     @param error <#error description#>
-     @return <#return value description#>
-     */
     [self.viewModel refreshConcernsWithCompletion:tokensWrapper completion:^(NSError *error) {
         [loadingMessage dismissViewControllerAnimated:YES completion:^(){
             UIAlertController *alert;
@@ -151,7 +142,6 @@
     
     NSError *error = nil;
     [self.viewModel addConcern:concern error:&error];
-    
     NSAssert(error == nil, @"Add concern failed with error: %@", error);
 }
 

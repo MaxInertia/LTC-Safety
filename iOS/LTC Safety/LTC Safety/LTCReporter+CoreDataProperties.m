@@ -2,7 +2,7 @@
 //  LTCReporter+CoreDataProperties.m
 //  
 //
-//  Created by Allan Kerr on 2017-01-27.
+//  Created by Daniel Morris on 2017-03-20.
 //
 //
 
@@ -10,7 +10,7 @@
 
 @implementation LTCReporter (CoreDataProperties)
 
-+ (NSFetchRequest *)fetchRequest {
++ (NSFetchRequest<LTCReporter *> *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCReporter"];
 }
 

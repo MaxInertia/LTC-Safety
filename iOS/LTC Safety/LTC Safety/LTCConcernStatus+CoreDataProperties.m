@@ -2,7 +2,7 @@
 //  LTCConcernStatus+CoreDataProperties.m
 //  
 //
-//  Created by Allan Kerr on 2017-02-01.
+//  Created by Daniel Morris on 2017-03-20.
 //
 //
 
@@ -10,7 +10,7 @@
 
 @implementation LTCConcernStatus (CoreDataProperties)
 
-+ (NSFetchRequest *)fetchRequest {
++ (NSFetchRequest<LTCConcernStatus *> *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCConcernStatus"];
 }
 
