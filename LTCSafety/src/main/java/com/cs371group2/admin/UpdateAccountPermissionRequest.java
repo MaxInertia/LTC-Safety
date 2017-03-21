@@ -38,6 +38,13 @@ public class UpdateAccountPermissionRequest extends AdminRequest implements Vali
      */
     private AccountPermissions permissions;
 
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public AccountPermissions getPermissions() {
+        return permissions;
+    }
     /**
      * Validates the request, ensuring that the accountId and accessToken are non-null and non-empty. Also ensures that
      * the given accountPermission is non-null.

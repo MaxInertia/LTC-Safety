@@ -620,7 +620,7 @@ public class AdminApiTest extends DatastoreTest {
     }
 
     /** Tests updating the permissions of an account with an invalid access token */
-    @Test (expected = BadRequestException.class)
+    @Test (expected = UnauthorizedException.class)
     public void updateAccountPermissionInvalidTokenTest() throws UnauthorizedException, BadRequestException, NotFoundException {
         Account testAccount = new Account("TESTING","TESTING",AccountPermissions.UNVERIFIED, true);
 
@@ -654,5 +654,6 @@ public class AdminApiTest extends DatastoreTest {
         testAccount = new AccountDao().load(testAccount.getId());
 
         assert(testAccount.getPermissions() == AccountPermissions.DENIED);
+
     }
 }

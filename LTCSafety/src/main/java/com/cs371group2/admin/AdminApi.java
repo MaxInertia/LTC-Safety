@@ -175,6 +175,24 @@ public class AdminApi {
     @ApiMethod(name = "updateAccountPermission", path = "admin/updateAccountPermission")
     public void updateAccountPermission(UpdateAccountPermissionRequest request)
             throws UnauthorizedException, BadRequestException, NotFoundException {
-        return;
+
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried updating an account permission with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is updating an account's permissions " + request);
+
+        AccountDao dao = new AccountDao();
+        Account toUpdate = dao.load(request.getAccountId());
+
+        if(toUpdate == null)
+            throw new NotFoundException("Requested account does not exist within the account database");
+
+        toUpdate.setPermissions(request.getPermissions());
+        dao.save(toUpdate);
     }
 }
