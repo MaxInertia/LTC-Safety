@@ -18,6 +18,7 @@
 NSString *const LTCDetailConcernTitle = @"DETAIL_CONCERN_TITLE";
 NSString *const LTCDetailConcernEdit = @"DETAIL_EDIT_CONCERN";
 NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
+NSString *const LTCDetailRetractError = @"DETAIL_RETRACT_ERROR";
 
 @interface LTCConcernDetailViewController ()
 @property (readwrite, nonatomic, strong) LTCConcernDetailViewModel *viewModel;
@@ -69,7 +70,7 @@ NSString *const LTCDetailRetractConfirmation = @"DETAIL_RETRACT_COMFIRMATION";
             UIAlertController *alert;
             if (error != nil){
                 NSString *errorMessage = [error.userInfo valueForKey:@"error"];
-                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCDetailRetractError, nil)
                                                             message:errorMessage
                                                      preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)

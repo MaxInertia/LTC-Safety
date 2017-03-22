@@ -34,6 +34,7 @@
 "DETAIL_STATUS_LOG" = "Concern Status Log";
 "RETRACT_CONCERN_PROMPT" = "Retract";
 "DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
+"DETAIL_RETRACT_ERROR" = "Retraction Failure";
 
 "DETAIL_NAME_TITLE" = "Name";
 "DETAIL_EMAIL_TITLE" = "Email";
@@ -43,6 +44,9 @@
 "DETAIL_ROOM_TITLE" = "Room";
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
 "DETAIL_DESCRIPTION_TITLE" = "Concern Description";
+
+//Refresh Prompts
+"REFRESH_ERROR" = "Refresh Failed";
 
 //Concern status Names
 "PENDING" = "Pending";
@@ -57,6 +61,7 @@
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "LOADING_PROMPT" = "Loading";
+"NETWORK_ERROR" = "No network connection. Please check your internet connection and try again.";
 
 // Value Selection
 "VALUE_OTHER" = "Other...";

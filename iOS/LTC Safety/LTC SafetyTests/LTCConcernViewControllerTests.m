@@ -113,7 +113,7 @@
 /**
  Tests the refresh of concerns in the view model by mocking the clientApi call to fetchConcerns and checking that the correct behaviour is achieved.
  */
--(void)test_refresh {
+-(void)testRefresh {
     LTCClientApi *mockApi = mock([LTCClientApi class]);
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
     __strong UITableView *tableView =  [[UITableView alloc] init];
@@ -127,14 +127,19 @@
     viewController.tableView = tableView;
     
     viewController.clientApi = mockApi;
-    [viewController _refresh];
+    NSError *error;
+    [viewController.viewModel addConcern:testConcern error:&error];
     
-    HCArgumentCaptor *argument = [[HCArgumentCaptor alloc] init];
+    LTCConcernStatus *newStatus = [[LTCConcernStatus alloc] init];
     
-    //[verify(mockApi) fetchConcerns:anything() completion:(id)argument];
-    void (^completion)(GTLRClient_OwnerTokenListWrapper *response, NSError *error) = [argument value];
+    //[testConcern addStatusesObject:newStatus];
     
-    GTLRClient_OwnerTokenListWrapper *response = [[GTLRClient_OwnerTokenListWrapper alloc] init];
+    [viewController refresh];
+    
+    //XCTAssert([[viewController.viewModel concernAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].statuses lastObject] == newStatus);
+    
+    
+    
     
     
     

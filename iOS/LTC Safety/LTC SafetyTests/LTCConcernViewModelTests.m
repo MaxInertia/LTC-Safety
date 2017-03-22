@@ -153,7 +153,7 @@
 /**
  Tests the update concerns status metho in the concern view model by creating a view model, placing a concern inside it, adding a status to the concern outside of the view model, and then use the upsateConcernsStatus with that newly modified cocnern then checking that the concern inside the view model has been updated accordingly.
  */
-- (void) testUpdateConcernsStatus {
+- (void) test_updateConcernsStatus {
     
     XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
 
@@ -202,6 +202,10 @@
     
 //    XCTAssert([[viewModel concernAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].statuses.lastObject.concernType isEqualToString:newStatus.concernType]);
     
+    
+}
+
+- (void) testRefreshConcernsWithCompletion {
     
 }
 

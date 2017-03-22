@@ -17,6 +17,8 @@
 #import "LTCLoadingViewController.h"
 #import "LTCClientApi.h"
 
+NSString *const LTCRefreshError = @"REFRESH_ERROR";
+
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -76,7 +78,6 @@
     
     UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = button;
-    [self refresh];
 }
 
 -(void)refresh {
@@ -103,7 +104,7 @@
             UIAlertController *alert;
             if (error != nil){
                 NSString *errorMessage = [error.userInfo valueForKey:@"error"];
-                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil)
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCRefreshError, nil)
                                                             message:errorMessage
                                                      preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
