@@ -32,14 +32,11 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
  */
 @property (nonatomic, weak) IBOutlet UIButton *addRefreshButton;
 
-/**
- <#Description#>
- */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
 
 @property (nonatomic, strong) LTCClientApi *clientApi;
 
-
+@property (nonatomic) BOOL *isFirstAppearance;
 
 @end
 
@@ -66,6 +63,7 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clientApi = [[LTCClientApi alloc] init];
+    self.isFirstAppearance = YES;
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
     
@@ -78,10 +76,31 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
     
     UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = button;
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+
+}
+
+/**
+ Calls the refresh method to refresh all concerns when ever the main view is loaded for the first time the app is loaded.
+ */
+-(void)viewDidAppear:(BOOL)animated{
+    if (self.isFirstAppearance){
+        [self refresh];
+        self.isFirstAppearance = NO;
+    }
+    
+}
+
+/**
+ Calls the refresh method to refresh all concerns when ever the main view is loaded when the app is re-opened after being running in the background.
+ */
+- (void)appDidBecomeActive{
+    [self refresh];
 }
 
 -(void)refresh {
-        
+    
     // Display the loading spinner to the user until the retract call has finished
     LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
     [self presentViewController: loadingMessage animated: YES completion: nil];
