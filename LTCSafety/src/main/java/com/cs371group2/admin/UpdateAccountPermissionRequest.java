@@ -14,7 +14,7 @@ import com.cs371group2.account.AccountPermissions;
  * Invariance Properties: This class assumes that the given accountId is validly formatted, and that
  * the given AccountPermission is non-null.
  *
- * Created by Brandon on 2017-03-20.
+ * Created on 2017-03-20.
  */
 public class UpdateAccountPermissionRequest extends AdminRequest implements Validatable{
 

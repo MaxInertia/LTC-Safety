@@ -13,7 +13,11 @@ import java.util.logging.Logger;
 
 /**
  * This class extends the data-access object in our system to load, save, and delete accounts.
- * These accounts
+ *
+ * History Properties: This class itself is immutable upon creation, as it has no fields that can modify it.
+ *
+ * Invariance Properties: This class assumes that an Objectify context has already been initialized via
+ * InitContextListener and that the account entities have been registered.
  *
  * Created on 2017-02-06.
  */

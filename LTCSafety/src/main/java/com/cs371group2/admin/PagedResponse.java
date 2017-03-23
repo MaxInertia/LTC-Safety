@@ -12,6 +12,9 @@ import java.util.logging.Logger;
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
+ * Invariance properties: This class assumes that a user has submitted a paged request and will require the
+ * start and end index in response (starting at 1), along with the total number of items returned.
+ *
  * Created on 2017-03-13.
  */
 public class PagedResponse {

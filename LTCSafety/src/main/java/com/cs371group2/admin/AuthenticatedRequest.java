@@ -14,7 +14,8 @@ import java.security.GeneralSecurityException;
  *
  * History property: This class is abstract and therefore un-instantiatable. Its fields are immutable.
  *
- * Invariance Properties:
+ * Invariance properties: This class assumes that any tokens it will be authenticating is a firebase token,
+ * and therefore uses a firebase authenticator.
  *
  * Created by on 2017-02-09.
  */
