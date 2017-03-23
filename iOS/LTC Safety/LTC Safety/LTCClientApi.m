@@ -10,7 +10,6 @@
 
 NSString * const LTCNetworkError = @"NETWORK_ERROR";
 
-
 @interface LTCClientApi ()
 @property (nonatomic, strong) GTLRClientService *service;
 @end
@@ -36,11 +35,13 @@ NSString * const LTCNetworkError = @"NETWORK_ERROR";
     
     GTLRClientQuery_SubmitConcern *query = [GTLRClientQuery_SubmitConcern queryWithObject:concern];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
         if(error.code == -1009){
             NSMutableDictionary* details = [NSMutableDictionary dictionary];
             [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
             error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
         }
+        
         completion(object, error);
     }];
 }
@@ -55,11 +56,13 @@ NSString * const LTCNetworkError = @"NETWORK_ERROR";
     
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
         if(error.code == -1009){
             NSMutableDictionary* details = [NSMutableDictionary dictionary];
             [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
             error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
         }
+        
         completion(object, error);
     }];
 }
@@ -71,13 +74,14 @@ NSString * const LTCNetworkError = @"NETWORK_ERROR";
     
     GTLRClientQuery_FetchConcerns *query = [GTLRClientQuery_FetchConcerns queryWithObject:inputTokenWrapper];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
         if(error.code == -1009){
             NSMutableDictionary* details = [NSMutableDictionary dictionary];
             [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
             error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
         }
+        
         completion(object, error);
-
     }];
 }
 

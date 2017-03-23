@@ -11,8 +11,6 @@
 #import "LTCConcernViewController.h"
 #import "LTCConcernDetailViewController.h"
 #import "LTCPersistentContainer.h"
-@import Firebase;
-@import FirebaseMessaging;
 
 @interface AppDelegate () <UISplitViewControllerDelegate>
 
@@ -28,8 +26,6 @@
  Performs setup for the application. This method is responsible for setting up the persistence container, app-wide navigation bar appearance and initializing the split view controller.
  */
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-        
-    [FIRApp configure];
     
     // Set up application wide persistence container and managed object context
     self.persistentContainer = [[LTCPersistentContainer alloc] initWithName:@"LTC_Safety"];

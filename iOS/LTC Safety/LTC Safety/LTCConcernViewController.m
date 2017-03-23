@@ -19,24 +19,24 @@
 
 NSString *const LTCRefreshError = @"REFRESH_ERROR";
 
-
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
 /**
  The button that the user clicks to present the form for submitting a new concern.
  */
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
-
 /**
  The button that the user clicks to refresh the list of concerns.
  */
 @property (nonatomic, weak) IBOutlet UIButton *addRefreshButton;
-
+/**
+ The table view that this view model will be using to write concern information to.
+ */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
-
+/**
+ The clientApi used within the viewModel to access the datastore.
+ */
 @property (nonatomic, strong) LTCClientApi *clientApi;
-
-@property (nonatomic) BOOL *isFirstAppearance;
 
 @end
 
@@ -63,7 +63,6 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clientApi = [[LTCClientApi alloc] init];
-    self.isFirstAppearance = YES;
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
     
@@ -82,18 +81,7 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
 }
 
 /**
- Calls the refresh method to refresh all concerns when ever the main view is loaded for the first time the app is loaded.
- */
--(void)viewDidAppear:(BOOL)animated{
-    if (self.isFirstAppearance){
-        [self refresh];
-        self.isFirstAppearance = NO;
-    }
-    
-}
-
-/**
- Calls the refresh method to refresh all concerns when ever the main view is loaded when the app is re-opened after being running in the background.
+ Calls the refresh method to refresh all concerns when ever the main view is loaded when the app opened or is re-opened after being running in the background.
  */
 - (void)appDidBecomeActive{
     [self refresh];
@@ -137,8 +125,6 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
         }];
     }];
 }
-
-
 
 /**
  Action callback triggered when the add concern button is clicked.

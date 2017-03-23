@@ -41,10 +41,7 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
         self.clientApi = [[LTCClientApi alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updatedConcernStatus:) name:LTCUpdatedConcernStatusNotification object:nil];
-        
-        
     }
-    
     return self;
 }
 
@@ -99,8 +96,8 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
 /**
  Adds a concern to the core data local datastore.
 
- @param concern The concern to be stored
- @param error   <#error description#>
+ @param concern The concern to be stored.
+ @param error   The error to be adjusted if neccecary.
  */
 - (void)addConcern:(LTCConcern *)concern error:(NSError **)error {
     
