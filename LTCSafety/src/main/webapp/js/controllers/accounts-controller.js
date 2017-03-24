@@ -13,7 +13,6 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
      * used to initialize the update permissions drop downs in the list.
      */
     $scope.accountsDidLoad = function() {
-        console.log("ACCOUNTS DID LOAD");
         Webflow.ready();
     };
 
@@ -227,9 +226,9 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
         var request = {
             accessToken : $scope.accessToken,
             accountId : account.id,
-            permissionsType : permissionsType
+            permissions : permissionsType
         };
-        adminApi.updatePermissions(request).execute(
+        adminApi.updateAccountPermission(request).execute(
             function (resp) {
                 if (resp.error) {
                     $scope.showModalError('Failed to update permissions for ' + account.email);
