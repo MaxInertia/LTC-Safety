@@ -568,4 +568,36 @@ describe("Accounts Controller", function() {
             checkExpectations();
         };
     });
+
+
+    /**
+     * Tests that mapping account permissions types to human readable names functions properly.
+     */
+    describe('Account permissions name tests', function() {
+
+        /**
+         * Test that an error is throwing when attempting to filter the accounts based on an unsupported type.
+         */
+        it('Filter invalid type', function() {
+
+            $controller('AccountsCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            var name = $scope.permissionsNames('ADMIN');
+            expect(name).toEqual('Admin');
+
+            name = $scope.permissionsNames('UNVERIFIED');
+            expect(name).toEqual('Unverified');
+
+            name = $scope.permissionsNames('DENIED');
+            expect(name).toEqual('Denied');
+
+            name = $scope.permissionsNames('DENIED');
+            expect(name).toEqual('Denied');
+
+            expect(function(){
+                $scope.permissionsNames('INVALID_TYPE');
+            }).toThrow(new Error("Attempted to get the name for an invalid permissions type: INVALID_TYPE"));
+        });
+    });
+
 });

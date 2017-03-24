@@ -20,7 +20,7 @@
   <ul class="list w-list-unstyled">
     <li class="text-row" ng-init="$last &amp;&amp; accountsDidLoad()" ng-repeat="account in accounts.items">
       <div class="expandable text-item">{{account.email}}</div>
-      <div class="permissions text-item">{{account.permissions}}</div>
+      <div class="permissions text-item">{{permissionsNames(account.permissions)}}</div>
       <div class="permissions-dropdown w-dropdown" data-delay="0">
         <div class="dropdown w-dropdown-toggle">
           <div>Update Permissions</div>

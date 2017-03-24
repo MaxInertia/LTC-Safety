@@ -240,6 +240,24 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
     };
 
     /**
+     * Get the human readable name that maps to a certain account permissions type.
+     * @param permissionsType The account permissions type for which to get the human readable name.
+     * @returns The human readable name associated with permissionsType.
+     * @post Throws an error if the permissions type is not one of the recognized types: ADMIN, UNVERIFIED, or DENIED.
+     */
+    $scope.permissionsNames = function(permissionsType) {
+        if (permissionsType == 'ADMIN') {
+            return 'Admin';
+        } else if (permissionsType == 'UNVERIFIED') {
+            return 'Unverified';
+        } else if (permissionsType == 'DENIED') {
+            return 'Denied';
+        } else {
+            throw new Error("Attempted to get the name for an invalid permissions type: " + permissionsType);
+        }
+    };
+
+    /**
      * Helper function for programmatically closing drop down menus. This is required
      * because drop down menus do not automatically close when an option is selected.
      */
