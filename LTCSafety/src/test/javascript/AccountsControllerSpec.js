@@ -576,9 +576,9 @@ describe("Accounts Controller", function() {
     describe('Account permissions name tests', function() {
 
         /**
-         * Test that an error is throwing when attempting to filter the accounts based on an unsupported type.
+         * Tests that the permissionsNames function properly maps from permission types to human readable names.
          */
-        it('Filter invalid type', function() {
+        it('Account permissions type to name test', function() {
 
             $controller('AccountsCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
 
