@@ -159,4 +159,39 @@ public class AdminApi {
         new ConcernDao().save(loadedConcern);
         logger.log(Level.INFO, "Concern " + loadedConcern + " archive status was successfully updated!");
     }
+
+
+    /**
+     * Updates the permission level of the account associated with the given id. The user submitting the request
+     * must hold administrative privileges to update the permissions of other accounts.
+     *
+     * @param request The update request containing the user's firebase token, along with the desired account id and
+     *                the permission level to grant it.
+     * @throws UnauthorizedException If the admin is unauthorized to modify the permissions of other accounts.
+     * @throws BadRequestException If the request or the admin's account contained invalid information
+     * @throws NotFoundException If the given account does not exist in the database.
+     */
+    @ApiMethod(name = "updateAccountPermission", path = "admin/updateAccountPermission")
+    public void updateAccountPermission(UpdateAccountPermissionRequest request)
+            throws UnauthorizedException, BadRequestException, NotFoundException {
+
+        ValidationResult result = request.validate();
+        if (!result.isValid()){
+            logger.log(Level.WARNING, "Admin tried updating an account permission with invalid data.");
+            throw new BadRequestException(result.getErrorMessage());
+        }
+
+        Account account = request.authenticate();
+        assert account != null;
+        logger.log(Level.INFO,account + " is updating an account's permissions " + request);
+
+        AccountDao dao = new AccountDao();
+        Account toUpdate = dao.load(request.getAccountId());
+
+        if(toUpdate == null)
+            throw new NotFoundException("Requested account does not exist within the account database");
+
+        toUpdate.setPermissions(request.getPermissions());
+        dao.save(toUpdate);
+    }
 }
