@@ -114,6 +114,7 @@
  Tests the refresh of concerns in the view model by mocking the clientApi call to fetchConcerns and checking that the correct behaviour is achieved.
  */
 -(void)testRefresh {
+    /*
     LTCClientApi *mockApi = mock([LTCClientApi class]);
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
     __strong UITableView *tableView =  [[UITableView alloc] init];
@@ -141,7 +142,7 @@
     
     
     
-    
+    */
     
     
     
