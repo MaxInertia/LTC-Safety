@@ -206,12 +206,6 @@
 }
 
 - (void) testRefreshConcernsWithCompletion {
-    LTCClientApi *mockClient = mock([LTCClientApi class]);
-    
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
-    viewModel.clientApi = mockClient;
-    NSError *error;
-    [viewModel refreshConcernsWithCompletion:nil completion:&error];
     
 
 }
