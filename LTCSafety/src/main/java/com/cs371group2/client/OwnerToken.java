@@ -18,6 +18,11 @@ import java.util.logging.Logger;
  * This JWS contains the identifier used to identify the concern within the data store. Possessing
  * an owner token gives a client the ability to retract the concern that they have submitted.
  *
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that a user has submitted a concern successfully, and the submitter
+ * may be identified via the token.
+ *
  * Created on 2017-01-17.
  */
 public class OwnerToken implements Validatable {

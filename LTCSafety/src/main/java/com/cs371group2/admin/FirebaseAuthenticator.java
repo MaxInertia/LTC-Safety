@@ -36,6 +36,11 @@ import java.util.logging.Level;
  * This class represents a firebase authenticator object for ensuring that a user has the correct
  * admission levels when accessing functionality that requires firebase authentication.
  *
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that all tokens it will be authenticating are JSON
+ * web-tokens generated from firebase authentication. All other token types/formats will be invalid.
+ *
  * Created on 2017-02-09.
  */
 final class FirebaseAuthenticator extends Authenticator {

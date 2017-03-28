@@ -18,6 +18,11 @@ import java.util.Iterator;
  * This class represents an authenticator object for ensuring that a user has the correct admission levels
  * when accessing functionality that requires authentication.
  *
+ * History properties: Instances of this class are mutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that an "authenticated" token is a JSON web-token that contains the
+ * correct information associated with an account in the system. If this is not met, the token is unauthenticated.
+ *
  * Created on 2017-02-09.
  */
 abstract class Authenticator {
