@@ -55,8 +55,9 @@
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value, testConcern.actionsTaken);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value, testConcern.descriptionProperty);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , NSLocalizedString(testConcern.statuses.firstObject.concernType, nil));
-    XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
-    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMM dd, h:mm a"];
+    XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString:[dateFormatter stringFromDate:testConcern.statuses.firstObject.creationDate]]);
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
     XCTAssertEqual(viewModel.formSections.count, 6);

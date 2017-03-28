@@ -54,6 +54,9 @@
 "RESPONDING24" = "Responding in 24 hours";
 "RESPONDING48" = "Responding in 48 hours";
 "RESPONDING72" = "Responding in 72 hours";
+"RESPONDING24_SHORT" = "Responding in 24 hrs";
+"RESPONDING48_SHORT" = "Responding in 48 hrs";
+"RESPONDING72_SHORT" = "Responding in 72 hrs";
 "RESOLVED" = "Resolved";
 "RETRACTED" = "Retracted";
 

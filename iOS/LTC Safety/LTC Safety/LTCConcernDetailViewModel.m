@@ -324,17 +324,39 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         
         [dateFormatter setDateFormat:@"MMM dd, h:mm a"];
-        
-        dateString = [dateFormatter stringFromDate:status.creationDate];
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus
                                                     rowType:XLFormRowDescriptorTypeInfo
                                                       title:NSLocalizedString(status.concernType,nil)];
-        row.value = dateString;
-        // Changing font for small devices
+        dateString = [dateFormatter stringFromDate:status.creationDate];
+
+        
+        // Changing date style for small devices
         if([UIScreen mainScreen].bounds.size.width < 350){ //iPhone 5 screen width is 320
-            [row.cellConfig setObject:[UIFont fontWithName:@"Helvetica" size:15] forKey:@"textLabel.font"];
-            [row.cellConfig setObject:[UIFont fontWithName:@"Helvetica" size:15] forKey:@"detailTextLabel.font"];
+            //Changing date style if the status is a responding status
+            if([status.concernType isEqualToString:@"RESPONDING24"] ||
+               [status.concernType isEqualToString:@"RESPONDING48"] ||
+               [status.concernType isEqualToString:@"RESPONDING72"]){
+                
+                [dateFormatter setDateFormat:@"MMM dd, h a"];
+                
+                //Rounding the date to the nearest hour
+                NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitMonth|NSCalendarUnitDay|NSCalendarUnitHour|NSCalendarUnitMinute fromDate:status.creationDate];
+                if([components minute] >= 30){
+                    [components setHour: [components hour]+1];
+                }
+                dateString = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:components]];
+                
+                NSString *title = [NSString stringWithFormat:@"%@_SHORT", status.concernType];
+                row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus
+                                                            rowType:XLFormRowDescriptorTypeInfo
+                                                              title:NSLocalizedString(title, nil)];
+            }
         }
+        
+        
+        
+        row.value = dateString;
+        
         [section addFormRow:row];
     }
     
