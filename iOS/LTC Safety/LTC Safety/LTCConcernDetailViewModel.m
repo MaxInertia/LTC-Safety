@@ -321,14 +321,20 @@ NSString *const LTCDetailDescriptorStatus               = @"CONCERN_STATUS";
     
     NSString *dateString;
     for (LTCConcernStatus* status in concern.statuses){
-        dateString = [NSDateFormatter localizedStringFromDate: status.creationDate
-                                                    dateStyle:NSDateFormatterMediumStyle
-                                                    timeStyle:NSDateFormatterShortStyle];
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        
+        [dateFormatter setDateFormat:@"MMM dd, h:mm a"];
+        
+        dateString = [dateFormatter stringFromDate:status.creationDate];
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDetailDescriptorStatus
                                                     rowType:XLFormRowDescriptorTypeInfo
                                                       title:NSLocalizedString(status.concernType,nil)];
         row.value = dateString;
-        
+        // Changing font for small devices
+        if([UIScreen mainScreen].bounds.size.width < 350){ //iPhone 5 screen width is 320
+            [row.cellConfig setObject:[UIFont fontWithName:@"Helvetica" size:15] forKey:@"textLabel.font"];
+            [row.cellConfig setObject:[UIFont fontWithName:@"Helvetica" size:15] forKey:@"detailTextLabel.font"];
+        }
         [section addFormRow:row];
     }
     
