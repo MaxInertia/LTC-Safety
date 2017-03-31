@@ -37,6 +37,10 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
  The clientApi used within the viewModel to access the datastore.
  */
 @property (nonatomic, strong) LTCClientApi *clientApi;
+/**
+ Property to keep track of if this is the first appearence of the app. Originally set to yes then changed to no.
+ */
+@property (nonatomic) BOOL isFirstAppearance;
 
 @end
 
@@ -63,6 +67,7 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.clientApi = [[LTCClientApi alloc] init];
+    self.isFirstAppearance = YES;
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
     
@@ -76,15 +81,17 @@ NSString *const LTCRefreshError = @"REFRESH_ERROR";
     UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
     self.navigationItem.rightBarButtonItem = button;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(appDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
-
 }
 
 /**
- Calls the refresh method to refresh all concerns when ever the main view is loaded when the app opened or is re-opened after being running in the background.
- */
-- (void)appDidBecomeActive{
-    [self refresh];
+  Calls the refresh method to refresh all concerns when ever the main view is loaded for the first time the app is loaded.
+   */
+- (void)viewDidAppear:(BOOL)animated{
+    if (self.isFirstAppearance){
+        [self refresh];
+        self.isFirstAppearance = NO;
+    }
+    
 }
 
 -(void)refresh {
