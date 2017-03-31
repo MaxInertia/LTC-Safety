@@ -24,7 +24,7 @@
  @return NO, since the user should not be able to type in their own facility.
  
  */
-- (BOOL *)hasOther {
+- (BOOL)hasOther {
     return NO;
 }
 
