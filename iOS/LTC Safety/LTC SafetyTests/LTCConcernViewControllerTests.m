@@ -112,7 +112,9 @@
 }
 
 /**
- Tests the refresh of concerns in the view model by mocking the clientApi call to fetchConcerns and checking that the correct behaviour is achieved.
+ Tests the refresh of concerns implementation over three different methods by submitting a concern, then retracting it in a way that will not send the
+ notification to the view model in order to test that the before and after statuses of the concern have changed.
+ These methods are : refresh , refreshConcernsWithCompletion , _updateConcernsStatus
  */
 -(void)testRefresh {
     
@@ -145,11 +147,16 @@
     data.descriptionProperty = testConcern.descriptionProperty;
     
     [viewController.clientApi submitConcern:data completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){
+        
         NSString *ownerToken = response.ownerToken.token;
-        //LTCConcern *concern = [LTCConcern concernWithData:response.concern ownerToken:ownerToken inManagedObjectContext:self.context];
+        
         [viewController.clientApi retractConcern:ownerToken completion:^(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error){
-            [viewController refresh];
+        
             NSIndexPath *indexPath1 = [NSIndexPath indexPathForRow:0 inSection:0];
+
+            //Testing that the refresh actually changes the status of the concern within the view model from pending to retracted
+            XCTAssertEqual([viewController.viewModel concernAtIndexPath:indexPath1].statuses.lastObject.concernType, @"PENDING");
+            [viewController refresh];
             XCTAssertEqual([viewController.viewModel concernAtIndexPath:indexPath1].statuses.lastObject.concernType, @"RETRACTED");
             
         }];
