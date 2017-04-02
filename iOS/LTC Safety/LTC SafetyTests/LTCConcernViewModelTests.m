@@ -18,8 +18,14 @@
 #import <OCHamcrest/OCHamcrest.h>
 #import <OCMockito/OCMockito.h>
 
+
 @import CoreData;
 
+
+
+@interface LTCConcernViewModel ()
+-(void)_updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns;
+@end
 /**
  Unit tests for the LTCConcernViewModelTests class.
  */
@@ -150,70 +156,5 @@
     XCTAssertEqual([viewModel rowCountForSection:0], 4);
     XCTAssertEqual([viewModel sectionCount], 1);
 }
-/**
- Tests the update concerns status metho in the concern view model by creating a view model, placing a concern inside it, adding a status to the concern outside of the view model, and then use the upsateConcernsStatus with that newly modified cocnern then checking that the concern inside the view model has been updated accordingly.
- */
-- (void) test_updateConcernsStatus {
-    
-    /*
-    
-    XCTAssertNotNil(self.context, @"Attempted to run test with a nil object context.");
-
-    //creating the viewModel with a single concern
-    LTCConcernViewController *viewController = [[LTCConcernViewController alloc] init];
-    LTCConcernViewModel *viewModel = [[LTCConcernViewModel alloc] initWithContext:self.context];
-    [viewController setViewModel:viewModel];
-    LTCConcern *concern = [LTCConcern testConcernWithContext:self.context];
-    NSError *error = nil;
-    [viewModel addConcern:concern error:&error];
-    
-    GTLRClient_ConcernStatus *gtlrStatus = [[GTLRClient_ConcernStatus alloc] init];
-    [gtlrStatus setType:@"RETRACTED"];
-    
-    // adding a new status to the concern
-    LTCConcernStatus *newStatus = [LTCConcernStatus statusWithData:gtlrStatus inManagedObjectContext:self.context];
-    NSMutableOrderedSet *tempStatusSet = [[NSMutableOrderedSet alloc] init];
-    [tempStatusSet addObject:newStatus];
-    NSOrderedSet *newStatusSet = [[NSOrderedSet alloc] init];
-    newStatusSet = (NSOrderedSet *)tempStatusSet.copy;
-    [concern addStatuses:newStatusSet];
-    
-    NSLog(@"TESTING %@", concern.statuses.lastObject.concernType);
-    
-    //create a GTLRClient_Concern from the above LTCConcern
-    GTLRClient_Concern *gtlrConcern = [[GTLRClient_Concern alloc] init];
-    
-    
-    gtlrConcern.data.reporter.name = concern.reporter.name;
-    gtlrConcern.data.reporter.phoneNumber = concern.reporter.phoneNumber;
-    gtlrConcern.data.reporter.email = concern.reporter.email;
-    gtlrConcern.data.concernNature = concern.concernNature;
-    gtlrConcern.data.location.facilityName = concern.location.facilityName;
-    gtlrConcern.data.location.roomName = concern.location.roomName;
-    gtlrConcern.data.actionsTaken = concern.actionsTaken;
-    gtlrConcern.data.descriptionProperty = concern.descriptionProperty;
-    gtlrConcern.statuses.firstObject.type = concern.statuses.firstObject.concernType;
-    
-    
-    //somehow assign the gtlrConcern to the above concern...
-    
-    //calling the viewModelwith the above GTLRClient_Concern
-    NSMutableArray *gtlrConcernArray = [[NSMutableArray alloc] init];
-    [gtlrConcernArray addObject:gtlrConcern];
-    
-    
-//    [viewModel updateConcernsStatus:gtlrConcernArray];
-    
-//    XCTAssert([[viewModel concernAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]].statuses.lastObject.concernType isEqualToString:newStatus.concernType]);
-    
-    */
-    
-}
-
-- (void) testRefreshConcernsWithCompletion {
-    
-
-}
-
 
 @end
