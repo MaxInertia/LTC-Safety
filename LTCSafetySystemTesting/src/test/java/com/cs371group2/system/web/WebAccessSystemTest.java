@@ -60,7 +60,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         wait.until(ExpectedConditions.textToBePresentInElement(webDriver.findElementById("login-error"), "The password is invalid or the user does not have a password."));
         assert (webDriver.getPageSource().contains("The password is invalid or the user does not have a password."));
 
-        webDriver.close();
 
     }
 
@@ -97,7 +96,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         wait.until(ExpectedConditions.textToBePresentInElement(webDriver.findElementById("login-error"), "There is no user record corresponding to this identifier. The user may have been deleted."));
         assert (webDriver.getPageSource().contains("There is no user record corresponding to this identifier. The user may have been deleted."));
 
-        webDriver.close();
     }
 
 
@@ -135,7 +133,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         //Go to Log In page
         logInTabs.get(0).click();
 
-        webDriver.close();
     }
 
 
@@ -180,7 +177,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         wait.until(ExpectedConditions.textToBePresentInElement(webDriver.findElementById("register-error"), "The email address is already in use by another account."));
         assert (webDriver.getPageSource().contains("The email address is already in use by another account."));
 
-        webDriver.close();
 
     }
 
@@ -235,7 +231,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         TimeUnit.SECONDS.sleep(3);
         assert ((webDriver.findElement(By.className("access-title")).getText().contains("LTC Safety")));
 
-        webDriver.close();
     }
 
 
@@ -297,7 +292,6 @@ public abstract class WebAccessSystemTest extends WebTest {
         //sign out
         webDriver.findElement(By.xpath("/html/body/div[3]/div[1]/a")).click();
 
-        webDriver.close();
 
     }
          /*
@@ -358,14 +352,13 @@ public abstract class WebAccessSystemTest extends WebTest {
         //sign out
         webDriver.findElement(By.xpath("/html/body/div[3]/div[1]/a")).click();
 
-        webDriver.close();
     }
 
          /*
         Test 8
         Navigate through Archive
          */
-/*
+
     @Test
     public void navigateArchive() throws Exception {
         System.out.println("Test 8 - \n Archive Navigation \n View a specific archived concern \n Check its contains the correct info");
@@ -394,6 +387,7 @@ public abstract class WebAccessSystemTest extends WebTest {
         //Checks that the page has been correctly changed
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("logo-title")));
         assert (webDriver.findElement(By.className("logo-title")).isDisplayed());
+        TimeUnit.SECONDS.sleep(5);
 
         WebElement archive = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[1]/div[1]/a[2]/div[2]"));
         archive.click();
@@ -427,16 +421,14 @@ public abstract class WebAccessSystemTest extends WebTest {
         //sign out
         webDriver.findElement(By.xpath("/html/body/div[3]/div[1]/a")).click();
 
-        webDriver.close();
-
     }
-*/
+
          /*
         Test 9
         Navigate Administrator
          */
 
-/*
+
     @Test
     public void navigateNewAdmin() throws Exception {
         System.out.println("Test 9 - \n Administrator Navigation \n Update Permissions \n Change Permission Pages");
@@ -461,48 +453,69 @@ public abstract class WebAccessSystemTest extends WebTest {
         //Clicks the login buttin
         System.out.println("Signing In....");
         buttonList1.get(0).click();
-
         //Checks that the page has been correctly changed
         wait.until(ExpectedConditions.presenceOfElementLocated(By.className("logo-title")));
         assert (webDriver.findElement(By.className("logo-title")).isDisplayed());
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(5);
 
         WebElement administrator = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[1]/div[2]/a/div[2]"));
         administrator.click();
         System.out.println("Navigating to administrator page");
         //Wait until page loaded
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]")));
-        TimeUnit.SECONDS.sleep(2);
-        WebElement adminSections = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]"));
-        adminSections.click();
-        Select select = new Select(webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]")));
-        select.deselectAll();
-        select.selectByVisibleText("Denied");
-        select.getFirstSelectedOption().click();
+        //wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]")));
+        TimeUnit.SECONDS.sleep(6);
+        //Navigate to Admin Accounts
+        System.out.println("Navigating to admin priviledge accounts");
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]")).click();
+        TimeUnit.SECONDS.sleep(4);
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/nav/a[2]")).click();
         TimeUnit.SECONDS.sleep(4);
 
-        //Navigate to administrator priviledge accounts
+        System.out.println("Changing permissions to denied");
+        TimeUnit.SECONDS.sleep(8);
+        WebElement adminSections = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]"));
+        adminSections.click();
+        TimeUnit.SECONDS.sleep(4);
+        WebElement deniedSection = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/nav/a[3]"));
+
+        deniedSection.click();
+
+        //Navigate to administrator denied accounts
         System.out.println("Navigating to denied priviledge accounts");
+        WebElement denied = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]"));
+        denied.click();
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/nav/a[3]")).click();
         //Waiting for the page to load
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[1]")));
+        TimeUnit.SECONDS.sleep(8);
         String testEmail = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[1]")).getText();
+        System.out.println(testEmail);
 
         WebElement testEmailUpdatePermissions = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div/div[1]"));
-        WebElement testEmailUpdatePermissionsDenied = webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/nav/a[3]"));
         //Viewing the update options
         testEmailUpdatePermissions.click();
-        System.out.println("Viewing the update account permissions options");
-        wait.until(ExpectedConditions.elementToBeClickable(testEmailUpdatePermissionsDenied));
-        //Updating the account permissions to Denied
-        testEmailUpdatePermissionsDenied.click();
-        System.out.println("Updating the account permissions to denied");
+        TimeUnit.SECONDS.sleep(4);
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/nav/a[1]")).click();
+        //Navigate to unverified Accounts
+        System.out.println("Navigating to unverified priviledge accounts");
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/div")).click();
+        TimeUnit.SECONDS.sleep(4);
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/nav/a[1]")).click();
+        TimeUnit.SECONDS.sleep(4);
+        //Set permissions to Admin
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/div")).click();
+        TimeUnit.SECONDS.sleep(4);
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[3]/nav/a[2]")).click();
 
-        adminSections.click();
-        System.out.println("Navigating to the account permission denied section");
-        assert (testEmail == webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/ul/li[1]/div[1]")).getText());
+        //Navigate to Admin Accounts
+        System.out.println("Navigating to admin priviledge accounts");
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/div/div[1]")).click();
+        TimeUnit.SECONDS.sleep(4);
+        webDriver.findElement(By.xpath("/html/body/div[3]/div[2]/div[2]/div/div[1]/div[1]/nav/a[2]")).click();
+        TimeUnit.SECONDS.sleep(4);
 
     }
-*/
+
 
     @After
     public void tearDown() {
