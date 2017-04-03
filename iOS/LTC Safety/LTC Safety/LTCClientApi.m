@@ -9,7 +9,8 @@
 #import "LTCClientApi.h"
 #import "LTCLogger.h"
 
-@import Firebase;
+NSString * const LTCNetworkError = @"NETWORK_ERROR";
+
 @interface LTCClientApi ()
 @property (nonatomic, strong) GTLRClientService *service;
 @end
@@ -35,10 +36,18 @@
     GTLRClientQuery_SubmitConcern *query = [GTLRClientQuery_SubmitConcern queryWithObject:concern];
     
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
+        if(error.code == -1009){
+            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+            [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
+            error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
+        }
+        
         completion(object, error);
     }];
     [LTCLogger log :@"Concern has been submitted" level:kLTCLogLevelInfo];
 }
+
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion {
     [LTCLogger log :@"Retracting a concern" level:kLTCLogLevelInfo];
     NSAssert(ownerToken != nil, @"Attempted to retract a concern with a nil owner token");
@@ -49,6 +58,31 @@
 
     GTLRClientQuery_RetractConcern *query = [GTLRClientQuery_RetractConcern queryWithObject:clientToken];
     [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
+        if(error.code == -1009){
+            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+            [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
+            error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
+        }
+        
+        completion(object, error);
+    }];
+}
+
+- (void)fetchConcerns:(GTLRClient_OwnerTokenListWrapper *)inputTokenWrapper completion:(LTCFetchConcernsCompletion)completion {
+    
+    NSAssert(inputTokenWrapper != nil, @"Attempted to fetch a collection of concerns with a nil tokenWrapper");
+    NSAssert(completion != nil, @"Attempted to fetch a collection of concerns with a nil completion block");
+    
+    GTLRClientQuery_FetchConcerns *query = [GTLRClientQuery_FetchConcerns queryWithObject:inputTokenWrapper];
+    [self.service executeQuery:query completionHandler:^(GTLRServiceTicket *ticket, id object, NSError *error) {
+        
+        if(error.code == -1009){
+            NSMutableDictionary* details = [NSMutableDictionary dictionary];
+            [details setValue:NSLocalizedString(LTCNetworkError, nil) forKey:@"error"];
+            error = [NSError errorWithDomain:@"networkError" code:-1009 userInfo:details];
+        }
+        
         completion(object, error);
     }];
     [LTCLogger log :@"Concern has been retracted" level:kLTCLogLevelInfo];

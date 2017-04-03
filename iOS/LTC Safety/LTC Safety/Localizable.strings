@@ -6,8 +6,6 @@
   Copyright © 2017 Allan Kerr. All rights reserved.
 */
 
-
-
 // Concern View Title
 "CONCERN_VIEW_TITLE" = "LTC Safety";
 
@@ -20,7 +18,7 @@
 "CONTACT_INFO_TITLE" = "Contact Information";
 "CONCERN_INFO_TITLE" = "Tell us about your concern";
 "ACTIONS_TAKEN_TITLE" = "What actions have been taken?";
-
+"DESCRIPTION_TITLE" = "Concern Description";
 // Submit Concern Prompts
 "REPORTER_NAME_PROMPT" = "First and Last Name";
 "PHONE_NUMBER_PROMPT" = "Phone Number";
@@ -36,7 +34,7 @@
 "DETAIL_STATUS_LOG" = "Concern Status Log";
 "RETRACT_CONCERN_PROMPT" = "Retract";
 "DETAIL_RETRACT_COMFIRMATION" = "Concern was successfully retracted";
-
+"DETAIL_RETRACT_ERROR" = "Retraction Failure";
 
 "DETAIL_NAME_TITLE" = "Name";
 "DETAIL_EMAIL_TITLE" = "Email";
@@ -45,13 +43,28 @@
 "DETAIL_FACILITY_TITLE" = "Facility Name";
 "DETAIL_ROOM_TITLE" = "Room";
 "DETAIL_ACTIONS_TAKEN_TITLE" = "Actions taken";
+"DETAIL_DESCRIPTION_TITLE" = "Concern Description";
 
+//Refresh Prompts
+"REFRESH_ERROR" = "Refresh Failed";
+
+//Concern status Names
+"PENDING" = "Pending";
+"SEEN" = "Seen";
+"RESPONDING24" = "Responding in 24 hours";
+"RESPONDING48" = "Responding in 48 hours";
+"RESPONDING72" = "Responding in 72 hours";
+"RESPONDING24_SHORT" = "Responding in 24 hrs";
+"RESPONDING48_SHORT" = "Responding in 48 hrs";
+"RESPONDING72_SHORT" = "Responding in 72 hrs";
+"RESOLVED" = "Resolved";
+"RETRACTED" = "Retracted";
 
 // Misc
 "OK" = "OK";
 "CANCEL" = "Cancel";
 "LOADING_PROMPT" = "Loading";
-
+"NETWORK_ERROR" = "No network connection. Please check your internet connection and try again.";
 
 // Value Selection
 "VALUE_OTHER" = "Other...";
@@ -59,15 +72,19 @@
 // Concern Nature Values
 "CATEGORY_OTHER_TITLE" = "Nature of Concern";
 "CATEGORY_OTHER_PROMPT" = "Please specify the nature of the concern.";
-"CATEGORY_1" = "Category One";
-"CATEGORY_2" = "Category Two";
-"CATEGORY_3" = "Category Three";
-"CATEGORY_4" = "Category Four";
-"CATEGORY_5" = "Category Five";
-"CATEGORY_6" = "Category Six";
+"CATEGORY_1" = "Environmental Hazard";
+"CATEGORY_2" = "Equipment Failure";
+"CATEGORY_3" = "Improper Equipment Use";
+"CATEGORY_4" = "Infection Control";
+"CATEGORY_5" = "Mental Abuse";
+"CATEGORY_6" = "Near Miss";
+"CATEGORY_7" = "No Response to Requests";
+"CATEGORY_8" = "Physical Abuse";
+"CATEGORY_9" = "Resident Aggression";
+"CATEGORY_10" = "Witnessed Fall";
+"CATEGORY_11" = "Wrong / Lack of Medication";
 
 // Facility Values
-
 "FACILITY_OTHER_TITLE" = "Facility";
 "FACILITY_OTHER_PROMPT" = "Please specify the facility the concern occurred at.";
 "FACILITY_1" = "The Franklin";

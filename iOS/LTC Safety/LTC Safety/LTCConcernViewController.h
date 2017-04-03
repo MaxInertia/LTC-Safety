@@ -19,5 +19,11 @@
  The view model used to model the concerns that are displayed within the view controller. This provides the view controller with the data necessary to display a concern cell for each concern.
  */
 @property (nonatomic, strong) LTCConcernViewModel *viewModel;
+
+/**
+ Called when the user selects the refresh button. This method displays a loading spinner while calling a method in the viewModel to refresh all concerns
+ known to the app.
+ */
+-(void)refresh;
 @end
 

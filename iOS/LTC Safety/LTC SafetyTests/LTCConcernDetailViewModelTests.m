@@ -25,6 +25,7 @@
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorDescription;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorConcernStatus;
 
 @end
@@ -38,7 +39,7 @@
 
 @implementation LTCDetailConcernViewModelTests
 /**
- Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 4.
+ Testing the initialization of the LTCConcernDetailViewModel by allocating a new view model and checking that the client api, the concern. Test also checks that the sections count is 6.
  */
 - (void)testInitWithConcern {
     LTCConcern *testConcern = [LTCConcern testConcernWithContext:self.context];
@@ -52,12 +53,14 @@
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorFacilityName].value, testConcern.location.facilityName);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorRoomNumber].value, testConcern.location.roomName);
     XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value, testConcern.actionsTaken);
-    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , testConcern.statuses.firstObject.concernType);
-    XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString: [NSDateFormatter localizedStringFromDate: testConcern.statuses.firstObject.creationDate dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterShortStyle]]);
-    
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorDescription].value, testConcern.descriptionProperty);
+    XCTAssertEqual([viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].title , NSLocalizedString(testConcern.statuses.firstObject.concernType, nil));
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"MMM dd, h:mm a"];
+    XCTAssertTrue([[viewModel formRowWithTag:viewModel.testHook_descriptorConcernStatus].value isEqualToString:[dateFormatter stringFromDate:testConcern.statuses.firstObject.creationDate]]);
     XCTAssertNotNil(viewModel.clientApi);
     XCTAssertNotNil(viewModel.concern);
-    XCTAssertEqual(viewModel.formSections.count, 4);
+    XCTAssertEqual(viewModel.formSections.count, 6);
     
 }
 @end

@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "LTCConcern+CoreDataClass.h"
 #import "LTCConcernViewModelDelegate.h"
+#import "LTCClientApi.h"
+
 
 extern NSString * const LTCUpdatedConcernStatusNotification;
 
@@ -16,6 +18,16 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
  The LTCConcernViewModel class is used for modelling the data required for the LTCConcernViewController to display the client's submitted concerns.
  */
 @interface LTCConcernViewModel : NSObject
+
+/**
+ The completion for a refresh concern call. Contains a possible error message that could be brought from the clientApi call.
+ */
+typedef void(^LTCRefreshConcernsCompletion)(NSError *error);
+
+/**
+ The clientApi for this view model used for making calls to the datastore.
+ */
+@property (nonatomic, strong) LTCClientApi *clientApi;
 
 /**
  The number of sections in the view model which is guaranteed to be non-negative.
@@ -81,4 +93,12 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
  @return The number of rows in the section.
  */
 - (NSUInteger )rowCountForSection:(NSUInteger)section;
+/**
+ Fetches the list of concerns from the datastore and saves them to the viewModel using the list of owner tokens in the owner token list wrapper.
+ 
+ @pre The view model's object context is non-nil and assigned correctly.
+ @param tokensWrapper the wrapper of a list of owner tokens to be fetched from the datastore.
+ @param completion the completion for this method that containes a possible error message to be brought back from the clientApi call.
+ */
+- (void)refreshConcernsWithCompletion:(GTLRClient_OwnerTokenListWrapper *)tokensWrapper completion:(LTCRefreshConcernsCompletion)completion;
 @end

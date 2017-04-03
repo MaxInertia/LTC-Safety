@@ -20,6 +20,11 @@ typedef void(^LTCSubmitConcernCompletion)(GTLRClient_SubmitConcernResponse *conc
     The completion block that will be used to bring back a possible error message.
 */
 typedef void(^LTCRetractConcernCompletion)(GTLRClient_UpdateConcernStatusResponse *concernStatus, NSError *error);
+/**
+ The completion block that will be used to bring back a collection of concerns from the datastore.
+ */
+typedef void(^LTCFetchConcernsCompletion)(GTLRClient_ConcernCollection *fetchResponse, NSError *error);
+
 
 /**
  The LTCClientApi will provide the application with the nececcary queries to interact with the 
@@ -40,4 +45,13 @@ typedef void(^LTCRetractConcernCompletion)(GTLRClient_UpdateConcernStatusRespons
  @param completion      The completion block that will be used to bring back a possible error message.
  */
 - (void)retractConcern:(NSString *)ownerToken completion:(LTCRetractConcernCompletion)completion;
+
+
+/**
+ Fetches a collection of concerns from the datastore using a datastore query.
+ 
+ @param inputTokenWrapper      The wrapper of a list of owner tokens to be fetched back.
+ @param completion      The completion block that will be used to bring back the fetched concerns and a possible error message.
+ */
+- (void)fetchConcerns:(GTLRClient_OwnerTokenListWrapper *)inputTokenWrapper completion:(LTCFetchConcernsCompletion)completion;
 @end

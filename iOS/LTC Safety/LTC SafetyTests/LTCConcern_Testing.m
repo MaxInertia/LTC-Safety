@@ -29,6 +29,7 @@
     concern.location = location;
     concern.concernNature = @"The nature of the concern";
     concern.actionsTaken = @"The actions taken";
+    concern.descriptionProperty = @"The concern description";
     concern.identifier = @"1234678990";
     concern.submissionDate = [NSDate date];
     concern.ownerToken = [NSUUID UUID].UUIDString;

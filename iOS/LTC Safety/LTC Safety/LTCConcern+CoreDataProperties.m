@@ -2,7 +2,7 @@
 //  LTCConcern+CoreDataProperties.m
 //  
 //
-//  Created by Allan Kerr on 2017-02-02.
+//  Created by Daniel Morris on 2017-03-20.
 //
 //
 
@@ -10,15 +10,16 @@
 
 @implementation LTCConcern (CoreDataProperties)
 
-+ (NSFetchRequest *)fetchRequest {
++ (NSFetchRequest<LTCConcern *> *)fetchRequest {
 	return [[NSFetchRequest alloc] initWithEntityName:@"LTCConcern"];
 }
 
 @dynamic actionsTaken;
 @dynamic concernNature;
+@dynamic descriptionProperty;
 @dynamic identifier;
-@dynamic submissionDate;
 @dynamic ownerToken;
+@dynamic submissionDate;
 @dynamic location;
 @dynamic reporter;
 @dynamic statuses;

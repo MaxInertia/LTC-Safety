@@ -79,6 +79,32 @@ GTLR_EXTERN NSString * const kGTLRClient_ConcernStatusType_Seen;
 @property(nonatomic, strong, nullable) NSArray<GTLRClient_ConcernStatus *> *statuses;
 @property(nonatomic, strong, nullable) GTLRDateTime *submissionDate;
 
+/**
+ *  test
+ *
+ *  Uses NSNumber of boolValue.
+ */
+@property(nonatomic, strong, nullable) NSNumber *test;
+
+@end
+
+
+/**
+ *  GTLRClient_ConcernCollection
+ *
+ *  @note This class supports NSFastEnumeration and indexed subscripting over
+ *        its "items" property.
+ */
+@interface GTLRClient_ConcernCollection : GTLRCollectionObject
+
+/**
+ *  items
+ *
+ *  @note This property is used to support NSFastEnumeration and indexed
+ *        subscripting on this class.
+ */
+@property(nonatomic, strong, nullable) NSArray<GTLRClient_Concern *> *items;
+
 @end
 
 
@@ -89,6 +115,14 @@ GTLR_EXTERN NSString * const kGTLRClient_ConcernStatusType_Seen;
 
 @property(nonatomic, copy, nullable) NSString *actionsTaken;
 @property(nonatomic, copy, nullable) NSString *concernNature;
+
+/**
+ *  descriptionProperty
+ *
+ *  Remapped to 'descriptionProperty' to avoid NSObject's 'description'.
+ */
+@property(nonatomic, copy, nullable) NSString *descriptionProperty;
+
 @property(nonatomic, strong, nullable) GTLRClient_Location *location;
 @property(nonatomic, strong, nullable) GTLRClient_Reporter *reporter;
 
@@ -123,6 +157,16 @@ GTLR_EXTERN NSString * const kGTLRClient_ConcernStatusType_Seen;
 @interface GTLRClient_OwnerToken : GTLRObject
 
 @property(nonatomic, copy, nullable) NSString *token;
+
+@end
+
+
+/**
+ *  GTLRClient_OwnerTokenListWrapper
+ */
+@interface GTLRClient_OwnerTokenListWrapper : GTLRObject
+
+@property(nonatomic, strong, nullable) NSArray<GTLRClient_OwnerToken *> *tokens;
 
 @end
 
