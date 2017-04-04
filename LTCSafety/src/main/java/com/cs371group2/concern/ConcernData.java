@@ -11,8 +11,10 @@ import java.util.logging.Logger;
  * This data is not part of the concern class to separate the object that is sent using Cloud
  * Endpoints from the object that will be stored in the data store.
  *
- * @History Properties concern nature, actions taken, reporter, and location are all guaranteed to be constant during the
- * entire duration of a concern data instance.
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class makes no assumptions about the information it is given, though to be considered
+ * "valid" in our system, it is required that all fields and sub-fields are non-null.
  *
  * Created on 2017-01-17.
  */

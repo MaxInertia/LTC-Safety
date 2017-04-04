@@ -9,6 +9,10 @@ import com.cs371group2.ValidationResult;
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
+ * Invariance properties: This class assumes that administrative permissions are required for the request to be
+ * fulfilled. It also assumes that the requester has access to the unique long id of the concern they desire. Finally,
+ * it assumes that the user will be authenticating themselves via firebase token.
+ *
  * Created on 2017-02-26.
  */
 public class ConcernRequest extends AdminRequest implements Validatable {

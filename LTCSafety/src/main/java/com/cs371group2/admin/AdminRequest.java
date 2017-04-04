@@ -7,6 +7,11 @@ import java.util.Set;
 
 /**
  * Represents a request that requires administrative privileges to be successful
+ *
+ * History property: This class is abstract and therefore un-instantiatable.
+ *
+ * Invariance Properties: Any subclass of this request will require administrative privileges to be fulfilled.
+ *
  * Created on 2017-02-09.
  */
 public abstract class AdminRequest extends AuthenticatedRequest{

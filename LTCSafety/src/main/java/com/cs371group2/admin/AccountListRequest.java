@@ -14,6 +14,9 @@ import java.util.logging.Logger;
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
+ * Invariance properties: This class assumes that some user has requested a list of accounts at the given
+ * offset with the given limit, and that the accountType is the type of accounts to load from the database.
+ *
  * Created on 2017-02-08.
  */
 public final class AccountListRequest extends PagedRequest implements Validatable {

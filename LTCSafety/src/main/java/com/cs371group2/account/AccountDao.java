@@ -6,14 +6,18 @@ import com.cs371group2.admin.AccountListRequest;
 import com.cs371group2.admin.AccountListResponse;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
-
+import com.googlecode.objectify.cmd.Query;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * This class extends the data-access object in our system to load, save, and delete accounts.
- * These accounts
+ *
+ * History Properties: This class itself is immutable upon creation, as it has no fields that can modify it.
+ *
+ * Invariance Properties: This class assumes that an Objectify context has already been initialized via
+ * InitContextListener and that the account entities have been registered.
  *
  * Created on 2017-02-06.
  */
@@ -100,18 +104,16 @@ public class AccountDao extends Dao<Account> {
         assert(request.getOffset() >= 0);
         assert(request.getLimit() > 0);
 
-        List<Account> accounts =  ObjectifyService.ofy().load().type(Account.class)
-                                    .filter("isTestingAccount = ", account.isTestingAccount())
-                                    .filter("permissions = ", request.getAccountType())
-                                    .offset(request.getOffset())
-                                    .limit(request.getLimit())
-                                    .list();
-
-        int count = ObjectifyService.ofy().load().type(Account.class)
+        Query<Account> query = ObjectifyService.ofy().load().type(Account.class)
                 .filter("isTestingAccount = ", account.isTestingAccount())
-                .filter("permissions = ", request.getAccountType())
-                .count();
+                .filter("permissions = ", request.getAccountType());
 
+        List<Account> accounts =  query
+                .offset(request.getOffset())
+                .limit(request.getLimit())
+                .list();
+
+        int count = query.count();
         int startIndex = 0;
         int endIndex = 0;
 

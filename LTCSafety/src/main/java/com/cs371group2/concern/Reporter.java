@@ -9,8 +9,11 @@ import java.util.logging.Logger;
  * The reporter class is used to store information pertaining to the reporter of the concern. This
  * consists of name and contact information.
  *
- * @History Properties Name, phone number, and email are all guaranteed to be constant during the
+ * History properties: Name, phone number, and email are all guaranteed to be constant during the
  * entire duration of a reporter instance.
+ *
+ * Invariance properties: This class makes no assumptions about the information it is given, though to be considered
+ * "valid" in our system, it is required that all fields are non-null.
  *
  * Created on 2017-01-17.
  */

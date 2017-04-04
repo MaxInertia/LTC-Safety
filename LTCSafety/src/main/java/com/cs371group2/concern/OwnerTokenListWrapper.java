@@ -11,7 +11,12 @@ import java.util.LinkedList;
  * The OwnerTokenListWrapper is used by any backend api methods that need to take in a list of
  * owner tokens as a parameter. This has to be done since google cloud endpoints does not allow
  * for arrays or lists as method parameters.
- * Created by DanielMorris on 2017-03-01.
+ *
+ * History properties: Instances of this class are mutable from the time they are created.
+ *
+ * Invariance properties: This class makes no assumptions about the information it is given.
+ *
+ * Created by on 2017-03-01.
  */
 public class OwnerTokenListWrapper {
 

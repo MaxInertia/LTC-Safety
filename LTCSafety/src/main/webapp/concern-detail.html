@@ -96,7 +96,7 @@
                 </div>
                 <nav class="status-dropdown-list w-dropdown-list"><a class="w-dropdown-link" href="#" id="Pending-Status" ng-click="updateStatus(&#39;PENDING&#39;)">Pending</a><a class="w-dropdown-link" href="#" id="Seen-Status" ng-click="updateStatus(&#39;SEEN&#39;)">Seen</a><a class="w-dropdown-link" href="#" id="Responding-24-Status" ng-click="updateStatus(&#39;RESPONDING24&#39;)">Responding in 24 Hours</a><a class="w-dropdown-link" href="#" id="Responding-48-Status" ng-click="updateStatus(&#39;RESPONDING48&#39;)">Responding in 48 Hours</a><a class="w-dropdown-link" href="#" id="Responding-72-Status" ng-click="updateStatus(&#39;RESPONDING72&#39;)">Responding in 72 Hours</a><a class="w-dropdown-link" href="#" id="Resolved-Status" ng-click="updateStatus(&#39;RESOLVED&#39;)">Resolved</a>
                 </nav>
-            </div><a class="archive button w-button" href="#" ng-click="toggleArchived()">{{ concern.isArchived ? 'Unarchive' : 'Archive' }}</a>
+            </div><a class="archive button w-button" href="#" ng-click="toggleArchived()">{{ concern.archived ? 'Unarchive' : 'Archive' }}</a>
         </div>
     </div>
 </div>
