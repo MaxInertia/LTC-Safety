@@ -12,9 +12,11 @@ if [ "${TRAVIS_BRANCH}" == "ios-app" ] ; then
 	
 else if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then 
 	xcodebuild \
+	-verbose \
 	-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
 	-scheme LTC\ Safety \
-	-destination 'platform=iOS Simulator, id=DB794781-65A7-4884-8D00-AAC3CBD39A44, OS=10.2, name=iPhone SE' \
+	-sdk iphonesimulator
+	-destination 'platform=iOS Simulator,id=DB794781-65A7-4884-8D00-AAC3CBD39A44,OS=latest' \
 	test
 
 	#xcodebuild \
