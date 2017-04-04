@@ -18,6 +18,10 @@ import java.util.logging.Logger;
  * The concern class is used to model and store all information relating to a concern within the
  * data store. This includes the submitted concern data and information for administrators to modify
  * as they tend to concerns.
+ *
+ * History properties: Instances of this class are mutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that the ConcernData contained is both non-null and valid.
  */
 @Entity
 public final class Concern {

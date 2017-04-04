@@ -18,6 +18,11 @@ import java.util.logging.Logger;
 /**
  * Data access object for the saving, loading, and deletion of concerns.
  *
+ * History Properties: This class itself is immutable upon creation, as it has no fields that can modify it.
+ *
+ * Invariance Properties: This class assumes that an Objectify context has already been initialized via
+ * InitContextListener and that the concern entity have been registered.
+ *
  * Created on 2017-01-19.
  */
 public class ConcernDao extends Dao<Concern> {

@@ -7,8 +7,11 @@ import com.cs371group2.concern.ConcernStatus;
  * concern's status back to the client. This involves sending back the newly added concern and the
  * identifier for the concern that was updated.
  *
- * History Properties:
- * Concern ID and Concern status will remain constant starting at the point they are passed to the constructor.
+ * History properties: Concern ID and Concern status will remain constant starting at the point they are passed to
+ *                      the constructor.
+ *
+ * Invariance properties: This class assumes that a valid concern update request has been successfully performed, and
+ * the concern/status given to this class upon instantiation is in-fact the concern/status that was updated.
  *
  * Created on 2017-02-13.
  */
