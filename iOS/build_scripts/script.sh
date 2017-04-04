@@ -14,6 +14,7 @@ else if [ "${TRAVIS_BRANCH}" == "ios-app-build" ] ; then
 	xcodebuild \
 	-workspace iOS/LTC\ Safety/LTC\ Safety.xcworkspace \
 	-scheme LTC\ Safety \
+	-sdk iphonesimulator \
 	-destination 'name=iPhone SE' \
 	test
 
