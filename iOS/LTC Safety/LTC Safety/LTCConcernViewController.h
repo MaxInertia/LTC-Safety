@@ -12,6 +12,11 @@
 
 /**
  The LTCConcernViewController class is used to display the client's previously submitted concerns. The concerns that its displayed are managed by the LTCConcernViewModel.
+ 
+ History properties: Aspects of the viewModel may vary with this class but the viewModel object will remain constant.
+ 
+ Invariance properties: This class assumes that the viewModel is non-nil.
+ 
  */
 @interface LTCConcernViewController : UIViewController
 

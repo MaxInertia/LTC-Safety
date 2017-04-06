@@ -11,6 +11,11 @@
 
 /**
  The LTCNewConcernViewModel class is used to model the concern submission form that is presented to the controller. This class is used by the LTCNewConcernViewController to determine which input fields should be displayed to the user and is updated whenever these input fields are modified.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCNewConcernViewModel : XLFormDescriptor
 

@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  The LTC Location class will represent a concern's facility name and room number.
+ 
+ History properties: Properties of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCLocation : NSManagedObject
 

@@ -11,6 +11,11 @@
 
 /**
  The LTCLoadingViewController class is used to configure an alert controller that displays a loading spinner
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCLoadingViewController : UIAlertController
 

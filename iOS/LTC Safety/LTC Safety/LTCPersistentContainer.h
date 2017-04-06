@@ -12,6 +12,11 @@
  The LTCPersistentContainer class is an iOS 9 compatible version of the NSPersistentContainer class introduced in iOS 9.
  Its purpose is to load a managed object model from file and set up a persistent store and managed object context that
  can be used to save and load entities in that model.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the viewContext, managedObjectModel, and storeCoordinator are valid and non-nil.
+ 
  */
 @interface LTCPersistentContainer : NSObject
 /**

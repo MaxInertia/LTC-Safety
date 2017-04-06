@@ -16,6 +16,12 @@ extern NSString * const LTCUpdatedConcernStatusNotification;
 
 /**
  The LTCConcernViewModel class is used for modelling the data required for the LTCConcernViewController to display the client's submitted concerns.
+ 
+ History properties: SectionCount will be the only thing changable in this class.
+ 
+ Invariance properties: This class assumes that the sectionCount is non-negative and that all other properties are non-nil.
+ 
+ 
  */
 @interface LTCConcernViewModel : NSObject
 

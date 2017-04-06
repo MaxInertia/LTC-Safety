@@ -14,6 +14,11 @@
 
 /**
  The LTCConcernDetailViewController class is used for displaying to the user the data associated with a single submitted concern in the LTCConcernViewController. It stores the static data that resulted from a user submission.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This assumes that the given viewModel and concern are valid and non-nil.
+ 
  */
 @interface LTCConcernDetailViewController : XLFormViewController
 

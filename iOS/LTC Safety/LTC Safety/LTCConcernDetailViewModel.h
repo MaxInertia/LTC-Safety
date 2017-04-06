@@ -13,6 +13,11 @@
 
 /**
  The LTCConcernDetailViewModel is responsible for modeling LTCConcern data in a way so that the LTCConcernDetailViewController can display the concern's data to the user. This involves setting up sections and rows to display the concern's properties.
+ 
+ History properties: The concern in this class is subject to change.
+ 
+ Invariance properties: This class assumes that the given viewModel is valid and non-nil and that the current concern is also valid and non-nil.
+ 
  */
 @interface LTCConcernDetailViewModel : XLFormDescriptor
 

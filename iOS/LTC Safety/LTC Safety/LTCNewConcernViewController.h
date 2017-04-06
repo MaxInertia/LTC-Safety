@@ -12,6 +12,11 @@
 
 /**
  The LTCNewConcernViewController class is used to present a concern data form that the user can use to fill in the information for a concern that they have. This class is responsible for displaying the form specified in the LTCNewConcernViewModel class.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the delegate is valid and non-nil.
+ 
  */
 @interface LTCNewConcernViewController : XLFormViewController
 

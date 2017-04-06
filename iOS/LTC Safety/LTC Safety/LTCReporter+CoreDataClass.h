@@ -15,6 +15,11 @@
 NS_ASSUME_NONNULL_BEGIN
 /**
  The LTC Reporter class will represent a concern's reporter name, phone number, and email address.
+ 
+ History properties: Properties of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCReporter : NSManagedObject
 /**
