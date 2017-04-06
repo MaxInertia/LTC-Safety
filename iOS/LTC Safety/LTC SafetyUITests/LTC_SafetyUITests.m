@@ -611,7 +611,7 @@
     XCTAssert(tablesQuery2.staticTexts[@"No Response to Requests"].exists);
     XCTAssert(tablesQuery2.staticTexts[@"Preston Extendicare"].exists);
     XCTAssert(tablesQuery2.staticTexts[@"45"].exists);
-    XCTAssert(tablesQuery2.staticTexts[@"PENDING"].exists);
+    XCTAssert(tablesQuery2.staticTexts[@"Pending"].exists);
 }
 
 /**
@@ -679,7 +679,79 @@
     [[query.cells elementBoundByIndex:0] tap];
 
     //Checks that the concern is correctly retracted
-    XCTAssert(tablesQuery.staticTexts[@"RETRACTED"].exists);
+    XCTAssert(tablesQuery.staticTexts[@"Retracted"].exists);
+}
+
+/**
+ Test case for testing that the expected statuses are shown for a concern when the refresh concerns button is pressed.
+ */
+- (void)testRefresh {
+
+    //Initiates the app
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    
+    //Creates a new concern
+    [app.buttons[@"New Safety Concern"] tap];
+    
+    XCUIElementQuery *tablesQuery = app.tables;
+    
+    //Enter new name "retract test1"
+    XCUIElement *nameTextField = tablesQuery.textFields[@"First and Last Name"];
+    [nameTextField tap];
+    [nameTextField typeText:@"refresh test1"];
+    //Enters new Phone Number "3062912761"
+    XCUIElement *phoneNumberTextField = tablesQuery.textFields[@"Phone Number"];
+    [phoneNumberTextField tap];
+    XCUIElement *moreNumbersKey = app.keys[@"more, numbers"];
+    [moreNumbersKey tap];
+    [phoneNumberTextField typeText:@"3062912761"];
+    //Enters new email "Fake@no"
+    XCUIElement *emailTextField = tablesQuery.textFields[@"Email Address"];
+    [emailTextField tap];
+    [emailTextField typeText:@"Fake"];
+    [moreNumbersKey tap];
+    emailTextField = tablesQuery.textFields[@"Fake"];
+    [emailTextField typeText:@"@"];
+    XCUIElement *moreLettersKey = app.keys[@"more, letters"];
+    [moreLettersKey tap];
+    emailTextField = tablesQuery.textFields[@"Fake@"];
+    [emailTextField typeText:@"no"];
+    //Enters new concern "No Response to Requests"
+    [tablesQuery.staticTexts[@"Nature of Concern"] tap];
+    [tablesQuery.staticTexts[@"No Response to Requests"] tap];
+    //Enters new facility "Preston Extendicare"
+    [tablesQuery.staticTexts[@"Facility"] tap];
+    [tablesQuery.staticTexts[@"Preston Extendicare"] tap];
+    //Enters new room "45"
+    [tablesQuery.textFields[@"Room"] tap];
+    [moreNumbersKey tap];
+    XCUIElement *roomTextField = tablesQuery.textFields[@"Room"];
+    [roomTextField typeText:@"45"];
+    //Enters new actions taken "none"
+    XCUIElement *textView = [[[tablesQuery childrenMatchingType:XCUIElementTypeCell] elementBoundByIndex:6] childrenMatchingType:XCUIElementTypeTextView].element;
+    [textView tap];
+    [textView typeText:@"None"];
+    //Submits concern
+    [tablesQuery.staticTexts[@"Submit Concern"] tap];
+    
+    [[[XCUIApplication alloc] init].navigationBars[@"LTC Safety"].buttons[@"Refresh"] tap];
+    
+    XCUIElementQuery *query = [app.tables containingType:XCUIElementTypeTable identifier:@"LTCConcernTableView"];
+    
+    //Navigates to the new concerns page
+    [[query.cells elementBoundByIndex:0] tap];
+    
+    //Checks that the concern
+    XCTAssert(tablesQuery.staticTexts[@"Pending"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Seen"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 24 hours"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 48 hours"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 72 hours"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 24 hrs"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 48 hrs"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Responding in 72 hrs"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Resolved"].exists);
+    XCTAssert(!tablesQuery.staticTexts[@"Retracted"].exists);
 }
 
 @end
