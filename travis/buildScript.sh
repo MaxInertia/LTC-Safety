@@ -10,7 +10,10 @@ if [ "${TRAVIS_OS_NAME}" == "osx" ] ; then
 	elif [ "${TRAVIS_LANGUAGE}" == "java" ] ; then
 		# Maven - Backend
 		mvn clean package -f LTCSafety/pom.xml
-		mvn test -f LTCSafetySystemTesting/pom.xml
+		# All tests
+		#mvn test -f LTCSafetySystemTesting/pom.xml
+		# All tests except automated selenium tests (for website)
+		mvn test -f LTCSafetySystemTesting/pom.xml -Dgroups="com.cs371group2.system.AdminAPISystemTests, com.cs371group2.system.ClientAPISystemTests"
 	fi
 	
 elif [ "${TRAVIS_OS_NAME}" == "linux"  ] ; then
