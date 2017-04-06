@@ -10,6 +10,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
 import android.support.test.espresso.PerformException;
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -58,6 +59,7 @@ import static org.hamcrest.core.IsAnything.anything;
  *
  * The tests here assume that after a successful concern submission the user is returned to MainActivity.
  */
+@Suppress
 @RunWith(AndroidJUnit4.class)
 public class NewConcernActivityEspressoTests {
 
