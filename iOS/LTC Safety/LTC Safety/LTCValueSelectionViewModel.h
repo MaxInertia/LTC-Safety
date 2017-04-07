@@ -11,6 +11,11 @@
 
 /**
  The LTCValueSelectionViewModel class is used to provide the data necessary for the LTCValueSelectionViewController class to display the value options to the user. This class loads the value selection config from file and creates row descriptors that are used by the value selection view controller.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the title and otherPrompt are non-nil and that the rowValues array is non-nil and contains only valid row value classes.
+ 
  */
 @interface LTCValueSelectionViewModel : NSObject
 

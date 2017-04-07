@@ -1,16 +1,16 @@
 package com.cs371group2.admin;
 
 import com.cs371group2.Validatable;
-import com.cs371group2.ValidationResult;
-
-import java.util.logging.Logger;
 
 /**
  * This object represents a concern request containing an offset and a limit,
  * both of which will be to access the concern database. It will also include all
  * necessary functionality for authenticating the requester.
  *
- * History property: Instances of this class are immutable from the time they are created.
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that paging information is required to go along with the
+ * concerns requested, and that archived and non-archived concerns are not to be loaded within the same request.
  *
  * Created on 2017-02-08.
  */
@@ -20,7 +20,9 @@ public final class ConcernListRequest extends PagedRequest implements Validatabl
     private boolean archived;
 
     /** @return Whether the request should load archived or non-archived concerns */
-    public boolean Archived() { return archived; }
+    public boolean isArchived() {
+        return archived;
+    }
 
     /**
      * TestHook_MutableConcernListRequest is a test hook to make ConcernListRequest testable without exposing its

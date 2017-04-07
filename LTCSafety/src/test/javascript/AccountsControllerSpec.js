@@ -27,8 +27,8 @@ describe("Accounts Controller", function() {
         // AdminApi mock to mock out server api calls
         adminApiMock = {
             updateConcernStatus : function(request) {},
-            requestAccountsList : function(request) {},
-            updatePermissions : function(request) {}
+            requestAccountList : function(request) {},
+            updateAccountPermission : function(request) {}
         };
 
         // Firebase mock to mock out authentication server calls
@@ -326,9 +326,9 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testRefreshAccounts(false, "test_token", 0, 25, 'INVALID_TYPE', function () {
-                    spyOn(adminApiMock, 'requestAccountsList');
+                    spyOn(adminApiMock, 'requestAccountList');
                 }, function () {
-                    expect(adminApiMock.requestAccountsList).not.toHaveBeenCalled();
+                    expect(adminApiMock.requestAccountList).not.toHaveBeenCalled();
                     expect($scope.accounts.items).toEqual([]);
                 });
             }).toThrow(new Error("Attempted to refresh accounts with an invalid account filter type: INVALID_TYPE"));
@@ -341,9 +341,9 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testRefreshAccounts(false, "test_token", -1, 25, 'ADMIN', function () {
-                    spyOn(adminApiMock, 'requestAccountsList');
+                    spyOn(adminApiMock, 'requestAccountList');
                 }, function () {
-                    expect(adminApiMock.requestAccountsList).not.toHaveBeenCalled();
+                    expect(adminApiMock.requestAccountList).not.toHaveBeenCalled();
                     expect($scope.accounts.items).toEqual([]);
                 });
             }).toThrow(new Error("Attempted to fetch a page with a negative start index."));
@@ -356,9 +356,9 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testRefreshAccounts(false, "", 0, 25, 'ADMIN', function () {
-                    spyOn(adminApiMock, 'requestAccountsList');
+                    spyOn(adminApiMock, 'requestAccountList');
                 }, function () {
-                    expect(adminApiMock.requestAccountsList).not.toHaveBeenCalled();
+                    expect(adminApiMock.requestAccountList).not.toHaveBeenCalled();
                     expect($scope.accounts.items).toEqual([]);
                 });
             }).toThrow(new Error("Attempted to refresh the accounts list with a null access token."));
@@ -371,9 +371,9 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testRefreshAccounts(false, "test_token", 0, 0, 'ADMIN', function () {
-                    spyOn(adminApiMock, 'requestAccountsList');
+                    spyOn(adminApiMock, 'requestAccountList');
                 }, function () {
-                    expect(adminApiMock.requestAccountsList).not.toHaveBeenCalled();
+                    expect(adminApiMock.requestAccountList).not.toHaveBeenCalled();
                     expect($scope.accounts.items).toEqual([]);
                 });
             }).toThrow(new Error("Attempted to fetch an empty page."));
@@ -415,7 +415,7 @@ describe("Accounts Controller", function() {
          */
         var testRefreshAccounts = function(simulateError, token, offset, limit, accountType, setupSpies, checkExpectations) {
 
-            adminApiMock.requestAccountsList  = function(request) {
+            adminApiMock.requestAccountList  = function(request) {
                 return {
                     execute : function(callback) {
                         if (simulateError) {
@@ -455,10 +455,10 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testUpdatePermissions(false, "", "12345", "email@test.com", 'ADMIN', function () {
-                    spyOn(adminApiMock, 'updatePermissions');
+                    spyOn(adminApiMock, 'updateAccountPermission');
                     spyOn($scope, 'refreshAccounts');
                 }, function () {
-                    expect(adminApiMock.updatePermissions).not.toHaveBeenCalled();
+                    expect(adminApiMock.updateAccountPermission).not.toHaveBeenCalled();
                     expect($scope.refreshAccounts).not.toHaveBeenCalled();
                 });
             }).toThrow(new Error("Attempted to update the permissions of an account with no access token."));
@@ -472,10 +472,10 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testUpdatePermissions(false, "test_token", "", "email@test.com", 'ADMIN', function () {
-                    spyOn(adminApiMock, 'updatePermissions');
+                    spyOn(adminApiMock, 'updateAccountPermission');
                     spyOn($scope, 'refreshAccounts');
                 }, function () {
-                    expect(adminApiMock.updatePermissions).not.toHaveBeenCalled();
+                    expect(adminApiMock.updateAccountPermission).not.toHaveBeenCalled();
                     expect($scope.refreshAccounts).not.toHaveBeenCalled();
                 });
             }).toThrow(new Error("Attempted to update the permissions of an account with no id."));
@@ -489,10 +489,10 @@ describe("Accounts Controller", function() {
 
             expect(function(){
                 testUpdatePermissions(false, "test_token", "12345", "email@test.com", 'INVALID_TYPE', function () {
-                    spyOn(adminApiMock, 'updatePermissions');
+                    spyOn(adminApiMock, 'updateAccountPermission');
                     spyOn($scope, 'refreshAccounts');
                 }, function () {
-                    expect(adminApiMock.updatePermissions).not.toHaveBeenCalled();
+                    expect(adminApiMock.updateAccountPermission).not.toHaveBeenCalled();
                     expect($scope.refreshAccounts).not.toHaveBeenCalled();
                 });
             }).toThrow(new Error("Attempted to update the permissions of an account to an invalid account type: INVALID_TYPE"));
@@ -538,7 +538,7 @@ describe("Accounts Controller", function() {
          */
         var testUpdatePermissions = function(simulateError, token, accountId, accountEmail, permissionsType, setupSpies, checkExpectations) {
 
-            adminApiMock.updatePermissions  = function(request) {
+            adminApiMock.updateAccountPermission  = function(request) {
                 return {
                     execute : function(callback) {
                         if (simulateError) {
@@ -568,4 +568,36 @@ describe("Accounts Controller", function() {
             checkExpectations();
         };
     });
+
+
+    /**
+     * Tests that mapping account permissions types to human readable names functions properly.
+     */
+    describe('Account permissions name tests', function() {
+
+        /**
+         * Tests that the permissionsNames function properly maps from permission types to human readable names.
+         */
+        it('Account permissions type to name test', function() {
+
+            $controller('AccountsCtrl', { $scope: $scope, firebase: firebaseMock, adminApi: adminApiMock });
+
+            var name = $scope.permissionsNames('ADMIN');
+            expect(name).toEqual('Admin');
+
+            name = $scope.permissionsNames('UNVERIFIED');
+            expect(name).toEqual('Unverified');
+
+            name = $scope.permissionsNames('DENIED');
+            expect(name).toEqual('Denied');
+
+            name = $scope.permissionsNames('DENIED');
+            expect(name).toEqual('Denied');
+
+            expect(function(){
+                $scope.permissionsNames('INVALID_TYPE');
+            }).toThrow(new Error("Attempted to get the name for an invalid permissions type: INVALID_TYPE"));
+        });
+    });
+
 });

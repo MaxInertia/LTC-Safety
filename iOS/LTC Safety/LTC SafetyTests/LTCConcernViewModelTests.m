@@ -11,20 +11,28 @@
 #import "LTCReporter+CoreDataClass.h"
 #import "LTCLocation+CoreDataClass.h"
 #import "LTCConcernViewModel.h"
+#import "LTCConcernViewController.h"
 #import "LTCCoreDataTestCase.h"
 #import "UICKeyChainStore.h"
 #import "LTCConcern_Testing.h"
 #import <OCHamcrest/OCHamcrest.h>
 #import <OCMockito/OCMockito.h>
 
+
 @import CoreData;
 
+
+
+@interface LTCConcernViewModel ()
+-(void)_updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns;
+@end
 /**
  Unit tests for the LTCConcernViewModelTests class.
  */
 @interface LTCConcernViewModelTests : LTCCoreDataTestCase
 
 @end
+
 
 @implementation LTCConcernViewModelTests
 

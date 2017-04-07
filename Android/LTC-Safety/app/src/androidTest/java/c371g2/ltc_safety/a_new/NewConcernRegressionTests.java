@@ -2,6 +2,7 @@ package c371g2.ltc_safety.a_new;
 
 import android.content.Intent;
 import android.support.test.espresso.NoMatchingViewException;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -23,6 +24,7 @@ import static org.junit.Assert.fail;
 /**
  * Tests that cover the bugs discovered in the NewConcernActivity.
  */
+@Suppress
 @RunWith(AndroidJUnit4.class)
 public class NewConcernRegressionTests {
 

@@ -115,6 +115,7 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
         adminApi.requestConcern($scope.concernRequest).execute(
             function (resp) {
 
+                console.log(resp);
                 $scope.concern = resp;
                 $scope.$apply();
             }
@@ -143,7 +144,7 @@ safetyApp.controller('ConcernDetailCtrl', function ConcernDetailCtrl($scope, $lo
                 if (resp.error) {
                     $scope.showModalError('Failed to toggle the concern archive status.');
                 } else {
-                    $scope.concern.isArchived = !$scope.concern.isArchived;
+                    $scope.concern.archived = !$scope.concern.archived;
                     $scope.$apply();
                 }
             }

@@ -19,6 +19,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  This class is an extension of the LTCConcern entity in the xcdatamodel. It is used to model concerns within the application and allows them to persistent when the managed object context is saved or loaded.
+ 
+ History properties: Properties of this class should not vary from the time they are created except new concern statuses may be appended to the concernStatus array.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCConcern : NSManagedObject
 

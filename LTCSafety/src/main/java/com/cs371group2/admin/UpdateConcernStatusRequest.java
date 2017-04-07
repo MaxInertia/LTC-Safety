@@ -17,6 +17,11 @@ import java.util.List;
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
+ * Invariance properties: This class assumes that administrative permissions are required for the request to be
+ * fulfilled. It also assumes that the requester has access to the unique long id of the concern they desire. Finally,
+ * it assumes that the user will be authenticating themselves via firebase token. Finally, it also assumes that
+ * the given concernStatus will be applied to the requested concern in the method it is used.
+ *
  * Created on 2017-02-08.
  */
 public class UpdateConcernStatusRequest extends ConcernRequest implements Validatable{

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.Espresso;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -41,6 +42,8 @@ import static org.hamcrest.core.IsAnything.anything;
 /**
  * This class runs Espresso tests on MainActivity.
  */
+
+@Suppress
 @RunWith(AndroidJUnit4.class)
 public class MainActivityEspressoTests {
 

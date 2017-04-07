@@ -184,7 +184,7 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
             limit : $scope.accountsRequest.limit,
             offset : $scope.accountsRequest.offset
         };
-        adminApi.requestAccountsList(request).execute(
+        adminApi.requestAccountList(request).execute(
             function (resp) {
                 if (resp.error) {
                     $scope.showModalError('Failed to refresh the accounts list.');
@@ -226,9 +226,9 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
         var request = {
             accessToken : $scope.accessToken,
             accountId : account.id,
-            permissionsType : permissionsType
+            permissions : permissionsType
         };
-        adminApi.updatePermissions(request).execute(
+        adminApi.updateAccountPermission(request).execute(
             function (resp) {
                 if (resp.error) {
                     $scope.showModalError('Failed to update permissions for ' + account.email);
@@ -237,6 +237,24 @@ safetyApp.controller('AccountsCtrl', function AccountsCtrl($scope, $location, $r
                 }
             }
         );
+    };
+
+    /**
+     * Get the human readable name that maps to a certain account permissions type.
+     * @param permissionsType The account permissions type for which to get the human readable name.
+     * @returns The human readable name associated with permissionsType.
+     * @post Throws an error if the permissions type is not one of the recognized types: ADMIN, UNVERIFIED, or DENIED.
+     */
+    $scope.permissionsNames = function(permissionsType) {
+        if (permissionsType == 'ADMIN') {
+            return 'Admin';
+        } else if (permissionsType == 'UNVERIFIED') {
+            return 'Unverified';
+        } else if (permissionsType == 'DENIED') {
+            return 'Denied';
+        } else {
+            throw new Error("Attempted to get the name for an invalid permissions type: " + permissionsType);
+        }
     };
 
     /**

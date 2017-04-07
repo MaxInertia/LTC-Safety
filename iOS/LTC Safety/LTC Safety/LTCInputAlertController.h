@@ -11,6 +11,11 @@
 
 /**
  The LTCInputAlertController class is used to display an alert with a textfield for user input. This is used to allow the user to enter custom input in the LTCValueSelectionController class.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the delegate is valid and non-nil.
+ 
  */
 @interface LTCInputAlertController : UIAlertController
 

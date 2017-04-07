@@ -10,8 +10,10 @@ import java.util.logging.Logger;
  * The location class is used to store information pertaining to the location the concern was
  * reported to be at. This includes a room name and facility name.
  *
- * @History Properties room name and facility name are all guaranteed to be constant during the
- * entire duration of a location instance.
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class makes no assumptions about the information it is given. However, to be considered
+ * "valid" in the system, the facilityName must be non-null.
  *
  * Created on 2017-01-17.
  */

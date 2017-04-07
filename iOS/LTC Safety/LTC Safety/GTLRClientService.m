@@ -24,7 +24,6 @@ NSString * const kGTLRAuthScopeClientUserinfoEmail = @"https://www.googleapis.co
   if (self) {
     // From discovery.
     self.rootURLString = @"https://ltc-safety.appspot.com/_ah/api/";
-    self.servicePath = @"concern/";
     self.batchPath = @"batch";
     self.prettyPrintQueryParameterNames = @[ @"prettyPrint" ];
   }

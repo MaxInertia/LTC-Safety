@@ -6,6 +6,10 @@ import java.util.Date;
  * The status of a concern including the type of the concern and when this status was created.
  * Throughout its life cycle a concern's status will change multiple times.
  *
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that the status type it is given is non-null.
+ *
  * Created on 2017-02-01.
  */
 public class ConcernStatus implements Comparable<ConcernStatus> {

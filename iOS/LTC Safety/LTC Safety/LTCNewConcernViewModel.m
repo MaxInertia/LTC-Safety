@@ -15,6 +15,7 @@
 NSString *const LTCContactInfoTitle               = @"CONTACT_INFO_TITLE";
 NSString *const LTCConcernInfoTitle               = @"CONCERN_INFO_TITLE";
 NSString *const LTCActionsTakenTitle              = @"ACTIONS_TAKEN_TITLE";
+NSString *const LTCConcernDescriptionTitle        = @"DESCRIPTION_TITLE";
 
 // The prompt keys that map to a string in the Localizable.strings
 NSString *const LTCReporterNamePrompt             = @"REPORTER_NAME_PROMPT";
@@ -33,6 +34,7 @@ NSString *const LTCDescriptorConcernNature        = @"CONCERN_NATURE";
 NSString *const LTCDescriptorFacilityName         = @"FACILITY_NAME";
 NSString *const LTCDescriptorRoomNumber           = @"ROOM_NUMBER";
 NSString *const LTCDescriptorActionsTaken         = @"ACTIONS_TAKEN";
+NSString *const LTCDescriptorDescription          = @"CONCERN_DESCRIPTION";
 NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
 
 @interface LTCNewConcernViewModel ()
@@ -46,6 +48,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorFacilityName;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorRoomNumber;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorActionsTaken;
+@property (readonly, nonatomic, strong) NSString *testHook_descriptorDescription;
 @property (readonly, nonatomic, strong) NSString *testHook_descriptorSubmitConcern;
 @end
 
@@ -59,6 +62,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
 @dynamic testHook_descriptorFacilityName;
 @dynamic testHook_descriptorRoomNumber;
 @dynamic testHook_descriptorActionsTaken;
+@dynamic testHook_descriptorDescription;
 @dynamic testHook_descriptorSubmitConcern;
 
 #pragma mark - Test Hooks
@@ -148,6 +152,18 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
 }
 
 /**
+ A test took for getting the actions taken descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
+ @code
+ [viewModel formRowWithTag:viewModel.testHook_descriptorActionsTaken].value = @"...";
+ @endcode
+ 
+ @return The descriptor string.
+ */
+- (NSString *)testHook_descriptorDescription {
+    return LTCDescriptorDescription;
+}
+
+/**
  A test took for getting the submit concern descriptor to programmatically set the LTCNewConcernViewModel's concern data without going through the LTCNewViewController class.
  @code
  [viewModel formRowWithTag:viewModel.testHook_descriptorSubmitConcern].value = @"...";
@@ -170,7 +186,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
  @return The array of descriptors.
  */
 - (NSArray <NSString *> *)testHook_descriptors {
-    return @[LTCDescriptorReporterName, LTCDescriptorPhoneNumber, LTCDescriptorEmail, LTCDescriptorConcernNature, LTCDescriptorFacilityName, LTCDescriptorRoomNumber, LTCDescriptorActionsTaken, LTCDescriptorSubmitConcern];
+    return @[LTCDescriptorReporterName, LTCDescriptorPhoneNumber, LTCDescriptorEmail, LTCDescriptorConcernNature, LTCDescriptorFacilityName, LTCDescriptorRoomNumber, LTCDescriptorActionsTaken, LTCDescriptorDescription, LTCDescriptorSubmitConcern];
 }
 
 #pragma mark - Implementation
@@ -245,6 +261,17 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         [section addFormRow:row];
         
         
+        // Sets up the concern description section
+        
+        section = [XLFormSectionDescriptor formSection];
+        section.title = NSLocalizedString(LTCConcernDescriptionTitle, nil);
+        [self addFormSection:section];
+        
+        row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorDescription rowType:XLFormRowDescriptorTypeTextView];
+        row.required = YES;
+        [section addFormRow:row];
+        
+        
         // Sets up the actions taken section
 
         section = [XLFormSectionDescriptor formSection];
@@ -254,7 +281,6 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
         row = [XLFormRowDescriptor formRowDescriptorWithTag:LTCDescriptorActionsTaken rowType:XLFormRowDescriptorTypeTextView];
         row.required = YES;
         [section addFormRow:row];
-        
         
         // Sets up the actions submit button section
         
@@ -294,9 +320,7 @@ NSString *const LTCDescriptorSubmitConcern        = @"SUBMIT_CONCERN";
     data.location = location;
     data.concernNature = [self formRowWithTag:LTCDescriptorConcernNature].value;
     data.actionsTaken = [self formRowWithTag:LTCDescriptorActionsTaken].value;
-    
-    
-    
+    data.descriptionProperty = [self formRowWithTag:LTCDescriptorDescription].value;
     
     // Send the concern data to the client API on the backend server
     [self.clientApi submitConcern:data completion:^(GTLRClient_SubmitConcernResponse *response, NSError *error){

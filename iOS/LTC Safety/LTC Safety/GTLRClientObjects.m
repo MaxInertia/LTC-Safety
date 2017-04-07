@@ -26,7 +26,7 @@ NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
 //
 
 @implementation GTLRClient_Concern
-@dynamic archived, data, identifier, retracted, statuses, submissionDate;
+@dynamic archived, data, identifier, retracted, statuses, submissionDate, test;
 
 + (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
   return @{ @"identifier" : @"id" };
@@ -44,11 +44,34 @@ NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
 
 // ----------------------------------------------------------------------------
 //
+//   GTLRClient_ConcernCollection
+//
+
+@implementation GTLRClient_ConcernCollection
+@dynamic items;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"items" : [GTLRClient_Concern class]
+  };
+  return map;
+}
+
+@end
+
+
+// ----------------------------------------------------------------------------
+//
 //   GTLRClient_ConcernData
 //
 
 @implementation GTLRClient_ConcernData
-@dynamic actionsTaken, concernNature, location, reporter;
+@dynamic actionsTaken, concernNature, descriptionProperty, location, reporter;
+
++ (NSDictionary<NSString *, NSString *> *)propertyToJSONKeyMap {
+  return @{ @"descriptionProperty" : @"description" };
+}
+
 @end
 
 
@@ -79,6 +102,24 @@ NSString * const kGTLRClient_ConcernStatusType_Seen         = @"SEEN";
 
 @implementation GTLRClient_OwnerToken
 @dynamic token;
+@end
+
+
+// ----------------------------------------------------------------------------
+//
+//   GTLRClient_OwnerTokenListWrapper
+//
+
+@implementation GTLRClient_OwnerTokenListWrapper
+@dynamic tokens;
+
++ (NSDictionary<NSString *, Class> *)arrayPropertyToClassMap {
+  NSDictionary<NSString *, Class> *map = @{
+    @"tokens" : [GTLRClient_OwnerToken class]
+  };
+  return map;
+}
+
 @end
 
 

@@ -8,6 +8,7 @@
 
 #import "LTCConcernViewModel.h"
 #import "LTCLogger.h"
+#import "LTCClientApi.h"
 
 NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatusNotification";
 
@@ -38,14 +39,10 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
 
         self.fetchedResultsController.delegate = self;
         self.objectContext = context;
+        self.clientApi = [[LTCClientApi alloc] init];
         
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_updatedConcernStatus:) name:LTCUpdatedConcernStatusNotification object:nil];
-        
-        
     }
-    
-    
-    
     return self;
 }
 
@@ -196,11 +193,74 @@ NSString * const LTCUpdatedConcernStatusNotification = @"LTCUpdatedConcernStatus
     NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
     
     if (error == nil && concern != nil) {
-        LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
-        [concern addStatusesObject:status];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            LTCConcernStatus *status = [LTCConcernStatus statusWithData:newConcernStatusResponse.status inManagedObjectContext:self.objectContext];
+            [concern addStatusesObject:status];
+            
+            NSError *error = nil;
+            [self.objectContext save:&error];
+            NSLog(@"ERROR: %@", error);
+        });
     }
-    [self.objectContext save:nil];
-
 }
+
+- (void)refreshConcernsWithCompletion:(GTLRClient_OwnerTokenListWrapper *)tokensWrapper completion:(LTCRefreshConcernsCompletion)completion  {
+    [self.clientApi fetchConcerns:tokensWrapper completion:^(GTLRClient_ConcernCollection *fetchResponse, NSError *error) {
+        if (error) {
+            completion(error);
+        } else {
+            [self _updateConcernsStatus:fetchResponse.items];
+            completion(nil);
+        }
+    }];
+}
+
+/**
+    Called when the user pressed the refresh putton in main concern view. This method will update the statuses of all concerns known to the app.
+ @param concerns the array of concerns that has come from the clientApi call to be used to update all concerns.
+ */
+- (void)_updateConcernsStatus:(NSArray<GTLRClient_Concern *>*)concerns{
+    
+    NSAssert(self.objectContext != nil, @"Attempted fetcing concerns with a nil context");
+
+    for(GTLRClient_Concern *curConcern in concerns){
+        
+        NSString *identifier = [curConcern.identifier stringValue];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat: @"identifier == %@", identifier];
+        
+        NSFetchRequest *request = [LTCConcern fetchRequest];
+        [request setPredicate:predicate];
+        
+        NSError *error = nil;
+        NSArray *result = [self.objectContext executeFetchRequest:request error:&error];
+        LTCConcern *concern = [result firstObject];
+        
+        NSAssert1(error != nil || result.count == 1, @"Unexecpted fetch request for concern status update: %@", error);
+        
+        int counter = (int) concern.statuses.count;
+        
+        if (error == nil && concern != nil) {
+            for(GTLRClient_ConcernStatus *curStatus in curConcern.statuses){
+                
+                if(counter == 0){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        LTCConcernStatus *status = [LTCConcernStatus statusWithData:curStatus inManagedObjectContext:self.objectContext];
+                        [concern addStatusesObject:status];
+                        status.status = concern;
+                        
+                        NSError *error = nil;
+                        [self.objectContext save:&error];
+                        NSLog(@"ERROR: %@", error);
+                    });
+                    
+                }else{
+                    counter--;
+                }
+            }
+        }
+    }
+}
+
 
 @end

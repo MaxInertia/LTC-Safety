@@ -12,6 +12,9 @@ import java.util.logging.Logger;
  *
  * History property: Instances of this class are immutable from the time they are created.
  *
+ * Invariance properties: This class assumes that the requester requires paging information be returned with
+ * their request. It also assumes that they will be authenticating themselves via firebase token.
+ *
  * Created on 2017-02-08.
  */
 public class PagedRequest extends AdminRequest implements Validatable {

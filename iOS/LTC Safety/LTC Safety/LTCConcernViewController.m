@@ -14,6 +14,10 @@
 #import "LTCConcernTableViewCell.h"
 #import "LTCConcernDetailViewModel.h"
 #import "LTCConcernDetailViewController.h"
+#import "LTCLoadingViewController.h"
+#import "LTCClientApi.h"
+
+NSString *const LTCRefreshError = @"REFRESH_ERROR";
 
 @interface LTCConcernViewController () <LTCNewConcernViewControllerDelegate, LTCConcernViewModelDelegate, UITableViewDataSource, UITableViewDelegate>
 
@@ -21,7 +25,23 @@
  The button that the user clicks to present the form for submitting a new concern.
  */
 @property (nonatomic, weak) IBOutlet UIButton *addConcernButton;
+/**
+ The button that the user clicks to refresh the list of concerns.
+ */
+@property (nonatomic, weak) IBOutlet UIButton *addRefreshButton;
+/**
+ The table view that this view model will be using to write concern information to.
+ */
 @property (nonatomic, weak) IBOutlet UITableView *tableView;
+/**
+ The clientApi used within the viewModel to access the datastore.
+ */
+@property (nonatomic, strong) LTCClientApi *clientApi;
+/**
+ Property to keep track of if this is the first appearence of the app. Originally set to yes then changed to no.
+ */
+@property (nonatomic) BOOL isFirstAppearance;
+
 @end
 
 @implementation LTCConcernViewController
@@ -38,6 +58,7 @@
     
     viewModel.delegate = self;
     _viewModel = viewModel;
+
 }
 
 /**
@@ -45,6 +66,8 @@
  */
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.clientApi = [[LTCClientApi alloc] init];
+    self.isFirstAppearance = YES;
     
     self.title = NSLocalizedString(@"CONCERN_VIEW_TITLE", nil);
     self.tableView.accessibilityIdentifier = @"LTCConcernTableView";
@@ -55,6 +78,60 @@
     self.addConcernButton.layer.cornerRadius = 2.5f;
     self.addConcernButton.layer.borderColor = [[UIColor colorWithRed:0xE2/255.0 green:0xE2/255.0 blue:0xE2/255.0 alpha:0xE2/255.0] CGColor];
     self.addConcernButton.layer.borderWidth = 1.0f;
+    
+    UIBarButtonItem *button = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+    self.navigationItem.rightBarButtonItem = button;
+    
+}
+
+/**
+  Calls the refresh method to refresh all concerns when ever the main view is loaded for the first time the app is loaded.
+   */
+- (void)viewDidAppear:(BOOL)animated{
+    if (self.isFirstAppearance){
+        [self refresh];
+        self.isFirstAppearance = NO;
+    }
+    
+}
+
+-(void)refresh {
+    
+    // Display the loading spinner to the user until the retract call has finished
+    LTCLoadingViewController *loadingMessage = [LTCLoadingViewController configure];
+    [self presentViewController: loadingMessage animated: YES completion: nil];
+ 
+    //Creating the token wrapper to pass into the fetch concerns clientApi method
+    GTLRClient_OwnerTokenListWrapper *tokensWrapper = [[GTLRClient_OwnerTokenListWrapper alloc] init];
+    NSMutableArray *tokens = [NSMutableArray array];
+
+    //Populating the tokensWrapper with all of the tokens of concerns submitted by the user
+    for(int i = 0; i < [self.viewModel rowCountForSection: 0]; i++){
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        GTLRClient_OwnerToken *curToken = [[GTLRClient_OwnerToken alloc] init];
+        curToken.token = [self.viewModel concernAtIndexPath:indexPath].ownerToken;
+        [tokens addObject:curToken];
+    }
+    tokensWrapper.tokens = [tokens copy];
+    
+    [self.viewModel refreshConcernsWithCompletion:tokensWrapper completion:^(NSError *error) {
+        [loadingMessage dismissViewControllerAnimated:YES completion:^(){
+            UIAlertController *alert;
+            if (error != nil){
+                NSString *errorMessage = [error.userInfo valueForKey:@"error"];
+                alert = [UIAlertController alertControllerWithTitle:NSLocalizedString(LTCRefreshError, nil)
+                                                            message:errorMessage
+                                                     preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"OK", nil)
+                                                                       style:UIAlertActionStyleCancel
+                                                                     handler:nil];
+                [alert addAction:cancelAction];
+                [self presentViewController:alert
+                                   animated:YES
+                                 completion:nil];
+            }
+        }];
+    }];
 }
 
 /**
@@ -63,13 +140,14 @@
  @param sender The sender of the action.
  */
 - (IBAction)presentCreateConcernController:(id)sender {
-    
+
     LTCNewConcernViewModel *viewModel = [[LTCNewConcernViewModel alloc] initWithContext:self.viewModel.objectContext];
     LTCNewConcernViewController *viewController = [[LTCNewConcernViewController alloc] initWithViewModel:viewModel];
     viewController.delegate = self;
     
     UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:viewController];
     [self presentViewController:navController animated:YES completion:nil];
+
 }
 
 - (void)viewController:(LTCNewConcernViewController *)viewController didSubmitConcern:(LTCConcern *)concern {
@@ -78,7 +156,6 @@
     
     NSError *error = nil;
     [self.viewModel addConcern:concern error:&error];
-    
     NSAssert(error == nil, @"Add concern failed with error: %@", error);
 }
 

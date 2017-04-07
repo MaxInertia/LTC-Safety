@@ -7,6 +7,11 @@ import com.cs371group2.concern.Concern;
  * related to the concern and the token giving ownernship. Its only purpose is to be sent back to
  * the client.
  *
+ * History properties: Instances of this class are immutable from the time they are created.
+ *
+ * Invariance properties: This class assumes that a valid concern submission has taken place, and the concern
+ * given upon instantiation is the submitted concern.
+ *
  * Created on 2017-02-01.
  */
 final class SubmitConcernResponse {

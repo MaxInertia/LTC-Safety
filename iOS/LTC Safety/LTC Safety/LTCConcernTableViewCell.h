@@ -11,6 +11,11 @@
 
 /**
  The LTCConcernTableViewCell class is used for displaying individual concern cells within the LTCConcernViewController. For every concern in the concern view model there is a single cell that displays a brief summary of the data related to that concern.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the concen given has valid data and is non-nil.
+ 
  */
 @interface LTCConcernTableViewCell : UITableViewCell
 

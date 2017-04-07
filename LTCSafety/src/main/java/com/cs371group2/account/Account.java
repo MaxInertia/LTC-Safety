@@ -9,6 +9,12 @@ import com.googlecode.objectify.annotation.Index;
  * This class represents an account in the system. It contains a permission level, a unique id, and a set of
  * facilities that the account is assigned to.
  *
+ * History property: Instances of this class are mutable from the time they are created. However, the id and email
+ * are immutable from the time the account is created.
+ *
+ * Invariance properties: This class assumes the provided information (email, id, etc) is properly formatted, and that
+ * the isEmailVerified field accurately indicates whether the email has been verified or not.
+ *
  * Created on 2017-02-06.
  */
 @Entity

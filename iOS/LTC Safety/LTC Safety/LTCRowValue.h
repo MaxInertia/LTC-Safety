@@ -10,6 +10,11 @@
 
 /**
  The LTCRowValue class is used to parse the row values from the list of items within a value selection configuration plist. For every pre-defined selection value there is a single row value.
+ 
+ History properties: Instances of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class assumes that the title and tag are non-nil.
+ 
  */
 @interface LTCRowValue : NSObject
 

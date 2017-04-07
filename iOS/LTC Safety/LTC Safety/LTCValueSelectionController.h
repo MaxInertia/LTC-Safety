@@ -12,6 +12,9 @@
 /**
  The LTCValueSelectionController class is used for providing the client with a set of predefined options to choose from when filling in data in the new concern view controller.
  @attention For all intents and purposes this class is abstract and should not instantiated. It must be subclasses so that -fileName can be overriden.
+ 
+ History/Invariance properties: This class is abstact and should not be instantiated so it has no history or invarience properties.
+  
  */
 @interface LTCValueSelectionController : XLFormViewController <XLFormRowDescriptorViewController>
 

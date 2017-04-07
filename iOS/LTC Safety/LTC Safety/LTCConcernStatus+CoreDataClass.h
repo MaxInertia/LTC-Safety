@@ -16,6 +16,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  The LTC Concern Status class will represent a concern's current or past status. This status includes the creation date, and the status itself.
+ 
+ History properties: Properties of this class should not vary from the time they are created.
+ 
+ Invariance properties: This class makes no assumptions.
+ 
  */
 @interface LTCConcernStatus : NSManagedObject
 /**

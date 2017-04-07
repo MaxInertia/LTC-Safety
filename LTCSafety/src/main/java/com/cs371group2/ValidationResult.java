@@ -9,6 +9,11 @@ import java.util.logging.Logger;
  * whether the validation succeeded or failed. If validation failed the error message will detail
  * what went wrong.
  *
+ * History properties: This class is immutable from the time it is created.
+ *
+ * Invariance properties: This class assumes that a successful validation requires no message to be given,
+ * and that an unsuccessful validation will always have a reason for failure given upon construction.
+ *
  * Created on 2017-01-19.
  */
 public final class ValidationResult {
