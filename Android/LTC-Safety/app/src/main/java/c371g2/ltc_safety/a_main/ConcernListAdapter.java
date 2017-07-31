@@ -1,6 +1,7 @@
 package c371g2.ltc_safety.a_main;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import javax.annotation.Nonnull;
 
 import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.local.ConcernWrapper;
+import c371g2.ltc_safety.local.StatusWrapper;
 
 /**
  * This class is used to populate the concern list on the main activity with the previously
@@ -66,6 +68,27 @@ public class ConcernListAdapter extends ArrayAdapter<ConcernWrapper> {
             ((TextView) concernListItem.findViewById(R.id.concernListItem_dateSubmitted)).setText(
                     dateString
             );
+
+            List<StatusWrapper> statuses = concern.getStatuses();
+            int lastStatus_stringResource;
+            TextView statusTextView = concernListItem.findViewById(R.id.concernListItem_status);
+
+            try {
+                lastStatus_stringResource = statuses.get(statuses.size() - 1).getReadableTypeResource();
+                statusTextView.setText(
+                    getContext().getResources().getString(lastStatus_stringResource)
+                );
+
+                if(lastStatus_stringResource == R.string.RESOLVED_text ||
+                        lastStatus_stringResource == R.string.RETRACTED_text) {
+                    statusTextView.setTextColor(Color.GREEN);
+                } else {
+                    // Add colors for other statuses if desired...
+                }
+            } catch(Exception e) {
+                statusTextView.setText("Unknown");
+            }
+
         } else {
             concernListItem = inflater.inflate(R.layout.concern_list_item, parent, false);
         }

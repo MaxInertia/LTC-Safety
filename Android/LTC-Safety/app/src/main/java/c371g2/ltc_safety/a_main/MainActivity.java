@@ -159,8 +159,6 @@ public class MainActivity extends AbstractNetworkActivity {
         assert(newConcernIntent != null);
         newConcernIntent.putExtra("observer",((ConcernSubmissionObserver)mainViewModel));
         assert(newConcernIntent.getExtras().getSerializable("observer").equals(mainViewModel));
-        //mainViewModel.setActivity(null);
-        //mainViewModel = null;
 
         newConcernIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         MainActivity.this.startActivity(newConcernIntent);
@@ -216,10 +214,10 @@ public class MainActivity extends AbstractNetworkActivity {
         }
 
         static void clearConcerns(MainActivity activity) {
-            //activity.mainViewModel;
+            MainViewModel.Test_Hook.clearConcernList(activity.mainViewModel);
         }
 
-        public static void addConcern(MainActivity activity, ConcernWrapper concern) {
+        public static void addConcern(final MainActivity activity, ConcernWrapper concern) {
             MainViewModel.Test_Hook.addConcern(activity.mainViewModel, concern);
         }
 

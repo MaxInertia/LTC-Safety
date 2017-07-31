@@ -18,10 +18,23 @@
         android:layout_height="wrap_content"
         android:id="@+id/concernListItem_facility" />
 
-    <TextView
-        android:text=""
-        android:textColor="@android:color/darker_gray"
-        android:layout_width="match_parent"
+    <RelativeLayout
         android:layout_height="wrap_content"
-        android:id="@+id/concernListItem_dateSubmitted" />
+        android:layout_width="match_parent">
+
+        <TextView
+            android:text=""
+            android:textColor="@android:color/darker_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/concernListItem_dateSubmitted" />
+
+        <TextView
+            android:text=""
+            android:layout_alignParentEnd="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/concernListItem_status" />
+
+    </RelativeLayout>
 </LinearLayout>

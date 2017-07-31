@@ -3,6 +3,8 @@ package c371g2.ltc_safety.local;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 
+import c371g2.ltc_safety.R;
+
 /**
  * Used to store the details of ConcernStatus objects locally.
  * @Invariants
@@ -26,5 +28,26 @@ public class StatusWrapper implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public int getReadableTypeResource() throws Exception {
+        switch(type) {
+            case "PENDING":
+                return R.string.PENDING_text;
+            case "SEEN":
+                 return R.string.SEEN_text;
+            case "RESPONDING24":
+                return R.string.RESPONDING24_text;
+            case "RESPONDING48":
+                return R.string.RESPONDING48_text;
+            case "RESPONDING72":
+                return R.string.RESPONDING72_text;
+            case "RESOLVED":
+                return R.string.RESOLVED_text;
+            case "RETRACTED":
+                return R.string.RETRACTED_text;
+            default:
+                throw new Exception("Unknown status type");
+        }
     }
 }

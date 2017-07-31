@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
+import android.widget.ListView;
 
 import com.appspot.ltc_safety.client.Client;
 import com.appspot.ltc_safety.client.model.Concern;
@@ -25,6 +26,7 @@ import java.util.TreeSet;
 
 import c371g2.ltc_safety.AbstractNetworkActivity;
 import c371g2.ltc_safety.AbstractNetworkViewModel;
+import c371g2.ltc_safety.R;
 import c371g2.ltc_safety.local.ConcernWrapper;
 import c371g2.ltc_safety.local.StatusWrapper;
 
@@ -58,7 +60,6 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
      * This variable is null until a concern submission or retraction is attempted.
      */
     transient FetchReturnCode fetchReturnCode;
-
 
     /**
      * Constructor for Testing
@@ -247,6 +248,7 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
             concernCollection = null;
             viewModel.signalLatch.countDown();
             assert(viewModel.signalLatch.getCount() == 0);
+            ((ListView) activity.findViewById(R.id.main_concernListView)).invalidateViews();
             viewModel = null;
         }
 
@@ -318,9 +320,9 @@ class MainViewModel extends AbstractNetworkViewModel implements ConcernRetractio
             return (ConcernWrapper) ((MainViewModel)mainViewModel).concerns.toArray()[index];
         }
 
-        //public static void initializeConcernSet(MainViewModel mainViewModel) {
-        //    mainViewModel.concerns = new TreeSet<>();
-        //}
+        public static void clearConcernList(MainViewModel mainViewModel) {
+            mainViewModel.concerns = new TreeSet<>();
+        }
 
         static void addConcern(MainViewModel viewModel, ConcernWrapper concern) throws NullPointerException {
             viewModel.concerns.add(concern);

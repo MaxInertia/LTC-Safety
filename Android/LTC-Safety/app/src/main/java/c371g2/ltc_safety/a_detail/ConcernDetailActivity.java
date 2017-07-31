@@ -208,30 +208,14 @@ public class ConcernDetailActivity extends AbstractNetworkActivity {
             StatusWrapper status = (StatusWrapper) concernStatuses.get(i);
             date.setText(status.getFormattedDate());
             assert(date.getText()!=null && !date.getText().equals(""));
-            switch(status.getType()) {
-                case "PENDING":
-                    type.setText(R.string.PENDING_text);
-                    break;
-                case "SEEN":
-                    type.setText(R.string.SEEN_text);
-                    break;
-                case "RESPONDING24":
-                    type.setText(R.string.RESPONDING24_text);
-                    break;
-                case "RESPONDING48":
-                    type.setText(R.string.RESPONDING48_text);
-                    break;
-                case "RESPONDING72":
-                    type.setText(R.string.RESPONDING72_text);
-                    break;
-                case "RESOLVED":
-                    type.setText(R.string.RESOLVED_text);
-                    break;
-                case "RETRACTED":
-                    type.setText(R.string.RETRACTED_text);
-                    break;
+
+            try {
+                type.setText(status.getReadableTypeResource());
+                assert(type.getText()!=null && !type.getText().equals(""));
+            } catch(Exception e) {
+                type.setText("Unknown");
             }
-            assert(type.getText()!=null && !type.getText().equals(""));
+
             statusLayout.addView(statusRow);
 
             if( (i+1) == concernStatuses.size() ) {
