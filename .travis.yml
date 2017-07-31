@@ -11,7 +11,7 @@ android:
     - build-tools-25.0.3
     
     # Compile SDK
-    - android-26
+    - android-25
     
     # System images for emulator - can be used for testing (Not required?)
     - sys-img-armeabi-v7a-android-25
