@@ -14,9 +14,8 @@ android:
     - android-26
     
     # System images for emulator - can be used for testing (Not required?)
-    #- sys-img-armeabi-v7a-android-22
-    #- sys-img-x86-android-22
-    #- sys-img-armeabi-v7a-android-17
+    - sys-img-armeabi-v7a-android-25
+    - sys-img-x86-android-25
     
     # Other components
     - extra-android-support
